@@ -214,18 +214,6 @@ class SMLGenerator extends AbstractGenerator {
 		return strRight
 	}
 	
-	def gestionRightRecursive(Right right) {
-		var strRight = ""
-		
-		if(right.conv !== null){
-			for (conv: right.conv){
-				strRight += gestionConv(conv, gestionWay.current)
-			}
-		}
-		
-		return strRight
-	}
-	
 	def gestionMergeRecu(MergeRecu mergeRecu) {
 		var strMerge =""
 
@@ -237,7 +225,7 @@ class SMLGenerator extends AbstractGenerator {
 		//body
 		strMerge += gestionLeftRecursive(mergeRecu.left)
 		strMerge += '\n'
-		strMerge += gestionRightRecursive(mergeRecu.right)
+		strMerge += gestionRight(mergeRecu.right)
 		
 		// end
 
