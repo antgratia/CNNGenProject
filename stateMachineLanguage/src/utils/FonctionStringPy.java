@@ -125,7 +125,7 @@ public class FonctionStringPy {
 	}
 	
 	public String writeUpconv(String x1, int kernel) {
-		return String.format("%s = UpSampling2D(size = %d)(%s)", x1, kernel, x1);
+		return String.format("\t\t%s = UpSampling2D(size = %d)(%s)", x1, kernel, x1);
 	}
 	
 	public String writeTrain() {
