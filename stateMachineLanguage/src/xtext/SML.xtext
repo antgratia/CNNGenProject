@@ -1,0 +1,55 @@
+grammar xtext.SML with org.eclipse.xtext.common.Terminals
+
+generate sML "http://www.SML.xtext"
+
+SML : sml = (Architecture);
+
+Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)*)? output = ('output');
+
+// Unit
+
+Dropout: 'dropout';
+
+Pooling: 'avg_pooling' | 'max_pooling';
+
+DebutMerge: '[';
+
+FinMerge: ']';
+
+BnConv:('(') ('bn') ('conv') (')');
+
+ConvBn:('(') ('conv') ('bn') (')');
+
+Convolution: bnconv = (BnConv)| (convbn = ConvBn ) | (conv = 'conv') | (upconv = 'upconv') ;
+
+GlobalPooling: ('global_avg_pooling') | ("global_max_pooling");
+
+FlattenOrGlobal: (flat='flatten') | (gp = GlobalPooling);
+
+Interstice: fg = (FlattenOrGlobal) drop = (Dropout)?;
+
+Classification: d=('dense') drop =(Dropout)?;
+
+ConvDrop: conv = Convolution (drop = Dropout)?;	
+
+// Merge Recursive
+LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) 
+	convdropend += (ConvDrop)* (pool=Pooling)?
+;
+
+MergeRecu:  db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge ;
+
+// Merge Non recusive
+LeftNonRecursive: p = (Pooling)? convdrop += (ConvDrop)+ pool = (Pooling)?;
+
+Right: conv += Convolution+ | {Right} 'Empty';
+
+MergeNonRecu: db = DebutMerge leftNonRec = LeftNonRecursive virg=','  right = Right fm = FinMerge;
+
+// Merge
+Merge: mnr = MergeNonRecu | mr = MergeRecu;
+
+Highway: (db += DebutMerge) ((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+ (fm += FinMerge);
+
+//Feature extraction
+FeatureExtraction: 	(conv = Convolution | merge = (Merge) | hw = (Highway)) drop = (Dropout)? pool= (Pooling)?;
