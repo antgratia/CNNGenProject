@@ -269,17 +269,6 @@ class SMLGenerator extends AbstractGenerator {
 		return strLeftRecu
 	}
 	
-	def gestionDense(EList<Classification> list) {
-		var strDense = ""
-		for (dense: list){
-			if(dense.drop !== null)
-				strDense += unitDropout(gestionWay.current)
-			strDense += unitDense(gestionWay.current)
-			
-		}
-		return strDense
-	}
-	
 	def gestionInter(Interstice inter) {
 		var string_inter = ""
 		
@@ -291,6 +280,25 @@ class SMLGenerator extends AbstractGenerator {
 			
 		return string_inter
 	}
+	
+	def gestionDense(EList<Classification> list) {
+		var strDense = ""
+		var i = 0; 
+		while (i<list.size()-1){
+			if(list.get(i).drop !== null)
+				strDense += unitDropout(gestionWay.current)
+			strDense += unitDense(gestionWay.current, false)
+			i++;
+		}
+		
+		if(list.get(i).drop !== null)
+				strDense += unitDropout(gestionWay.current)
+		strDense += unitDense(gestionWay.current, true);
+		
+		return strDense
+	}
+	
+
 	
 	
 	
@@ -324,7 +332,7 @@ class SMLGenerator extends AbstractGenerator {
 		return fsp.writeDropout(0.5, X_or_shortcut)
 	}
 	
-	def unitDense(String X_or_shortcut){
+	def unitDense(String X_or_shortcut, boolean last){
 		return fsp.writeDense(50,"relu", X_or_shortcut)
 	}
 	
