@@ -6,7 +6,7 @@ import java.util.List;
 
 import models.Convolution;
 import models.LayerInterface;
-import models.Padding;
+import models.Pooling;
 
 public class GestionHpp {
 	
@@ -23,7 +23,7 @@ public class GestionHpp {
 			conv.setPadding(padding.get(0));
 			conv.setFct_activation(fctActivation.get(0));
 			conv.setStride(stride.get(0));
-		}else if (layer instanceof Padding){
+		}else if (layer instanceof Pooling){
 			
 		}else {
 			throw new UnexpectedException("error: gestionKernelPaddingStride");
