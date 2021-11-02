@@ -12,6 +12,18 @@ public class BatchNormalisation implements LayerInterface {
 		GestionHpp.gestionBN(this);
 		return this;
 	}
+
+
+	public double getEpsilon() {
+		return epsilon;
+	}
+
+
+	public void setEpsilon(double epsilon) {
+		this.epsilon = epsilon;
+	}
+	
+	
 	
 	
 

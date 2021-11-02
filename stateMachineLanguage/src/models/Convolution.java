@@ -15,7 +15,7 @@ public class Convolution implements LayerInterface {
 	
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionKernelPaddingStride(this);
+		GestionHpp.gestionConvolution(this);
 		return this;
 	}
 

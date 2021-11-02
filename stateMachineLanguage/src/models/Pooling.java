@@ -12,7 +12,7 @@ public class Pooling implements LayerInterface {
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionKernelPaddingStride(this);
+		GestionHpp.gestionPooling(this);
 		return this;
 	}
 

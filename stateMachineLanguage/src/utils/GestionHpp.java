@@ -3,6 +3,7 @@ package utils;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import models.BatchNormalisation;
 import models.Convolution;
@@ -14,8 +15,10 @@ import models.Pooling;
 public class GestionHpp {
 	
 	// info img
-	private int maxSizeImg;
-	private int currentSizeImg;
+	private final int maxSizeImg = 28;
+	private int currentSizeImg = 28;
+	
+	private final int nb_class = 10;
 	
 	
 	// hpp Convolution + Pooling
@@ -27,44 +30,46 @@ public class GestionHpp {
 	private int nbFilter;
 	
 	// hpp dropout
-	private double dropoutRate;
+	private static List<Double> dropoutRate = new ArrayList<Double>(List.of(.1, .2, .4, .5, .8, .01));
 	
 	//hpp batch Normalisation
-	private double epsilon;
+	private static List<Double> epsilon = new ArrayList<Double>(List.of(1.1e-10, 1.001e-5, 0.001, 1.1e-5, 1.1e-7));;
 	
 	// hpp Dense
 	private int units;
 	
-	public static void gestionKernelPaddingStride(LayerInterface layer) throws Exception {
-		if (layer instanceof Convolution) {
-			Convolution conv = (Convolution) layer;
+	
+	// entry point
+	public static void gestionConvolution(Convolution conv){
 			conv.setKernel(kernel.get(0));
 			conv.setNbFilter(10);
 			conv.setPadding(padding.get(0));
 			conv.setFct_activation(fctActivation.get(0));
 			conv.setStride(stride.get(0));
-		}else if (layer instanceof Pooling){
-			
-		}else {
-			throw new UnexpectedException("error: gestionKernelPaddingStride");
-		}
 
+
+	}
+	
+	public static void gestionPooling(Pooling pool) {
+		
 	}
 
 	public static void gestionDropout(Dropout dropout) {
-		
+		Random rand = new Random();
+		dropout.setDropoutRate(dropoutRate.get(rand.nextInt(dropoutRate.size())));
 		
 	}
 
-	public static void gestionBN(BatchNormalisation batchNormalisation) {
-		// TODO Auto-generated method stub
-		
+	public static void gestionBN(BatchNormalisation bn) {
+		Random rand = new Random();
+		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
 	}
 
 	public static void gestionDense(Dense dense) {
-		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	
 	
 }
