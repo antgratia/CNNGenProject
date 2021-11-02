@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link xtext.sML.Interstice#getFg <em>Fg</em>}</li>
- *   <li>{@link xtext.sML.Interstice#getDrop <em>Drop</em>}</li>
  * </ul>
  *
  * @see xtext.sML.SMLPackage#getInterstice()
@@ -45,27 +44,5 @@ public interface Interstice extends EObject
    * @generated
    */
   void setFg(FlattenOrGlobal value);
-
-  /**
-   * Returns the value of the '<em><b>Drop</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Drop</em>' attribute.
-   * @see #setDrop(String)
-   * @see xtext.sML.SMLPackage#getInterstice_Drop()
-   * @model
-   * @generated
-   */
-  String getDrop();
-
-  /**
-   * Sets the value of the '{@link xtext.sML.Interstice#getDrop <em>Drop</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Drop</em>' attribute.
-   * @see #getDrop()
-   * @generated
-   */
-  void setDrop(String value);
 
 } // Interstice

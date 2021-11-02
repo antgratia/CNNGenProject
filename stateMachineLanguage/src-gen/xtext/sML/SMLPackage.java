@@ -261,22 +261,13 @@ public interface SMLPackage extends EPackage
   int INTERSTICE__FG = 0;
 
   /**
-   * The feature id for the '<em><b>Drop</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERSTICE__DROP = 1;
-
-  /**
    * The number of structural features of the '<em>Interstice</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERSTICE_FEATURE_COUNT = 2;
+  int INTERSTICE_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link xtext.sML.impl.ClassificationImpl <em>Classification</em>}' class.
@@ -289,22 +280,22 @@ public interface SMLPackage extends EPackage
   int CLASSIFICATION = 5;
 
   /**
-   * The feature id for the '<em><b>D</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLASSIFICATION__D = 0;
-
-  /**
    * The feature id for the '<em><b>Drop</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLASSIFICATION__DROP = 1;
+  int CLASSIFICATION__DROP = 0;
+
+  /**
+   * The feature id for the '<em><b>D</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASSIFICATION__D = 1;
 
   /**
    * The number of structural features of the '<em>Classification</em>' class.
@@ -969,17 +960,6 @@ public interface SMLPackage extends EPackage
   EReference getInterstice_Fg();
 
   /**
-   * Returns the meta object for the attribute '{@link xtext.sML.Interstice#getDrop <em>Drop</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Drop</em>'.
-   * @see xtext.sML.Interstice#getDrop()
-   * @see #getInterstice()
-   * @generated
-   */
-  EAttribute getInterstice_Drop();
-
-  /**
    * Returns the meta object for class '{@link xtext.sML.Classification <em>Classification</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -988,17 +968,6 @@ public interface SMLPackage extends EPackage
    * @generated
    */
   EClass getClassification();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.Classification#getD <em>D</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>D</em>'.
-   * @see xtext.sML.Classification#getD()
-   * @see #getClassification()
-   * @generated
-   */
-  EAttribute getClassification_D();
 
   /**
    * Returns the meta object for the attribute '{@link xtext.sML.Classification#getDrop <em>Drop</em>}'.
@@ -1010,6 +979,17 @@ public interface SMLPackage extends EPackage
    * @generated
    */
   EAttribute getClassification_Drop();
+
+  /**
+   * Returns the meta object for the attribute '{@link xtext.sML.Classification#getD <em>D</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>D</em>'.
+   * @see xtext.sML.Classification#getD()
+   * @see #getClassification()
+   * @generated
+   */
+  EAttribute getClassification_D();
 
   /**
    * Returns the meta object for class '{@link xtext.sML.ConvDrop <em>Conv Drop</em>}'.
@@ -1631,14 +1611,6 @@ public interface SMLPackage extends EPackage
     EReference INTERSTICE__FG = eINSTANCE.getInterstice_Fg();
 
     /**
-     * The meta object literal for the '<em><b>Drop</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INTERSTICE__DROP = eINSTANCE.getInterstice_Drop();
-
-    /**
      * The meta object literal for the '{@link xtext.sML.impl.ClassificationImpl <em>Classification</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1649,20 +1621,20 @@ public interface SMLPackage extends EPackage
     EClass CLASSIFICATION = eINSTANCE.getClassification();
 
     /**
-     * The meta object literal for the '<em><b>D</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CLASSIFICATION__D = eINSTANCE.getClassification_D();
-
-    /**
      * The meta object literal for the '<em><b>Drop</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute CLASSIFICATION__DROP = eINSTANCE.getClassification_Drop();
+
+    /**
+     * The meta object literal for the '<em><b>D</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLASSIFICATION__D = eINSTANCE.getClassification_D();
 
     /**
      * The meta object literal for the '{@link xtext.sML.impl.ConvDropImpl <em>Conv Drop</em>}' class.

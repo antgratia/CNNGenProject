@@ -21,34 +21,14 @@ import xtext.sML.SMLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.impl.ClassificationImpl#getD <em>D</em>}</li>
  *   <li>{@link xtext.sML.impl.ClassificationImpl#getDrop <em>Drop</em>}</li>
+ *   <li>{@link xtext.sML.impl.ClassificationImpl#getD <em>D</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ClassificationImpl extends MinimalEObjectImpl.Container implements Classification
 {
-  /**
-   * The default value of the '{@link #getD() <em>D</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getD()
-   * @generated
-   * @ordered
-   */
-  protected static final String D_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getD() <em>D</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getD()
-   * @generated
-   * @ordered
-   */
-  protected String d = D_EDEFAULT;
-
   /**
    * The default value of the '{@link #getDrop() <em>Drop</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -70,6 +50,26 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
   protected String drop = DROP_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getD() <em>D</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getD()
+   * @generated
+   * @ordered
+   */
+  protected static final String D_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getD() <em>D</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getD()
+   * @generated
+   * @ordered
+   */
+  protected String d = D_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -88,31 +88,6 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
   protected EClass eStaticClass()
   {
     return SMLPackage.Literals.CLASSIFICATION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getD()
-  {
-    return d;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setD(String newD)
-  {
-    String oldD = d;
-    d = newD;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.CLASSIFICATION__D, oldD, d));
   }
 
   /**
@@ -146,14 +121,39 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
+  public String getD()
+  {
+    return d;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setD(String newD)
+  {
+    String oldD = d;
+    d = newD;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.CLASSIFICATION__D, oldD, d));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case SMLPackage.CLASSIFICATION__D:
-        return getD();
       case SMLPackage.CLASSIFICATION__DROP:
         return getDrop();
+      case SMLPackage.CLASSIFICATION__D:
+        return getD();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -168,11 +168,11 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case SMLPackage.CLASSIFICATION__D:
-        setD((String)newValue);
-        return;
       case SMLPackage.CLASSIFICATION__DROP:
         setDrop((String)newValue);
+        return;
+      case SMLPackage.CLASSIFICATION__D:
+        setD((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -188,11 +188,11 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case SMLPackage.CLASSIFICATION__D:
-        setD(D_EDEFAULT);
-        return;
       case SMLPackage.CLASSIFICATION__DROP:
         setDrop(DROP_EDEFAULT);
+        return;
+      case SMLPackage.CLASSIFICATION__D:
+        setD(D_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -208,10 +208,10 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case SMLPackage.CLASSIFICATION__D:
-        return D_EDEFAULT == null ? d != null : !D_EDEFAULT.equals(d);
       case SMLPackage.CLASSIFICATION__DROP:
         return DROP_EDEFAULT == null ? drop != null : !DROP_EDEFAULT.equals(drop);
+      case SMLPackage.CLASSIFICATION__D:
+        return D_EDEFAULT == null ? d != null : !D_EDEFAULT.equals(d);
     }
     return super.eIsSet(featureID);
   }
@@ -227,10 +227,10 @@ public class ClassificationImpl extends MinimalEObjectImpl.Container implements 
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (d: ");
-    result.append(d);
-    result.append(", drop: ");
+    result.append(" (drop: ");
     result.append(drop);
+    result.append(", d: ");
+    result.append(d);
     result.append(')');
     return result.toString();
   }

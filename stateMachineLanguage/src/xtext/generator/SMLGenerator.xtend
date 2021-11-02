@@ -288,9 +288,6 @@ class SMLGenerator extends AbstractGenerator {
 		}else{
 			string_inter += unitGlobalPooling(inter.fg.gp, gestionWay.current)
 		}
-		
-		if(inter.drop !== null)
-			string_inter += unitDropout(gestionWay.current)
 			
 		return string_inter
 	}

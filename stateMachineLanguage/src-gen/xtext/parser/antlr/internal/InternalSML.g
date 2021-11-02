@@ -564,43 +564,22 @@ ruleInterstice returns [EObject current=null]
 }:
 	(
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0_0());
+			{
+				newCompositeNode(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0());
+			}
+			lv_fg_0_0=ruleFlattenOrGlobal
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getIntersticeRule());
 				}
-				lv_fg_0_0=ruleFlattenOrGlobal
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getIntersticeRule());
-					}
-					set(
-						$current,
-						"fg",
-						lv_fg_0_0,
-						"xtext.SML.FlattenOrGlobal");
-					afterParserOrEnumRuleCall();
-				}
-			)
+				set(
+					$current,
+					"fg",
+					lv_fg_0_0,
+					"xtext.SML.FlattenOrGlobal");
+				afterParserOrEnumRuleCall();
+			}
 		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getIntersticeAccess().getDropDropoutParserRuleCall_1_0());
-				}
-				lv_drop_1_0=ruleDropout
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getIntersticeRule());
-					}
-					set(
-						$current,
-						"drop",
-						lv_drop_1_0,
-						"xtext.SML.Dropout");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
 	)
 ;
 
@@ -622,24 +601,10 @@ ruleClassification returns [EObject current=null]
 	(
 		(
 			(
-				lv_d_0_0='dense'
 				{
-					newLeafNode(lv_d_0_0, grammarAccess.getClassificationAccess().getDDenseKeyword_0_0());
+					newCompositeNode(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_0_0());
 				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getClassificationRule());
-					}
-					setWithLastConsumed($current, "d", lv_d_0_0, "dense");
-				}
-			)
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_1_0());
-				}
-				lv_drop_1_0=ruleDropout
+				lv_drop_0_0=ruleDropout
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getClassificationRule());
@@ -647,12 +612,26 @@ ruleClassification returns [EObject current=null]
 					set(
 						$current,
 						"drop",
-						lv_drop_1_0,
+						lv_drop_0_0,
 						"xtext.SML.Dropout");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
+		(
+			(
+				lv_d_1_0='dense'
+				{
+					newLeafNode(lv_d_1_0, grammarAccess.getClassificationAccess().getDDenseKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getClassificationRule());
+					}
+					setWithLastConsumed($current, "d", lv_d_1_0, "dense");
+				}
+			)
+		)
 	)
 ;
 

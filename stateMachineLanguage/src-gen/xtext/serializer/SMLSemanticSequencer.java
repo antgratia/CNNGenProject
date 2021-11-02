@@ -113,7 +113,7 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Classification returns Classification
 	 *
 	 * Constraint:
-	 *     (d='dense' drop=Dropout?)
+	 *     (drop=Dropout? d='dense')
 	 */
 	protected void sequence_Classification(ISerializationContext context, Classification semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -185,10 +185,16 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Interstice returns Interstice
 	 *
 	 * Constraint:
-	 *     (fg=FlattenOrGlobal drop=Dropout?)
+	 *     fg=FlattenOrGlobal
 	 */
 	protected void sequence_Interstice(ISerializationContext context, Interstice semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.INTERSTICE__FG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.INTERSTICE__FG));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0(), semanticObject.getFg());
+		feeder.finish();
 	}
 	
 	

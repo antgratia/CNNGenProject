@@ -407,17 +407,6 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getInterstice_Drop()
-  {
-    return (EAttribute)intersticeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getClassification()
   {
     return classificationEClass;
@@ -429,7 +418,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getClassification_D()
+  public EAttribute getClassification_Drop()
   {
     return (EAttribute)classificationEClass.getEStructuralFeatures().get(0);
   }
@@ -440,7 +429,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getClassification_Drop()
+  public EAttribute getClassification_D()
   {
     return (EAttribute)classificationEClass.getEStructuralFeatures().get(1);
   }
@@ -949,11 +938,10 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
 
     intersticeEClass = createEClass(INTERSTICE);
     createEReference(intersticeEClass, INTERSTICE__FG);
-    createEAttribute(intersticeEClass, INTERSTICE__DROP);
 
     classificationEClass = createEClass(CLASSIFICATION);
-    createEAttribute(classificationEClass, CLASSIFICATION__D);
     createEAttribute(classificationEClass, CLASSIFICATION__DROP);
+    createEAttribute(classificationEClass, CLASSIFICATION__D);
 
     convDropEClass = createEClass(CONV_DROP);
     createEReference(convDropEClass, CONV_DROP__CONV);
@@ -1059,11 +1047,10 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
 
     initEClass(intersticeEClass, Interstice.class, "Interstice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInterstice_Fg(), this.getFlattenOrGlobal(), null, "fg", null, 0, 1, Interstice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInterstice_Drop(), ecorePackage.getEString(), "drop", null, 0, 1, Interstice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classificationEClass, Classification.class, "Classification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getClassification_D(), ecorePackage.getEString(), "d", null, 0, 1, Classification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClassification_Drop(), ecorePackage.getEString(), "drop", null, 0, 1, Classification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClassification_D(), ecorePackage.getEString(), "d", null, 0, 1, Classification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(convDropEClass, ConvDrop.class, "ConvDrop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConvDrop_Conv(), this.getConvolution(), null, "conv", null, 0, 1, ConvDrop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

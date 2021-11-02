@@ -14,8 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.Classification#getD <em>D</em>}</li>
  *   <li>{@link xtext.sML.Classification#getDrop <em>Drop</em>}</li>
+ *   <li>{@link xtext.sML.Classification#getD <em>D</em>}</li>
  * </ul>
  *
  * @see xtext.sML.SMLPackage#getClassification()
@@ -24,28 +24,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Classification extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>D</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>D</em>' attribute.
-   * @see #setD(String)
-   * @see xtext.sML.SMLPackage#getClassification_D()
-   * @model
-   * @generated
-   */
-  String getD();
-
-  /**
-   * Sets the value of the '{@link xtext.sML.Classification#getD <em>D</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>D</em>' attribute.
-   * @see #getD()
-   * @generated
-   */
-  void setD(String value);
-
   /**
    * Returns the value of the '<em><b>Drop</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -67,5 +45,27 @@ public interface Classification extends EObject
    * @generated
    */
   void setDrop(String value);
+
+  /**
+   * Returns the value of the '<em><b>D</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>D</em>' attribute.
+   * @see #setD(String)
+   * @see xtext.sML.SMLPackage#getClassification_D()
+   * @model
+   * @generated
+   */
+  String getD();
+
+  /**
+   * Sets the value of the '{@link xtext.sML.Classification#getD <em>D</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>D</em>' attribute.
+   * @see #getD()
+   * @generated
+   */
+  void setD(String value);
 
 } // Classification

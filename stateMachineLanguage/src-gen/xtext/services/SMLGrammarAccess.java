@@ -280,55 +280,43 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	public class IntersticeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Interstice");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cFgAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cFgFlattenOrGlobalParserRuleCall_0_0 = (RuleCall)cFgAssignment_0.eContents().get(0);
-		private final Assignment cDropAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cDropDropoutParserRuleCall_1_0 = (RuleCall)cDropAssignment_1.eContents().get(0);
+		private final Assignment cFgAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cFgFlattenOrGlobalParserRuleCall_0 = (RuleCall)cFgAssignment.eContents().get(0);
 		
-		//Interstice: fg = (FlattenOrGlobal) drop = (Dropout)?;
+		//Interstice: fg = (FlattenOrGlobal);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//fg = (FlattenOrGlobal) drop = (Dropout)?
-		public Group getGroup() { return cGroup; }
-		
 		//fg = (FlattenOrGlobal)
-		public Assignment getFgAssignment_0() { return cFgAssignment_0; }
+		public Assignment getFgAssignment() { return cFgAssignment; }
 		
 		//(FlattenOrGlobal)
-		public RuleCall getFgFlattenOrGlobalParserRuleCall_0_0() { return cFgFlattenOrGlobalParserRuleCall_0_0; }
-		
-		//drop = (Dropout)?
-		public Assignment getDropAssignment_1() { return cDropAssignment_1; }
-		
-		//(Dropout)
-		public RuleCall getDropDropoutParserRuleCall_1_0() { return cDropDropoutParserRuleCall_1_0; }
+		public RuleCall getFgFlattenOrGlobalParserRuleCall_0() { return cFgFlattenOrGlobalParserRuleCall_0; }
 	}
 	public class ClassificationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Classification");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cDAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cDDenseKeyword_0_0 = (Keyword)cDAssignment_0.eContents().get(0);
-		private final Assignment cDropAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cDropDropoutParserRuleCall_1_0 = (RuleCall)cDropAssignment_1.eContents().get(0);
+		private final Assignment cDropAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cDropDropoutParserRuleCall_0_0 = (RuleCall)cDropAssignment_0.eContents().get(0);
+		private final Assignment cDAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cDDenseKeyword_1_0 = (Keyword)cDAssignment_1.eContents().get(0);
 		
-		//Classification: d=('dense') drop =(Dropout)?;
+		//Classification: drop =(Dropout)? d=('dense') ;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//d=('dense') drop =(Dropout)?
+		//drop =(Dropout)? d=('dense')
 		public Group getGroup() { return cGroup; }
 		
-		//d=('dense')
-		public Assignment getDAssignment_0() { return cDAssignment_0; }
-		
-		//('dense')
-		public Keyword getDDenseKeyword_0_0() { return cDDenseKeyword_0_0; }
-		
 		//drop =(Dropout)?
-		public Assignment getDropAssignment_1() { return cDropAssignment_1; }
+		public Assignment getDropAssignment_0() { return cDropAssignment_0; }
 		
 		//(Dropout)
-		public RuleCall getDropDropoutParserRuleCall_1_0() { return cDropDropoutParserRuleCall_1_0; }
+		public RuleCall getDropDropoutParserRuleCall_0_0() { return cDropDropoutParserRuleCall_0_0; }
+		
+		//d=('dense')
+		public Assignment getDAssignment_1() { return cDAssignment_1; }
+		
+		//('dense')
+		public Keyword getDDenseKeyword_1_0() { return cDDenseKeyword_1_0; }
 	}
 	public class ConvDropElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.ConvDrop");
@@ -896,7 +884,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getFlattenOrGlobalAccess().getRule();
 	}
 	
-	//Interstice: fg = (FlattenOrGlobal) drop = (Dropout)?;
+	//Interstice: fg = (FlattenOrGlobal);
 	public IntersticeElements getIntersticeAccess() {
 		return pInterstice;
 	}
@@ -905,7 +893,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getIntersticeAccess().getRule();
 	}
 	
-	//Classification: d=('dense') drop =(Dropout)?;
+	//Classification: drop =(Dropout)? d=('dense') ;
 	public ClassificationElements getClassificationAccess() {
 		return pClassification;
 	}

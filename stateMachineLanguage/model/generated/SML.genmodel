@@ -28,11 +28,10 @@
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//Interstice">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Interstice/fg"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Interstice/drop"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//Classification">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Classification/d"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Classification/drop"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Classification/d"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//ConvDrop">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//ConvDrop/conv"/>

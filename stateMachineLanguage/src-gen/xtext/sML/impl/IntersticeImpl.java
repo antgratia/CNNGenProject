@@ -25,7 +25,6 @@ import xtext.sML.SMLPackage;
  * </p>
  * <ul>
  *   <li>{@link xtext.sML.impl.IntersticeImpl#getFg <em>Fg</em>}</li>
- *   <li>{@link xtext.sML.impl.IntersticeImpl#getDrop <em>Drop</em>}</li>
  * </ul>
  *
  * @generated
@@ -41,26 +40,6 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
    * @ordered
    */
   protected FlattenOrGlobal fg;
-
-  /**
-   * The default value of the '{@link #getDrop() <em>Drop</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDrop()
-   * @generated
-   * @ordered
-   */
-  protected static final String DROP_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getDrop() <em>Drop</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDrop()
-   * @generated
-   * @ordered
-   */
-  protected String drop = DROP_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -139,31 +118,6 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
    * @generated
    */
   @Override
-  public String getDrop()
-  {
-    return drop;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setDrop(String newDrop)
-  {
-    String oldDrop = drop;
-    drop = newDrop;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.INTERSTICE__DROP, oldDrop, drop));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -186,8 +140,6 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
     {
       case SMLPackage.INTERSTICE__FG:
         return getFg();
-      case SMLPackage.INTERSTICE__DROP:
-        return getDrop();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -204,9 +156,6 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
     {
       case SMLPackage.INTERSTICE__FG:
         setFg((FlattenOrGlobal)newValue);
-        return;
-      case SMLPackage.INTERSTICE__DROP:
-        setDrop((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -225,9 +174,6 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
       case SMLPackage.INTERSTICE__FG:
         setFg((FlattenOrGlobal)null);
         return;
-      case SMLPackage.INTERSTICE__DROP:
-        setDrop(DROP_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -244,27 +190,8 @@ public class IntersticeImpl extends MinimalEObjectImpl.Container implements Inte
     {
       case SMLPackage.INTERSTICE__FG:
         return fg != null;
-      case SMLPackage.INTERSTICE__DROP:
-        return DROP_EDEFAULT == null ? drop != null : !DROP_EDEFAULT.equals(drop);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (drop: ");
-    result.append(drop);
-    result.append(')');
-    return result.toString();
   }
 
 } //IntersticeImpl

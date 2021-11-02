@@ -935,31 +935,31 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleInterstice"
-    // InternalSML.g:337:1: ruleInterstice : ( ( rule__Interstice__Group__0 ) ) ;
+    // InternalSML.g:337:1: ruleInterstice : ( ( rule__Interstice__FgAssignment ) ) ;
     public final void ruleInterstice() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:341:2: ( ( ( rule__Interstice__Group__0 ) ) )
-            // InternalSML.g:342:2: ( ( rule__Interstice__Group__0 ) )
+            // InternalSML.g:341:2: ( ( ( rule__Interstice__FgAssignment ) ) )
+            // InternalSML.g:342:2: ( ( rule__Interstice__FgAssignment ) )
             {
-            // InternalSML.g:342:2: ( ( rule__Interstice__Group__0 ) )
-            // InternalSML.g:343:3: ( rule__Interstice__Group__0 )
+            // InternalSML.g:342:2: ( ( rule__Interstice__FgAssignment ) )
+            // InternalSML.g:343:3: ( rule__Interstice__FgAssignment )
             {
-             before(grammarAccess.getIntersticeAccess().getGroup()); 
-            // InternalSML.g:344:3: ( rule__Interstice__Group__0 )
-            // InternalSML.g:344:4: rule__Interstice__Group__0
+             before(grammarAccess.getIntersticeAccess().getFgAssignment()); 
+            // InternalSML.g:344:3: ( rule__Interstice__FgAssignment )
+            // InternalSML.g:344:4: rule__Interstice__FgAssignment
             {
             pushFollow(FOLLOW_2);
-            rule__Interstice__Group__0();
+            rule__Interstice__FgAssignment();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getIntersticeAccess().getGroup()); 
+             after(grammarAccess.getIntersticeAccess().getFgAssignment()); 
 
             }
 
@@ -2989,7 +2989,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
                 int alt11=2;
                 int LA11_0 = input.LA(1);
 
-                if ( (LA11_0==29) ) {
+                if ( (LA11_0==11||LA11_0==29) ) {
                     alt11=1;
                 }
 
@@ -3624,193 +3624,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ConvBn__Group__3__Impl"
 
 
-    // $ANTLR start "rule__Interstice__Group__0"
-    // InternalSML.g:1159:1: rule__Interstice__Group__0 : rule__Interstice__Group__0__Impl rule__Interstice__Group__1 ;
-    public final void rule__Interstice__Group__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSML.g:1163:1: ( rule__Interstice__Group__0__Impl rule__Interstice__Group__1 )
-            // InternalSML.g:1164:2: rule__Interstice__Group__0__Impl rule__Interstice__Group__1
-            {
-            pushFollow(FOLLOW_12);
-            rule__Interstice__Group__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_2);
-            rule__Interstice__Group__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Interstice__Group__0"
-
-
-    // $ANTLR start "rule__Interstice__Group__0__Impl"
-    // InternalSML.g:1171:1: rule__Interstice__Group__0__Impl : ( ( rule__Interstice__FgAssignment_0 ) ) ;
-    public final void rule__Interstice__Group__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSML.g:1175:1: ( ( ( rule__Interstice__FgAssignment_0 ) ) )
-            // InternalSML.g:1176:1: ( ( rule__Interstice__FgAssignment_0 ) )
-            {
-            // InternalSML.g:1176:1: ( ( rule__Interstice__FgAssignment_0 ) )
-            // InternalSML.g:1177:2: ( rule__Interstice__FgAssignment_0 )
-            {
-             before(grammarAccess.getIntersticeAccess().getFgAssignment_0()); 
-            // InternalSML.g:1178:2: ( rule__Interstice__FgAssignment_0 )
-            // InternalSML.g:1178:3: rule__Interstice__FgAssignment_0
-            {
-            pushFollow(FOLLOW_2);
-            rule__Interstice__FgAssignment_0();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getIntersticeAccess().getFgAssignment_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Interstice__Group__0__Impl"
-
-
-    // $ANTLR start "rule__Interstice__Group__1"
-    // InternalSML.g:1186:1: rule__Interstice__Group__1 : rule__Interstice__Group__1__Impl ;
-    public final void rule__Interstice__Group__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSML.g:1190:1: ( rule__Interstice__Group__1__Impl )
-            // InternalSML.g:1191:2: rule__Interstice__Group__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__Interstice__Group__1__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Interstice__Group__1"
-
-
-    // $ANTLR start "rule__Interstice__Group__1__Impl"
-    // InternalSML.g:1197:1: rule__Interstice__Group__1__Impl : ( ( rule__Interstice__DropAssignment_1 )? ) ;
-    public final void rule__Interstice__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSML.g:1201:1: ( ( ( rule__Interstice__DropAssignment_1 )? ) )
-            // InternalSML.g:1202:1: ( ( rule__Interstice__DropAssignment_1 )? )
-            {
-            // InternalSML.g:1202:1: ( ( rule__Interstice__DropAssignment_1 )? )
-            // InternalSML.g:1203:2: ( rule__Interstice__DropAssignment_1 )?
-            {
-             before(grammarAccess.getIntersticeAccess().getDropAssignment_1()); 
-            // InternalSML.g:1204:2: ( rule__Interstice__DropAssignment_1 )?
-            int alt12=2;
-            int LA12_0 = input.LA(1);
-
-            if ( (LA12_0==11) ) {
-                alt12=1;
-            }
-            switch (alt12) {
-                case 1 :
-                    // InternalSML.g:1204:3: rule__Interstice__DropAssignment_1
-                    {
-                    pushFollow(FOLLOW_2);
-                    rule__Interstice__DropAssignment_1();
-
-                    state._fsp--;
-
-
-                    }
-                    break;
-
-            }
-
-             after(grammarAccess.getIntersticeAccess().getDropAssignment_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Interstice__Group__1__Impl"
-
-
     // $ANTLR start "rule__Classification__Group__0"
-    // InternalSML.g:1213:1: rule__Classification__Group__0 : rule__Classification__Group__0__Impl rule__Classification__Group__1 ;
+    // InternalSML.g:1159:1: rule__Classification__Group__0 : rule__Classification__Group__0__Impl rule__Classification__Group__1 ;
     public final void rule__Classification__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1217:1: ( rule__Classification__Group__0__Impl rule__Classification__Group__1 )
-            // InternalSML.g:1218:2: rule__Classification__Group__0__Impl rule__Classification__Group__1
+            // InternalSML.g:1163:1: ( rule__Classification__Group__0__Impl rule__Classification__Group__1 )
+            // InternalSML.g:1164:2: rule__Classification__Group__0__Impl rule__Classification__Group__1
             {
-            pushFollow(FOLLOW_12);
+            pushFollow(FOLLOW_7);
             rule__Classification__Group__0__Impl();
 
             state._fsp--;
@@ -3839,31 +3663,42 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Classification__Group__0__Impl"
-    // InternalSML.g:1225:1: rule__Classification__Group__0__Impl : ( ( rule__Classification__DAssignment_0 ) ) ;
+    // InternalSML.g:1171:1: rule__Classification__Group__0__Impl : ( ( rule__Classification__DropAssignment_0 )? ) ;
     public final void rule__Classification__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1229:1: ( ( ( rule__Classification__DAssignment_0 ) ) )
-            // InternalSML.g:1230:1: ( ( rule__Classification__DAssignment_0 ) )
+            // InternalSML.g:1175:1: ( ( ( rule__Classification__DropAssignment_0 )? ) )
+            // InternalSML.g:1176:1: ( ( rule__Classification__DropAssignment_0 )? )
             {
-            // InternalSML.g:1230:1: ( ( rule__Classification__DAssignment_0 ) )
-            // InternalSML.g:1231:2: ( rule__Classification__DAssignment_0 )
+            // InternalSML.g:1176:1: ( ( rule__Classification__DropAssignment_0 )? )
+            // InternalSML.g:1177:2: ( rule__Classification__DropAssignment_0 )?
             {
-             before(grammarAccess.getClassificationAccess().getDAssignment_0()); 
-            // InternalSML.g:1232:2: ( rule__Classification__DAssignment_0 )
-            // InternalSML.g:1232:3: rule__Classification__DAssignment_0
-            {
-            pushFollow(FOLLOW_2);
-            rule__Classification__DAssignment_0();
+             before(grammarAccess.getClassificationAccess().getDropAssignment_0()); 
+            // InternalSML.g:1178:2: ( rule__Classification__DropAssignment_0 )?
+            int alt12=2;
+            int LA12_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA12_0==11) ) {
+                alt12=1;
+            }
+            switch (alt12) {
+                case 1 :
+                    // InternalSML.g:1178:3: rule__Classification__DropAssignment_0
+                    {
+                    pushFollow(FOLLOW_2);
+                    rule__Classification__DropAssignment_0();
 
+                    state._fsp--;
+
+
+                    }
+                    break;
 
             }
 
-             after(grammarAccess.getClassificationAccess().getDAssignment_0()); 
+             after(grammarAccess.getClassificationAccess().getDropAssignment_0()); 
 
             }
 
@@ -3886,14 +3721,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Classification__Group__1"
-    // InternalSML.g:1240:1: rule__Classification__Group__1 : rule__Classification__Group__1__Impl ;
+    // InternalSML.g:1186:1: rule__Classification__Group__1 : rule__Classification__Group__1__Impl ;
     public final void rule__Classification__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1244:1: ( rule__Classification__Group__1__Impl )
-            // InternalSML.g:1245:2: rule__Classification__Group__1__Impl
+            // InternalSML.g:1190:1: ( rule__Classification__Group__1__Impl )
+            // InternalSML.g:1191:2: rule__Classification__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Classification__Group__1__Impl();
@@ -3919,42 +3754,31 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Classification__Group__1__Impl"
-    // InternalSML.g:1251:1: rule__Classification__Group__1__Impl : ( ( rule__Classification__DropAssignment_1 )? ) ;
+    // InternalSML.g:1197:1: rule__Classification__Group__1__Impl : ( ( rule__Classification__DAssignment_1 ) ) ;
     public final void rule__Classification__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1255:1: ( ( ( rule__Classification__DropAssignment_1 )? ) )
-            // InternalSML.g:1256:1: ( ( rule__Classification__DropAssignment_1 )? )
+            // InternalSML.g:1201:1: ( ( ( rule__Classification__DAssignment_1 ) ) )
+            // InternalSML.g:1202:1: ( ( rule__Classification__DAssignment_1 ) )
             {
-            // InternalSML.g:1256:1: ( ( rule__Classification__DropAssignment_1 )? )
-            // InternalSML.g:1257:2: ( rule__Classification__DropAssignment_1 )?
+            // InternalSML.g:1202:1: ( ( rule__Classification__DAssignment_1 ) )
+            // InternalSML.g:1203:2: ( rule__Classification__DAssignment_1 )
             {
-             before(grammarAccess.getClassificationAccess().getDropAssignment_1()); 
-            // InternalSML.g:1258:2: ( rule__Classification__DropAssignment_1 )?
-            int alt13=2;
-            int LA13_0 = input.LA(1);
+             before(grammarAccess.getClassificationAccess().getDAssignment_1()); 
+            // InternalSML.g:1204:2: ( rule__Classification__DAssignment_1 )
+            // InternalSML.g:1204:3: rule__Classification__DAssignment_1
+            {
+            pushFollow(FOLLOW_2);
+            rule__Classification__DAssignment_1();
 
-            if ( (LA13_0==11) ) {
-                alt13=1;
-            }
-            switch (alt13) {
-                case 1 :
-                    // InternalSML.g:1258:3: rule__Classification__DropAssignment_1
-                    {
-                    pushFollow(FOLLOW_2);
-                    rule__Classification__DropAssignment_1();
+            state._fsp--;
 
-                    state._fsp--;
-
-
-                    }
-                    break;
 
             }
 
-             after(grammarAccess.getClassificationAccess().getDropAssignment_1()); 
+             after(grammarAccess.getClassificationAccess().getDAssignment_1()); 
 
             }
 
@@ -3977,14 +3801,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConvDrop__Group__0"
-    // InternalSML.g:1267:1: rule__ConvDrop__Group__0 : rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1 ;
+    // InternalSML.g:1213:1: rule__ConvDrop__Group__0 : rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1 ;
     public final void rule__ConvDrop__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1271:1: ( rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1 )
-            // InternalSML.g:1272:2: rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1
+            // InternalSML.g:1217:1: ( rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1 )
+            // InternalSML.g:1218:2: rule__ConvDrop__Group__0__Impl rule__ConvDrop__Group__1
             {
             pushFollow(FOLLOW_12);
             rule__ConvDrop__Group__0__Impl();
@@ -4015,21 +3839,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConvDrop__Group__0__Impl"
-    // InternalSML.g:1279:1: rule__ConvDrop__Group__0__Impl : ( ( rule__ConvDrop__ConvAssignment_0 ) ) ;
+    // InternalSML.g:1225:1: rule__ConvDrop__Group__0__Impl : ( ( rule__ConvDrop__ConvAssignment_0 ) ) ;
     public final void rule__ConvDrop__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1283:1: ( ( ( rule__ConvDrop__ConvAssignment_0 ) ) )
-            // InternalSML.g:1284:1: ( ( rule__ConvDrop__ConvAssignment_0 ) )
+            // InternalSML.g:1229:1: ( ( ( rule__ConvDrop__ConvAssignment_0 ) ) )
+            // InternalSML.g:1230:1: ( ( rule__ConvDrop__ConvAssignment_0 ) )
             {
-            // InternalSML.g:1284:1: ( ( rule__ConvDrop__ConvAssignment_0 ) )
-            // InternalSML.g:1285:2: ( rule__ConvDrop__ConvAssignment_0 )
+            // InternalSML.g:1230:1: ( ( rule__ConvDrop__ConvAssignment_0 ) )
+            // InternalSML.g:1231:2: ( rule__ConvDrop__ConvAssignment_0 )
             {
              before(grammarAccess.getConvDropAccess().getConvAssignment_0()); 
-            // InternalSML.g:1286:2: ( rule__ConvDrop__ConvAssignment_0 )
-            // InternalSML.g:1286:3: rule__ConvDrop__ConvAssignment_0
+            // InternalSML.g:1232:2: ( rule__ConvDrop__ConvAssignment_0 )
+            // InternalSML.g:1232:3: rule__ConvDrop__ConvAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__ConvDrop__ConvAssignment_0();
@@ -4062,14 +3886,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConvDrop__Group__1"
-    // InternalSML.g:1294:1: rule__ConvDrop__Group__1 : rule__ConvDrop__Group__1__Impl ;
+    // InternalSML.g:1240:1: rule__ConvDrop__Group__1 : rule__ConvDrop__Group__1__Impl ;
     public final void rule__ConvDrop__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1298:1: ( rule__ConvDrop__Group__1__Impl )
-            // InternalSML.g:1299:2: rule__ConvDrop__Group__1__Impl
+            // InternalSML.g:1244:1: ( rule__ConvDrop__Group__1__Impl )
+            // InternalSML.g:1245:2: rule__ConvDrop__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ConvDrop__Group__1__Impl();
@@ -4095,29 +3919,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConvDrop__Group__1__Impl"
-    // InternalSML.g:1305:1: rule__ConvDrop__Group__1__Impl : ( ( rule__ConvDrop__DropAssignment_1 )? ) ;
+    // InternalSML.g:1251:1: rule__ConvDrop__Group__1__Impl : ( ( rule__ConvDrop__DropAssignment_1 )? ) ;
     public final void rule__ConvDrop__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1309:1: ( ( ( rule__ConvDrop__DropAssignment_1 )? ) )
-            // InternalSML.g:1310:1: ( ( rule__ConvDrop__DropAssignment_1 )? )
+            // InternalSML.g:1255:1: ( ( ( rule__ConvDrop__DropAssignment_1 )? ) )
+            // InternalSML.g:1256:1: ( ( rule__ConvDrop__DropAssignment_1 )? )
             {
-            // InternalSML.g:1310:1: ( ( rule__ConvDrop__DropAssignment_1 )? )
-            // InternalSML.g:1311:2: ( rule__ConvDrop__DropAssignment_1 )?
+            // InternalSML.g:1256:1: ( ( rule__ConvDrop__DropAssignment_1 )? )
+            // InternalSML.g:1257:2: ( rule__ConvDrop__DropAssignment_1 )?
             {
              before(grammarAccess.getConvDropAccess().getDropAssignment_1()); 
-            // InternalSML.g:1312:2: ( rule__ConvDrop__DropAssignment_1 )?
-            int alt14=2;
-            int LA14_0 = input.LA(1);
+            // InternalSML.g:1258:2: ( rule__ConvDrop__DropAssignment_1 )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA14_0==11) ) {
-                alt14=1;
+            if ( (LA13_0==11) ) {
+                alt13=1;
             }
-            switch (alt14) {
+            switch (alt13) {
                 case 1 :
-                    // InternalSML.g:1312:3: rule__ConvDrop__DropAssignment_1
+                    // InternalSML.g:1258:3: rule__ConvDrop__DropAssignment_1
                     {
                     pushFollow(FOLLOW_2);
                     rule__ConvDrop__DropAssignment_1();
@@ -4153,14 +3977,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__0"
-    // InternalSML.g:1321:1: rule__LeftRecu__Group__0 : rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1 ;
+    // InternalSML.g:1267:1: rule__LeftRecu__Group__0 : rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1 ;
     public final void rule__LeftRecu__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1325:1: ( rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1 )
-            // InternalSML.g:1326:2: rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1
+            // InternalSML.g:1271:1: ( rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1 )
+            // InternalSML.g:1272:2: rule__LeftRecu__Group__0__Impl rule__LeftRecu__Group__1
             {
             pushFollow(FOLLOW_4);
             rule__LeftRecu__Group__0__Impl();
@@ -4191,29 +4015,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__0__Impl"
-    // InternalSML.g:1333:1: rule__LeftRecu__Group__0__Impl : ( ( rule__LeftRecu__PAssignment_0 )? ) ;
+    // InternalSML.g:1279:1: rule__LeftRecu__Group__0__Impl : ( ( rule__LeftRecu__PAssignment_0 )? ) ;
     public final void rule__LeftRecu__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1337:1: ( ( ( rule__LeftRecu__PAssignment_0 )? ) )
-            // InternalSML.g:1338:1: ( ( rule__LeftRecu__PAssignment_0 )? )
+            // InternalSML.g:1283:1: ( ( ( rule__LeftRecu__PAssignment_0 )? ) )
+            // InternalSML.g:1284:1: ( ( rule__LeftRecu__PAssignment_0 )? )
             {
-            // InternalSML.g:1338:1: ( ( rule__LeftRecu__PAssignment_0 )? )
-            // InternalSML.g:1339:2: ( rule__LeftRecu__PAssignment_0 )?
+            // InternalSML.g:1284:1: ( ( rule__LeftRecu__PAssignment_0 )? )
+            // InternalSML.g:1285:2: ( rule__LeftRecu__PAssignment_0 )?
             {
              before(grammarAccess.getLeftRecuAccess().getPAssignment_0()); 
-            // InternalSML.g:1340:2: ( rule__LeftRecu__PAssignment_0 )?
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // InternalSML.g:1286:2: ( rule__LeftRecu__PAssignment_0 )?
+            int alt14=2;
+            int LA14_0 = input.LA(1);
 
-            if ( ((LA15_0>=14 && LA15_0<=15)) ) {
-                alt15=1;
+            if ( ((LA14_0>=14 && LA14_0<=15)) ) {
+                alt14=1;
             }
-            switch (alt15) {
+            switch (alt14) {
                 case 1 :
-                    // InternalSML.g:1340:3: rule__LeftRecu__PAssignment_0
+                    // InternalSML.g:1286:3: rule__LeftRecu__PAssignment_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__LeftRecu__PAssignment_0();
@@ -4249,14 +4073,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__1"
-    // InternalSML.g:1348:1: rule__LeftRecu__Group__1 : rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2 ;
+    // InternalSML.g:1294:1: rule__LeftRecu__Group__1 : rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2 ;
     public final void rule__LeftRecu__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1352:1: ( rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2 )
-            // InternalSML.g:1353:2: rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2
+            // InternalSML.g:1298:1: ( rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2 )
+            // InternalSML.g:1299:2: rule__LeftRecu__Group__1__Impl rule__LeftRecu__Group__2
             {
             pushFollow(FOLLOW_4);
             rule__LeftRecu__Group__1__Impl();
@@ -4287,33 +4111,33 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__1__Impl"
-    // InternalSML.g:1360:1: rule__LeftRecu__Group__1__Impl : ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* ) ;
+    // InternalSML.g:1306:1: rule__LeftRecu__Group__1__Impl : ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* ) ;
     public final void rule__LeftRecu__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1364:1: ( ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* ) )
-            // InternalSML.g:1365:1: ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* )
+            // InternalSML.g:1310:1: ( ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* ) )
+            // InternalSML.g:1311:1: ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* )
             {
-            // InternalSML.g:1365:1: ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* )
-            // InternalSML.g:1366:2: ( rule__LeftRecu__ConvdropbeginAssignment_1 )*
+            // InternalSML.g:1311:1: ( ( rule__LeftRecu__ConvdropbeginAssignment_1 )* )
+            // InternalSML.g:1312:2: ( rule__LeftRecu__ConvdropbeginAssignment_1 )*
             {
              before(grammarAccess.getLeftRecuAccess().getConvdropbeginAssignment_1()); 
-            // InternalSML.g:1367:2: ( rule__LeftRecu__ConvdropbeginAssignment_1 )*
-            loop16:
+            // InternalSML.g:1313:2: ( rule__LeftRecu__ConvdropbeginAssignment_1 )*
+            loop15:
             do {
-                int alt16=2;
-                int LA16_0 = input.LA(1);
+                int alt15=2;
+                int LA15_0 = input.LA(1);
 
-                if ( (LA16_0==18||LA16_0==20||LA16_0==27) ) {
-                    alt16=1;
+                if ( (LA15_0==18||LA15_0==20||LA15_0==27) ) {
+                    alt15=1;
                 }
 
 
-                switch (alt16) {
+                switch (alt15) {
             	case 1 :
-            	    // InternalSML.g:1367:3: rule__LeftRecu__ConvdropbeginAssignment_1
+            	    // InternalSML.g:1313:3: rule__LeftRecu__ConvdropbeginAssignment_1
             	    {
             	    pushFollow(FOLLOW_3);
             	    rule__LeftRecu__ConvdropbeginAssignment_1();
@@ -4325,7 +4149,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop16;
+            	    break loop15;
                 }
             } while (true);
 
@@ -4352,14 +4176,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__2"
-    // InternalSML.g:1375:1: rule__LeftRecu__Group__2 : rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3 ;
+    // InternalSML.g:1321:1: rule__LeftRecu__Group__2 : rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3 ;
     public final void rule__LeftRecu__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1379:1: ( rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3 )
-            // InternalSML.g:1380:2: rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3
+            // InternalSML.g:1325:1: ( rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3 )
+            // InternalSML.g:1326:2: rule__LeftRecu__Group__2__Impl rule__LeftRecu__Group__3
             {
             pushFollow(FOLLOW_13);
             rule__LeftRecu__Group__2__Impl();
@@ -4390,21 +4214,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__2__Impl"
-    // InternalSML.g:1387:1: rule__LeftRecu__Group__2__Impl : ( ( rule__LeftRecu__MergeAssignment_2 ) ) ;
+    // InternalSML.g:1333:1: rule__LeftRecu__Group__2__Impl : ( ( rule__LeftRecu__MergeAssignment_2 ) ) ;
     public final void rule__LeftRecu__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1391:1: ( ( ( rule__LeftRecu__MergeAssignment_2 ) ) )
-            // InternalSML.g:1392:1: ( ( rule__LeftRecu__MergeAssignment_2 ) )
+            // InternalSML.g:1337:1: ( ( ( rule__LeftRecu__MergeAssignment_2 ) ) )
+            // InternalSML.g:1338:1: ( ( rule__LeftRecu__MergeAssignment_2 ) )
             {
-            // InternalSML.g:1392:1: ( ( rule__LeftRecu__MergeAssignment_2 ) )
-            // InternalSML.g:1393:2: ( rule__LeftRecu__MergeAssignment_2 )
+            // InternalSML.g:1338:1: ( ( rule__LeftRecu__MergeAssignment_2 ) )
+            // InternalSML.g:1339:2: ( rule__LeftRecu__MergeAssignment_2 )
             {
              before(grammarAccess.getLeftRecuAccess().getMergeAssignment_2()); 
-            // InternalSML.g:1394:2: ( rule__LeftRecu__MergeAssignment_2 )
-            // InternalSML.g:1394:3: rule__LeftRecu__MergeAssignment_2
+            // InternalSML.g:1340:2: ( rule__LeftRecu__MergeAssignment_2 )
+            // InternalSML.g:1340:3: rule__LeftRecu__MergeAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__LeftRecu__MergeAssignment_2();
@@ -4437,14 +4261,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__3"
-    // InternalSML.g:1402:1: rule__LeftRecu__Group__3 : rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4 ;
+    // InternalSML.g:1348:1: rule__LeftRecu__Group__3 : rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4 ;
     public final void rule__LeftRecu__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1406:1: ( rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4 )
-            // InternalSML.g:1407:2: rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4
+            // InternalSML.g:1352:1: ( rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4 )
+            // InternalSML.g:1353:2: rule__LeftRecu__Group__3__Impl rule__LeftRecu__Group__4
             {
             pushFollow(FOLLOW_13);
             rule__LeftRecu__Group__3__Impl();
@@ -4475,33 +4299,33 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__3__Impl"
-    // InternalSML.g:1414:1: rule__LeftRecu__Group__3__Impl : ( ( rule__LeftRecu__ConvdropendAssignment_3 )* ) ;
+    // InternalSML.g:1360:1: rule__LeftRecu__Group__3__Impl : ( ( rule__LeftRecu__ConvdropendAssignment_3 )* ) ;
     public final void rule__LeftRecu__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1418:1: ( ( ( rule__LeftRecu__ConvdropendAssignment_3 )* ) )
-            // InternalSML.g:1419:1: ( ( rule__LeftRecu__ConvdropendAssignment_3 )* )
+            // InternalSML.g:1364:1: ( ( ( rule__LeftRecu__ConvdropendAssignment_3 )* ) )
+            // InternalSML.g:1365:1: ( ( rule__LeftRecu__ConvdropendAssignment_3 )* )
             {
-            // InternalSML.g:1419:1: ( ( rule__LeftRecu__ConvdropendAssignment_3 )* )
-            // InternalSML.g:1420:2: ( rule__LeftRecu__ConvdropendAssignment_3 )*
+            // InternalSML.g:1365:1: ( ( rule__LeftRecu__ConvdropendAssignment_3 )* )
+            // InternalSML.g:1366:2: ( rule__LeftRecu__ConvdropendAssignment_3 )*
             {
              before(grammarAccess.getLeftRecuAccess().getConvdropendAssignment_3()); 
-            // InternalSML.g:1421:2: ( rule__LeftRecu__ConvdropendAssignment_3 )*
-            loop17:
+            // InternalSML.g:1367:2: ( rule__LeftRecu__ConvdropendAssignment_3 )*
+            loop16:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt16=2;
+                int LA16_0 = input.LA(1);
 
-                if ( (LA17_0==18||LA17_0==20||LA17_0==27) ) {
-                    alt17=1;
+                if ( (LA16_0==18||LA16_0==20||LA16_0==27) ) {
+                    alt16=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt16) {
             	case 1 :
-            	    // InternalSML.g:1421:3: rule__LeftRecu__ConvdropendAssignment_3
+            	    // InternalSML.g:1367:3: rule__LeftRecu__ConvdropendAssignment_3
             	    {
             	    pushFollow(FOLLOW_3);
             	    rule__LeftRecu__ConvdropendAssignment_3();
@@ -4513,7 +4337,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop17;
+            	    break loop16;
                 }
             } while (true);
 
@@ -4540,14 +4364,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__4"
-    // InternalSML.g:1429:1: rule__LeftRecu__Group__4 : rule__LeftRecu__Group__4__Impl ;
+    // InternalSML.g:1375:1: rule__LeftRecu__Group__4 : rule__LeftRecu__Group__4__Impl ;
     public final void rule__LeftRecu__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1433:1: ( rule__LeftRecu__Group__4__Impl )
-            // InternalSML.g:1434:2: rule__LeftRecu__Group__4__Impl
+            // InternalSML.g:1379:1: ( rule__LeftRecu__Group__4__Impl )
+            // InternalSML.g:1380:2: rule__LeftRecu__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__LeftRecu__Group__4__Impl();
@@ -4573,29 +4397,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__Group__4__Impl"
-    // InternalSML.g:1440:1: rule__LeftRecu__Group__4__Impl : ( ( rule__LeftRecu__PoolAssignment_4 )? ) ;
+    // InternalSML.g:1386:1: rule__LeftRecu__Group__4__Impl : ( ( rule__LeftRecu__PoolAssignment_4 )? ) ;
     public final void rule__LeftRecu__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1444:1: ( ( ( rule__LeftRecu__PoolAssignment_4 )? ) )
-            // InternalSML.g:1445:1: ( ( rule__LeftRecu__PoolAssignment_4 )? )
+            // InternalSML.g:1390:1: ( ( ( rule__LeftRecu__PoolAssignment_4 )? ) )
+            // InternalSML.g:1391:1: ( ( rule__LeftRecu__PoolAssignment_4 )? )
             {
-            // InternalSML.g:1445:1: ( ( rule__LeftRecu__PoolAssignment_4 )? )
-            // InternalSML.g:1446:2: ( rule__LeftRecu__PoolAssignment_4 )?
+            // InternalSML.g:1391:1: ( ( rule__LeftRecu__PoolAssignment_4 )? )
+            // InternalSML.g:1392:2: ( rule__LeftRecu__PoolAssignment_4 )?
             {
              before(grammarAccess.getLeftRecuAccess().getPoolAssignment_4()); 
-            // InternalSML.g:1447:2: ( rule__LeftRecu__PoolAssignment_4 )?
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // InternalSML.g:1393:2: ( rule__LeftRecu__PoolAssignment_4 )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( ((LA18_0>=14 && LA18_0<=15)) ) {
-                alt18=1;
+            if ( ((LA17_0>=14 && LA17_0<=15)) ) {
+                alt17=1;
             }
-            switch (alt18) {
+            switch (alt17) {
                 case 1 :
-                    // InternalSML.g:1447:3: rule__LeftRecu__PoolAssignment_4
+                    // InternalSML.g:1393:3: rule__LeftRecu__PoolAssignment_4
                     {
                     pushFollow(FOLLOW_2);
                     rule__LeftRecu__PoolAssignment_4();
@@ -4631,14 +4455,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__0"
-    // InternalSML.g:1456:1: rule__MergeRecu__Group__0 : rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1 ;
+    // InternalSML.g:1402:1: rule__MergeRecu__Group__0 : rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1 ;
     public final void rule__MergeRecu__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1460:1: ( rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1 )
-            // InternalSML.g:1461:2: rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1
+            // InternalSML.g:1406:1: ( rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1 )
+            // InternalSML.g:1407:2: rule__MergeRecu__Group__0__Impl rule__MergeRecu__Group__1
             {
             pushFollow(FOLLOW_14);
             rule__MergeRecu__Group__0__Impl();
@@ -4669,21 +4493,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__0__Impl"
-    // InternalSML.g:1468:1: rule__MergeRecu__Group__0__Impl : ( ( rule__MergeRecu__DbAssignment_0 ) ) ;
+    // InternalSML.g:1414:1: rule__MergeRecu__Group__0__Impl : ( ( rule__MergeRecu__DbAssignment_0 ) ) ;
     public final void rule__MergeRecu__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1472:1: ( ( ( rule__MergeRecu__DbAssignment_0 ) ) )
-            // InternalSML.g:1473:1: ( ( rule__MergeRecu__DbAssignment_0 ) )
+            // InternalSML.g:1418:1: ( ( ( rule__MergeRecu__DbAssignment_0 ) ) )
+            // InternalSML.g:1419:1: ( ( rule__MergeRecu__DbAssignment_0 ) )
             {
-            // InternalSML.g:1473:1: ( ( rule__MergeRecu__DbAssignment_0 ) )
-            // InternalSML.g:1474:2: ( rule__MergeRecu__DbAssignment_0 )
+            // InternalSML.g:1419:1: ( ( rule__MergeRecu__DbAssignment_0 ) )
+            // InternalSML.g:1420:2: ( rule__MergeRecu__DbAssignment_0 )
             {
              before(grammarAccess.getMergeRecuAccess().getDbAssignment_0()); 
-            // InternalSML.g:1475:2: ( rule__MergeRecu__DbAssignment_0 )
-            // InternalSML.g:1475:3: rule__MergeRecu__DbAssignment_0
+            // InternalSML.g:1421:2: ( rule__MergeRecu__DbAssignment_0 )
+            // InternalSML.g:1421:3: rule__MergeRecu__DbAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__DbAssignment_0();
@@ -4716,14 +4540,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__1"
-    // InternalSML.g:1483:1: rule__MergeRecu__Group__1 : rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2 ;
+    // InternalSML.g:1429:1: rule__MergeRecu__Group__1 : rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2 ;
     public final void rule__MergeRecu__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1487:1: ( rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2 )
-            // InternalSML.g:1488:2: rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2
+            // InternalSML.g:1433:1: ( rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2 )
+            // InternalSML.g:1434:2: rule__MergeRecu__Group__1__Impl rule__MergeRecu__Group__2
             {
             pushFollow(FOLLOW_15);
             rule__MergeRecu__Group__1__Impl();
@@ -4754,21 +4578,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__1__Impl"
-    // InternalSML.g:1495:1: rule__MergeRecu__Group__1__Impl : ( ( rule__MergeRecu__LeftAssignment_1 ) ) ;
+    // InternalSML.g:1441:1: rule__MergeRecu__Group__1__Impl : ( ( rule__MergeRecu__LeftAssignment_1 ) ) ;
     public final void rule__MergeRecu__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1499:1: ( ( ( rule__MergeRecu__LeftAssignment_1 ) ) )
-            // InternalSML.g:1500:1: ( ( rule__MergeRecu__LeftAssignment_1 ) )
+            // InternalSML.g:1445:1: ( ( ( rule__MergeRecu__LeftAssignment_1 ) ) )
+            // InternalSML.g:1446:1: ( ( rule__MergeRecu__LeftAssignment_1 ) )
             {
-            // InternalSML.g:1500:1: ( ( rule__MergeRecu__LeftAssignment_1 ) )
-            // InternalSML.g:1501:2: ( rule__MergeRecu__LeftAssignment_1 )
+            // InternalSML.g:1446:1: ( ( rule__MergeRecu__LeftAssignment_1 ) )
+            // InternalSML.g:1447:2: ( rule__MergeRecu__LeftAssignment_1 )
             {
              before(grammarAccess.getMergeRecuAccess().getLeftAssignment_1()); 
-            // InternalSML.g:1502:2: ( rule__MergeRecu__LeftAssignment_1 )
-            // InternalSML.g:1502:3: rule__MergeRecu__LeftAssignment_1
+            // InternalSML.g:1448:2: ( rule__MergeRecu__LeftAssignment_1 )
+            // InternalSML.g:1448:3: rule__MergeRecu__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__LeftAssignment_1();
@@ -4801,14 +4625,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__2"
-    // InternalSML.g:1510:1: rule__MergeRecu__Group__2 : rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3 ;
+    // InternalSML.g:1456:1: rule__MergeRecu__Group__2 : rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3 ;
     public final void rule__MergeRecu__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1514:1: ( rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3 )
-            // InternalSML.g:1515:2: rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3
+            // InternalSML.g:1460:1: ( rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3 )
+            // InternalSML.g:1461:2: rule__MergeRecu__Group__2__Impl rule__MergeRecu__Group__3
             {
             pushFollow(FOLLOW_16);
             rule__MergeRecu__Group__2__Impl();
@@ -4839,21 +4663,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__2__Impl"
-    // InternalSML.g:1522:1: rule__MergeRecu__Group__2__Impl : ( ( rule__MergeRecu__VirgAssignment_2 ) ) ;
+    // InternalSML.g:1468:1: rule__MergeRecu__Group__2__Impl : ( ( rule__MergeRecu__VirgAssignment_2 ) ) ;
     public final void rule__MergeRecu__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1526:1: ( ( ( rule__MergeRecu__VirgAssignment_2 ) ) )
-            // InternalSML.g:1527:1: ( ( rule__MergeRecu__VirgAssignment_2 ) )
+            // InternalSML.g:1472:1: ( ( ( rule__MergeRecu__VirgAssignment_2 ) ) )
+            // InternalSML.g:1473:1: ( ( rule__MergeRecu__VirgAssignment_2 ) )
             {
-            // InternalSML.g:1527:1: ( ( rule__MergeRecu__VirgAssignment_2 ) )
-            // InternalSML.g:1528:2: ( rule__MergeRecu__VirgAssignment_2 )
+            // InternalSML.g:1473:1: ( ( rule__MergeRecu__VirgAssignment_2 ) )
+            // InternalSML.g:1474:2: ( rule__MergeRecu__VirgAssignment_2 )
             {
              before(grammarAccess.getMergeRecuAccess().getVirgAssignment_2()); 
-            // InternalSML.g:1529:2: ( rule__MergeRecu__VirgAssignment_2 )
-            // InternalSML.g:1529:3: rule__MergeRecu__VirgAssignment_2
+            // InternalSML.g:1475:2: ( rule__MergeRecu__VirgAssignment_2 )
+            // InternalSML.g:1475:3: rule__MergeRecu__VirgAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__VirgAssignment_2();
@@ -4886,14 +4710,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__3"
-    // InternalSML.g:1537:1: rule__MergeRecu__Group__3 : rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4 ;
+    // InternalSML.g:1483:1: rule__MergeRecu__Group__3 : rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4 ;
     public final void rule__MergeRecu__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1541:1: ( rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4 )
-            // InternalSML.g:1542:2: rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4
+            // InternalSML.g:1487:1: ( rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4 )
+            // InternalSML.g:1488:2: rule__MergeRecu__Group__3__Impl rule__MergeRecu__Group__4
             {
             pushFollow(FOLLOW_17);
             rule__MergeRecu__Group__3__Impl();
@@ -4924,21 +4748,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__3__Impl"
-    // InternalSML.g:1549:1: rule__MergeRecu__Group__3__Impl : ( ( rule__MergeRecu__RightAssignment_3 ) ) ;
+    // InternalSML.g:1495:1: rule__MergeRecu__Group__3__Impl : ( ( rule__MergeRecu__RightAssignment_3 ) ) ;
     public final void rule__MergeRecu__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1553:1: ( ( ( rule__MergeRecu__RightAssignment_3 ) ) )
-            // InternalSML.g:1554:1: ( ( rule__MergeRecu__RightAssignment_3 ) )
+            // InternalSML.g:1499:1: ( ( ( rule__MergeRecu__RightAssignment_3 ) ) )
+            // InternalSML.g:1500:1: ( ( rule__MergeRecu__RightAssignment_3 ) )
             {
-            // InternalSML.g:1554:1: ( ( rule__MergeRecu__RightAssignment_3 ) )
-            // InternalSML.g:1555:2: ( rule__MergeRecu__RightAssignment_3 )
+            // InternalSML.g:1500:1: ( ( rule__MergeRecu__RightAssignment_3 ) )
+            // InternalSML.g:1501:2: ( rule__MergeRecu__RightAssignment_3 )
             {
              before(grammarAccess.getMergeRecuAccess().getRightAssignment_3()); 
-            // InternalSML.g:1556:2: ( rule__MergeRecu__RightAssignment_3 )
-            // InternalSML.g:1556:3: rule__MergeRecu__RightAssignment_3
+            // InternalSML.g:1502:2: ( rule__MergeRecu__RightAssignment_3 )
+            // InternalSML.g:1502:3: rule__MergeRecu__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__RightAssignment_3();
@@ -4971,14 +4795,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__4"
-    // InternalSML.g:1564:1: rule__MergeRecu__Group__4 : rule__MergeRecu__Group__4__Impl ;
+    // InternalSML.g:1510:1: rule__MergeRecu__Group__4 : rule__MergeRecu__Group__4__Impl ;
     public final void rule__MergeRecu__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1568:1: ( rule__MergeRecu__Group__4__Impl )
-            // InternalSML.g:1569:2: rule__MergeRecu__Group__4__Impl
+            // InternalSML.g:1514:1: ( rule__MergeRecu__Group__4__Impl )
+            // InternalSML.g:1515:2: rule__MergeRecu__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__Group__4__Impl();
@@ -5004,21 +4828,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__Group__4__Impl"
-    // InternalSML.g:1575:1: rule__MergeRecu__Group__4__Impl : ( ( rule__MergeRecu__FmAssignment_4 ) ) ;
+    // InternalSML.g:1521:1: rule__MergeRecu__Group__4__Impl : ( ( rule__MergeRecu__FmAssignment_4 ) ) ;
     public final void rule__MergeRecu__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1579:1: ( ( ( rule__MergeRecu__FmAssignment_4 ) ) )
-            // InternalSML.g:1580:1: ( ( rule__MergeRecu__FmAssignment_4 ) )
+            // InternalSML.g:1525:1: ( ( ( rule__MergeRecu__FmAssignment_4 ) ) )
+            // InternalSML.g:1526:1: ( ( rule__MergeRecu__FmAssignment_4 ) )
             {
-            // InternalSML.g:1580:1: ( ( rule__MergeRecu__FmAssignment_4 ) )
-            // InternalSML.g:1581:2: ( rule__MergeRecu__FmAssignment_4 )
+            // InternalSML.g:1526:1: ( ( rule__MergeRecu__FmAssignment_4 ) )
+            // InternalSML.g:1527:2: ( rule__MergeRecu__FmAssignment_4 )
             {
              before(grammarAccess.getMergeRecuAccess().getFmAssignment_4()); 
-            // InternalSML.g:1582:2: ( rule__MergeRecu__FmAssignment_4 )
-            // InternalSML.g:1582:3: rule__MergeRecu__FmAssignment_4
+            // InternalSML.g:1528:2: ( rule__MergeRecu__FmAssignment_4 )
+            // InternalSML.g:1528:3: rule__MergeRecu__FmAssignment_4
             {
             pushFollow(FOLLOW_2);
             rule__MergeRecu__FmAssignment_4();
@@ -5051,14 +4875,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__0"
-    // InternalSML.g:1591:1: rule__LeftNonRecursive__Group__0 : rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1 ;
+    // InternalSML.g:1537:1: rule__LeftNonRecursive__Group__0 : rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1 ;
     public final void rule__LeftNonRecursive__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1595:1: ( rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1 )
-            // InternalSML.g:1596:2: rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1
+            // InternalSML.g:1541:1: ( rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1 )
+            // InternalSML.g:1542:2: rule__LeftNonRecursive__Group__0__Impl rule__LeftNonRecursive__Group__1
             {
             pushFollow(FOLLOW_18);
             rule__LeftNonRecursive__Group__0__Impl();
@@ -5089,29 +4913,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__0__Impl"
-    // InternalSML.g:1603:1: rule__LeftNonRecursive__Group__0__Impl : ( ( rule__LeftNonRecursive__PAssignment_0 )? ) ;
+    // InternalSML.g:1549:1: rule__LeftNonRecursive__Group__0__Impl : ( ( rule__LeftNonRecursive__PAssignment_0 )? ) ;
     public final void rule__LeftNonRecursive__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1607:1: ( ( ( rule__LeftNonRecursive__PAssignment_0 )? ) )
-            // InternalSML.g:1608:1: ( ( rule__LeftNonRecursive__PAssignment_0 )? )
+            // InternalSML.g:1553:1: ( ( ( rule__LeftNonRecursive__PAssignment_0 )? ) )
+            // InternalSML.g:1554:1: ( ( rule__LeftNonRecursive__PAssignment_0 )? )
             {
-            // InternalSML.g:1608:1: ( ( rule__LeftNonRecursive__PAssignment_0 )? )
-            // InternalSML.g:1609:2: ( rule__LeftNonRecursive__PAssignment_0 )?
+            // InternalSML.g:1554:1: ( ( rule__LeftNonRecursive__PAssignment_0 )? )
+            // InternalSML.g:1555:2: ( rule__LeftNonRecursive__PAssignment_0 )?
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getPAssignment_0()); 
-            // InternalSML.g:1610:2: ( rule__LeftNonRecursive__PAssignment_0 )?
-            int alt19=2;
-            int LA19_0 = input.LA(1);
+            // InternalSML.g:1556:2: ( rule__LeftNonRecursive__PAssignment_0 )?
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( ((LA19_0>=14 && LA19_0<=15)) ) {
-                alt19=1;
+            if ( ((LA18_0>=14 && LA18_0<=15)) ) {
+                alt18=1;
             }
-            switch (alt19) {
+            switch (alt18) {
                 case 1 :
-                    // InternalSML.g:1610:3: rule__LeftNonRecursive__PAssignment_0
+                    // InternalSML.g:1556:3: rule__LeftNonRecursive__PAssignment_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__LeftNonRecursive__PAssignment_0();
@@ -5147,14 +4971,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__1"
-    // InternalSML.g:1618:1: rule__LeftNonRecursive__Group__1 : rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2 ;
+    // InternalSML.g:1564:1: rule__LeftNonRecursive__Group__1 : rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2 ;
     public final void rule__LeftNonRecursive__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1622:1: ( rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2 )
-            // InternalSML.g:1623:2: rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2
+            // InternalSML.g:1568:1: ( rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2 )
+            // InternalSML.g:1569:2: rule__LeftNonRecursive__Group__1__Impl rule__LeftNonRecursive__Group__2
             {
             pushFollow(FOLLOW_19);
             rule__LeftNonRecursive__Group__1__Impl();
@@ -5185,24 +5009,24 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__1__Impl"
-    // InternalSML.g:1630:1: rule__LeftNonRecursive__Group__1__Impl : ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) ) ;
+    // InternalSML.g:1576:1: rule__LeftNonRecursive__Group__1__Impl : ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) ) ;
     public final void rule__LeftNonRecursive__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1634:1: ( ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) ) )
-            // InternalSML.g:1635:1: ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) )
+            // InternalSML.g:1580:1: ( ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) ) )
+            // InternalSML.g:1581:1: ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) )
             {
-            // InternalSML.g:1635:1: ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) )
-            // InternalSML.g:1636:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* )
+            // InternalSML.g:1581:1: ( ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* ) )
+            // InternalSML.g:1582:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) ) ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* )
             {
-            // InternalSML.g:1636:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) )
-            // InternalSML.g:1637:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )
+            // InternalSML.g:1582:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 ) )
+            // InternalSML.g:1583:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getConvdropAssignment_1()); 
-            // InternalSML.g:1638:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )
-            // InternalSML.g:1638:4: rule__LeftNonRecursive__ConvdropAssignment_1
+            // InternalSML.g:1584:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )
+            // InternalSML.g:1584:4: rule__LeftNonRecursive__ConvdropAssignment_1
             {
             pushFollow(FOLLOW_3);
             rule__LeftNonRecursive__ConvdropAssignment_1();
@@ -5216,24 +5040,24 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalSML.g:1641:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* )
-            // InternalSML.g:1642:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )*
+            // InternalSML.g:1587:2: ( ( rule__LeftNonRecursive__ConvdropAssignment_1 )* )
+            // InternalSML.g:1588:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )*
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getConvdropAssignment_1()); 
-            // InternalSML.g:1643:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )*
-            loop20:
+            // InternalSML.g:1589:3: ( rule__LeftNonRecursive__ConvdropAssignment_1 )*
+            loop19:
             do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
+                int alt19=2;
+                int LA19_0 = input.LA(1);
 
-                if ( (LA20_0==18||LA20_0==20||LA20_0==27) ) {
-                    alt20=1;
+                if ( (LA19_0==18||LA19_0==20||LA19_0==27) ) {
+                    alt19=1;
                 }
 
 
-                switch (alt20) {
+                switch (alt19) {
             	case 1 :
-            	    // InternalSML.g:1643:4: rule__LeftNonRecursive__ConvdropAssignment_1
+            	    // InternalSML.g:1589:4: rule__LeftNonRecursive__ConvdropAssignment_1
             	    {
             	    pushFollow(FOLLOW_3);
             	    rule__LeftNonRecursive__ConvdropAssignment_1();
@@ -5245,7 +5069,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop20;
+            	    break loop19;
                 }
             } while (true);
 
@@ -5275,14 +5099,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__2"
-    // InternalSML.g:1652:1: rule__LeftNonRecursive__Group__2 : rule__LeftNonRecursive__Group__2__Impl ;
+    // InternalSML.g:1598:1: rule__LeftNonRecursive__Group__2 : rule__LeftNonRecursive__Group__2__Impl ;
     public final void rule__LeftNonRecursive__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1656:1: ( rule__LeftNonRecursive__Group__2__Impl )
-            // InternalSML.g:1657:2: rule__LeftNonRecursive__Group__2__Impl
+            // InternalSML.g:1602:1: ( rule__LeftNonRecursive__Group__2__Impl )
+            // InternalSML.g:1603:2: rule__LeftNonRecursive__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__LeftNonRecursive__Group__2__Impl();
@@ -5308,29 +5132,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__Group__2__Impl"
-    // InternalSML.g:1663:1: rule__LeftNonRecursive__Group__2__Impl : ( ( rule__LeftNonRecursive__PoolAssignment_2 )? ) ;
+    // InternalSML.g:1609:1: rule__LeftNonRecursive__Group__2__Impl : ( ( rule__LeftNonRecursive__PoolAssignment_2 )? ) ;
     public final void rule__LeftNonRecursive__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1667:1: ( ( ( rule__LeftNonRecursive__PoolAssignment_2 )? ) )
-            // InternalSML.g:1668:1: ( ( rule__LeftNonRecursive__PoolAssignment_2 )? )
+            // InternalSML.g:1613:1: ( ( ( rule__LeftNonRecursive__PoolAssignment_2 )? ) )
+            // InternalSML.g:1614:1: ( ( rule__LeftNonRecursive__PoolAssignment_2 )? )
             {
-            // InternalSML.g:1668:1: ( ( rule__LeftNonRecursive__PoolAssignment_2 )? )
-            // InternalSML.g:1669:2: ( rule__LeftNonRecursive__PoolAssignment_2 )?
+            // InternalSML.g:1614:1: ( ( rule__LeftNonRecursive__PoolAssignment_2 )? )
+            // InternalSML.g:1615:2: ( rule__LeftNonRecursive__PoolAssignment_2 )?
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getPoolAssignment_2()); 
-            // InternalSML.g:1670:2: ( rule__LeftNonRecursive__PoolAssignment_2 )?
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // InternalSML.g:1616:2: ( rule__LeftNonRecursive__PoolAssignment_2 )?
+            int alt20=2;
+            int LA20_0 = input.LA(1);
 
-            if ( ((LA21_0>=14 && LA21_0<=15)) ) {
-                alt21=1;
+            if ( ((LA20_0>=14 && LA20_0<=15)) ) {
+                alt20=1;
             }
-            switch (alt21) {
+            switch (alt20) {
                 case 1 :
-                    // InternalSML.g:1670:3: rule__LeftNonRecursive__PoolAssignment_2
+                    // InternalSML.g:1616:3: rule__LeftNonRecursive__PoolAssignment_2
                     {
                     pushFollow(FOLLOW_2);
                     rule__LeftNonRecursive__PoolAssignment_2();
@@ -5366,14 +5190,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Right__Group_1__0"
-    // InternalSML.g:1679:1: rule__Right__Group_1__0 : rule__Right__Group_1__0__Impl rule__Right__Group_1__1 ;
+    // InternalSML.g:1625:1: rule__Right__Group_1__0 : rule__Right__Group_1__0__Impl rule__Right__Group_1__1 ;
     public final void rule__Right__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1683:1: ( rule__Right__Group_1__0__Impl rule__Right__Group_1__1 )
-            // InternalSML.g:1684:2: rule__Right__Group_1__0__Impl rule__Right__Group_1__1
+            // InternalSML.g:1629:1: ( rule__Right__Group_1__0__Impl rule__Right__Group_1__1 )
+            // InternalSML.g:1630:2: rule__Right__Group_1__0__Impl rule__Right__Group_1__1
             {
             pushFollow(FOLLOW_16);
             rule__Right__Group_1__0__Impl();
@@ -5404,21 +5228,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Right__Group_1__0__Impl"
-    // InternalSML.g:1691:1: rule__Right__Group_1__0__Impl : ( () ) ;
+    // InternalSML.g:1637:1: rule__Right__Group_1__0__Impl : ( () ) ;
     public final void rule__Right__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1695:1: ( ( () ) )
-            // InternalSML.g:1696:1: ( () )
+            // InternalSML.g:1641:1: ( ( () ) )
+            // InternalSML.g:1642:1: ( () )
             {
-            // InternalSML.g:1696:1: ( () )
-            // InternalSML.g:1697:2: ()
+            // InternalSML.g:1642:1: ( () )
+            // InternalSML.g:1643:2: ()
             {
              before(grammarAccess.getRightAccess().getRightAction_1_0()); 
-            // InternalSML.g:1698:2: ()
-            // InternalSML.g:1698:3: 
+            // InternalSML.g:1644:2: ()
+            // InternalSML.g:1644:3: 
             {
             }
 
@@ -5441,14 +5265,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Right__Group_1__1"
-    // InternalSML.g:1706:1: rule__Right__Group_1__1 : rule__Right__Group_1__1__Impl ;
+    // InternalSML.g:1652:1: rule__Right__Group_1__1 : rule__Right__Group_1__1__Impl ;
     public final void rule__Right__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1710:1: ( rule__Right__Group_1__1__Impl )
-            // InternalSML.g:1711:2: rule__Right__Group_1__1__Impl
+            // InternalSML.g:1656:1: ( rule__Right__Group_1__1__Impl )
+            // InternalSML.g:1657:2: rule__Right__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Right__Group_1__1__Impl();
@@ -5474,17 +5298,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Right__Group_1__1__Impl"
-    // InternalSML.g:1717:1: rule__Right__Group_1__1__Impl : ( 'Empty' ) ;
+    // InternalSML.g:1663:1: rule__Right__Group_1__1__Impl : ( 'Empty' ) ;
     public final void rule__Right__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1721:1: ( ( 'Empty' ) )
-            // InternalSML.g:1722:1: ( 'Empty' )
+            // InternalSML.g:1667:1: ( ( 'Empty' ) )
+            // InternalSML.g:1668:1: ( 'Empty' )
             {
-            // InternalSML.g:1722:1: ( 'Empty' )
-            // InternalSML.g:1723:2: 'Empty'
+            // InternalSML.g:1668:1: ( 'Empty' )
+            // InternalSML.g:1669:2: 'Empty'
             {
              before(grammarAccess.getRightAccess().getEmptyKeyword_1_1()); 
             match(input,22,FOLLOW_2); 
@@ -5511,14 +5335,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__0"
-    // InternalSML.g:1733:1: rule__MergeNonRecu__Group__0 : rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1 ;
+    // InternalSML.g:1679:1: rule__MergeNonRecu__Group__0 : rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1 ;
     public final void rule__MergeNonRecu__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1737:1: ( rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1 )
-            // InternalSML.g:1738:2: rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1
+            // InternalSML.g:1683:1: ( rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1 )
+            // InternalSML.g:1684:2: rule__MergeNonRecu__Group__0__Impl rule__MergeNonRecu__Group__1
             {
             pushFollow(FOLLOW_13);
             rule__MergeNonRecu__Group__0__Impl();
@@ -5549,21 +5373,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__0__Impl"
-    // InternalSML.g:1745:1: rule__MergeNonRecu__Group__0__Impl : ( ( rule__MergeNonRecu__DbAssignment_0 ) ) ;
+    // InternalSML.g:1691:1: rule__MergeNonRecu__Group__0__Impl : ( ( rule__MergeNonRecu__DbAssignment_0 ) ) ;
     public final void rule__MergeNonRecu__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1749:1: ( ( ( rule__MergeNonRecu__DbAssignment_0 ) ) )
-            // InternalSML.g:1750:1: ( ( rule__MergeNonRecu__DbAssignment_0 ) )
+            // InternalSML.g:1695:1: ( ( ( rule__MergeNonRecu__DbAssignment_0 ) ) )
+            // InternalSML.g:1696:1: ( ( rule__MergeNonRecu__DbAssignment_0 ) )
             {
-            // InternalSML.g:1750:1: ( ( rule__MergeNonRecu__DbAssignment_0 ) )
-            // InternalSML.g:1751:2: ( rule__MergeNonRecu__DbAssignment_0 )
+            // InternalSML.g:1696:1: ( ( rule__MergeNonRecu__DbAssignment_0 ) )
+            // InternalSML.g:1697:2: ( rule__MergeNonRecu__DbAssignment_0 )
             {
              before(grammarAccess.getMergeNonRecuAccess().getDbAssignment_0()); 
-            // InternalSML.g:1752:2: ( rule__MergeNonRecu__DbAssignment_0 )
-            // InternalSML.g:1752:3: rule__MergeNonRecu__DbAssignment_0
+            // InternalSML.g:1698:2: ( rule__MergeNonRecu__DbAssignment_0 )
+            // InternalSML.g:1698:3: rule__MergeNonRecu__DbAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__DbAssignment_0();
@@ -5596,14 +5420,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__1"
-    // InternalSML.g:1760:1: rule__MergeNonRecu__Group__1 : rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2 ;
+    // InternalSML.g:1706:1: rule__MergeNonRecu__Group__1 : rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2 ;
     public final void rule__MergeNonRecu__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1764:1: ( rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2 )
-            // InternalSML.g:1765:2: rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2
+            // InternalSML.g:1710:1: ( rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2 )
+            // InternalSML.g:1711:2: rule__MergeNonRecu__Group__1__Impl rule__MergeNonRecu__Group__2
             {
             pushFollow(FOLLOW_15);
             rule__MergeNonRecu__Group__1__Impl();
@@ -5634,21 +5458,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__1__Impl"
-    // InternalSML.g:1772:1: rule__MergeNonRecu__Group__1__Impl : ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) ) ;
+    // InternalSML.g:1718:1: rule__MergeNonRecu__Group__1__Impl : ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) ) ;
     public final void rule__MergeNonRecu__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1776:1: ( ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) ) )
-            // InternalSML.g:1777:1: ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) )
+            // InternalSML.g:1722:1: ( ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) ) )
+            // InternalSML.g:1723:1: ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) )
             {
-            // InternalSML.g:1777:1: ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) )
-            // InternalSML.g:1778:2: ( rule__MergeNonRecu__LeftNonRecAssignment_1 )
+            // InternalSML.g:1723:1: ( ( rule__MergeNonRecu__LeftNonRecAssignment_1 ) )
+            // InternalSML.g:1724:2: ( rule__MergeNonRecu__LeftNonRecAssignment_1 )
             {
              before(grammarAccess.getMergeNonRecuAccess().getLeftNonRecAssignment_1()); 
-            // InternalSML.g:1779:2: ( rule__MergeNonRecu__LeftNonRecAssignment_1 )
-            // InternalSML.g:1779:3: rule__MergeNonRecu__LeftNonRecAssignment_1
+            // InternalSML.g:1725:2: ( rule__MergeNonRecu__LeftNonRecAssignment_1 )
+            // InternalSML.g:1725:3: rule__MergeNonRecu__LeftNonRecAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__LeftNonRecAssignment_1();
@@ -5681,14 +5505,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__2"
-    // InternalSML.g:1787:1: rule__MergeNonRecu__Group__2 : rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3 ;
+    // InternalSML.g:1733:1: rule__MergeNonRecu__Group__2 : rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3 ;
     public final void rule__MergeNonRecu__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1791:1: ( rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3 )
-            // InternalSML.g:1792:2: rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3
+            // InternalSML.g:1737:1: ( rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3 )
+            // InternalSML.g:1738:2: rule__MergeNonRecu__Group__2__Impl rule__MergeNonRecu__Group__3
             {
             pushFollow(FOLLOW_16);
             rule__MergeNonRecu__Group__2__Impl();
@@ -5719,21 +5543,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__2__Impl"
-    // InternalSML.g:1799:1: rule__MergeNonRecu__Group__2__Impl : ( ( rule__MergeNonRecu__VirgAssignment_2 ) ) ;
+    // InternalSML.g:1745:1: rule__MergeNonRecu__Group__2__Impl : ( ( rule__MergeNonRecu__VirgAssignment_2 ) ) ;
     public final void rule__MergeNonRecu__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1803:1: ( ( ( rule__MergeNonRecu__VirgAssignment_2 ) ) )
-            // InternalSML.g:1804:1: ( ( rule__MergeNonRecu__VirgAssignment_2 ) )
+            // InternalSML.g:1749:1: ( ( ( rule__MergeNonRecu__VirgAssignment_2 ) ) )
+            // InternalSML.g:1750:1: ( ( rule__MergeNonRecu__VirgAssignment_2 ) )
             {
-            // InternalSML.g:1804:1: ( ( rule__MergeNonRecu__VirgAssignment_2 ) )
-            // InternalSML.g:1805:2: ( rule__MergeNonRecu__VirgAssignment_2 )
+            // InternalSML.g:1750:1: ( ( rule__MergeNonRecu__VirgAssignment_2 ) )
+            // InternalSML.g:1751:2: ( rule__MergeNonRecu__VirgAssignment_2 )
             {
              before(grammarAccess.getMergeNonRecuAccess().getVirgAssignment_2()); 
-            // InternalSML.g:1806:2: ( rule__MergeNonRecu__VirgAssignment_2 )
-            // InternalSML.g:1806:3: rule__MergeNonRecu__VirgAssignment_2
+            // InternalSML.g:1752:2: ( rule__MergeNonRecu__VirgAssignment_2 )
+            // InternalSML.g:1752:3: rule__MergeNonRecu__VirgAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__VirgAssignment_2();
@@ -5766,14 +5590,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__3"
-    // InternalSML.g:1814:1: rule__MergeNonRecu__Group__3 : rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4 ;
+    // InternalSML.g:1760:1: rule__MergeNonRecu__Group__3 : rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4 ;
     public final void rule__MergeNonRecu__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1818:1: ( rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4 )
-            // InternalSML.g:1819:2: rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4
+            // InternalSML.g:1764:1: ( rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4 )
+            // InternalSML.g:1765:2: rule__MergeNonRecu__Group__3__Impl rule__MergeNonRecu__Group__4
             {
             pushFollow(FOLLOW_17);
             rule__MergeNonRecu__Group__3__Impl();
@@ -5804,21 +5628,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__3__Impl"
-    // InternalSML.g:1826:1: rule__MergeNonRecu__Group__3__Impl : ( ( rule__MergeNonRecu__RightAssignment_3 ) ) ;
+    // InternalSML.g:1772:1: rule__MergeNonRecu__Group__3__Impl : ( ( rule__MergeNonRecu__RightAssignment_3 ) ) ;
     public final void rule__MergeNonRecu__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1830:1: ( ( ( rule__MergeNonRecu__RightAssignment_3 ) ) )
-            // InternalSML.g:1831:1: ( ( rule__MergeNonRecu__RightAssignment_3 ) )
+            // InternalSML.g:1776:1: ( ( ( rule__MergeNonRecu__RightAssignment_3 ) ) )
+            // InternalSML.g:1777:1: ( ( rule__MergeNonRecu__RightAssignment_3 ) )
             {
-            // InternalSML.g:1831:1: ( ( rule__MergeNonRecu__RightAssignment_3 ) )
-            // InternalSML.g:1832:2: ( rule__MergeNonRecu__RightAssignment_3 )
+            // InternalSML.g:1777:1: ( ( rule__MergeNonRecu__RightAssignment_3 ) )
+            // InternalSML.g:1778:2: ( rule__MergeNonRecu__RightAssignment_3 )
             {
              before(grammarAccess.getMergeNonRecuAccess().getRightAssignment_3()); 
-            // InternalSML.g:1833:2: ( rule__MergeNonRecu__RightAssignment_3 )
-            // InternalSML.g:1833:3: rule__MergeNonRecu__RightAssignment_3
+            // InternalSML.g:1779:2: ( rule__MergeNonRecu__RightAssignment_3 )
+            // InternalSML.g:1779:3: rule__MergeNonRecu__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__RightAssignment_3();
@@ -5851,14 +5675,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__4"
-    // InternalSML.g:1841:1: rule__MergeNonRecu__Group__4 : rule__MergeNonRecu__Group__4__Impl ;
+    // InternalSML.g:1787:1: rule__MergeNonRecu__Group__4 : rule__MergeNonRecu__Group__4__Impl ;
     public final void rule__MergeNonRecu__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1845:1: ( rule__MergeNonRecu__Group__4__Impl )
-            // InternalSML.g:1846:2: rule__MergeNonRecu__Group__4__Impl
+            // InternalSML.g:1791:1: ( rule__MergeNonRecu__Group__4__Impl )
+            // InternalSML.g:1792:2: rule__MergeNonRecu__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__Group__4__Impl();
@@ -5884,21 +5708,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__Group__4__Impl"
-    // InternalSML.g:1852:1: rule__MergeNonRecu__Group__4__Impl : ( ( rule__MergeNonRecu__FmAssignment_4 ) ) ;
+    // InternalSML.g:1798:1: rule__MergeNonRecu__Group__4__Impl : ( ( rule__MergeNonRecu__FmAssignment_4 ) ) ;
     public final void rule__MergeNonRecu__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1856:1: ( ( ( rule__MergeNonRecu__FmAssignment_4 ) ) )
-            // InternalSML.g:1857:1: ( ( rule__MergeNonRecu__FmAssignment_4 ) )
+            // InternalSML.g:1802:1: ( ( ( rule__MergeNonRecu__FmAssignment_4 ) ) )
+            // InternalSML.g:1803:1: ( ( rule__MergeNonRecu__FmAssignment_4 ) )
             {
-            // InternalSML.g:1857:1: ( ( rule__MergeNonRecu__FmAssignment_4 ) )
-            // InternalSML.g:1858:2: ( rule__MergeNonRecu__FmAssignment_4 )
+            // InternalSML.g:1803:1: ( ( rule__MergeNonRecu__FmAssignment_4 ) )
+            // InternalSML.g:1804:2: ( rule__MergeNonRecu__FmAssignment_4 )
             {
              before(grammarAccess.getMergeNonRecuAccess().getFmAssignment_4()); 
-            // InternalSML.g:1859:2: ( rule__MergeNonRecu__FmAssignment_4 )
-            // InternalSML.g:1859:3: rule__MergeNonRecu__FmAssignment_4
+            // InternalSML.g:1805:2: ( rule__MergeNonRecu__FmAssignment_4 )
+            // InternalSML.g:1805:3: rule__MergeNonRecu__FmAssignment_4
             {
             pushFollow(FOLLOW_2);
             rule__MergeNonRecu__FmAssignment_4();
@@ -5931,14 +5755,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__0"
-    // InternalSML.g:1868:1: rule__Highway__Group__0 : rule__Highway__Group__0__Impl rule__Highway__Group__1 ;
+    // InternalSML.g:1814:1: rule__Highway__Group__0 : rule__Highway__Group__0__Impl rule__Highway__Group__1 ;
     public final void rule__Highway__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1872:1: ( rule__Highway__Group__0__Impl rule__Highway__Group__1 )
-            // InternalSML.g:1873:2: rule__Highway__Group__0__Impl rule__Highway__Group__1
+            // InternalSML.g:1818:1: ( rule__Highway__Group__0__Impl rule__Highway__Group__1 )
+            // InternalSML.g:1819:2: rule__Highway__Group__0__Impl rule__Highway__Group__1
             {
             pushFollow(FOLLOW_13);
             rule__Highway__Group__0__Impl();
@@ -5969,21 +5793,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__0__Impl"
-    // InternalSML.g:1880:1: rule__Highway__Group__0__Impl : ( ( rule__Highway__DbAssignment_0 ) ) ;
+    // InternalSML.g:1826:1: rule__Highway__Group__0__Impl : ( ( rule__Highway__DbAssignment_0 ) ) ;
     public final void rule__Highway__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1884:1: ( ( ( rule__Highway__DbAssignment_0 ) ) )
-            // InternalSML.g:1885:1: ( ( rule__Highway__DbAssignment_0 ) )
+            // InternalSML.g:1830:1: ( ( ( rule__Highway__DbAssignment_0 ) ) )
+            // InternalSML.g:1831:1: ( ( rule__Highway__DbAssignment_0 ) )
             {
-            // InternalSML.g:1885:1: ( ( rule__Highway__DbAssignment_0 ) )
-            // InternalSML.g:1886:2: ( rule__Highway__DbAssignment_0 )
+            // InternalSML.g:1831:1: ( ( rule__Highway__DbAssignment_0 ) )
+            // InternalSML.g:1832:2: ( rule__Highway__DbAssignment_0 )
             {
              before(grammarAccess.getHighwayAccess().getDbAssignment_0()); 
-            // InternalSML.g:1887:2: ( rule__Highway__DbAssignment_0 )
-            // InternalSML.g:1887:3: rule__Highway__DbAssignment_0
+            // InternalSML.g:1833:2: ( rule__Highway__DbAssignment_0 )
+            // InternalSML.g:1833:3: rule__Highway__DbAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__Highway__DbAssignment_0();
@@ -6016,14 +5840,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__1"
-    // InternalSML.g:1895:1: rule__Highway__Group__1 : rule__Highway__Group__1__Impl rule__Highway__Group__2 ;
+    // InternalSML.g:1841:1: rule__Highway__Group__1 : rule__Highway__Group__1__Impl rule__Highway__Group__2 ;
     public final void rule__Highway__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1899:1: ( rule__Highway__Group__1__Impl rule__Highway__Group__2 )
-            // InternalSML.g:1900:2: rule__Highway__Group__1__Impl rule__Highway__Group__2
+            // InternalSML.g:1845:1: ( rule__Highway__Group__1__Impl rule__Highway__Group__2 )
+            // InternalSML.g:1846:2: rule__Highway__Group__1__Impl rule__Highway__Group__2
             {
             pushFollow(FOLLOW_17);
             rule__Highway__Group__1__Impl();
@@ -6054,24 +5878,24 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__1__Impl"
-    // InternalSML.g:1907:1: rule__Highway__Group__1__Impl : ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) ) ;
+    // InternalSML.g:1853:1: rule__Highway__Group__1__Impl : ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) ) ;
     public final void rule__Highway__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1911:1: ( ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) ) )
-            // InternalSML.g:1912:1: ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) )
+            // InternalSML.g:1857:1: ( ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) ) )
+            // InternalSML.g:1858:1: ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) )
             {
-            // InternalSML.g:1912:1: ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) )
-            // InternalSML.g:1913:2: ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* )
+            // InternalSML.g:1858:1: ( ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* ) )
+            // InternalSML.g:1859:2: ( ( rule__Highway__Group_1__0 ) ) ( ( rule__Highway__Group_1__0 )* )
             {
-            // InternalSML.g:1913:2: ( ( rule__Highway__Group_1__0 ) )
-            // InternalSML.g:1914:3: ( rule__Highway__Group_1__0 )
+            // InternalSML.g:1859:2: ( ( rule__Highway__Group_1__0 ) )
+            // InternalSML.g:1860:3: ( rule__Highway__Group_1__0 )
             {
              before(grammarAccess.getHighwayAccess().getGroup_1()); 
-            // InternalSML.g:1915:3: ( rule__Highway__Group_1__0 )
-            // InternalSML.g:1915:4: rule__Highway__Group_1__0
+            // InternalSML.g:1861:3: ( rule__Highway__Group_1__0 )
+            // InternalSML.g:1861:4: rule__Highway__Group_1__0
             {
             pushFollow(FOLLOW_20);
             rule__Highway__Group_1__0();
@@ -6085,24 +5909,24 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalSML.g:1918:2: ( ( rule__Highway__Group_1__0 )* )
-            // InternalSML.g:1919:3: ( rule__Highway__Group_1__0 )*
+            // InternalSML.g:1864:2: ( ( rule__Highway__Group_1__0 )* )
+            // InternalSML.g:1865:3: ( rule__Highway__Group_1__0 )*
             {
              before(grammarAccess.getHighwayAccess().getGroup_1()); 
-            // InternalSML.g:1920:3: ( rule__Highway__Group_1__0 )*
-            loop22:
+            // InternalSML.g:1866:3: ( rule__Highway__Group_1__0 )*
+            loop21:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt21=2;
+                int LA21_0 = input.LA(1);
 
-                if ( ((LA22_0>=14 && LA22_0<=15)||LA22_0==18||LA22_0==20||LA22_0==27) ) {
-                    alt22=1;
+                if ( ((LA21_0>=14 && LA21_0<=15)||LA21_0==18||LA21_0==20||LA21_0==27) ) {
+                    alt21=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt21) {
             	case 1 :
-            	    // InternalSML.g:1920:4: rule__Highway__Group_1__0
+            	    // InternalSML.g:1866:4: rule__Highway__Group_1__0
             	    {
             	    pushFollow(FOLLOW_20);
             	    rule__Highway__Group_1__0();
@@ -6114,7 +5938,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop22;
+            	    break loop21;
                 }
             } while (true);
 
@@ -6144,14 +5968,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__2"
-    // InternalSML.g:1929:1: rule__Highway__Group__2 : rule__Highway__Group__2__Impl ;
+    // InternalSML.g:1875:1: rule__Highway__Group__2 : rule__Highway__Group__2__Impl ;
     public final void rule__Highway__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1933:1: ( rule__Highway__Group__2__Impl )
-            // InternalSML.g:1934:2: rule__Highway__Group__2__Impl
+            // InternalSML.g:1879:1: ( rule__Highway__Group__2__Impl )
+            // InternalSML.g:1880:2: rule__Highway__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Highway__Group__2__Impl();
@@ -6177,21 +6001,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group__2__Impl"
-    // InternalSML.g:1940:1: rule__Highway__Group__2__Impl : ( ( rule__Highway__FmAssignment_2 ) ) ;
+    // InternalSML.g:1886:1: rule__Highway__Group__2__Impl : ( ( rule__Highway__FmAssignment_2 ) ) ;
     public final void rule__Highway__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1944:1: ( ( ( rule__Highway__FmAssignment_2 ) ) )
-            // InternalSML.g:1945:1: ( ( rule__Highway__FmAssignment_2 ) )
+            // InternalSML.g:1890:1: ( ( ( rule__Highway__FmAssignment_2 ) ) )
+            // InternalSML.g:1891:1: ( ( rule__Highway__FmAssignment_2 ) )
             {
-            // InternalSML.g:1945:1: ( ( rule__Highway__FmAssignment_2 ) )
-            // InternalSML.g:1946:2: ( rule__Highway__FmAssignment_2 )
+            // InternalSML.g:1891:1: ( ( rule__Highway__FmAssignment_2 ) )
+            // InternalSML.g:1892:2: ( rule__Highway__FmAssignment_2 )
             {
              before(grammarAccess.getHighwayAccess().getFmAssignment_2()); 
-            // InternalSML.g:1947:2: ( rule__Highway__FmAssignment_2 )
-            // InternalSML.g:1947:3: rule__Highway__FmAssignment_2
+            // InternalSML.g:1893:2: ( rule__Highway__FmAssignment_2 )
+            // InternalSML.g:1893:3: rule__Highway__FmAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__Highway__FmAssignment_2();
@@ -6224,14 +6048,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__0"
-    // InternalSML.g:1956:1: rule__Highway__Group_1__0 : rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1 ;
+    // InternalSML.g:1902:1: rule__Highway__Group_1__0 : rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1 ;
     public final void rule__Highway__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1960:1: ( rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1 )
-            // InternalSML.g:1961:2: rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1
+            // InternalSML.g:1906:1: ( rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1 )
+            // InternalSML.g:1907:2: rule__Highway__Group_1__0__Impl rule__Highway__Group_1__1
             {
             pushFollow(FOLLOW_21);
             rule__Highway__Group_1__0__Impl();
@@ -6262,21 +6086,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__0__Impl"
-    // InternalSML.g:1968:1: rule__Highway__Group_1__0__Impl : ( ( rule__Highway__LeftNonRecAssignment_1_0 ) ) ;
+    // InternalSML.g:1914:1: rule__Highway__Group_1__0__Impl : ( ( rule__Highway__LeftNonRecAssignment_1_0 ) ) ;
     public final void rule__Highway__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1972:1: ( ( ( rule__Highway__LeftNonRecAssignment_1_0 ) ) )
-            // InternalSML.g:1973:1: ( ( rule__Highway__LeftNonRecAssignment_1_0 ) )
+            // InternalSML.g:1918:1: ( ( ( rule__Highway__LeftNonRecAssignment_1_0 ) ) )
+            // InternalSML.g:1919:1: ( ( rule__Highway__LeftNonRecAssignment_1_0 ) )
             {
-            // InternalSML.g:1973:1: ( ( rule__Highway__LeftNonRecAssignment_1_0 ) )
-            // InternalSML.g:1974:2: ( rule__Highway__LeftNonRecAssignment_1_0 )
+            // InternalSML.g:1919:1: ( ( rule__Highway__LeftNonRecAssignment_1_0 ) )
+            // InternalSML.g:1920:2: ( rule__Highway__LeftNonRecAssignment_1_0 )
             {
              before(grammarAccess.getHighwayAccess().getLeftNonRecAssignment_1_0()); 
-            // InternalSML.g:1975:2: ( rule__Highway__LeftNonRecAssignment_1_0 )
-            // InternalSML.g:1975:3: rule__Highway__LeftNonRecAssignment_1_0
+            // InternalSML.g:1921:2: ( rule__Highway__LeftNonRecAssignment_1_0 )
+            // InternalSML.g:1921:3: rule__Highway__LeftNonRecAssignment_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Highway__LeftNonRecAssignment_1_0();
@@ -6309,14 +6133,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__1"
-    // InternalSML.g:1983:1: rule__Highway__Group_1__1 : rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2 ;
+    // InternalSML.g:1929:1: rule__Highway__Group_1__1 : rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2 ;
     public final void rule__Highway__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1987:1: ( rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2 )
-            // InternalSML.g:1988:2: rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2
+            // InternalSML.g:1933:1: ( rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2 )
+            // InternalSML.g:1934:2: rule__Highway__Group_1__1__Impl rule__Highway__Group_1__2
             {
             pushFollow(FOLLOW_18);
             rule__Highway__Group_1__1__Impl();
@@ -6347,17 +6171,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__1__Impl"
-    // InternalSML.g:1995:1: rule__Highway__Group_1__1__Impl : ( '|' ) ;
+    // InternalSML.g:1941:1: rule__Highway__Group_1__1__Impl : ( '|' ) ;
     public final void rule__Highway__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:1999:1: ( ( '|' ) )
-            // InternalSML.g:2000:1: ( '|' )
+            // InternalSML.g:1945:1: ( ( '|' ) )
+            // InternalSML.g:1946:1: ( '|' )
             {
-            // InternalSML.g:2000:1: ( '|' )
-            // InternalSML.g:2001:2: '|'
+            // InternalSML.g:1946:1: ( '|' )
+            // InternalSML.g:1947:2: '|'
             {
              before(grammarAccess.getHighwayAccess().getVerticalLineKeyword_1_1()); 
             match(input,23,FOLLOW_2); 
@@ -6384,14 +6208,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__2"
-    // InternalSML.g:2010:1: rule__Highway__Group_1__2 : rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3 ;
+    // InternalSML.g:1956:1: rule__Highway__Group_1__2 : rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3 ;
     public final void rule__Highway__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2014:1: ( rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3 )
-            // InternalSML.g:2015:2: rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3
+            // InternalSML.g:1960:1: ( rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3 )
+            // InternalSML.g:1961:2: rule__Highway__Group_1__2__Impl rule__Highway__Group_1__3
             {
             pushFollow(FOLLOW_15);
             rule__Highway__Group_1__2__Impl();
@@ -6422,21 +6246,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__2__Impl"
-    // InternalSML.g:2022:1: rule__Highway__Group_1__2__Impl : ( ( rule__Highway__ConvAssignment_1_2 ) ) ;
+    // InternalSML.g:1968:1: rule__Highway__Group_1__2__Impl : ( ( rule__Highway__ConvAssignment_1_2 ) ) ;
     public final void rule__Highway__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2026:1: ( ( ( rule__Highway__ConvAssignment_1_2 ) ) )
-            // InternalSML.g:2027:1: ( ( rule__Highway__ConvAssignment_1_2 ) )
+            // InternalSML.g:1972:1: ( ( ( rule__Highway__ConvAssignment_1_2 ) ) )
+            // InternalSML.g:1973:1: ( ( rule__Highway__ConvAssignment_1_2 ) )
             {
-            // InternalSML.g:2027:1: ( ( rule__Highway__ConvAssignment_1_2 ) )
-            // InternalSML.g:2028:2: ( rule__Highway__ConvAssignment_1_2 )
+            // InternalSML.g:1973:1: ( ( rule__Highway__ConvAssignment_1_2 ) )
+            // InternalSML.g:1974:2: ( rule__Highway__ConvAssignment_1_2 )
             {
              before(grammarAccess.getHighwayAccess().getConvAssignment_1_2()); 
-            // InternalSML.g:2029:2: ( rule__Highway__ConvAssignment_1_2 )
-            // InternalSML.g:2029:3: rule__Highway__ConvAssignment_1_2
+            // InternalSML.g:1975:2: ( rule__Highway__ConvAssignment_1_2 )
+            // InternalSML.g:1975:3: rule__Highway__ConvAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__Highway__ConvAssignment_1_2();
@@ -6469,14 +6293,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__3"
-    // InternalSML.g:2037:1: rule__Highway__Group_1__3 : rule__Highway__Group_1__3__Impl ;
+    // InternalSML.g:1983:1: rule__Highway__Group_1__3 : rule__Highway__Group_1__3__Impl ;
     public final void rule__Highway__Group_1__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2041:1: ( rule__Highway__Group_1__3__Impl )
-            // InternalSML.g:2042:2: rule__Highway__Group_1__3__Impl
+            // InternalSML.g:1987:1: ( rule__Highway__Group_1__3__Impl )
+            // InternalSML.g:1988:2: rule__Highway__Group_1__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Highway__Group_1__3__Impl();
@@ -6502,17 +6326,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__Group_1__3__Impl"
-    // InternalSML.g:2048:1: rule__Highway__Group_1__3__Impl : ( ',' ) ;
+    // InternalSML.g:1994:1: rule__Highway__Group_1__3__Impl : ( ',' ) ;
     public final void rule__Highway__Group_1__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2052:1: ( ( ',' ) )
-            // InternalSML.g:2053:1: ( ',' )
+            // InternalSML.g:1998:1: ( ( ',' ) )
+            // InternalSML.g:1999:1: ( ',' )
             {
-            // InternalSML.g:2053:1: ( ',' )
-            // InternalSML.g:2054:2: ','
+            // InternalSML.g:1999:1: ( ',' )
+            // InternalSML.g:2000:2: ','
             {
              before(grammarAccess.getHighwayAccess().getCommaKeyword_1_3()); 
             match(input,24,FOLLOW_2); 
@@ -6539,14 +6363,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__0"
-    // InternalSML.g:2064:1: rule__FeatureExtraction__Group__0 : rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1 ;
+    // InternalSML.g:2010:1: rule__FeatureExtraction__Group__0 : rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1 ;
     public final void rule__FeatureExtraction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2068:1: ( rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1 )
-            // InternalSML.g:2069:2: rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1
+            // InternalSML.g:2014:1: ( rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1 )
+            // InternalSML.g:2015:2: rule__FeatureExtraction__Group__0__Impl rule__FeatureExtraction__Group__1
             {
             pushFollow(FOLLOW_22);
             rule__FeatureExtraction__Group__0__Impl();
@@ -6577,21 +6401,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__0__Impl"
-    // InternalSML.g:2076:1: rule__FeatureExtraction__Group__0__Impl : ( ( rule__FeatureExtraction__Alternatives_0 ) ) ;
+    // InternalSML.g:2022:1: rule__FeatureExtraction__Group__0__Impl : ( ( rule__FeatureExtraction__Alternatives_0 ) ) ;
     public final void rule__FeatureExtraction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2080:1: ( ( ( rule__FeatureExtraction__Alternatives_0 ) ) )
-            // InternalSML.g:2081:1: ( ( rule__FeatureExtraction__Alternatives_0 ) )
+            // InternalSML.g:2026:1: ( ( ( rule__FeatureExtraction__Alternatives_0 ) ) )
+            // InternalSML.g:2027:1: ( ( rule__FeatureExtraction__Alternatives_0 ) )
             {
-            // InternalSML.g:2081:1: ( ( rule__FeatureExtraction__Alternatives_0 ) )
-            // InternalSML.g:2082:2: ( rule__FeatureExtraction__Alternatives_0 )
+            // InternalSML.g:2027:1: ( ( rule__FeatureExtraction__Alternatives_0 ) )
+            // InternalSML.g:2028:2: ( rule__FeatureExtraction__Alternatives_0 )
             {
              before(grammarAccess.getFeatureExtractionAccess().getAlternatives_0()); 
-            // InternalSML.g:2083:2: ( rule__FeatureExtraction__Alternatives_0 )
-            // InternalSML.g:2083:3: rule__FeatureExtraction__Alternatives_0
+            // InternalSML.g:2029:2: ( rule__FeatureExtraction__Alternatives_0 )
+            // InternalSML.g:2029:3: rule__FeatureExtraction__Alternatives_0
             {
             pushFollow(FOLLOW_2);
             rule__FeatureExtraction__Alternatives_0();
@@ -6624,14 +6448,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__1"
-    // InternalSML.g:2091:1: rule__FeatureExtraction__Group__1 : rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2 ;
+    // InternalSML.g:2037:1: rule__FeatureExtraction__Group__1 : rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2 ;
     public final void rule__FeatureExtraction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2095:1: ( rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2 )
-            // InternalSML.g:2096:2: rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2
+            // InternalSML.g:2041:1: ( rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2 )
+            // InternalSML.g:2042:2: rule__FeatureExtraction__Group__1__Impl rule__FeatureExtraction__Group__2
             {
             pushFollow(FOLLOW_22);
             rule__FeatureExtraction__Group__1__Impl();
@@ -6662,29 +6486,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__1__Impl"
-    // InternalSML.g:2103:1: rule__FeatureExtraction__Group__1__Impl : ( ( rule__FeatureExtraction__DropAssignment_1 )? ) ;
+    // InternalSML.g:2049:1: rule__FeatureExtraction__Group__1__Impl : ( ( rule__FeatureExtraction__DropAssignment_1 )? ) ;
     public final void rule__FeatureExtraction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2107:1: ( ( ( rule__FeatureExtraction__DropAssignment_1 )? ) )
-            // InternalSML.g:2108:1: ( ( rule__FeatureExtraction__DropAssignment_1 )? )
+            // InternalSML.g:2053:1: ( ( ( rule__FeatureExtraction__DropAssignment_1 )? ) )
+            // InternalSML.g:2054:1: ( ( rule__FeatureExtraction__DropAssignment_1 )? )
             {
-            // InternalSML.g:2108:1: ( ( rule__FeatureExtraction__DropAssignment_1 )? )
-            // InternalSML.g:2109:2: ( rule__FeatureExtraction__DropAssignment_1 )?
+            // InternalSML.g:2054:1: ( ( rule__FeatureExtraction__DropAssignment_1 )? )
+            // InternalSML.g:2055:2: ( rule__FeatureExtraction__DropAssignment_1 )?
             {
              before(grammarAccess.getFeatureExtractionAccess().getDropAssignment_1()); 
-            // InternalSML.g:2110:2: ( rule__FeatureExtraction__DropAssignment_1 )?
-            int alt23=2;
-            int LA23_0 = input.LA(1);
+            // InternalSML.g:2056:2: ( rule__FeatureExtraction__DropAssignment_1 )?
+            int alt22=2;
+            int LA22_0 = input.LA(1);
 
-            if ( (LA23_0==11) ) {
-                alt23=1;
+            if ( (LA22_0==11) ) {
+                alt22=1;
             }
-            switch (alt23) {
+            switch (alt22) {
                 case 1 :
-                    // InternalSML.g:2110:3: rule__FeatureExtraction__DropAssignment_1
+                    // InternalSML.g:2056:3: rule__FeatureExtraction__DropAssignment_1
                     {
                     pushFollow(FOLLOW_2);
                     rule__FeatureExtraction__DropAssignment_1();
@@ -6720,14 +6544,14 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__2"
-    // InternalSML.g:2118:1: rule__FeatureExtraction__Group__2 : rule__FeatureExtraction__Group__2__Impl ;
+    // InternalSML.g:2064:1: rule__FeatureExtraction__Group__2 : rule__FeatureExtraction__Group__2__Impl ;
     public final void rule__FeatureExtraction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2122:1: ( rule__FeatureExtraction__Group__2__Impl )
-            // InternalSML.g:2123:2: rule__FeatureExtraction__Group__2__Impl
+            // InternalSML.g:2068:1: ( rule__FeatureExtraction__Group__2__Impl )
+            // InternalSML.g:2069:2: rule__FeatureExtraction__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__FeatureExtraction__Group__2__Impl();
@@ -6753,29 +6577,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__Group__2__Impl"
-    // InternalSML.g:2129:1: rule__FeatureExtraction__Group__2__Impl : ( ( rule__FeatureExtraction__PoolAssignment_2 )? ) ;
+    // InternalSML.g:2075:1: rule__FeatureExtraction__Group__2__Impl : ( ( rule__FeatureExtraction__PoolAssignment_2 )? ) ;
     public final void rule__FeatureExtraction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2133:1: ( ( ( rule__FeatureExtraction__PoolAssignment_2 )? ) )
-            // InternalSML.g:2134:1: ( ( rule__FeatureExtraction__PoolAssignment_2 )? )
+            // InternalSML.g:2079:1: ( ( ( rule__FeatureExtraction__PoolAssignment_2 )? ) )
+            // InternalSML.g:2080:1: ( ( rule__FeatureExtraction__PoolAssignment_2 )? )
             {
-            // InternalSML.g:2134:1: ( ( rule__FeatureExtraction__PoolAssignment_2 )? )
-            // InternalSML.g:2135:2: ( rule__FeatureExtraction__PoolAssignment_2 )?
+            // InternalSML.g:2080:1: ( ( rule__FeatureExtraction__PoolAssignment_2 )? )
+            // InternalSML.g:2081:2: ( rule__FeatureExtraction__PoolAssignment_2 )?
             {
              before(grammarAccess.getFeatureExtractionAccess().getPoolAssignment_2()); 
-            // InternalSML.g:2136:2: ( rule__FeatureExtraction__PoolAssignment_2 )?
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // InternalSML.g:2082:2: ( rule__FeatureExtraction__PoolAssignment_2 )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
-            if ( ((LA24_0>=14 && LA24_0<=15)) ) {
-                alt24=1;
+            if ( ((LA23_0>=14 && LA23_0<=15)) ) {
+                alt23=1;
             }
-            switch (alt24) {
+            switch (alt23) {
                 case 1 :
-                    // InternalSML.g:2136:3: rule__FeatureExtraction__PoolAssignment_2
+                    // InternalSML.g:2082:3: rule__FeatureExtraction__PoolAssignment_2
                     {
                     pushFollow(FOLLOW_2);
                     rule__FeatureExtraction__PoolAssignment_2();
@@ -6811,17 +6635,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SML__SmlAssignment"
-    // InternalSML.g:2145:1: rule__SML__SmlAssignment : ( ruleArchitecture ) ;
+    // InternalSML.g:2091:1: rule__SML__SmlAssignment : ( ruleArchitecture ) ;
     public final void rule__SML__SmlAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2149:1: ( ( ruleArchitecture ) )
-            // InternalSML.g:2150:2: ( ruleArchitecture )
+            // InternalSML.g:2095:1: ( ( ruleArchitecture ) )
+            // InternalSML.g:2096:2: ( ruleArchitecture )
             {
-            // InternalSML.g:2150:2: ( ruleArchitecture )
-            // InternalSML.g:2151:3: ruleArchitecture
+            // InternalSML.g:2096:2: ( ruleArchitecture )
+            // InternalSML.g:2097:3: ruleArchitecture
             {
              before(grammarAccess.getSMLAccess().getSmlArchitectureParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -6852,21 +6676,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Architecture__InputAssignment_0"
-    // InternalSML.g:2160:1: rule__Architecture__InputAssignment_0 : ( ( 'input' ) ) ;
+    // InternalSML.g:2106:1: rule__Architecture__InputAssignment_0 : ( ( 'input' ) ) ;
     public final void rule__Architecture__InputAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2164:1: ( ( ( 'input' ) ) )
-            // InternalSML.g:2165:2: ( ( 'input' ) )
+            // InternalSML.g:2110:1: ( ( ( 'input' ) ) )
+            // InternalSML.g:2111:2: ( ( 'input' ) )
             {
-            // InternalSML.g:2165:2: ( ( 'input' ) )
-            // InternalSML.g:2166:3: ( 'input' )
+            // InternalSML.g:2111:2: ( ( 'input' ) )
+            // InternalSML.g:2112:3: ( 'input' )
             {
              before(grammarAccess.getArchitectureAccess().getInputInputKeyword_0_0()); 
-            // InternalSML.g:2167:3: ( 'input' )
-            // InternalSML.g:2168:4: 'input'
+            // InternalSML.g:2113:3: ( 'input' )
+            // InternalSML.g:2114:4: 'input'
             {
              before(grammarAccess.getArchitectureAccess().getInputInputKeyword_0_0()); 
             match(input,25,FOLLOW_2); 
@@ -6897,17 +6721,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Architecture__FeAssignment_1"
-    // InternalSML.g:2179:1: rule__Architecture__FeAssignment_1 : ( ruleFeatureExtraction ) ;
+    // InternalSML.g:2125:1: rule__Architecture__FeAssignment_1 : ( ruleFeatureExtraction ) ;
     public final void rule__Architecture__FeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2183:1: ( ( ruleFeatureExtraction ) )
-            // InternalSML.g:2184:2: ( ruleFeatureExtraction )
+            // InternalSML.g:2129:1: ( ( ruleFeatureExtraction ) )
+            // InternalSML.g:2130:2: ( ruleFeatureExtraction )
             {
-            // InternalSML.g:2184:2: ( ruleFeatureExtraction )
-            // InternalSML.g:2185:3: ruleFeatureExtraction
+            // InternalSML.g:2130:2: ( ruleFeatureExtraction )
+            // InternalSML.g:2131:3: ruleFeatureExtraction
             {
              before(grammarAccess.getArchitectureAccess().getFeFeatureExtractionParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -6938,17 +6762,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Architecture__InterAssignment_2_0"
-    // InternalSML.g:2194:1: rule__Architecture__InterAssignment_2_0 : ( ruleInterstice ) ;
+    // InternalSML.g:2140:1: rule__Architecture__InterAssignment_2_0 : ( ruleInterstice ) ;
     public final void rule__Architecture__InterAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2198:1: ( ( ruleInterstice ) )
-            // InternalSML.g:2199:2: ( ruleInterstice )
+            // InternalSML.g:2144:1: ( ( ruleInterstice ) )
+            // InternalSML.g:2145:2: ( ruleInterstice )
             {
-            // InternalSML.g:2199:2: ( ruleInterstice )
-            // InternalSML.g:2200:3: ruleInterstice
+            // InternalSML.g:2145:2: ( ruleInterstice )
+            // InternalSML.g:2146:3: ruleInterstice
             {
              before(grammarAccess.getArchitectureAccess().getInterIntersticeParserRuleCall_2_0_0()); 
             pushFollow(FOLLOW_2);
@@ -6979,17 +6803,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Architecture__ClassAssignment_2_1"
-    // InternalSML.g:2209:1: rule__Architecture__ClassAssignment_2_1 : ( ruleClassification ) ;
+    // InternalSML.g:2155:1: rule__Architecture__ClassAssignment_2_1 : ( ruleClassification ) ;
     public final void rule__Architecture__ClassAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2213:1: ( ( ruleClassification ) )
-            // InternalSML.g:2214:2: ( ruleClassification )
+            // InternalSML.g:2159:1: ( ( ruleClassification ) )
+            // InternalSML.g:2160:2: ( ruleClassification )
             {
-            // InternalSML.g:2214:2: ( ruleClassification )
-            // InternalSML.g:2215:3: ruleClassification
+            // InternalSML.g:2160:2: ( ruleClassification )
+            // InternalSML.g:2161:3: ruleClassification
             {
              before(grammarAccess.getArchitectureAccess().getClassClassificationParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7020,21 +6844,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Architecture__OutputAssignment_3"
-    // InternalSML.g:2224:1: rule__Architecture__OutputAssignment_3 : ( ( 'output' ) ) ;
+    // InternalSML.g:2170:1: rule__Architecture__OutputAssignment_3 : ( ( 'output' ) ) ;
     public final void rule__Architecture__OutputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2228:1: ( ( ( 'output' ) ) )
-            // InternalSML.g:2229:2: ( ( 'output' ) )
+            // InternalSML.g:2174:1: ( ( ( 'output' ) ) )
+            // InternalSML.g:2175:2: ( ( 'output' ) )
             {
-            // InternalSML.g:2229:2: ( ( 'output' ) )
-            // InternalSML.g:2230:3: ( 'output' )
+            // InternalSML.g:2175:2: ( ( 'output' ) )
+            // InternalSML.g:2176:3: ( 'output' )
             {
              before(grammarAccess.getArchitectureAccess().getOutputOutputKeyword_3_0()); 
-            // InternalSML.g:2231:3: ( 'output' )
-            // InternalSML.g:2232:4: 'output'
+            // InternalSML.g:2177:3: ( 'output' )
+            // InternalSML.g:2178:4: 'output'
             {
              before(grammarAccess.getArchitectureAccess().getOutputOutputKeyword_3_0()); 
             match(input,26,FOLLOW_2); 
@@ -7065,17 +6889,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Convolution__BnconvAssignment_0"
-    // InternalSML.g:2243:1: rule__Convolution__BnconvAssignment_0 : ( ruleBnConv ) ;
+    // InternalSML.g:2189:1: rule__Convolution__BnconvAssignment_0 : ( ruleBnConv ) ;
     public final void rule__Convolution__BnconvAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2247:1: ( ( ruleBnConv ) )
-            // InternalSML.g:2248:2: ( ruleBnConv )
+            // InternalSML.g:2193:1: ( ( ruleBnConv ) )
+            // InternalSML.g:2194:2: ( ruleBnConv )
             {
-            // InternalSML.g:2248:2: ( ruleBnConv )
-            // InternalSML.g:2249:3: ruleBnConv
+            // InternalSML.g:2194:2: ( ruleBnConv )
+            // InternalSML.g:2195:3: ruleBnConv
             {
              before(grammarAccess.getConvolutionAccess().getBnconvBnConvParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -7106,17 +6930,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Convolution__ConvbnAssignment_1"
-    // InternalSML.g:2258:1: rule__Convolution__ConvbnAssignment_1 : ( ruleConvBn ) ;
+    // InternalSML.g:2204:1: rule__Convolution__ConvbnAssignment_1 : ( ruleConvBn ) ;
     public final void rule__Convolution__ConvbnAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2262:1: ( ( ruleConvBn ) )
-            // InternalSML.g:2263:2: ( ruleConvBn )
+            // InternalSML.g:2208:1: ( ( ruleConvBn ) )
+            // InternalSML.g:2209:2: ( ruleConvBn )
             {
-            // InternalSML.g:2263:2: ( ruleConvBn )
-            // InternalSML.g:2264:3: ruleConvBn
+            // InternalSML.g:2209:2: ( ruleConvBn )
+            // InternalSML.g:2210:3: ruleConvBn
             {
              before(grammarAccess.getConvolutionAccess().getConvbnConvBnParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7147,21 +6971,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Convolution__ConvAssignment_2"
-    // InternalSML.g:2273:1: rule__Convolution__ConvAssignment_2 : ( ( 'conv' ) ) ;
+    // InternalSML.g:2219:1: rule__Convolution__ConvAssignment_2 : ( ( 'conv' ) ) ;
     public final void rule__Convolution__ConvAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2277:1: ( ( ( 'conv' ) ) )
-            // InternalSML.g:2278:2: ( ( 'conv' ) )
+            // InternalSML.g:2223:1: ( ( ( 'conv' ) ) )
+            // InternalSML.g:2224:2: ( ( 'conv' ) )
             {
-            // InternalSML.g:2278:2: ( ( 'conv' ) )
-            // InternalSML.g:2279:3: ( 'conv' )
+            // InternalSML.g:2224:2: ( ( 'conv' ) )
+            // InternalSML.g:2225:3: ( 'conv' )
             {
              before(grammarAccess.getConvolutionAccess().getConvConvKeyword_2_0()); 
-            // InternalSML.g:2280:3: ( 'conv' )
-            // InternalSML.g:2281:4: 'conv'
+            // InternalSML.g:2226:3: ( 'conv' )
+            // InternalSML.g:2227:4: 'conv'
             {
              before(grammarAccess.getConvolutionAccess().getConvConvKeyword_2_0()); 
             match(input,20,FOLLOW_2); 
@@ -7192,21 +7016,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Convolution__UpconvAssignment_3"
-    // InternalSML.g:2292:1: rule__Convolution__UpconvAssignment_3 : ( ( 'upconv' ) ) ;
+    // InternalSML.g:2238:1: rule__Convolution__UpconvAssignment_3 : ( ( 'upconv' ) ) ;
     public final void rule__Convolution__UpconvAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2296:1: ( ( ( 'upconv' ) ) )
-            // InternalSML.g:2297:2: ( ( 'upconv' ) )
+            // InternalSML.g:2242:1: ( ( ( 'upconv' ) ) )
+            // InternalSML.g:2243:2: ( ( 'upconv' ) )
             {
-            // InternalSML.g:2297:2: ( ( 'upconv' ) )
-            // InternalSML.g:2298:3: ( 'upconv' )
+            // InternalSML.g:2243:2: ( ( 'upconv' ) )
+            // InternalSML.g:2244:3: ( 'upconv' )
             {
              before(grammarAccess.getConvolutionAccess().getUpconvUpconvKeyword_3_0()); 
-            // InternalSML.g:2299:3: ( 'upconv' )
-            // InternalSML.g:2300:4: 'upconv'
+            // InternalSML.g:2245:3: ( 'upconv' )
+            // InternalSML.g:2246:4: 'upconv'
             {
              before(grammarAccess.getConvolutionAccess().getUpconvUpconvKeyword_3_0()); 
             match(input,27,FOLLOW_2); 
@@ -7237,21 +7061,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FlattenOrGlobal__FlatAssignment_0"
-    // InternalSML.g:2311:1: rule__FlattenOrGlobal__FlatAssignment_0 : ( ( 'flatten' ) ) ;
+    // InternalSML.g:2257:1: rule__FlattenOrGlobal__FlatAssignment_0 : ( ( 'flatten' ) ) ;
     public final void rule__FlattenOrGlobal__FlatAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2315:1: ( ( ( 'flatten' ) ) )
-            // InternalSML.g:2316:2: ( ( 'flatten' ) )
+            // InternalSML.g:2261:1: ( ( ( 'flatten' ) ) )
+            // InternalSML.g:2262:2: ( ( 'flatten' ) )
             {
-            // InternalSML.g:2316:2: ( ( 'flatten' ) )
-            // InternalSML.g:2317:3: ( 'flatten' )
+            // InternalSML.g:2262:2: ( ( 'flatten' ) )
+            // InternalSML.g:2263:3: ( 'flatten' )
             {
              before(grammarAccess.getFlattenOrGlobalAccess().getFlatFlattenKeyword_0_0()); 
-            // InternalSML.g:2318:3: ( 'flatten' )
-            // InternalSML.g:2319:4: 'flatten'
+            // InternalSML.g:2264:3: ( 'flatten' )
+            // InternalSML.g:2265:4: 'flatten'
             {
              before(grammarAccess.getFlattenOrGlobalAccess().getFlatFlattenKeyword_0_0()); 
             match(input,28,FOLLOW_2); 
@@ -7282,17 +7106,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FlattenOrGlobal__GpAssignment_1"
-    // InternalSML.g:2330:1: rule__FlattenOrGlobal__GpAssignment_1 : ( ruleGlobalPooling ) ;
+    // InternalSML.g:2276:1: rule__FlattenOrGlobal__GpAssignment_1 : ( ruleGlobalPooling ) ;
     public final void rule__FlattenOrGlobal__GpAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2334:1: ( ( ruleGlobalPooling ) )
-            // InternalSML.g:2335:2: ( ruleGlobalPooling )
+            // InternalSML.g:2280:1: ( ( ruleGlobalPooling ) )
+            // InternalSML.g:2281:2: ( ruleGlobalPooling )
             {
-            // InternalSML.g:2335:2: ( ruleGlobalPooling )
-            // InternalSML.g:2336:3: ruleGlobalPooling
+            // InternalSML.g:2281:2: ( ruleGlobalPooling )
+            // InternalSML.g:2282:3: ruleGlobalPooling
             {
              before(grammarAccess.getFlattenOrGlobalAccess().getGpGlobalPoolingParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7322,26 +7146,26 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__FlattenOrGlobal__GpAssignment_1"
 
 
-    // $ANTLR start "rule__Interstice__FgAssignment_0"
-    // InternalSML.g:2345:1: rule__Interstice__FgAssignment_0 : ( ruleFlattenOrGlobal ) ;
-    public final void rule__Interstice__FgAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__Interstice__FgAssignment"
+    // InternalSML.g:2291:1: rule__Interstice__FgAssignment : ( ruleFlattenOrGlobal ) ;
+    public final void rule__Interstice__FgAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2349:1: ( ( ruleFlattenOrGlobal ) )
-            // InternalSML.g:2350:2: ( ruleFlattenOrGlobal )
+            // InternalSML.g:2295:1: ( ( ruleFlattenOrGlobal ) )
+            // InternalSML.g:2296:2: ( ruleFlattenOrGlobal )
             {
-            // InternalSML.g:2350:2: ( ruleFlattenOrGlobal )
-            // InternalSML.g:2351:3: ruleFlattenOrGlobal
+            // InternalSML.g:2296:2: ( ruleFlattenOrGlobal )
+            // InternalSML.g:2297:3: ruleFlattenOrGlobal
             {
-             before(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0_0()); 
+             before(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
             ruleFlattenOrGlobal();
 
             state._fsp--;
 
-             after(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0_0()); 
+             after(grammarAccess.getIntersticeAccess().getFgFlattenOrGlobalParserRuleCall_0()); 
 
             }
 
@@ -7360,29 +7184,29 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Interstice__FgAssignment_0"
+    // $ANTLR end "rule__Interstice__FgAssignment"
 
 
-    // $ANTLR start "rule__Interstice__DropAssignment_1"
-    // InternalSML.g:2360:1: rule__Interstice__DropAssignment_1 : ( ruleDropout ) ;
-    public final void rule__Interstice__DropAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Classification__DropAssignment_0"
+    // InternalSML.g:2306:1: rule__Classification__DropAssignment_0 : ( ruleDropout ) ;
+    public final void rule__Classification__DropAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2364:1: ( ( ruleDropout ) )
-            // InternalSML.g:2365:2: ( ruleDropout )
+            // InternalSML.g:2310:1: ( ( ruleDropout ) )
+            // InternalSML.g:2311:2: ( ruleDropout )
             {
-            // InternalSML.g:2365:2: ( ruleDropout )
-            // InternalSML.g:2366:3: ruleDropout
+            // InternalSML.g:2311:2: ( ruleDropout )
+            // InternalSML.g:2312:3: ruleDropout
             {
-             before(grammarAccess.getIntersticeAccess().getDropDropoutParserRuleCall_1_0()); 
+             before(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
             ruleDropout();
 
             state._fsp--;
 
-             after(grammarAccess.getIntersticeAccess().getDropDropoutParserRuleCall_1_0()); 
+             after(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_0_0()); 
 
             }
 
@@ -7401,74 +7225,33 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Interstice__DropAssignment_1"
+    // $ANTLR end "rule__Classification__DropAssignment_0"
 
 
-    // $ANTLR start "rule__Classification__DAssignment_0"
-    // InternalSML.g:2375:1: rule__Classification__DAssignment_0 : ( ( 'dense' ) ) ;
-    public final void rule__Classification__DAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__Classification__DAssignment_1"
+    // InternalSML.g:2321:1: rule__Classification__DAssignment_1 : ( ( 'dense' ) ) ;
+    public final void rule__Classification__DAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2379:1: ( ( ( 'dense' ) ) )
-            // InternalSML.g:2380:2: ( ( 'dense' ) )
+            // InternalSML.g:2325:1: ( ( ( 'dense' ) ) )
+            // InternalSML.g:2326:2: ( ( 'dense' ) )
             {
-            // InternalSML.g:2380:2: ( ( 'dense' ) )
-            // InternalSML.g:2381:3: ( 'dense' )
+            // InternalSML.g:2326:2: ( ( 'dense' ) )
+            // InternalSML.g:2327:3: ( 'dense' )
             {
-             before(grammarAccess.getClassificationAccess().getDDenseKeyword_0_0()); 
-            // InternalSML.g:2382:3: ( 'dense' )
-            // InternalSML.g:2383:4: 'dense'
+             before(grammarAccess.getClassificationAccess().getDDenseKeyword_1_0()); 
+            // InternalSML.g:2328:3: ( 'dense' )
+            // InternalSML.g:2329:4: 'dense'
             {
-             before(grammarAccess.getClassificationAccess().getDDenseKeyword_0_0()); 
+             before(grammarAccess.getClassificationAccess().getDDenseKeyword_1_0()); 
             match(input,29,FOLLOW_2); 
-             after(grammarAccess.getClassificationAccess().getDDenseKeyword_0_0()); 
+             after(grammarAccess.getClassificationAccess().getDDenseKeyword_1_0()); 
 
             }
 
-             after(grammarAccess.getClassificationAccess().getDDenseKeyword_0_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Classification__DAssignment_0"
-
-
-    // $ANTLR start "rule__Classification__DropAssignment_1"
-    // InternalSML.g:2394:1: rule__Classification__DropAssignment_1 : ( ruleDropout ) ;
-    public final void rule__Classification__DropAssignment_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalSML.g:2398:1: ( ( ruleDropout ) )
-            // InternalSML.g:2399:2: ( ruleDropout )
-            {
-            // InternalSML.g:2399:2: ( ruleDropout )
-            // InternalSML.g:2400:3: ruleDropout
-            {
-             before(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_2);
-            ruleDropout();
-
-            state._fsp--;
-
-             after(grammarAccess.getClassificationAccess().getDropDropoutParserRuleCall_1_0()); 
+             after(grammarAccess.getClassificationAccess().getDDenseKeyword_1_0()); 
 
             }
 
@@ -7487,21 +7270,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Classification__DropAssignment_1"
+    // $ANTLR end "rule__Classification__DAssignment_1"
 
 
     // $ANTLR start "rule__ConvDrop__ConvAssignment_0"
-    // InternalSML.g:2409:1: rule__ConvDrop__ConvAssignment_0 : ( ruleConvolution ) ;
+    // InternalSML.g:2340:1: rule__ConvDrop__ConvAssignment_0 : ( ruleConvolution ) ;
     public final void rule__ConvDrop__ConvAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2413:1: ( ( ruleConvolution ) )
-            // InternalSML.g:2414:2: ( ruleConvolution )
+            // InternalSML.g:2344:1: ( ( ruleConvolution ) )
+            // InternalSML.g:2345:2: ( ruleConvolution )
             {
-            // InternalSML.g:2414:2: ( ruleConvolution )
-            // InternalSML.g:2415:3: ruleConvolution
+            // InternalSML.g:2345:2: ( ruleConvolution )
+            // InternalSML.g:2346:3: ruleConvolution
             {
              before(grammarAccess.getConvDropAccess().getConvConvolutionParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -7532,17 +7315,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConvDrop__DropAssignment_1"
-    // InternalSML.g:2424:1: rule__ConvDrop__DropAssignment_1 : ( ruleDropout ) ;
+    // InternalSML.g:2355:1: rule__ConvDrop__DropAssignment_1 : ( ruleDropout ) ;
     public final void rule__ConvDrop__DropAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2428:1: ( ( ruleDropout ) )
-            // InternalSML.g:2429:2: ( ruleDropout )
+            // InternalSML.g:2359:1: ( ( ruleDropout ) )
+            // InternalSML.g:2360:2: ( ruleDropout )
             {
-            // InternalSML.g:2429:2: ( ruleDropout )
-            // InternalSML.g:2430:3: ruleDropout
+            // InternalSML.g:2360:2: ( ruleDropout )
+            // InternalSML.g:2361:3: ruleDropout
             {
              before(grammarAccess.getConvDropAccess().getDropDropoutParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7573,17 +7356,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__PAssignment_0"
-    // InternalSML.g:2439:1: rule__LeftRecu__PAssignment_0 : ( rulePooling ) ;
+    // InternalSML.g:2370:1: rule__LeftRecu__PAssignment_0 : ( rulePooling ) ;
     public final void rule__LeftRecu__PAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2443:1: ( ( rulePooling ) )
-            // InternalSML.g:2444:2: ( rulePooling )
+            // InternalSML.g:2374:1: ( ( rulePooling ) )
+            // InternalSML.g:2375:2: ( rulePooling )
             {
-            // InternalSML.g:2444:2: ( rulePooling )
-            // InternalSML.g:2445:3: rulePooling
+            // InternalSML.g:2375:2: ( rulePooling )
+            // InternalSML.g:2376:3: rulePooling
             {
              before(grammarAccess.getLeftRecuAccess().getPPoolingParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -7614,17 +7397,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__ConvdropbeginAssignment_1"
-    // InternalSML.g:2454:1: rule__LeftRecu__ConvdropbeginAssignment_1 : ( ruleConvDrop ) ;
+    // InternalSML.g:2385:1: rule__LeftRecu__ConvdropbeginAssignment_1 : ( ruleConvDrop ) ;
     public final void rule__LeftRecu__ConvdropbeginAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2458:1: ( ( ruleConvDrop ) )
-            // InternalSML.g:2459:2: ( ruleConvDrop )
+            // InternalSML.g:2389:1: ( ( ruleConvDrop ) )
+            // InternalSML.g:2390:2: ( ruleConvDrop )
             {
-            // InternalSML.g:2459:2: ( ruleConvDrop )
-            // InternalSML.g:2460:3: ruleConvDrop
+            // InternalSML.g:2390:2: ( ruleConvDrop )
+            // InternalSML.g:2391:3: ruleConvDrop
             {
              before(grammarAccess.getLeftRecuAccess().getConvdropbeginConvDropParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7655,17 +7438,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__MergeAssignment_2"
-    // InternalSML.g:2469:1: rule__LeftRecu__MergeAssignment_2 : ( ruleMerge ) ;
+    // InternalSML.g:2400:1: rule__LeftRecu__MergeAssignment_2 : ( ruleMerge ) ;
     public final void rule__LeftRecu__MergeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2473:1: ( ( ruleMerge ) )
-            // InternalSML.g:2474:2: ( ruleMerge )
+            // InternalSML.g:2404:1: ( ( ruleMerge ) )
+            // InternalSML.g:2405:2: ( ruleMerge )
             {
-            // InternalSML.g:2474:2: ( ruleMerge )
-            // InternalSML.g:2475:3: ruleMerge
+            // InternalSML.g:2405:2: ( ruleMerge )
+            // InternalSML.g:2406:3: ruleMerge
             {
              before(grammarAccess.getLeftRecuAccess().getMergeMergeParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -7696,17 +7479,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__ConvdropendAssignment_3"
-    // InternalSML.g:2484:1: rule__LeftRecu__ConvdropendAssignment_3 : ( ruleConvDrop ) ;
+    // InternalSML.g:2415:1: rule__LeftRecu__ConvdropendAssignment_3 : ( ruleConvDrop ) ;
     public final void rule__LeftRecu__ConvdropendAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2488:1: ( ( ruleConvDrop ) )
-            // InternalSML.g:2489:2: ( ruleConvDrop )
+            // InternalSML.g:2419:1: ( ( ruleConvDrop ) )
+            // InternalSML.g:2420:2: ( ruleConvDrop )
             {
-            // InternalSML.g:2489:2: ( ruleConvDrop )
-            // InternalSML.g:2490:3: ruleConvDrop
+            // InternalSML.g:2420:2: ( ruleConvDrop )
+            // InternalSML.g:2421:3: ruleConvDrop
             {
              before(grammarAccess.getLeftRecuAccess().getConvdropendConvDropParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -7737,17 +7520,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftRecu__PoolAssignment_4"
-    // InternalSML.g:2499:1: rule__LeftRecu__PoolAssignment_4 : ( rulePooling ) ;
+    // InternalSML.g:2430:1: rule__LeftRecu__PoolAssignment_4 : ( rulePooling ) ;
     public final void rule__LeftRecu__PoolAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2503:1: ( ( rulePooling ) )
-            // InternalSML.g:2504:2: ( rulePooling )
+            // InternalSML.g:2434:1: ( ( rulePooling ) )
+            // InternalSML.g:2435:2: ( rulePooling )
             {
-            // InternalSML.g:2504:2: ( rulePooling )
-            // InternalSML.g:2505:3: rulePooling
+            // InternalSML.g:2435:2: ( rulePooling )
+            // InternalSML.g:2436:3: rulePooling
             {
              before(grammarAccess.getLeftRecuAccess().getPoolPoolingParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -7778,17 +7561,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__DbAssignment_0"
-    // InternalSML.g:2514:1: rule__MergeRecu__DbAssignment_0 : ( ruleDebutMerge ) ;
+    // InternalSML.g:2445:1: rule__MergeRecu__DbAssignment_0 : ( ruleDebutMerge ) ;
     public final void rule__MergeRecu__DbAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2518:1: ( ( ruleDebutMerge ) )
-            // InternalSML.g:2519:2: ( ruleDebutMerge )
+            // InternalSML.g:2449:1: ( ( ruleDebutMerge ) )
+            // InternalSML.g:2450:2: ( ruleDebutMerge )
             {
-            // InternalSML.g:2519:2: ( ruleDebutMerge )
-            // InternalSML.g:2520:3: ruleDebutMerge
+            // InternalSML.g:2450:2: ( ruleDebutMerge )
+            // InternalSML.g:2451:3: ruleDebutMerge
             {
              before(grammarAccess.getMergeRecuAccess().getDbDebutMergeParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -7819,17 +7602,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__LeftAssignment_1"
-    // InternalSML.g:2529:1: rule__MergeRecu__LeftAssignment_1 : ( ruleLeftRecu ) ;
+    // InternalSML.g:2460:1: rule__MergeRecu__LeftAssignment_1 : ( ruleLeftRecu ) ;
     public final void rule__MergeRecu__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2533:1: ( ( ruleLeftRecu ) )
-            // InternalSML.g:2534:2: ( ruleLeftRecu )
+            // InternalSML.g:2464:1: ( ( ruleLeftRecu ) )
+            // InternalSML.g:2465:2: ( ruleLeftRecu )
             {
-            // InternalSML.g:2534:2: ( ruleLeftRecu )
-            // InternalSML.g:2535:3: ruleLeftRecu
+            // InternalSML.g:2465:2: ( ruleLeftRecu )
+            // InternalSML.g:2466:3: ruleLeftRecu
             {
              before(grammarAccess.getMergeRecuAccess().getLeftLeftRecuParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7860,21 +7643,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__VirgAssignment_2"
-    // InternalSML.g:2544:1: rule__MergeRecu__VirgAssignment_2 : ( ( ',' ) ) ;
+    // InternalSML.g:2475:1: rule__MergeRecu__VirgAssignment_2 : ( ( ',' ) ) ;
     public final void rule__MergeRecu__VirgAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2548:1: ( ( ( ',' ) ) )
-            // InternalSML.g:2549:2: ( ( ',' ) )
+            // InternalSML.g:2479:1: ( ( ( ',' ) ) )
+            // InternalSML.g:2480:2: ( ( ',' ) )
             {
-            // InternalSML.g:2549:2: ( ( ',' ) )
-            // InternalSML.g:2550:3: ( ',' )
+            // InternalSML.g:2480:2: ( ( ',' ) )
+            // InternalSML.g:2481:3: ( ',' )
             {
              before(grammarAccess.getMergeRecuAccess().getVirgCommaKeyword_2_0()); 
-            // InternalSML.g:2551:3: ( ',' )
-            // InternalSML.g:2552:4: ','
+            // InternalSML.g:2482:3: ( ',' )
+            // InternalSML.g:2483:4: ','
             {
              before(grammarAccess.getMergeRecuAccess().getVirgCommaKeyword_2_0()); 
             match(input,24,FOLLOW_2); 
@@ -7905,17 +7688,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__RightAssignment_3"
-    // InternalSML.g:2563:1: rule__MergeRecu__RightAssignment_3 : ( ruleRight ) ;
+    // InternalSML.g:2494:1: rule__MergeRecu__RightAssignment_3 : ( ruleRight ) ;
     public final void rule__MergeRecu__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2567:1: ( ( ruleRight ) )
-            // InternalSML.g:2568:2: ( ruleRight )
+            // InternalSML.g:2498:1: ( ( ruleRight ) )
+            // InternalSML.g:2499:2: ( ruleRight )
             {
-            // InternalSML.g:2568:2: ( ruleRight )
-            // InternalSML.g:2569:3: ruleRight
+            // InternalSML.g:2499:2: ( ruleRight )
+            // InternalSML.g:2500:3: ruleRight
             {
              before(grammarAccess.getMergeRecuAccess().getRightRightParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -7946,17 +7729,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeRecu__FmAssignment_4"
-    // InternalSML.g:2578:1: rule__MergeRecu__FmAssignment_4 : ( ruleFinMerge ) ;
+    // InternalSML.g:2509:1: rule__MergeRecu__FmAssignment_4 : ( ruleFinMerge ) ;
     public final void rule__MergeRecu__FmAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2582:1: ( ( ruleFinMerge ) )
-            // InternalSML.g:2583:2: ( ruleFinMerge )
+            // InternalSML.g:2513:1: ( ( ruleFinMerge ) )
+            // InternalSML.g:2514:2: ( ruleFinMerge )
             {
-            // InternalSML.g:2583:2: ( ruleFinMerge )
-            // InternalSML.g:2584:3: ruleFinMerge
+            // InternalSML.g:2514:2: ( ruleFinMerge )
+            // InternalSML.g:2515:3: ruleFinMerge
             {
              before(grammarAccess.getMergeRecuAccess().getFmFinMergeParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -7987,17 +7770,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__PAssignment_0"
-    // InternalSML.g:2593:1: rule__LeftNonRecursive__PAssignment_0 : ( rulePooling ) ;
+    // InternalSML.g:2524:1: rule__LeftNonRecursive__PAssignment_0 : ( rulePooling ) ;
     public final void rule__LeftNonRecursive__PAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2597:1: ( ( rulePooling ) )
-            // InternalSML.g:2598:2: ( rulePooling )
+            // InternalSML.g:2528:1: ( ( rulePooling ) )
+            // InternalSML.g:2529:2: ( rulePooling )
             {
-            // InternalSML.g:2598:2: ( rulePooling )
-            // InternalSML.g:2599:3: rulePooling
+            // InternalSML.g:2529:2: ( rulePooling )
+            // InternalSML.g:2530:3: rulePooling
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getPPoolingParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8028,17 +7811,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__ConvdropAssignment_1"
-    // InternalSML.g:2608:1: rule__LeftNonRecursive__ConvdropAssignment_1 : ( ruleConvDrop ) ;
+    // InternalSML.g:2539:1: rule__LeftNonRecursive__ConvdropAssignment_1 : ( ruleConvDrop ) ;
     public final void rule__LeftNonRecursive__ConvdropAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2612:1: ( ( ruleConvDrop ) )
-            // InternalSML.g:2613:2: ( ruleConvDrop )
+            // InternalSML.g:2543:1: ( ( ruleConvDrop ) )
+            // InternalSML.g:2544:2: ( ruleConvDrop )
             {
-            // InternalSML.g:2613:2: ( ruleConvDrop )
-            // InternalSML.g:2614:3: ruleConvDrop
+            // InternalSML.g:2544:2: ( ruleConvDrop )
+            // InternalSML.g:2545:3: ruleConvDrop
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getConvdropConvDropParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8069,17 +7852,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LeftNonRecursive__PoolAssignment_2"
-    // InternalSML.g:2623:1: rule__LeftNonRecursive__PoolAssignment_2 : ( rulePooling ) ;
+    // InternalSML.g:2554:1: rule__LeftNonRecursive__PoolAssignment_2 : ( rulePooling ) ;
     public final void rule__LeftNonRecursive__PoolAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2627:1: ( ( rulePooling ) )
-            // InternalSML.g:2628:2: ( rulePooling )
+            // InternalSML.g:2558:1: ( ( rulePooling ) )
+            // InternalSML.g:2559:2: ( rulePooling )
             {
-            // InternalSML.g:2628:2: ( rulePooling )
-            // InternalSML.g:2629:3: rulePooling
+            // InternalSML.g:2559:2: ( rulePooling )
+            // InternalSML.g:2560:3: rulePooling
             {
              before(grammarAccess.getLeftNonRecursiveAccess().getPoolPoolingParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8110,17 +7893,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Right__ConvAssignment_0"
-    // InternalSML.g:2638:1: rule__Right__ConvAssignment_0 : ( ruleConvolution ) ;
+    // InternalSML.g:2569:1: rule__Right__ConvAssignment_0 : ( ruleConvolution ) ;
     public final void rule__Right__ConvAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2642:1: ( ( ruleConvolution ) )
-            // InternalSML.g:2643:2: ( ruleConvolution )
+            // InternalSML.g:2573:1: ( ( ruleConvolution ) )
+            // InternalSML.g:2574:2: ( ruleConvolution )
             {
-            // InternalSML.g:2643:2: ( ruleConvolution )
-            // InternalSML.g:2644:3: ruleConvolution
+            // InternalSML.g:2574:2: ( ruleConvolution )
+            // InternalSML.g:2575:3: ruleConvolution
             {
              before(grammarAccess.getRightAccess().getConvConvolutionParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8151,17 +7934,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__DbAssignment_0"
-    // InternalSML.g:2653:1: rule__MergeNonRecu__DbAssignment_0 : ( ruleDebutMerge ) ;
+    // InternalSML.g:2584:1: rule__MergeNonRecu__DbAssignment_0 : ( ruleDebutMerge ) ;
     public final void rule__MergeNonRecu__DbAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2657:1: ( ( ruleDebutMerge ) )
-            // InternalSML.g:2658:2: ( ruleDebutMerge )
+            // InternalSML.g:2588:1: ( ( ruleDebutMerge ) )
+            // InternalSML.g:2589:2: ( ruleDebutMerge )
             {
-            // InternalSML.g:2658:2: ( ruleDebutMerge )
-            // InternalSML.g:2659:3: ruleDebutMerge
+            // InternalSML.g:2589:2: ( ruleDebutMerge )
+            // InternalSML.g:2590:3: ruleDebutMerge
             {
              before(grammarAccess.getMergeNonRecuAccess().getDbDebutMergeParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8192,17 +7975,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__LeftNonRecAssignment_1"
-    // InternalSML.g:2668:1: rule__MergeNonRecu__LeftNonRecAssignment_1 : ( ruleLeftNonRecursive ) ;
+    // InternalSML.g:2599:1: rule__MergeNonRecu__LeftNonRecAssignment_1 : ( ruleLeftNonRecursive ) ;
     public final void rule__MergeNonRecu__LeftNonRecAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2672:1: ( ( ruleLeftNonRecursive ) )
-            // InternalSML.g:2673:2: ( ruleLeftNonRecursive )
+            // InternalSML.g:2603:1: ( ( ruleLeftNonRecursive ) )
+            // InternalSML.g:2604:2: ( ruleLeftNonRecursive )
             {
-            // InternalSML.g:2673:2: ( ruleLeftNonRecursive )
-            // InternalSML.g:2674:3: ruleLeftNonRecursive
+            // InternalSML.g:2604:2: ( ruleLeftNonRecursive )
+            // InternalSML.g:2605:3: ruleLeftNonRecursive
             {
              before(grammarAccess.getMergeNonRecuAccess().getLeftNonRecLeftNonRecursiveParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8233,21 +8016,21 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__VirgAssignment_2"
-    // InternalSML.g:2683:1: rule__MergeNonRecu__VirgAssignment_2 : ( ( ',' ) ) ;
+    // InternalSML.g:2614:1: rule__MergeNonRecu__VirgAssignment_2 : ( ( ',' ) ) ;
     public final void rule__MergeNonRecu__VirgAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2687:1: ( ( ( ',' ) ) )
-            // InternalSML.g:2688:2: ( ( ',' ) )
+            // InternalSML.g:2618:1: ( ( ( ',' ) ) )
+            // InternalSML.g:2619:2: ( ( ',' ) )
             {
-            // InternalSML.g:2688:2: ( ( ',' ) )
-            // InternalSML.g:2689:3: ( ',' )
+            // InternalSML.g:2619:2: ( ( ',' ) )
+            // InternalSML.g:2620:3: ( ',' )
             {
              before(grammarAccess.getMergeNonRecuAccess().getVirgCommaKeyword_2_0()); 
-            // InternalSML.g:2690:3: ( ',' )
-            // InternalSML.g:2691:4: ','
+            // InternalSML.g:2621:3: ( ',' )
+            // InternalSML.g:2622:4: ','
             {
              before(grammarAccess.getMergeNonRecuAccess().getVirgCommaKeyword_2_0()); 
             match(input,24,FOLLOW_2); 
@@ -8278,17 +8061,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__RightAssignment_3"
-    // InternalSML.g:2702:1: rule__MergeNonRecu__RightAssignment_3 : ( ruleRight ) ;
+    // InternalSML.g:2633:1: rule__MergeNonRecu__RightAssignment_3 : ( ruleRight ) ;
     public final void rule__MergeNonRecu__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2706:1: ( ( ruleRight ) )
-            // InternalSML.g:2707:2: ( ruleRight )
+            // InternalSML.g:2637:1: ( ( ruleRight ) )
+            // InternalSML.g:2638:2: ( ruleRight )
             {
-            // InternalSML.g:2707:2: ( ruleRight )
-            // InternalSML.g:2708:3: ruleRight
+            // InternalSML.g:2638:2: ( ruleRight )
+            // InternalSML.g:2639:3: ruleRight
             {
              before(grammarAccess.getMergeNonRecuAccess().getRightRightParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -8319,17 +8102,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MergeNonRecu__FmAssignment_4"
-    // InternalSML.g:2717:1: rule__MergeNonRecu__FmAssignment_4 : ( ruleFinMerge ) ;
+    // InternalSML.g:2648:1: rule__MergeNonRecu__FmAssignment_4 : ( ruleFinMerge ) ;
     public final void rule__MergeNonRecu__FmAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2721:1: ( ( ruleFinMerge ) )
-            // InternalSML.g:2722:2: ( ruleFinMerge )
+            // InternalSML.g:2652:1: ( ( ruleFinMerge ) )
+            // InternalSML.g:2653:2: ( ruleFinMerge )
             {
-            // InternalSML.g:2722:2: ( ruleFinMerge )
-            // InternalSML.g:2723:3: ruleFinMerge
+            // InternalSML.g:2653:2: ( ruleFinMerge )
+            // InternalSML.g:2654:3: ruleFinMerge
             {
              before(grammarAccess.getMergeNonRecuAccess().getFmFinMergeParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -8360,17 +8143,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Merge__MnrAssignment_0"
-    // InternalSML.g:2732:1: rule__Merge__MnrAssignment_0 : ( ruleMergeNonRecu ) ;
+    // InternalSML.g:2663:1: rule__Merge__MnrAssignment_0 : ( ruleMergeNonRecu ) ;
     public final void rule__Merge__MnrAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2736:1: ( ( ruleMergeNonRecu ) )
-            // InternalSML.g:2737:2: ( ruleMergeNonRecu )
+            // InternalSML.g:2667:1: ( ( ruleMergeNonRecu ) )
+            // InternalSML.g:2668:2: ( ruleMergeNonRecu )
             {
-            // InternalSML.g:2737:2: ( ruleMergeNonRecu )
-            // InternalSML.g:2738:3: ruleMergeNonRecu
+            // InternalSML.g:2668:2: ( ruleMergeNonRecu )
+            // InternalSML.g:2669:3: ruleMergeNonRecu
             {
              before(grammarAccess.getMergeAccess().getMnrMergeNonRecuParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8401,17 +8184,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Merge__MrAssignment_1"
-    // InternalSML.g:2747:1: rule__Merge__MrAssignment_1 : ( ruleMergeRecu ) ;
+    // InternalSML.g:2678:1: rule__Merge__MrAssignment_1 : ( ruleMergeRecu ) ;
     public final void rule__Merge__MrAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2751:1: ( ( ruleMergeRecu ) )
-            // InternalSML.g:2752:2: ( ruleMergeRecu )
+            // InternalSML.g:2682:1: ( ( ruleMergeRecu ) )
+            // InternalSML.g:2683:2: ( ruleMergeRecu )
             {
-            // InternalSML.g:2752:2: ( ruleMergeRecu )
-            // InternalSML.g:2753:3: ruleMergeRecu
+            // InternalSML.g:2683:2: ( ruleMergeRecu )
+            // InternalSML.g:2684:3: ruleMergeRecu
             {
              before(grammarAccess.getMergeAccess().getMrMergeRecuParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8442,17 +8225,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__DbAssignment_0"
-    // InternalSML.g:2762:1: rule__Highway__DbAssignment_0 : ( ruleDebutMerge ) ;
+    // InternalSML.g:2693:1: rule__Highway__DbAssignment_0 : ( ruleDebutMerge ) ;
     public final void rule__Highway__DbAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2766:1: ( ( ruleDebutMerge ) )
-            // InternalSML.g:2767:2: ( ruleDebutMerge )
+            // InternalSML.g:2697:1: ( ( ruleDebutMerge ) )
+            // InternalSML.g:2698:2: ( ruleDebutMerge )
             {
-            // InternalSML.g:2767:2: ( ruleDebutMerge )
-            // InternalSML.g:2768:3: ruleDebutMerge
+            // InternalSML.g:2698:2: ( ruleDebutMerge )
+            // InternalSML.g:2699:3: ruleDebutMerge
             {
              before(grammarAccess.getHighwayAccess().getDbDebutMergeParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8483,17 +8266,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__LeftNonRecAssignment_1_0"
-    // InternalSML.g:2777:1: rule__Highway__LeftNonRecAssignment_1_0 : ( ruleLeftNonRecursive ) ;
+    // InternalSML.g:2708:1: rule__Highway__LeftNonRecAssignment_1_0 : ( ruleLeftNonRecursive ) ;
     public final void rule__Highway__LeftNonRecAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2781:1: ( ( ruleLeftNonRecursive ) )
-            // InternalSML.g:2782:2: ( ruleLeftNonRecursive )
+            // InternalSML.g:2712:1: ( ( ruleLeftNonRecursive ) )
+            // InternalSML.g:2713:2: ( ruleLeftNonRecursive )
             {
-            // InternalSML.g:2782:2: ( ruleLeftNonRecursive )
-            // InternalSML.g:2783:3: ruleLeftNonRecursive
+            // InternalSML.g:2713:2: ( ruleLeftNonRecursive )
+            // InternalSML.g:2714:3: ruleLeftNonRecursive
             {
              before(grammarAccess.getHighwayAccess().getLeftNonRecLeftNonRecursiveParserRuleCall_1_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8524,17 +8307,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__ConvAssignment_1_2"
-    // InternalSML.g:2792:1: rule__Highway__ConvAssignment_1_2 : ( ruleConvolution ) ;
+    // InternalSML.g:2723:1: rule__Highway__ConvAssignment_1_2 : ( ruleConvolution ) ;
     public final void rule__Highway__ConvAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2796:1: ( ( ruleConvolution ) )
-            // InternalSML.g:2797:2: ( ruleConvolution )
+            // InternalSML.g:2727:1: ( ( ruleConvolution ) )
+            // InternalSML.g:2728:2: ( ruleConvolution )
             {
-            // InternalSML.g:2797:2: ( ruleConvolution )
-            // InternalSML.g:2798:3: ruleConvolution
+            // InternalSML.g:2728:2: ( ruleConvolution )
+            // InternalSML.g:2729:3: ruleConvolution
             {
              before(grammarAccess.getHighwayAccess().getConvConvolutionParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8565,17 +8348,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Highway__FmAssignment_2"
-    // InternalSML.g:2807:1: rule__Highway__FmAssignment_2 : ( ruleFinMerge ) ;
+    // InternalSML.g:2738:1: rule__Highway__FmAssignment_2 : ( ruleFinMerge ) ;
     public final void rule__Highway__FmAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2811:1: ( ( ruleFinMerge ) )
-            // InternalSML.g:2812:2: ( ruleFinMerge )
+            // InternalSML.g:2742:1: ( ( ruleFinMerge ) )
+            // InternalSML.g:2743:2: ( ruleFinMerge )
             {
-            // InternalSML.g:2812:2: ( ruleFinMerge )
-            // InternalSML.g:2813:3: ruleFinMerge
+            // InternalSML.g:2743:2: ( ruleFinMerge )
+            // InternalSML.g:2744:3: ruleFinMerge
             {
              before(grammarAccess.getHighwayAccess().getFmFinMergeParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8606,17 +8389,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__ConvAssignment_0_0"
-    // InternalSML.g:2822:1: rule__FeatureExtraction__ConvAssignment_0_0 : ( ruleConvolution ) ;
+    // InternalSML.g:2753:1: rule__FeatureExtraction__ConvAssignment_0_0 : ( ruleConvolution ) ;
     public final void rule__FeatureExtraction__ConvAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2826:1: ( ( ruleConvolution ) )
-            // InternalSML.g:2827:2: ( ruleConvolution )
+            // InternalSML.g:2757:1: ( ( ruleConvolution ) )
+            // InternalSML.g:2758:2: ( ruleConvolution )
             {
-            // InternalSML.g:2827:2: ( ruleConvolution )
-            // InternalSML.g:2828:3: ruleConvolution
+            // InternalSML.g:2758:2: ( ruleConvolution )
+            // InternalSML.g:2759:3: ruleConvolution
             {
              before(grammarAccess.getFeatureExtractionAccess().getConvConvolutionParserRuleCall_0_0_0()); 
             pushFollow(FOLLOW_2);
@@ -8647,17 +8430,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__MergeAssignment_0_1"
-    // InternalSML.g:2837:1: rule__FeatureExtraction__MergeAssignment_0_1 : ( ruleMerge ) ;
+    // InternalSML.g:2768:1: rule__FeatureExtraction__MergeAssignment_0_1 : ( ruleMerge ) ;
     public final void rule__FeatureExtraction__MergeAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2841:1: ( ( ruleMerge ) )
-            // InternalSML.g:2842:2: ( ruleMerge )
+            // InternalSML.g:2772:1: ( ( ruleMerge ) )
+            // InternalSML.g:2773:2: ( ruleMerge )
             {
-            // InternalSML.g:2842:2: ( ruleMerge )
-            // InternalSML.g:2843:3: ruleMerge
+            // InternalSML.g:2773:2: ( ruleMerge )
+            // InternalSML.g:2774:3: ruleMerge
             {
              before(grammarAccess.getFeatureExtractionAccess().getMergeMergeParserRuleCall_0_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8688,17 +8471,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__HwAssignment_0_2"
-    // InternalSML.g:2852:1: rule__FeatureExtraction__HwAssignment_0_2 : ( ruleHighway ) ;
+    // InternalSML.g:2783:1: rule__FeatureExtraction__HwAssignment_0_2 : ( ruleHighway ) ;
     public final void rule__FeatureExtraction__HwAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2856:1: ( ( ruleHighway ) )
-            // InternalSML.g:2857:2: ( ruleHighway )
+            // InternalSML.g:2787:1: ( ( ruleHighway ) )
+            // InternalSML.g:2788:2: ( ruleHighway )
             {
-            // InternalSML.g:2857:2: ( ruleHighway )
-            // InternalSML.g:2858:3: ruleHighway
+            // InternalSML.g:2788:2: ( ruleHighway )
+            // InternalSML.g:2789:3: ruleHighway
             {
              before(grammarAccess.getFeatureExtractionAccess().getHwHighwayParserRuleCall_0_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8729,17 +8512,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__DropAssignment_1"
-    // InternalSML.g:2867:1: rule__FeatureExtraction__DropAssignment_1 : ( ruleDropout ) ;
+    // InternalSML.g:2798:1: rule__FeatureExtraction__DropAssignment_1 : ( ruleDropout ) ;
     public final void rule__FeatureExtraction__DropAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2871:1: ( ( ruleDropout ) )
-            // InternalSML.g:2872:2: ( ruleDropout )
+            // InternalSML.g:2802:1: ( ( ruleDropout ) )
+            // InternalSML.g:2803:2: ( ruleDropout )
             {
-            // InternalSML.g:2872:2: ( ruleDropout )
-            // InternalSML.g:2873:3: ruleDropout
+            // InternalSML.g:2803:2: ( ruleDropout )
+            // InternalSML.g:2804:3: ruleDropout
             {
              before(grammarAccess.getFeatureExtractionAccess().getDropDropoutParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8770,17 +8553,17 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FeatureExtraction__PoolAssignment_2"
-    // InternalSML.g:2882:1: rule__FeatureExtraction__PoolAssignment_2 : ( rulePooling ) ;
+    // InternalSML.g:2813:1: rule__FeatureExtraction__PoolAssignment_2 : ( rulePooling ) ;
     public final void rule__FeatureExtraction__PoolAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSML.g:2886:1: ( ( rulePooling ) )
-            // InternalSML.g:2887:2: ( rulePooling )
+            // InternalSML.g:2817:1: ( ( rulePooling ) )
+            // InternalSML.g:2818:2: ( rulePooling )
             {
-            // InternalSML.g:2887:2: ( rulePooling )
-            // InternalSML.g:2888:3: rulePooling
+            // InternalSML.g:2818:2: ( rulePooling )
+            // InternalSML.g:2819:3: rulePooling
             {
              before(grammarAccess.getFeatureExtractionAccess().getPoolPoolingParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8815,8 +8598,8 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
     protected DFA7 dfa7 = new DFA7(this);
     protected DFA8 dfa8 = new DFA8(this);
     static final String dfa_1s = "\32\uffff";
-    static final String dfa_2s = "\4\14\1\23\2\13\1\uffff\1\24\1\23\1\14\1\23\2\13\1\uffff\2\25\1\24\1\23\1\14\2\13\2\25\2\13";
-    static final String dfa_3s = "\1\14\3\33\1\24\2\33\1\uffff\1\24\1\23\1\33\1\24\2\33\1\uffff\2\25\1\24\1\23\3\33\2\25\2\33";
+    static final String dfa_2s = "\4\14\1\23\2\13\1\uffff\1\23\1\24\1\14\1\23\2\13\1\uffff\2\25\1\24\1\23\1\14\2\13\2\25\2\13";
+    static final String dfa_3s = "\1\14\3\33\1\24\2\33\1\uffff\1\23\1\24\1\33\1\24\2\33\1\uffff\2\25\1\24\1\23\3\33\2\25\2\33";
     static final String dfa_4s = "\7\uffff\1\2\6\uffff\1\1\13\uffff";
     static final String dfa_5s = "\32\uffff}>";
     static final String[] dfa_6s = {
@@ -8824,7 +8607,7 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
             "\1\7\1\uffff\1\2\1\3\2\uffff\1\4\1\uffff\1\5\6\uffff\1\6",
             "\1\7\5\uffff\1\4\1\uffff\1\5\6\uffff\1\6",
             "\1\7\5\uffff\1\4\1\uffff\1\5\6\uffff\1\6",
-            "\1\10\1\11",
+            "\1\11\1\10",
             "\1\12\1\7\1\uffff\2\16\2\uffff\1\13\1\uffff\1\14\3\uffff\1\16\2\uffff\1\15",
             "\1\12\1\7\1\uffff\2\16\2\uffff\1\13\1\uffff\1\14\3\uffff\1\16\2\uffff\1\15",
             "",
@@ -8941,8 +8724,8 @@ public class InternalSMLParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000008141000L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000014030000L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000008141002L});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000020000002L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000020000800L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000020000802L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000200000L});

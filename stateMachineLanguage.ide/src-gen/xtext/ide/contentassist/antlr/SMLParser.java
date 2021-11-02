@@ -42,7 +42,6 @@ public class SMLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getArchitectureAccess().getGroup_2(), "rule__Architecture__Group_2__0");
 			builder.put(grammarAccess.getBnConvAccess().getGroup(), "rule__BnConv__Group__0");
 			builder.put(grammarAccess.getConvBnAccess().getGroup(), "rule__ConvBn__Group__0");
-			builder.put(grammarAccess.getIntersticeAccess().getGroup(), "rule__Interstice__Group__0");
 			builder.put(grammarAccess.getClassificationAccess().getGroup(), "rule__Classification__Group__0");
 			builder.put(grammarAccess.getConvDropAccess().getGroup(), "rule__ConvDrop__Group__0");
 			builder.put(grammarAccess.getLeftRecuAccess().getGroup(), "rule__LeftRecu__Group__0");
@@ -65,10 +64,9 @@ public class SMLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getConvolutionAccess().getUpconvAssignment_3(), "rule__Convolution__UpconvAssignment_3");
 			builder.put(grammarAccess.getFlattenOrGlobalAccess().getFlatAssignment_0(), "rule__FlattenOrGlobal__FlatAssignment_0");
 			builder.put(grammarAccess.getFlattenOrGlobalAccess().getGpAssignment_1(), "rule__FlattenOrGlobal__GpAssignment_1");
-			builder.put(grammarAccess.getIntersticeAccess().getFgAssignment_0(), "rule__Interstice__FgAssignment_0");
-			builder.put(grammarAccess.getIntersticeAccess().getDropAssignment_1(), "rule__Interstice__DropAssignment_1");
-			builder.put(grammarAccess.getClassificationAccess().getDAssignment_0(), "rule__Classification__DAssignment_0");
-			builder.put(grammarAccess.getClassificationAccess().getDropAssignment_1(), "rule__Classification__DropAssignment_1");
+			builder.put(grammarAccess.getIntersticeAccess().getFgAssignment(), "rule__Interstice__FgAssignment");
+			builder.put(grammarAccess.getClassificationAccess().getDropAssignment_0(), "rule__Classification__DropAssignment_0");
+			builder.put(grammarAccess.getClassificationAccess().getDAssignment_1(), "rule__Classification__DAssignment_1");
 			builder.put(grammarAccess.getConvDropAccess().getConvAssignment_0(), "rule__ConvDrop__ConvAssignment_0");
 			builder.put(grammarAccess.getConvDropAccess().getDropAssignment_1(), "rule__ConvDrop__DropAssignment_1");
 			builder.put(grammarAccess.getLeftRecuAccess().getPAssignment_0(), "rule__LeftRecu__PAssignment_0");
