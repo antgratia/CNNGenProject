@@ -4,7 +4,9 @@ import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.BatchNormalisation;
 import models.Convolution;
+import models.Dropout;
 import models.LayerInterface;
 import models.Pooling;
 
@@ -47,4 +49,16 @@ public class GestionHpp {
 		}
 
 	}
+
+	public static void gestionDropout(Dropout dropout) {
+		
+		
+	}
+
+	public static void gestionBN(BatchNormalisation batchNormalisation) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }
