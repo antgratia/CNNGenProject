@@ -7,15 +7,6 @@ public class Pooling implements LayerInterface {
 	private int kernel;
 	private int stride;
 	private String padding;
-	
-	
-	
-	public Pooling(int kernel, int stride, String padding) {
-		super();
-		this.kernel = kernel;
-		this.stride = stride;
-		this.padding = padding;
-	}
 
 
 

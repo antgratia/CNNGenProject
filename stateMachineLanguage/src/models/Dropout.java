@@ -5,16 +5,6 @@ import utils.GestionHpp;
 public class Dropout implements LayerInterface {
 
 	private double dropoutRate;
-	
-	public Dropout(int dropoutRate) {
-		super();
-		this.dropoutRate = dropoutRate;
-	}
-	
-	public Dropout() {
-		super();
-	}
-
 
 
 	@Override

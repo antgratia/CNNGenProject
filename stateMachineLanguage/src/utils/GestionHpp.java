@@ -6,6 +6,7 @@ import java.util.List;
 
 import models.BatchNormalisation;
 import models.Convolution;
+import models.Dense;
 import models.Dropout;
 import models.LayerInterface;
 import models.Pooling;
@@ -56,6 +57,11 @@ public class GestionHpp {
 	}
 
 	public static void gestionBN(BatchNormalisation batchNormalisation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void gestionDense(Dense dense) {
 		// TODO Auto-generated method stub
 		
 	}
