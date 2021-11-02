@@ -272,9 +272,10 @@ class SMLGenerator extends AbstractGenerator {
 	def gestionDense(EList<Classification> list) {
 		var strDense = ""
 		for (dense: list){
-			strDense += unitDense(gestionWay.current)
 			if(dense.drop !== null)
 				strDense += unitDropout(gestionWay.current)
+			strDense += unitDense(gestionWay.current)
+			
 		}
 		return strDense
 	}

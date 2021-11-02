@@ -26,9 +26,9 @@ GlobalPooling: ('global_avg_pooling') | ("global_max_pooling");
 
 FlattenOrGlobal: (flat='flatten') | (gp = GlobalPooling);
 
-Interstice: fg = (FlattenOrGlobal) drop = (Dropout)?;
+Interstice: fg = (FlattenOrGlobal);
 
-Classification: d=('dense') drop =(Dropout)?;
+Classification: drop =(Dropout)? d=('dense') ;
 
 ConvDrop: conv = Convolution (drop = Dropout)?;	
 
