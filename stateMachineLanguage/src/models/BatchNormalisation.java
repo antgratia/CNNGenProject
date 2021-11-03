@@ -5,11 +5,16 @@ import utils.GestionHpp;
 public class BatchNormalisation implements LayerInterface {
 
 	private double epsilon;
+	private GestionHpp gestionHpp;
+	
+	public BatchNormalisation() {
+		gestionHpp = GestionHpp.getGestionHpp();
+	}
 	
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionBN(this);
+		gestionHpp.gestionBN(this);
 		return this;
 	}
 

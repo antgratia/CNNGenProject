@@ -9,13 +9,16 @@ public class Convolution implements LayerInterface {
 	private int stride;
 	private String fct_activation;
 	private String padding;
+	private GestionHpp gestionHpp;
 	
-	
-	
+	public Convolution() {
+		gestionHpp = GestionHpp.getGestionHpp();
+		
+	}
 	
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionConvolution(this);
+		gestionHpp.gestionConvolution(this);
 		return this;
 	}
 

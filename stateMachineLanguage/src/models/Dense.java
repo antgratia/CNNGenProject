@@ -7,20 +7,22 @@ public class Dense implements LayerInterface {
 	private int units;
 	private String fctActivation;
 	private boolean last;
+	private GestionHpp gestionHpp;
 	
 	
 	
 	
-	private Dense(boolean last) {
+	public Dense(boolean last) {
 		super();
 		this.last = last;
+		gestionHpp = GestionHpp.getGestionHpp();
 	}
 
 
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionDense(this);
+		gestionHpp.gestionDense(this);
 		return this;
 	}
 

@@ -3,6 +3,7 @@
  */
 package xtext.generator
 
+import models.Convolution
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -12,7 +13,6 @@ import utils.FonctionStringPy
 import utils.GestionWay
 import xtext.sML.Architecture
 import xtext.sML.Classification
-import xtext.sML.Convolution
 import xtext.sML.FeatureExtraction
 import xtext.sML.Interstice
 import xtext.sML.LeftNonRecursive
@@ -21,6 +21,10 @@ import xtext.sML.Merge
 import xtext.sML.MergeNonRecu
 import xtext.sML.MergeRecu
 import xtext.sML.Right
+import models.Dense
+import models.Dropout
+import models.Pooling
+import models.BatchNormalisation
 
 /**
  * Generates code from your model files on save.
@@ -151,7 +155,7 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	
-	def gestionConv(Convolution conv, String x_or_shortcut) {
+	def gestionConv(xtext.sML.Convolution conv, String x_or_shortcut) {
 		if( conv.bnconv !== null)
 			return unitBnConv(x_or_shortcut)
 		else if (conv.convbn !== null)
@@ -303,8 +307,8 @@ class SMLGenerator extends AbstractGenerator {
 	
 	
 	def unitConv(String X_or_shortcut){
-		var models.Convolution conv = new models.Convolution
-		conv = conv.hyperparameters as models.Convolution
+		var Convolution conv = new Convolution
+		conv.hyperparameters
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
@@ -313,14 +317,20 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitBnConv(String X_or_shortcut){
-		return fsp.writeBN(0.2, X_or_shortcut) + fsp.writeConv(10,1,1,"relu","same", X_or_shortcut)
+		var BatchNormalisation bn = new BatchNormalisation
+		bn.hyperparameters
+		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(10,1,1,"relu","same", X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut){
-		return fsp.writeConv(10,1,1,"relu","same",X_or_shortcut) + fsp.writeBN(0.2, X_or_shortcut)
+		var BatchNormalisation bn = new BatchNormalisation
+		bn.hyperparameters
+		return fsp.writeConv(10,1,1,"relu","same",X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
 	def unitPooling(String pool, String X_or_shortcut){
+		var Pooling pooling = new Pooling
+		pooling.hyperparameters
 		if(pool == "avg_pooling"){
 			return fsp.writeAvgPooling(1,1,"same", X_or_shortcut)
 		}else{
@@ -329,11 +339,15 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitDropout(String X_or_shortcut){
-		return fsp.writeDropout(0.5, X_or_shortcut)
+		var Dropout dropout = new Dropout
+		dropout.hyperparameters
+		return fsp.writeDropout(dropout.dropoutRate, X_or_shortcut)
 	}
 	
 	def unitDense(String X_or_shortcut, boolean last){
-		return fsp.writeDense(50,"relu", X_or_shortcut)
+		var Dense dense = new Dense(last)
+		dense.hyperparameters
+		return fsp.writeDense(dense.units,dense.fctActivation, X_or_shortcut)
 	}
 	
 	def unitFlatten(String X_or_shortcut){

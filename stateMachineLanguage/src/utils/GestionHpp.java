@@ -13,9 +13,11 @@ import models.Pooling;
 
 public class GestionHpp {
 	
+	private static GestionHpp gestionHpp;
+	
 	// info img
 	private final static int MAX_SIZE_IMG = 28;
-	private static int currentSizeImg = 28;
+	private static int currentSizeImg;
 	
 	private final static int NB_CLASS = 10;
 	private final static String FCT_ACTIVATION = "softmax";
@@ -27,7 +29,7 @@ public class GestionHpp {
 	private static List<String> padding = new ArrayList<String>(List.of("same","valid"));
 		// hpp Convolution supp
 	private static List<String> fctActivation = new ArrayList<String>(List.of("relu","selu","tanh"));
-	private static int currentNBFilters;
+	private int currentNBFilters;
 	private static final int INIT_NB_FILTER = 16;
 	
 	// hpp dropout
@@ -37,36 +39,49 @@ public class GestionHpp {
 	private static List<Double> epsilon = new ArrayList<Double>(List.of(1.1e-10, 1.001e-5, 0.001, 1.1e-5, 1.1e-7));;
 	
 	// hpp Dense
-	private static int entryParams = 0;
+	private int entryParams;
 	
+	private GestionHpp() {
+		gestionHpp.currentNBFilters = INIT_NB_FILTER;
+		entryParams = 0;
+		currentSizeImg = MAX_SIZE_IMG;
+	}
+	
+	public static GestionHpp getGestionHpp() {
+		if (gestionHpp == null) {
+			return gestionHpp = new GestionHpp();
+		}
+		return gestionHpp;
+	}
 	
 	// entry point
-	public static void gestionConvolution(Convolution conv){
+	public void gestionConvolution(Convolution conv){
 		optimisationKernelPaddingStride(conv);
 			
-		conv.setNbFilter(multFilterby2());
+		conv.setNbFilter(currentNBFilters);
+		multFilterby2();
 		Random rand = new Random();
 		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
 			
 	}
 	
-	public static void gestionPooling(Pooling pool) {
+	public void gestionPooling(Pooling pool) {
 		optimisationKernelPaddingStride(pool);
 
 	}
 
-	public static void gestionDropout(Dropout dropout) {
+	public void gestionDropout(Dropout dropout) {
 		Random rand = new Random();
 		dropout.setDropoutRate(dropoutRate.get(rand.nextInt(dropoutRate.size())));
 		
 	}
 
-	public static void gestionBN(BatchNormalisation bn) {
+	public void gestionBN(BatchNormalisation bn) {
 		Random rand = new Random();
 		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
 	}
 
-	public static void gestionDense(Dense dense) {
+	public void gestionDense(Dense dense) {
 		if(entryParams == 0) entryParams = currentSizeImg*currentSizeImg*currentNBFilters;
 		
 		if(dense.isLast()) {
@@ -88,7 +103,7 @@ public class GestionHpp {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static void optimisationKernelPaddingStride(LayerInterface layer) {
+	private static void optimisationKernelPaddingStride(LayerInterface layer) {
 		Random rand = new Random();
 		
 		String pad = padding.get(rand.nextInt(padding.size()));
@@ -130,8 +145,6 @@ public class GestionHpp {
 				    
 		}
 		
-		calculCurrentSize(pad, knl, strd);
-		
 		
 		if (layer instanceof Convolution) {
 			Convolution conv;
@@ -146,23 +159,41 @@ public class GestionHpp {
 			pool.setKernel(knl);
 			pool.setStride(strd);
 		}
+		
+		calculCurrentSize(pad, knl, strd);
 			 
 	}
 	
-	public static int multFilterby2() {
-		return currentNBFilters*2;
+	private int multFilterby2() {
+		currentNBFilters = currentNBFilters*2;
+		return currentNBFilters;
 	}
 	
-	public static int addInitToFilter() {
-		return currentNBFilters + INIT_NB_FILTER;
+	@SuppressWarnings("unused")
+	private int addInitToFilter() {
+		currentNBFilters = currentNBFilters + INIT_NB_FILTER;
+		return currentNBFilters;
 	}
 	
-	public static void calculCurrentSize(String pad, int knl, int strd) {
-		
+	private static void calculCurrentSize(String pad, int knl, int strd) {
+		int newCurrentSizeImg = 0;
+		if(pad == "valid") {
+			
+	        while(currentSizeImg>=knl) {
+	        	currentSizeImg -= strd;
+	        	newCurrentSizeImg += 1;
+	        }
+		}else {
+	        if(currentSizeImg%strd == 0)
+	        	newCurrentSizeImg = (int)(currentSizeImg/strd);
+	        else
+	        	newCurrentSizeImg = (int)(currentSizeImg/strd)+1;
+		}
+		currentSizeImg = newCurrentSizeImg;
 	}
 	
 	
-	public static class Randomizer {
+	private static class Randomizer {
 	    public static int generate(int min,int max) {
 	        return min + (int)(Math.random() * ((max - min) + 1));
 	    }

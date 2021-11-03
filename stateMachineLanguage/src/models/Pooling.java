@@ -7,12 +7,16 @@ public class Pooling implements LayerInterface {
 	private int kernel;
 	private int stride;
 	private String padding;
+	private GestionHpp gestionHpp;
 
+	public Pooling() {
+		gestionHpp = GestionHpp.getGestionHpp();
+	}
 
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionPooling(this);
+		gestionHpp.gestionPooling(this);
 		return this;
 	}
 

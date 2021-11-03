@@ -5,11 +5,15 @@ import utils.GestionHpp;
 public class Dropout implements LayerInterface {
 
 	private double dropoutRate;
-
+	private GestionHpp gestionHpp;
+	
+	public Dropout() {
+		gestionHpp = GestionHpp.getGestionHpp();
+	}
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		GestionHpp.gestionDropout(this);
+		gestionHpp.gestionDropout(this);
 		return this;
 	}
 
