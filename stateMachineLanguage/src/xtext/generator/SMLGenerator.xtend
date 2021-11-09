@@ -195,7 +195,7 @@ class SMLGenerator extends AbstractGenerator {
 		// body merge (i.e Left & Right)
 		strMergeNonRecur += gestionLeftNonRecursive(mergeNonRecu.leftNonRec, merge)
 		strMergeNonRecur += '\n'
-		strMergeNonRecur += gestionRight(mergeNonRecu.right, merge)
+		strMergeNonRecur += gestionRight(mergeNonRecu.right, merge, false)
 		
 		// end merge (i.e Add/Concatenate)
 		if (merge.add_or_concat == 'concat'){
@@ -232,12 +232,14 @@ class SMLGenerator extends AbstractGenerator {
 		return strLeft
 	}
 	
-	def gestionRight(Right right, MergeSimple merge) {
+	def gestionRight(Right right, MergeSimple merge, boolean isRecu) {
 		var strRight = ""
 		
 		if(right.conv !== null){
 			for (conv: right.conv){
-				strRight += gestionConv(conv, gestionWay.next, merge.right.get(0) as Convolution)
+				if (isRecu)
+					strRight += gestionConv(conv, gestionWay.current, merge.right.get(0) as Convolution)
+				else strRight += gestionConv(conv, gestionWay.next, merge.right.get(0) as Convolution)
 				merge.removeFirstRight
 			}
 		}
@@ -257,7 +259,7 @@ class SMLGenerator extends AbstractGenerator {
 		//body
 		strMerge += gestionLeftRecursive(mergeRecu.left, ms)
 		strMerge += '\n'
-		strMerge += gestionRight(mergeRecu.right, ms)
+		strMerge += gestionRight(mergeRecu.right, ms, true)
 		
 		// end
 		if (ms.add_or_concat == 'concat'){

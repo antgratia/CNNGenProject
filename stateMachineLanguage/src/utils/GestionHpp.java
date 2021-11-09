@@ -334,8 +334,6 @@ public class GestionHpp {
 			Random rand = new Random();
 			ms.setAdd_or_concat(add_or_concat.get(rand.nextInt(add_or_concat.size())));
 			
-			if (mr.getRight().getEmpty() != null) {
-				
 				// pooling -> conv -> merge -> conv -> pooling
 				
 				// one way is empty
@@ -368,60 +366,14 @@ public class GestionHpp {
 					}
 				}
 				
-				// pooling
-				if(mr.getLeft().getPool() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-			}else {
-				int initImgSize = currentSizeImg;
-				
-				// pooling -> conv -> merge -> conv -> pooling
-				
-				// pooling
-				if(mr.getLeft().getP() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-				
-				// convdrop
-				if (mr.getLeft().getConvdropend() != null){
-					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
+				if (mr.getRight().getEmpty() == null) {
+					// add to right
+					for (xtext.sML.Convolution conv: mr.getRight().getConv()) {
 						Convolution c = new Convolution();
 						gestionConvolutionMerge(1, "same", c);
-						ms.addLeft(c);
-					}
-
-				}
-				
-				
-				// merge
-				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
-				
-				// conv
-				if (mr.getLeft().getConvdropend() != null){
-					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
-						Convolution c = new Convolution();
-						gestionConvolutionMerge(1, "same", c);
-						ms.addLeft(c);
+						ms.addRight(c);
 					}
 				}
-				
-				// add to right
-				for (xtext.sML.Convolution conv: mr.getRight().getConv()) {
-					Convolution c = new Convolution();
-					gestionConvolutionMerge(1, "same", c);
-					ms.addRight(c);
-				}
-				
 				
 				// pooling
 				if(mr.getLeft().getPool() != null) {
@@ -431,11 +383,7 @@ public class GestionHpp {
 					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
 					
 					ms.addLeft(p);
-				}
-				
-			}
-			
-			
+				}					
 		}else { // end of merge recusive
 			gestionMergeNonRecu(mr.getLeft().getMerge().getMnr(), ms);
 		}
