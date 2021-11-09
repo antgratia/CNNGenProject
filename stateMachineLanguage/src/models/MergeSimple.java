@@ -46,14 +46,6 @@ public class MergeSimple {
 	public void setAdd_or_concat(String add_or_concat) {
 		this.add_or_concat = add_or_concat;
 	}
-
-	public GestionHpp getGestionHpp() {
-		return gestionHpp;
-	}
-
-	public void setGestionHpp(GestionHpp gestionHpp) {
-		this.gestionHpp = gestionHpp;
-	}
 	
 	public void addLeft(LayerInterface l) {
 		this.left.add(l);

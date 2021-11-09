@@ -121,7 +121,7 @@ public class FonctionStringPy {
 	}
 	
 	public String writeAdd(String x1, String x2) {
-		return String.format("\t\tX = Add()([%s, %s])\n", x1, x2);
+		return String.format("\t\t%s = Add()([%s, %s])\n", x1, x1, x2);
 	}
 	
 	public String writeUpconv(String x1, int kernel) {

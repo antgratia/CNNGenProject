@@ -33,8 +33,7 @@ Classification: drop =(Dropout)? d=('dense') ;
 ConvDrop: conv = Convolution (drop = Dropout)?;	
 
 // Merge Recursive
-LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
-;
+LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
 
 MergeRecu:  db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge ;
 

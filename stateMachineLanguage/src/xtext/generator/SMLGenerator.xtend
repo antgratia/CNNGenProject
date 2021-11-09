@@ -260,8 +260,11 @@ class SMLGenerator extends AbstractGenerator {
 		strMerge += gestionRight(mergeRecu.right, ms)
 		
 		// end
-
-		strMerge += fsp.writeConcat(gestionWay.next, gestionWay.current)
+		if (ms.add_or_concat == 'concat'){
+			strMerge += fsp.writeConcat(gestionWay.next, gestionWay.current)
+		}else{
+			strMerge += fsp.writeAdd(gestionWay.next, gestionWay.current)
+		}
 		gestionWay.removeBeforeLastFromList
 		
 		
@@ -273,12 +276,16 @@ class SMLGenerator extends AbstractGenerator {
 	def gestionLeftRecursive(LeftRecu left, MergeSimple ms) {
 		var strLeftRecu = ""
 		
-		if(left.p !== null)
-			strLeftRecu += unitPooling(left.p, gestionWay.next)
+		if(left.p !== null){
+			strLeftRecu += unitPooling(left.p, gestionWay.next, ms.left.get(0) as Pooling)
+			ms.removeFirstLeft
+		}
+			
 		
 		if (left.convdropbegin !== null){
 			for (convdrop: left.convdropbegin){
-				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next)
+				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next, ms.left.get(0) as Convolution)
+				ms.removeFirstLeft
 				if(convdrop.drop !== null)
 					strLeftRecu += unitDropout(gestionWay.next)
 			}
@@ -288,14 +295,17 @@ class SMLGenerator extends AbstractGenerator {
 		
 		if (left.convdropend !== null){
 			for (convdrop: left.convdropend){
-				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next)
+				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next, ms.left.get(0) as Convolution)
+				ms.removeFirstLeft
 				if(convdrop.drop !== null)
 					strLeftRecu += unitDropout(gestionWay.next)
 			}
 		}
 		
-		if(left.pool !== null)
-			strLeftRecu += unitPooling(left.p, gestionWay.next)
+		if(left.pool !== null){
+			strLeftRecu += unitPooling(left.pool, gestionWay.next, ms.left.get(0) as Pooling)
+			ms.removeFirstLeft
+		}
 
 		
 		return strLeftRecu

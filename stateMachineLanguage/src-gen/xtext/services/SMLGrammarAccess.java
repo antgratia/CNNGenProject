@@ -359,8 +359,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cPoolPoolingParserRuleCall_4_0 = (RuleCall)cPoolAssignment_4.eContents().get(0);
 		
 		//// Merge Recursive
-		//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
-		//;
+		//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
@@ -914,8 +913,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Merge Recursive
-	//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
-	//;
+	//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
 	public LeftRecuElements getLeftRecuAccess() {
 		return pLeftRecu;
 	}

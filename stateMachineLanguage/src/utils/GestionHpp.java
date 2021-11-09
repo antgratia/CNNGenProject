@@ -16,6 +16,7 @@ import xtext.sML.ConvDrop;
 import xtext.sML.MergeNonRecu;
 import xtext.sML.MergeRecu;
 
+@SuppressWarnings("unused")
 public class GestionHpp {
 	
 	private static GestionHpp gestionHpp;
@@ -188,7 +189,7 @@ public class GestionHpp {
 			 
 	}
 	
-	@SuppressWarnings("unused")
+
 	private int compressedFilter(float compressFactor) {
 		currentNBFilters = (int) (currentNBFilters*compressFactor);
 		return currentNBFilters;
@@ -349,23 +350,8 @@ public class GestionHpp {
 				
 				// convdrop
 				if (mr.getLeft().getConvdropbegin() != null){
-					if(ms.getAdd_or_concat() == "add") {
-						for (ConvDrop conv: mr.getLeft().getConvdropbegin()) {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-						}
-					}else {
-						int i = 0;
-						while (i < mr.getLeft().getConvdropbegin().size()-1) {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-							i++;
-						}
-						
+					for (ConvDrop conv: mr.getLeft().getConvdropbegin()) {
 						Convolution c = new Convolution();
-						addInitToFilter();
 						gestionConvolutionMerge(1, "same", c);
 						ms.addLeft(c);
 					}
@@ -375,23 +361,8 @@ public class GestionHpp {
 				
 				// convdrop
 				if (mr.getLeft().getConvdropend() != null){
-					if(ms.getAdd_or_concat() == "add") {
-						for (ConvDrop conv: mr.getLeft().getConvdropend()) {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-						}
-					}else {
-						int i = 0;
-						while (i < mr.getLeft().getConvdropend().size()-1) {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-							i++;
-						}
-						
+					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
 						Convolution c = new Convolution();
-						addInitToFilter();
 						gestionConvolutionMerge(1, "same", c);
 						ms.addLeft(c);
 					}
@@ -423,36 +394,12 @@ public class GestionHpp {
 				
 				// convdrop
 				if (mr.getLeft().getConvdropend() != null){
-					int countConvLeft = mr.getLeft().getConvdropbegin().size();
-					int numLeft = rand.nextInt(countConvLeft);
-					Convolution reduceConv = new Convolution();
-					int i = 0;
-					while(i < countConvLeft) {
-						if(numLeft == i) {
-							gestionConvolution(reduceConv);
-							ms.addLeft(reduceConv);
-						}else {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-						}
-						i++;
+					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
 					}
-					
-					int countConvRight = mr.getRight().getConv().size();
-					int numRight = rand.nextInt(countConvRight);
-					
-					i = 0;
-					while(i < countConvRight) {
-						if(numRight == i) {
-							ms.addRight(reduceConv);
-						}else {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addRight(c);
-						}
-						i++;
-					}
+
 				}
 				
 				
@@ -461,36 +408,18 @@ public class GestionHpp {
 				
 				// conv
 				if (mr.getLeft().getConvdropend() != null){
-					int countConvLeft = mr.getLeft().getConvdropbegin().size();
-					int numLeft = rand.nextInt(countConvLeft);
-					Convolution reduceConv = new Convolution();
-					int i = 0;
-					while(i < countConvLeft) {
-						if(numLeft == i) {
-							gestionConvolution(reduceConv);
-							ms.addLeft(reduceConv);
-						}else {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addLeft(c);
-						}
-						i++;
+					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
 					}
-					
-					int countConvRight = mr.getRight().getConv().size();
-					int numRight = rand.nextInt(countConvRight);
-					
-					i = 0;
-					while(i < countConvRight) {
-						if(numRight == i) {
-							ms.addRight(reduceConv);
-						}else {
-							Convolution c = new Convolution();
-							gestionConvolutionMerge(1, "same", c);
-							ms.addRight(c);
-						}
-						i++;
-					}
+				}
+				
+				// add to right
+				for (xtext.sML.Convolution conv: mr.getRight().getConv()) {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addRight(c);
 				}
 				
 				
