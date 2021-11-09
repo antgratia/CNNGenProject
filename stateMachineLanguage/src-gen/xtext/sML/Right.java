@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link xtext.sML.Right#getConv <em>Conv</em>}</li>
+ *   <li>{@link xtext.sML.Right#getEmpty <em>Empty</em>}</li>
  * </ul>
  *
  * @see xtext.sML.SMLPackage#getRight()
@@ -36,5 +37,27 @@ public interface Right extends EObject
    * @generated
    */
   EList<Convolution> getConv();
+
+  /**
+   * Returns the value of the '<em><b>Empty</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Empty</em>' attribute.
+   * @see #setEmpty(String)
+   * @see xtext.sML.SMLPackage#getRight_Empty()
+   * @model
+   * @generated
+   */
+  String getEmpty();
+
+  /**
+   * Sets the value of the '{@link xtext.sML.Right#getEmpty <em>Empty</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Empty</em>' attribute.
+   * @see #getEmpty()
+   * @generated
+   */
+  void setEmpty(String value);
 
 } // Right

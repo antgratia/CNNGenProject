@@ -3,7 +3,12 @@
  */
 package xtext.generator
 
+import models.BatchNormalisation
 import models.Convolution
+import models.Dense
+import models.Dropout
+import models.MergeSimple
+import models.Pooling
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -21,10 +26,7 @@ import xtext.sML.Merge
 import xtext.sML.MergeNonRecu
 import xtext.sML.MergeRecu
 import xtext.sML.Right
-import models.Dense
-import models.Dropout
-import models.Pooling
-import models.BatchNormalisation
+import utils.GestionHpp
 
 /**
  * Generates code from your model files on save.
@@ -38,7 +40,7 @@ class SMLGenerator extends AbstractGenerator {
 	var gestionWay = GestionWay.gestionWay;
 	
 	// python directory
-    //var py_dir = "architecture_py/"
+    var py_dir = "architecture_py/"
     
     // log directory
     var log_dir = "../architecture_log/"
@@ -51,8 +53,9 @@ class SMLGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		gestionWay = GestionWay.gestionWay
+		GestionHpp.destroy
 		for(elem : resource.allContents.toIterable.filter(Architecture)){
-			fsa.generateFile('architecture.py', elem.compile())
+			fsa.generateFile(py_dir + file_name + '.py', elem.compile())
 		}
 	}
 	
@@ -165,6 +168,16 @@ class SMLGenerator extends AbstractGenerator {
 		else return unitUpConv(x_or_shortcut)
 	}
 	
+	def gestionConv(xtext.sML.Convolution conv, String x_or_shortcut, Convolution hppConv) {
+		if( conv.bnconv !== null)
+			return unitBnConv(x_or_shortcut, hppConv)
+		else if (conv.convbn !== null)
+			return unitConvBn(x_or_shortcut, hppConv)
+		else if (conv.conv !== null)
+			return unitConv(x_or_shortcut, hppConv)
+		else return unitUpConv(x_or_shortcut)
+	}
+	
 	def gestionMerge(Merge merge) {
 		var str_merge = ""
 		if(merge.mnr !== null) str_merge += gestionMergeNonRecu(merge.mnr)
@@ -172,6 +185,7 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def gestionMergeNonRecu(MergeNonRecu mergeNonRecu) {
+		var MergeSimple merge = new MergeSimple(mergeNonRecu);
 		var strMergeNonRecur = ""
 	
 		//init merge
@@ -179,39 +193,52 @@ class SMLGenerator extends AbstractGenerator {
 		strMergeNonRecur += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
 		
 		// body merge (i.e Left & Right)
-		strMergeNonRecur += gestionLeftNonRecursive(mergeNonRecu.leftNonRec)
+		strMergeNonRecur += gestionLeftNonRecursive(mergeNonRecu.leftNonRec, merge)
 		strMergeNonRecur += '\n'
-		strMergeNonRecur += gestionRight(mergeNonRecu.right)
+		strMergeNonRecur += gestionRight(mergeNonRecu.right, merge)
 		
 		// end merge (i.e Add/Concatenate)
-		strMergeNonRecur += fsp.writeConcat(gestionWay.current, gestionWay.next)
+		if (merge.add_or_concat == 'concat'){
+			strMergeNonRecur += fsp.writeConcat(gestionWay.current, gestionWay.next)
+		}else{
+			strMergeNonRecur += fsp.writeAdd(gestionWay.current, gestionWay.next)
+		}
 		gestionWay.removeLastFromList
 		
 		return strMergeNonRecur
 	}
 	
-	def gestionLeftNonRecursive(LeftNonRecursive left) {
+	def gestionLeftNonRecursive(LeftNonRecursive left, MergeSimple merge) {
 		var strLeft = ""
 		if (left.p !== null){
-			strLeft += unitPooling(left.p, gestionWay.current)
+			strLeft += unitPooling(left.p, gestionWay.current, merge.left.get(0) as Pooling)
+			merge.removeFirstLeft
 		}
 		
 		if(left.convdrop !== null){
 			for (convdrop: left.convdrop){
-				strLeft += gestionConv(convdrop.conv, gestionWay.current)
+				strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
+				merge.removeFirstLeft
 				if(convdrop.drop !== null)
 					strLeft += unitDropout(gestionWay.current)
 			}
 		}
+		
+		if (left.pool !== null){
+			strLeft += unitPooling(left.pool, gestionWay.current, merge.left.get(0) as Pooling)
+			merge.removeFirstLeft
+		}
+		
 		return strLeft
 	}
 	
-	def gestionRight(Right right) {
+	def gestionRight(Right right, MergeSimple merge) {
 		var strRight = ""
 		
 		if(right.conv !== null){
 			for (conv: right.conv){
-				strRight += gestionConv(conv, gestionWay.next)
+				strRight += gestionConv(conv, gestionWay.next, merge.right.get(0) as Convolution)
+				merge.removeFirstRight
 			}
 		}
 		
@@ -219,6 +246,7 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def gestionMergeRecu(MergeRecu mergeRecu) {
+		var MergeSimple ms = new MergeSimple(mergeRecu)
 		var strMerge =""
 
 		
@@ -227,9 +255,9 @@ class SMLGenerator extends AbstractGenerator {
 		strMerge += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
 		
 		//body
-		strMerge += gestionLeftRecursive(mergeRecu.left)
+		strMerge += gestionLeftRecursive(mergeRecu.left, ms)
 		strMerge += '\n'
-		strMerge += gestionRight(mergeRecu.right)
+		strMerge += gestionRight(mergeRecu.right, ms)
 		
 		// end
 
@@ -242,7 +270,7 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	
-	def gestionLeftRecursive(LeftRecu left) {
+	def gestionLeftRecursive(LeftRecu left, MergeSimple ms) {
 		var strLeftRecu = ""
 		
 		if(left.p !== null)
@@ -304,11 +332,15 @@ class SMLGenerator extends AbstractGenerator {
 	
 
 	
-	
+	// ===== Units =====
 	
 	def unitConv(String X_or_shortcut){
 		var Convolution conv = new Convolution
 		conv.hyperparameters
+		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
+	}
+	
+	def unitConv(String X_or_shortcut, Convolution conv){
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
@@ -319,22 +351,52 @@ class SMLGenerator extends AbstractGenerator {
 	def unitBnConv(String X_or_shortcut){
 		var BatchNormalisation bn = new BatchNormalisation
 		bn.hyperparameters
-		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(10,1,1,"relu","same", X_or_shortcut)
+		
+		var Convolution conv = new Convolution
+		conv.hyperparameters
+		
+		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
+	}
+	
+	def unitBnConv(String X_or_shortcut, Convolution conv){
+		var BatchNormalisation bn = new BatchNormalisation
+		bn.hyperparameters
+		
+		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut){
 		var BatchNormalisation bn = new BatchNormalisation
 		bn.hyperparameters
-		return fsp.writeConv(10,1,1,"relu","same",X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
+		
+		var Convolution conv = new Convolution
+		conv.hyperparameters
+		
+		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
+	}
+	
+	def unitConvBn(String X_or_shortcut, Convolution conv){
+		var BatchNormalisation bn = new BatchNormalisation
+		bn.hyperparameters
+		
+		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
 	def unitPooling(String pool, String X_or_shortcut){
-		var Pooling pooling = new Pooling
-		pooling.hyperparameters
+		var Pooling p = new Pooling
+		p.hyperparameters
 		if(pool == "avg_pooling"){
-			return fsp.writeAvgPooling(1,1,"same", X_or_shortcut)
+			return fsp.writeAvgPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
 		}else{
-			return fsp.writeMaxPooling(1,1,"same", X_or_shortcut)
+			return fsp.writeMaxPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
+		}
+	}
+	
+		def unitPooling(String pool, String X_or_shortcut, Pooling p){
+		if(pool == "avg_pooling"){
+			return fsp.writeAvgPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
+		}else{
+			return fsp.writeMaxPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
 		}
 	}
 	

@@ -359,13 +359,11 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cPoolPoolingParserRuleCall_4_0 = (RuleCall)cPoolAssignment_4.eContents().get(0);
 		
 		//// Merge Recursive
-		//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge)
-		//    convdropend += (ConvDrop)* (pool=Pooling)?
+		//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge)
-		//   convdropend += (ConvDrop)* (pool=Pooling)?
+		//(p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
 		public Group getGroup() { return cGroup; }
 		
 		//(p=Pooling)?
@@ -490,12 +488,13 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cConvConvolutionParserRuleCall_0_0 = (RuleCall)cConvAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Action cRightAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Keyword cEmptyKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cEmptyAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Keyword cEmptyEmptyKeyword_1_1_0 = (Keyword)cEmptyAssignment_1_1.eContents().get(0);
 		
-		//Right: conv += Convolution+ | {Right} 'Empty';
+		//Right: conv += Convolution+ | {Right} empty = 'Empty';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//conv += Convolution+ | {Right} 'Empty'
+		//conv += Convolution+ | {Right} empty = 'Empty'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//conv += Convolution+
@@ -504,14 +503,17 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//Convolution
 		public RuleCall getConvConvolutionParserRuleCall_0_0() { return cConvConvolutionParserRuleCall_0_0; }
 		
-		//{Right} 'Empty'
+		//{Right} empty = 'Empty'
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{Right}
 		public Action getRightAction_1_0() { return cRightAction_1_0; }
 		
+		//empty = 'Empty'
+		public Assignment getEmptyAssignment_1_1() { return cEmptyAssignment_1_1; }
+		
 		//'Empty'
-		public Keyword getEmptyKeyword_1_1() { return cEmptyKeyword_1_1; }
+		public Keyword getEmptyEmptyKeyword_1_1_0() { return cEmptyEmptyKeyword_1_1_0; }
 	}
 	public class MergeNonRecuElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.MergeNonRecu");
@@ -912,8 +914,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Merge Recursive
-	//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge)
-	//    convdropend += (ConvDrop)* (pool=Pooling)?
+	//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
 	//;
 	public LeftRecuElements getLeftRecuAccess() {
 		return pLeftRecu;
@@ -942,7 +943,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getLeftNonRecursiveAccess().getRule();
 	}
 	
-	//Right: conv += Convolution+ | {Right} 'Empty';
+	//Right: conv += Convolution+ | {Right} empty = 'Empty';
 	public RightElements getRightAccess() {
 		return pRight;
 	}

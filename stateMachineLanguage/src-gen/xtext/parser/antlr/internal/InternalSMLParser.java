@@ -2678,11 +2678,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRight"
-    // InternalSML.g:1002:1: ruleRight returns [EObject current=null] : ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () otherlv_2= 'Empty' ) ) ;
+    // InternalSML.g:1002:1: ruleRight returns [EObject current=null] : ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () ( (lv_empty_2_0= 'Empty' ) ) ) ) ;
     public final EObject ruleRight() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_2=null;
+        Token lv_empty_2_0=null;
         EObject lv_conv_0_0 = null;
 
 
@@ -2690,10 +2690,10 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSML.g:1008:2: ( ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () otherlv_2= 'Empty' ) ) )
-            // InternalSML.g:1009:2: ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () otherlv_2= 'Empty' ) )
+            // InternalSML.g:1008:2: ( ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () ( (lv_empty_2_0= 'Empty' ) ) ) ) )
+            // InternalSML.g:1009:2: ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () ( (lv_empty_2_0= 'Empty' ) ) ) )
             {
-            // InternalSML.g:1009:2: ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () otherlv_2= 'Empty' ) )
+            // InternalSML.g:1009:2: ( ( (lv_conv_0_0= ruleConvolution ) )+ | ( () ( (lv_empty_2_0= 'Empty' ) ) ) )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2771,10 +2771,10 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSML.g:1030:3: ( () otherlv_2= 'Empty' )
+                    // InternalSML.g:1030:3: ( () ( (lv_empty_2_0= 'Empty' ) ) )
                     {
-                    // InternalSML.g:1030:3: ( () otherlv_2= 'Empty' )
-                    // InternalSML.g:1031:4: () otherlv_2= 'Empty'
+                    // InternalSML.g:1030:3: ( () ( (lv_empty_2_0= 'Empty' ) ) )
+                    // InternalSML.g:1031:4: () ( (lv_empty_2_0= 'Empty' ) )
                     {
                     // InternalSML.g:1031:4: ()
                     // InternalSML.g:1032:5: 
@@ -2787,10 +2787,28 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,28,FOLLOW_2); 
+                    // InternalSML.g:1038:4: ( (lv_empty_2_0= 'Empty' ) )
+                    // InternalSML.g:1039:5: (lv_empty_2_0= 'Empty' )
+                    {
+                    // InternalSML.g:1039:5: (lv_empty_2_0= 'Empty' )
+                    // InternalSML.g:1040:6: lv_empty_2_0= 'Empty'
+                    {
+                    lv_empty_2_0=(Token)match(input,28,FOLLOW_2); 
 
-                    				newLeafNode(otherlv_2, grammarAccess.getRightAccess().getEmptyKeyword_1_1());
-                    			
+                    						newLeafNode(lv_empty_2_0, grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0());
+                    					
+
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getRightRule());
+                    						}
+                    						setWithLastConsumed(current, "empty", lv_empty_2_0, "Empty");
+                    					
+
+                    }
+
+
+                    }
+
 
                     }
 
@@ -2820,7 +2838,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMergeNonRecu"
-    // InternalSML.g:1047:1: entryRuleMergeNonRecu returns [EObject current=null] : iv_ruleMergeNonRecu= ruleMergeNonRecu EOF ;
+    // InternalSML.g:1057:1: entryRuleMergeNonRecu returns [EObject current=null] : iv_ruleMergeNonRecu= ruleMergeNonRecu EOF ;
     public final EObject entryRuleMergeNonRecu() throws RecognitionException {
         EObject current = null;
 
@@ -2828,8 +2846,8 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSML.g:1047:53: (iv_ruleMergeNonRecu= ruleMergeNonRecu EOF )
-            // InternalSML.g:1048:2: iv_ruleMergeNonRecu= ruleMergeNonRecu EOF
+            // InternalSML.g:1057:53: (iv_ruleMergeNonRecu= ruleMergeNonRecu EOF )
+            // InternalSML.g:1058:2: iv_ruleMergeNonRecu= ruleMergeNonRecu EOF
             {
              newCompositeNode(grammarAccess.getMergeNonRecuRule()); 
             pushFollow(FOLLOW_1);
@@ -2856,7 +2874,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMergeNonRecu"
-    // InternalSML.g:1054:1: ruleMergeNonRecu returns [EObject current=null] : ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) ) ;
+    // InternalSML.g:1064:1: ruleMergeNonRecu returns [EObject current=null] : ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) ) ;
     public final EObject ruleMergeNonRecu() throws RecognitionException {
         EObject current = null;
 
@@ -2874,17 +2892,17 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSML.g:1060:2: ( ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) ) )
-            // InternalSML.g:1061:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) )
+            // InternalSML.g:1070:2: ( ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) ) )
+            // InternalSML.g:1071:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) )
             {
-            // InternalSML.g:1061:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) )
-            // InternalSML.g:1062:3: ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) )
+            // InternalSML.g:1071:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) ) )
+            // InternalSML.g:1072:3: ( (lv_db_0_0= ruleDebutMerge ) ) ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) ( (lv_virg_2_0= ',' ) ) ( (lv_right_3_0= ruleRight ) ) ( (lv_fm_4_0= ruleFinMerge ) )
             {
-            // InternalSML.g:1062:3: ( (lv_db_0_0= ruleDebutMerge ) )
-            // InternalSML.g:1063:4: (lv_db_0_0= ruleDebutMerge )
+            // InternalSML.g:1072:3: ( (lv_db_0_0= ruleDebutMerge ) )
+            // InternalSML.g:1073:4: (lv_db_0_0= ruleDebutMerge )
             {
-            // InternalSML.g:1063:4: (lv_db_0_0= ruleDebutMerge )
-            // InternalSML.g:1064:5: lv_db_0_0= ruleDebutMerge
+            // InternalSML.g:1073:4: (lv_db_0_0= ruleDebutMerge )
+            // InternalSML.g:1074:5: lv_db_0_0= ruleDebutMerge
             {
 
             					newCompositeNode(grammarAccess.getMergeNonRecuAccess().getDbDebutMergeParserRuleCall_0_0());
@@ -2911,11 +2929,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1081:3: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) )
-            // InternalSML.g:1082:4: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
+            // InternalSML.g:1091:3: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) )
+            // InternalSML.g:1092:4: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
             {
-            // InternalSML.g:1082:4: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
-            // InternalSML.g:1083:5: lv_leftNonRec_1_0= ruleLeftNonRecursive
+            // InternalSML.g:1092:4: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
+            // InternalSML.g:1093:5: lv_leftNonRec_1_0= ruleLeftNonRecursive
             {
 
             					newCompositeNode(grammarAccess.getMergeNonRecuAccess().getLeftNonRecLeftNonRecursiveParserRuleCall_1_0());
@@ -2942,11 +2960,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1100:3: ( (lv_virg_2_0= ',' ) )
-            // InternalSML.g:1101:4: (lv_virg_2_0= ',' )
+            // InternalSML.g:1110:3: ( (lv_virg_2_0= ',' ) )
+            // InternalSML.g:1111:4: (lv_virg_2_0= ',' )
             {
-            // InternalSML.g:1101:4: (lv_virg_2_0= ',' )
-            // InternalSML.g:1102:5: lv_virg_2_0= ','
+            // InternalSML.g:1111:4: (lv_virg_2_0= ',' )
+            // InternalSML.g:1112:5: lv_virg_2_0= ','
             {
             lv_virg_2_0=(Token)match(input,27,FOLLOW_14); 
 
@@ -2964,11 +2982,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1114:3: ( (lv_right_3_0= ruleRight ) )
-            // InternalSML.g:1115:4: (lv_right_3_0= ruleRight )
+            // InternalSML.g:1124:3: ( (lv_right_3_0= ruleRight ) )
+            // InternalSML.g:1125:4: (lv_right_3_0= ruleRight )
             {
-            // InternalSML.g:1115:4: (lv_right_3_0= ruleRight )
-            // InternalSML.g:1116:5: lv_right_3_0= ruleRight
+            // InternalSML.g:1125:4: (lv_right_3_0= ruleRight )
+            // InternalSML.g:1126:5: lv_right_3_0= ruleRight
             {
 
             					newCompositeNode(grammarAccess.getMergeNonRecuAccess().getRightRightParserRuleCall_3_0());
@@ -2995,11 +3013,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1133:3: ( (lv_fm_4_0= ruleFinMerge ) )
-            // InternalSML.g:1134:4: (lv_fm_4_0= ruleFinMerge )
+            // InternalSML.g:1143:3: ( (lv_fm_4_0= ruleFinMerge ) )
+            // InternalSML.g:1144:4: (lv_fm_4_0= ruleFinMerge )
             {
-            // InternalSML.g:1134:4: (lv_fm_4_0= ruleFinMerge )
-            // InternalSML.g:1135:5: lv_fm_4_0= ruleFinMerge
+            // InternalSML.g:1144:4: (lv_fm_4_0= ruleFinMerge )
+            // InternalSML.g:1145:5: lv_fm_4_0= ruleFinMerge
             {
 
             					newCompositeNode(grammarAccess.getMergeNonRecuAccess().getFmFinMergeParserRuleCall_4_0());
@@ -3049,7 +3067,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMerge"
-    // InternalSML.g:1156:1: entryRuleMerge returns [EObject current=null] : iv_ruleMerge= ruleMerge EOF ;
+    // InternalSML.g:1166:1: entryRuleMerge returns [EObject current=null] : iv_ruleMerge= ruleMerge EOF ;
     public final EObject entryRuleMerge() throws RecognitionException {
         EObject current = null;
 
@@ -3057,8 +3075,8 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSML.g:1156:46: (iv_ruleMerge= ruleMerge EOF )
-            // InternalSML.g:1157:2: iv_ruleMerge= ruleMerge EOF
+            // InternalSML.g:1166:46: (iv_ruleMerge= ruleMerge EOF )
+            // InternalSML.g:1167:2: iv_ruleMerge= ruleMerge EOF
             {
              newCompositeNode(grammarAccess.getMergeRule()); 
             pushFollow(FOLLOW_1);
@@ -3085,7 +3103,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMerge"
-    // InternalSML.g:1163:1: ruleMerge returns [EObject current=null] : ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) ) ;
+    // InternalSML.g:1173:1: ruleMerge returns [EObject current=null] : ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) ) ;
     public final EObject ruleMerge() throws RecognitionException {
         EObject current = null;
 
@@ -3098,21 +3116,21 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSML.g:1169:2: ( ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) ) )
-            // InternalSML.g:1170:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )
+            // InternalSML.g:1179:2: ( ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) ) )
+            // InternalSML.g:1180:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )
             {
-            // InternalSML.g:1170:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )
+            // InternalSML.g:1180:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )
             int alt19=2;
             alt19 = dfa19.predict(input);
             switch (alt19) {
                 case 1 :
-                    // InternalSML.g:1171:3: ( (lv_mnr_0_0= ruleMergeNonRecu ) )
+                    // InternalSML.g:1181:3: ( (lv_mnr_0_0= ruleMergeNonRecu ) )
                     {
-                    // InternalSML.g:1171:3: ( (lv_mnr_0_0= ruleMergeNonRecu ) )
-                    // InternalSML.g:1172:4: (lv_mnr_0_0= ruleMergeNonRecu )
+                    // InternalSML.g:1181:3: ( (lv_mnr_0_0= ruleMergeNonRecu ) )
+                    // InternalSML.g:1182:4: (lv_mnr_0_0= ruleMergeNonRecu )
                     {
-                    // InternalSML.g:1172:4: (lv_mnr_0_0= ruleMergeNonRecu )
-                    // InternalSML.g:1173:5: lv_mnr_0_0= ruleMergeNonRecu
+                    // InternalSML.g:1182:4: (lv_mnr_0_0= ruleMergeNonRecu )
+                    // InternalSML.g:1183:5: lv_mnr_0_0= ruleMergeNonRecu
                     {
 
                     					newCompositeNode(grammarAccess.getMergeAccess().getMnrMergeNonRecuParserRuleCall_0_0());
@@ -3143,13 +3161,13 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSML.g:1191:3: ( (lv_mr_1_0= ruleMergeRecu ) )
+                    // InternalSML.g:1201:3: ( (lv_mr_1_0= ruleMergeRecu ) )
                     {
-                    // InternalSML.g:1191:3: ( (lv_mr_1_0= ruleMergeRecu ) )
-                    // InternalSML.g:1192:4: (lv_mr_1_0= ruleMergeRecu )
+                    // InternalSML.g:1201:3: ( (lv_mr_1_0= ruleMergeRecu ) )
+                    // InternalSML.g:1202:4: (lv_mr_1_0= ruleMergeRecu )
                     {
-                    // InternalSML.g:1192:4: (lv_mr_1_0= ruleMergeRecu )
-                    // InternalSML.g:1193:5: lv_mr_1_0= ruleMergeRecu
+                    // InternalSML.g:1202:4: (lv_mr_1_0= ruleMergeRecu )
+                    // InternalSML.g:1203:5: lv_mr_1_0= ruleMergeRecu
                     {
 
                     					newCompositeNode(grammarAccess.getMergeAccess().getMrMergeRecuParserRuleCall_1_0());
@@ -3202,7 +3220,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHighway"
-    // InternalSML.g:1214:1: entryRuleHighway returns [EObject current=null] : iv_ruleHighway= ruleHighway EOF ;
+    // InternalSML.g:1224:1: entryRuleHighway returns [EObject current=null] : iv_ruleHighway= ruleHighway EOF ;
     public final EObject entryRuleHighway() throws RecognitionException {
         EObject current = null;
 
@@ -3210,8 +3228,8 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSML.g:1214:48: (iv_ruleHighway= ruleHighway EOF )
-            // InternalSML.g:1215:2: iv_ruleHighway= ruleHighway EOF
+            // InternalSML.g:1224:48: (iv_ruleHighway= ruleHighway EOF )
+            // InternalSML.g:1225:2: iv_ruleHighway= ruleHighway EOF
             {
              newCompositeNode(grammarAccess.getHighwayRule()); 
             pushFollow(FOLLOW_1);
@@ -3238,7 +3256,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHighway"
-    // InternalSML.g:1221:1: ruleHighway returns [EObject current=null] : ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) ) ;
+    // InternalSML.g:1231:1: ruleHighway returns [EObject current=null] : ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) ) ;
     public final EObject ruleHighway() throws RecognitionException {
         EObject current = null;
 
@@ -3257,17 +3275,17 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSML.g:1227:2: ( ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) ) )
-            // InternalSML.g:1228:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) )
+            // InternalSML.g:1237:2: ( ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) ) )
+            // InternalSML.g:1238:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) )
             {
-            // InternalSML.g:1228:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) )
-            // InternalSML.g:1229:3: ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) )
+            // InternalSML.g:1238:2: ( ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) ) )
+            // InternalSML.g:1239:3: ( (lv_db_0_0= ruleDebutMerge ) ) ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+ ( (lv_fm_5_0= ruleFinMerge ) )
             {
-            // InternalSML.g:1229:3: ( (lv_db_0_0= ruleDebutMerge ) )
-            // InternalSML.g:1230:4: (lv_db_0_0= ruleDebutMerge )
+            // InternalSML.g:1239:3: ( (lv_db_0_0= ruleDebutMerge ) )
+            // InternalSML.g:1240:4: (lv_db_0_0= ruleDebutMerge )
             {
-            // InternalSML.g:1230:4: (lv_db_0_0= ruleDebutMerge )
-            // InternalSML.g:1231:5: lv_db_0_0= ruleDebutMerge
+            // InternalSML.g:1240:4: (lv_db_0_0= ruleDebutMerge )
+            // InternalSML.g:1241:5: lv_db_0_0= ruleDebutMerge
             {
 
             					newCompositeNode(grammarAccess.getHighwayAccess().getDbDebutMergeParserRuleCall_0_0());
@@ -3294,7 +3312,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1248:3: ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+
+            // InternalSML.g:1258:3: ( ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ',' )+
             int cnt20=0;
             loop20:
             do {
@@ -3308,13 +3326,13 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalSML.g:1249:4: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ','
+            	    // InternalSML.g:1259:4: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) ) otherlv_2= '|' ( (lv_conv_3_0= ruleConvolution ) ) otherlv_4= ','
             	    {
-            	    // InternalSML.g:1249:4: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) )
-            	    // InternalSML.g:1250:5: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
+            	    // InternalSML.g:1259:4: ( (lv_leftNonRec_1_0= ruleLeftNonRecursive ) )
+            	    // InternalSML.g:1260:5: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
             	    {
-            	    // InternalSML.g:1250:5: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
-            	    // InternalSML.g:1251:6: lv_leftNonRec_1_0= ruleLeftNonRecursive
+            	    // InternalSML.g:1260:5: (lv_leftNonRec_1_0= ruleLeftNonRecursive )
+            	    // InternalSML.g:1261:6: lv_leftNonRec_1_0= ruleLeftNonRecursive
             	    {
 
             	    						newCompositeNode(grammarAccess.getHighwayAccess().getLeftNonRecLeftNonRecursiveParserRuleCall_1_0_0());
@@ -3345,11 +3363,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             	    				newLeafNode(otherlv_2, grammarAccess.getHighwayAccess().getVerticalLineKeyword_1_1());
             	    			
-            	    // InternalSML.g:1272:4: ( (lv_conv_3_0= ruleConvolution ) )
-            	    // InternalSML.g:1273:5: (lv_conv_3_0= ruleConvolution )
+            	    // InternalSML.g:1282:4: ( (lv_conv_3_0= ruleConvolution ) )
+            	    // InternalSML.g:1283:5: (lv_conv_3_0= ruleConvolution )
             	    {
-            	    // InternalSML.g:1273:5: (lv_conv_3_0= ruleConvolution )
-            	    // InternalSML.g:1274:6: lv_conv_3_0= ruleConvolution
+            	    // InternalSML.g:1283:5: (lv_conv_3_0= ruleConvolution )
+            	    // InternalSML.g:1284:6: lv_conv_3_0= ruleConvolution
             	    {
 
             	    						newCompositeNode(grammarAccess.getHighwayAccess().getConvConvolutionParserRuleCall_1_2_0());
@@ -3393,11 +3411,11 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
                 cnt20++;
             } while (true);
 
-            // InternalSML.g:1296:3: ( (lv_fm_5_0= ruleFinMerge ) )
-            // InternalSML.g:1297:4: (lv_fm_5_0= ruleFinMerge )
+            // InternalSML.g:1306:3: ( (lv_fm_5_0= ruleFinMerge ) )
+            // InternalSML.g:1307:4: (lv_fm_5_0= ruleFinMerge )
             {
-            // InternalSML.g:1297:4: (lv_fm_5_0= ruleFinMerge )
-            // InternalSML.g:1298:5: lv_fm_5_0= ruleFinMerge
+            // InternalSML.g:1307:4: (lv_fm_5_0= ruleFinMerge )
+            // InternalSML.g:1308:5: lv_fm_5_0= ruleFinMerge
             {
 
             					newCompositeNode(grammarAccess.getHighwayAccess().getFmFinMergeParserRuleCall_2_0());
@@ -3447,7 +3465,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFeatureExtraction"
-    // InternalSML.g:1319:1: entryRuleFeatureExtraction returns [EObject current=null] : iv_ruleFeatureExtraction= ruleFeatureExtraction EOF ;
+    // InternalSML.g:1329:1: entryRuleFeatureExtraction returns [EObject current=null] : iv_ruleFeatureExtraction= ruleFeatureExtraction EOF ;
     public final EObject entryRuleFeatureExtraction() throws RecognitionException {
         EObject current = null;
 
@@ -3455,8 +3473,8 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSML.g:1319:58: (iv_ruleFeatureExtraction= ruleFeatureExtraction EOF )
-            // InternalSML.g:1320:2: iv_ruleFeatureExtraction= ruleFeatureExtraction EOF
+            // InternalSML.g:1329:58: (iv_ruleFeatureExtraction= ruleFeatureExtraction EOF )
+            // InternalSML.g:1330:2: iv_ruleFeatureExtraction= ruleFeatureExtraction EOF
             {
              newCompositeNode(grammarAccess.getFeatureExtractionRule()); 
             pushFollow(FOLLOW_1);
@@ -3483,7 +3501,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFeatureExtraction"
-    // InternalSML.g:1326:1: ruleFeatureExtraction returns [EObject current=null] : ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? ) ;
+    // InternalSML.g:1336:1: ruleFeatureExtraction returns [EObject current=null] : ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? ) ;
     public final EObject ruleFeatureExtraction() throws RecognitionException {
         EObject current = null;
 
@@ -3502,24 +3520,24 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSML.g:1332:2: ( ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? ) )
-            // InternalSML.g:1333:2: ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? )
+            // InternalSML.g:1342:2: ( ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? ) )
+            // InternalSML.g:1343:2: ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? )
             {
-            // InternalSML.g:1333:2: ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? )
-            // InternalSML.g:1334:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )?
+            // InternalSML.g:1343:2: ( ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )? )
+            // InternalSML.g:1344:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) ) ( (lv_drop_3_0= ruleDropout ) )? ( (lv_pool_4_0= rulePooling ) )?
             {
-            // InternalSML.g:1334:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) )
+            // InternalSML.g:1344:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) )
             int alt21=3;
             alt21 = dfa21.predict(input);
             switch (alt21) {
                 case 1 :
-                    // InternalSML.g:1335:4: ( (lv_conv_0_0= ruleConvolution ) )
+                    // InternalSML.g:1345:4: ( (lv_conv_0_0= ruleConvolution ) )
                     {
-                    // InternalSML.g:1335:4: ( (lv_conv_0_0= ruleConvolution ) )
-                    // InternalSML.g:1336:5: (lv_conv_0_0= ruleConvolution )
+                    // InternalSML.g:1345:4: ( (lv_conv_0_0= ruleConvolution ) )
+                    // InternalSML.g:1346:5: (lv_conv_0_0= ruleConvolution )
                     {
-                    // InternalSML.g:1336:5: (lv_conv_0_0= ruleConvolution )
-                    // InternalSML.g:1337:6: lv_conv_0_0= ruleConvolution
+                    // InternalSML.g:1346:5: (lv_conv_0_0= ruleConvolution )
+                    // InternalSML.g:1347:6: lv_conv_0_0= ruleConvolution
                     {
 
                     						newCompositeNode(grammarAccess.getFeatureExtractionAccess().getConvConvolutionParserRuleCall_0_0_0());
@@ -3550,13 +3568,13 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSML.g:1355:4: ( (lv_merge_1_0= ruleMerge ) )
+                    // InternalSML.g:1365:4: ( (lv_merge_1_0= ruleMerge ) )
                     {
-                    // InternalSML.g:1355:4: ( (lv_merge_1_0= ruleMerge ) )
-                    // InternalSML.g:1356:5: (lv_merge_1_0= ruleMerge )
+                    // InternalSML.g:1365:4: ( (lv_merge_1_0= ruleMerge ) )
+                    // InternalSML.g:1366:5: (lv_merge_1_0= ruleMerge )
                     {
-                    // InternalSML.g:1356:5: (lv_merge_1_0= ruleMerge )
-                    // InternalSML.g:1357:6: lv_merge_1_0= ruleMerge
+                    // InternalSML.g:1366:5: (lv_merge_1_0= ruleMerge )
+                    // InternalSML.g:1367:6: lv_merge_1_0= ruleMerge
                     {
 
                     						newCompositeNode(grammarAccess.getFeatureExtractionAccess().getMergeMergeParserRuleCall_0_1_0());
@@ -3587,13 +3605,13 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSML.g:1375:4: ( (lv_hw_2_0= ruleHighway ) )
+                    // InternalSML.g:1385:4: ( (lv_hw_2_0= ruleHighway ) )
                     {
-                    // InternalSML.g:1375:4: ( (lv_hw_2_0= ruleHighway ) )
-                    // InternalSML.g:1376:5: (lv_hw_2_0= ruleHighway )
+                    // InternalSML.g:1385:4: ( (lv_hw_2_0= ruleHighway ) )
+                    // InternalSML.g:1386:5: (lv_hw_2_0= ruleHighway )
                     {
-                    // InternalSML.g:1376:5: (lv_hw_2_0= ruleHighway )
-                    // InternalSML.g:1377:6: lv_hw_2_0= ruleHighway
+                    // InternalSML.g:1386:5: (lv_hw_2_0= ruleHighway )
+                    // InternalSML.g:1387:6: lv_hw_2_0= ruleHighway
                     {
 
                     						newCompositeNode(grammarAccess.getFeatureExtractionAccess().getHwHighwayParserRuleCall_0_2_0());
@@ -3626,7 +3644,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1395:3: ( (lv_drop_3_0= ruleDropout ) )?
+            // InternalSML.g:1405:3: ( (lv_drop_3_0= ruleDropout ) )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -3635,10 +3653,10 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             }
             switch (alt22) {
                 case 1 :
-                    // InternalSML.g:1396:4: (lv_drop_3_0= ruleDropout )
+                    // InternalSML.g:1406:4: (lv_drop_3_0= ruleDropout )
                     {
-                    // InternalSML.g:1396:4: (lv_drop_3_0= ruleDropout )
-                    // InternalSML.g:1397:5: lv_drop_3_0= ruleDropout
+                    // InternalSML.g:1406:4: (lv_drop_3_0= ruleDropout )
+                    // InternalSML.g:1407:5: lv_drop_3_0= ruleDropout
                     {
 
                     					newCompositeNode(grammarAccess.getFeatureExtractionAccess().getDropDropoutParserRuleCall_1_0());
@@ -3668,7 +3686,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSML.g:1414:3: ( (lv_pool_4_0= rulePooling ) )?
+            // InternalSML.g:1424:3: ( (lv_pool_4_0= rulePooling ) )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -3677,10 +3695,10 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             }
             switch (alt23) {
                 case 1 :
-                    // InternalSML.g:1415:4: (lv_pool_4_0= rulePooling )
+                    // InternalSML.g:1425:4: (lv_pool_4_0= rulePooling )
                     {
-                    // InternalSML.g:1415:4: (lv_pool_4_0= rulePooling )
-                    // InternalSML.g:1416:5: lv_pool_4_0= rulePooling
+                    // InternalSML.g:1425:4: (lv_pool_4_0= rulePooling )
+                    // InternalSML.g:1426:5: lv_pool_4_0= rulePooling
                     {
 
                     					newCompositeNode(grammarAccess.getFeatureExtractionAccess().getPoolPoolingParserRuleCall_2_0());
@@ -3737,8 +3755,8 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
     protected DFA19 dfa19 = new DFA19(this);
     protected DFA21 dfa21 = new DFA21(this);
     static final String dfa_1s = "\20\uffff";
-    static final String dfa_2s = "\1\20\1\16\2\20\1\23\2\15\1\uffff\1\23\1\24\1\16\1\uffff\2\25\2\15";
-    static final String dfa_3s = "\1\20\3\26\1\24\2\33\1\uffff\1\23\1\24\1\33\1\uffff\2\25\2\33";
+    static final String dfa_2s = "\1\20\1\16\2\20\1\23\2\15\1\uffff\1\24\1\23\1\16\1\uffff\2\25\2\15";
+    static final String dfa_3s = "\1\20\3\26\1\24\2\33\1\uffff\1\24\1\23\1\33\1\uffff\2\25\2\33";
     static final String dfa_4s = "\7\uffff\1\2\3\uffff\1\1\4\uffff";
     static final String dfa_5s = "\20\uffff}>";
     static final String[] dfa_6s = {
@@ -3746,7 +3764,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             "\1\2\1\3\1\7\1\uffff\1\4\1\uffff\1\5\1\uffff\1\6",
             "\1\7\1\uffff\1\4\1\uffff\1\5\1\uffff\1\6",
             "\1\7\1\uffff\1\4\1\uffff\1\5\1\uffff\1\6",
-            "\1\11\1\10",
+            "\1\10\1\11",
             "\1\12\2\13\1\7\1\uffff\1\4\1\uffff\1\5\1\uffff\1\6\4\uffff\1\13",
             "\1\12\2\13\1\7\1\uffff\1\4\1\uffff\1\5\1\uffff\1\6\4\uffff\1\13",
             "",
@@ -3781,12 +3799,12 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             this.transition = dfa_6;
         }
         public String getDescription() {
-            return "1170:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )";
+            return "1180:2: ( ( (lv_mnr_0_0= ruleMergeNonRecu ) ) | ( (lv_mr_1_0= ruleMergeRecu ) ) )";
         }
     }
     static final String dfa_7s = "\23\uffff";
-    static final String dfa_8s = "\1\20\1\uffff\1\16\2\20\1\23\2\15\1\uffff\1\24\1\23\1\16\2\33\1\uffff\2\25\2\15";
-    static final String dfa_9s = "\1\26\1\uffff\3\26\1\24\2\35\1\uffff\1\24\1\23\3\35\1\uffff\2\25\2\35";
+    static final String dfa_8s = "\1\20\1\uffff\1\16\2\20\1\23\2\15\1\uffff\1\23\1\24\1\16\2\33\1\uffff\2\25\2\15";
+    static final String dfa_9s = "\1\26\1\uffff\3\26\1\24\2\35\1\uffff\1\23\1\24\3\35\1\uffff\2\25\2\35";
     static final String dfa_10s = "\1\uffff\1\1\6\uffff\1\2\5\uffff\1\3\4\uffff";
     static final String dfa_11s = "\23\uffff}>";
     static final String[] dfa_12s = {
@@ -3795,7 +3813,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             "\1\3\1\4\1\10\1\uffff\1\5\1\uffff\1\6\1\uffff\1\7",
             "\1\10\1\uffff\1\5\1\uffff\1\6\1\uffff\1\7",
             "\1\10\1\uffff\1\5\1\uffff\1\6\1\uffff\1\7",
-            "\1\11\1\12",
+            "\1\12\1\11",
             "\1\13\1\14\1\15\1\10\1\uffff\1\5\1\uffff\1\6\1\uffff\1\7\4\uffff\1\10\1\uffff\1\16",
             "\1\13\1\14\1\15\1\10\1\uffff\1\5\1\uffff\1\6\1\uffff\1\7\4\uffff\1\10\1\uffff\1\16",
             "",
@@ -3832,7 +3850,7 @@ public class InternalSMLParser extends AbstractInternalAntlrParser {
             this.transition = dfa_12;
         }
         public String getDescription() {
-            return "1334:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) )";
+            return "1344:3: ( ( (lv_conv_0_0= ruleConvolution ) ) | ( (lv_merge_1_0= ruleMerge ) ) | ( (lv_hw_2_0= ruleHighway ) ) )";
         }
     }
  

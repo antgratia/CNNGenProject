@@ -5,6 +5,7 @@ package xtext.sML.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -12,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -30,6 +32,7 @@ import xtext.sML.SMLPackage;
  * </p>
  * <ul>
  *   <li>{@link xtext.sML.impl.RightImpl#getConv <em>Conv</em>}</li>
+ *   <li>{@link xtext.sML.impl.RightImpl#getEmpty <em>Empty</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,6 +48,26 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
    * @ordered
    */
   protected EList<Convolution> conv;
+
+  /**
+   * The default value of the '{@link #getEmpty() <em>Empty</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEmpty()
+   * @generated
+   * @ordered
+   */
+  protected static final String EMPTY_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEmpty() <em>Empty</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEmpty()
+   * @generated
+   * @ordered
+   */
+  protected String empty = EMPTY_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -88,6 +111,31 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
    * @generated
    */
   @Override
+  public String getEmpty()
+  {
+    return empty;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setEmpty(String newEmpty)
+  {
+    String oldEmpty = empty;
+    empty = newEmpty;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.RIGHT__EMPTY, oldEmpty, empty));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -110,6 +158,8 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
     {
       case SMLPackage.RIGHT__CONV:
         return getConv();
+      case SMLPackage.RIGHT__EMPTY:
+        return getEmpty();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -129,6 +179,9 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
         getConv().clear();
         getConv().addAll((Collection<? extends Convolution>)newValue);
         return;
+      case SMLPackage.RIGHT__EMPTY:
+        setEmpty((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -146,6 +199,9 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
       case SMLPackage.RIGHT__CONV:
         getConv().clear();
         return;
+      case SMLPackage.RIGHT__EMPTY:
+        setEmpty(EMPTY_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -162,8 +218,27 @@ public class RightImpl extends MinimalEObjectImpl.Container implements Right
     {
       case SMLPackage.RIGHT__CONV:
         return conv != null && !conv.isEmpty();
+      case SMLPackage.RIGHT__EMPTY:
+        return EMPTY_EDEFAULT == null ? empty != null : !EMPTY_EDEFAULT.equals(empty);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (empty: ");
+    result.append(empty);
+    result.append(')');
+    return result.toString();
   }
 
 } //RightImpl

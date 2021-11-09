@@ -3,13 +3,18 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import models.BatchNormalisation;
 import models.Convolution;
 import models.Dense;
 import models.Dropout;
 import models.LayerInterface;
+import models.MergeSimple;
 import models.Pooling;
+import xtext.sML.ConvDrop;
+import xtext.sML.MergeNonRecu;
+import xtext.sML.MergeRecu;
 
 public class GestionHpp {
 	
@@ -41,15 +46,19 @@ public class GestionHpp {
 	// hpp Dense
 	private int entryParams;
 	
+	// hpp
+	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
+	
 	private GestionHpp() {
-		gestionHpp.currentNBFilters = INIT_NB_FILTER;
+		currentNBFilters = INIT_NB_FILTER;
 		entryParams = 0;
 		currentSizeImg = MAX_SIZE_IMG;
 	}
 	
+	// design singleton
 	public static GestionHpp getGestionHpp() {
 		if (gestionHpp == null) {
-			return gestionHpp = new GestionHpp();
+			gestionHpp = new GestionHpp();
 		}
 		return gestionHpp;
 	}
@@ -57,10 +66,26 @@ public class GestionHpp {
 	// entry point
 	public void gestionConvolution(Convolution conv){
 		optimisationKernelPaddingStride(conv);
-			
-		conv.setNbFilter(currentNBFilters);
+		
 		multFilterby2();
+		conv.setNbFilter(currentNBFilters);
 		Random rand = new Random();
+		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
+			
+	}
+	
+	public void gestionConvolutionMerge(int s, String pad, Convolution conv){
+		Random rand = new Random();
+		// kernel <= input size
+		List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+		int knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+		
+		conv.setKernel(knl);
+		conv.setStride(s);
+		conv.setPadding(pad);
+		
+		conv.setNbFilter(currentNBFilters);
+		
 		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
 			
 	}
@@ -102,7 +127,6 @@ public class GestionHpp {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	private static void optimisationKernelPaddingStride(LayerInterface layer) {
 		Random rand = new Random();
 		
@@ -115,15 +139,15 @@ public class GestionHpp {
 		
 		if(pad == "valid") {
 			  // kernel <= input size
-			  kernel_value_filtered = (List<Integer>) kernel.stream().filter(k -> k <= currentSizeImg);
+			  kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
 			  knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
 				        
 			  //stride <= kernel
 			  strd = (int)currentSizeImg/knl;
 			  if(strd > knl) {
 				  int k = knl;
-				  stride_value_filtered = (List<Integer>) stride.stream().filter(s -> s <= k);
-				  strd = stride_value_filtered.get(rand.nextInt(stride.size()));
+				  stride_value_filtered = stride.stream().filter(s -> s <= k).collect(Collectors.toList());
+				  strd = stride_value_filtered.get(rand.nextInt(stride_value_filtered.size()));
 			  }
 				            
 		}else {
@@ -133,14 +157,14 @@ public class GestionHpp {
 			 }else if(currentSizeImg == 1){
 				 kernel_value_filtered = new ArrayList<Integer>(List.of(1));
 			 }else {
-				kernel_value_filtered = (List<Integer>) kernel.stream().filter(k -> k <= Math.ceil(currentSizeImg/2));
+				kernel_value_filtered = kernel.stream().filter(k -> k <= Math.ceil(currentSizeImg/2)).collect(Collectors.toList());
 			 }
 				            
 			 knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
 			 
 			 // kernel >= stride
 			 int k = knl;
-			 stride_value_filtered = (List<Integer>) stride.stream().filter(s -> s <= k);
+			 stride_value_filtered = stride.stream().filter(s -> s <= k).collect(Collectors.toList());
 			 strd = stride_value_filtered.get(rand.nextInt(stride_value_filtered.size()));
 				    
 		}
@@ -164,12 +188,17 @@ public class GestionHpp {
 			 
 	}
 	
+	@SuppressWarnings("unused")
+	private int compressedFilter(float compressFactor) {
+		currentNBFilters = (int) (currentNBFilters*compressFactor);
+		return currentNBFilters;
+	}
+	
 	private int multFilterby2() {
 		currentNBFilters = currentNBFilters*2;
 		return currentNBFilters;
 	}
 	
-	@SuppressWarnings("unused")
 	private int addInitToFilter() {
 		currentNBFilters = currentNBFilters + INIT_NB_FILTER;
 		return currentNBFilters;
@@ -192,12 +221,308 @@ public class GestionHpp {
 		currentSizeImg = newCurrentSizeImg;
 	}
 	
+	public void gestionMergeNonRecu(MergeNonRecu mnr, MergeSimple ms){
+		
+		Random rand = new Random();
+		ms.setAdd_or_concat(add_or_concat.get(rand.nextInt(add_or_concat.size())));
+		
+		if (mnr.getRight().getEmpty() != null) {
+			// one way is empty
+			if(mnr.getLeftNonRec().getP() != null) {
+				Pooling p = new Pooling();
+				p.setPadding("same");
+				p.setStride(1);
+				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+				
+				ms.addLeft(p);
+			}
+			
+			// convdrop
+			if(ms.getAdd_or_concat() == "add") {
+				for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addLeft(c);
+				}
+				
+				
+			}else {
+				int i = 0;
+				while (i < mnr.getLeftNonRec().getConvdrop().size()-1) {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addLeft(c);
+					i++;
+				}
+				
+				Convolution c = new Convolution();
+				addInitToFilter();
+				gestionConvolutionMerge(1, "same", c);
+				ms.addLeft(c);
+			}
+			// pooling
+			if(mnr.getLeftNonRec().getPool() != null) {
+				Pooling p = new Pooling();
+				p.setPadding("same");
+				p.setStride(1);
+				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+				
+				ms.addLeft(p);
+			}
+		}else {
+			int initImgSize = currentSizeImg;
+			
+			if(mnr.getLeftNonRec().getP() != null) {
+				Pooling p = new Pooling();
+				p.setPadding("same");
+				p.setStride(1);
+				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+				
+				ms.addLeft(p);
+			}
+			
+			// management conv for reduction img
+			int countConvLeft = mnr.getLeftNonRec().getConvdrop().size();
+			int numLeft = rand.nextInt(countConvLeft);
+			Convolution reduceConv = new Convolution();
+			int i = 0;
+			while(i < countConvLeft) {
+				if(numLeft == i) {
+					gestionConvolution(reduceConv);
+					ms.addLeft(reduceConv);
+				}else {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addLeft(c);
+				}
+				i++;
+			}
+			
+			// add reduction on left to right
+			int countConvRight = mnr.getRight().getConv().size();
+			int numRight = rand.nextInt(countConvRight);
+			
+			i = 0;
+			while(i < countConvRight) {
+				if(numRight == i) {
+					ms.addRight(reduceConv);
+				}else {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addRight(c);
+				}
+				i++;
+			}
+			
+			// pooling
+			if(mnr.getLeftNonRec().getPool() != null) {
+				Pooling p = new Pooling();
+				p.setPadding("same");
+				p.setStride(1);
+				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+				
+				ms.addLeft(p);
+			}
+			
+		}
+	}
+	
+	public void gestionMergeRecu(MergeRecu mr, MergeSimple ms) {
+		if (mr.getLeft().getMerge().getMr() != null) { // managmenet merge recusive
+			
+			Random rand = new Random();
+			ms.setAdd_or_concat(add_or_concat.get(rand.nextInt(add_or_concat.size())));
+			
+			if (mr.getRight().getEmpty() != null) {
+				
+				// pooling -> conv -> merge -> conv -> pooling
+				
+				// one way is empty
+				if(mr.getLeft().getP() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+				// convdrop
+				if (mr.getLeft().getConvdropbegin() != null){
+					if(ms.getAdd_or_concat() == "add") {
+						for (ConvDrop conv: mr.getLeft().getConvdropbegin()) {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+						}
+					}else {
+						int i = 0;
+						while (i < mr.getLeft().getConvdropbegin().size()-1) {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+							i++;
+						}
+						
+						Convolution c = new Convolution();
+						addInitToFilter();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+					}
+				}
+					
+				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
+				
+				// convdrop
+				if (mr.getLeft().getConvdropend() != null){
+					if(ms.getAdd_or_concat() == "add") {
+						for (ConvDrop conv: mr.getLeft().getConvdropend()) {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+						}
+					}else {
+						int i = 0;
+						while (i < mr.getLeft().getConvdropend().size()-1) {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+							i++;
+						}
+						
+						Convolution c = new Convolution();
+						addInitToFilter();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+					}
+				}
+				
+				// pooling
+				if(mr.getLeft().getPool() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+			}else {
+				int initImgSize = currentSizeImg;
+				
+				// pooling -> conv -> merge -> conv -> pooling
+				
+				// pooling
+				if(mr.getLeft().getP() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+				// convdrop
+				if (mr.getLeft().getConvdropend() != null){
+					int countConvLeft = mr.getLeft().getConvdropbegin().size();
+					int numLeft = rand.nextInt(countConvLeft);
+					Convolution reduceConv = new Convolution();
+					int i = 0;
+					while(i < countConvLeft) {
+						if(numLeft == i) {
+							gestionConvolution(reduceConv);
+							ms.addLeft(reduceConv);
+						}else {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+						}
+						i++;
+					}
+					
+					int countConvRight = mr.getRight().getConv().size();
+					int numRight = rand.nextInt(countConvRight);
+					
+					i = 0;
+					while(i < countConvRight) {
+						if(numRight == i) {
+							ms.addRight(reduceConv);
+						}else {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addRight(c);
+						}
+						i++;
+					}
+				}
+				
+				
+				// merge
+				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
+				
+				// conv
+				if (mr.getLeft().getConvdropend() != null){
+					int countConvLeft = mr.getLeft().getConvdropbegin().size();
+					int numLeft = rand.nextInt(countConvLeft);
+					Convolution reduceConv = new Convolution();
+					int i = 0;
+					while(i < countConvLeft) {
+						if(numLeft == i) {
+							gestionConvolution(reduceConv);
+							ms.addLeft(reduceConv);
+						}else {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addLeft(c);
+						}
+						i++;
+					}
+					
+					int countConvRight = mr.getRight().getConv().size();
+					int numRight = rand.nextInt(countConvRight);
+					
+					i = 0;
+					while(i < countConvRight) {
+						if(numRight == i) {
+							ms.addRight(reduceConv);
+						}else {
+							Convolution c = new Convolution();
+							gestionConvolutionMerge(1, "same", c);
+							ms.addRight(c);
+						}
+						i++;
+					}
+				}
+				
+				
+				// pooling
+				if(mr.getLeft().getPool() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+			}
+			
+			
+		}else { // end of merge recusive
+			gestionMergeNonRecu(mr.getLeft().getMerge().getMnr(), ms);
+		}
+	}
+	
 	
 	private static class Randomizer {
 	    public static int generate(int min,int max) {
 	        return min + (int)(Math.random() * ((max - min) + 1));
 	    }
 	}
+
+	public static void destroy() {
+		gestionHpp = null;
+	}
+
 	
 	
 	

@@ -1035,10 +1035,20 @@ ruleRight returns [EObject current=null]
 						$current);
 				}
 			)
-			otherlv_2='Empty'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getRightAccess().getEmptyKeyword_1_1());
-			}
+			(
+				(
+					lv_empty_2_0='Empty'
+					{
+						newLeafNode(lv_empty_2_0, grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getRightRule());
+						}
+						setWithLastConsumed($current, "empty", lv_empty_2_0, "Empty");
+					}
+				)
+			)
 		)
 	)
 ;

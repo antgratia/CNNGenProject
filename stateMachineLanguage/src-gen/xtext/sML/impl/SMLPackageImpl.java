@@ -671,6 +671,17 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
+  public EAttribute getRight_Empty()
+  {
+    return (EAttribute)rightEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getMergeNonRecu()
   {
     return mergeNonRecuEClass;
@@ -968,6 +979,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
 
     rightEClass = createEClass(RIGHT);
     createEReference(rightEClass, RIGHT__CONV);
+    createEAttribute(rightEClass, RIGHT__EMPTY);
 
     mergeNonRecuEClass = createEClass(MERGE_NON_RECU);
     createEAttribute(mergeNonRecuEClass, MERGE_NON_RECU__DB);
@@ -1077,6 +1089,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
 
     initEClass(rightEClass, Right.class, "Right", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRight_Conv(), this.getConvolution(), null, "conv", null, 0, -1, Right.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRight_Empty(), ecorePackage.getEString(), "empty", null, 0, 1, Right.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mergeNonRecuEClass, MergeNonRecu.class, "MergeNonRecu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMergeNonRecu_Db(), ecorePackage.getEString(), "db", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

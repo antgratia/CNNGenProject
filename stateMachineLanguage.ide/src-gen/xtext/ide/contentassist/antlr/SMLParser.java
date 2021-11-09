@@ -83,6 +83,7 @@ public class SMLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLeftNonRecursiveAccess().getConvdropAssignment_1(), "rule__LeftNonRecursive__ConvdropAssignment_1");
 			builder.put(grammarAccess.getLeftNonRecursiveAccess().getPoolAssignment_2(), "rule__LeftNonRecursive__PoolAssignment_2");
 			builder.put(grammarAccess.getRightAccess().getConvAssignment_0(), "rule__Right__ConvAssignment_0");
+			builder.put(grammarAccess.getRightAccess().getEmptyAssignment_1_1(), "rule__Right__EmptyAssignment_1_1");
 			builder.put(grammarAccess.getMergeNonRecuAccess().getDbAssignment_0(), "rule__MergeNonRecu__DbAssignment_0");
 			builder.put(grammarAccess.getMergeNonRecuAccess().getLeftNonRecAssignment_1(), "rule__MergeNonRecu__LeftNonRecAssignment_1");
 			builder.put(grammarAccess.getMergeNonRecuAccess().getVirgAssignment_2(), "rule__MergeNonRecu__VirgAssignment_2");

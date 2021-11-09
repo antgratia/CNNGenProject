@@ -299,7 +299,7 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Right returns Right
 	 *
 	 * Constraint:
-	 *     conv+=Convolution*
+	 *     (conv+=Convolution+ | empty='Empty')
 	 */
 	protected void sequence_Right(ISerializationContext context, Right semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

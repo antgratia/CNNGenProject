@@ -1666,9 +1666,9 @@ rule__Right__Group_1__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getRightAccess().getEmptyKeyword_1_1()); }
-	'Empty'
-	{ after(grammarAccess.getRightAccess().getEmptyKeyword_1_1()); }
+	{ before(grammarAccess.getRightAccess().getEmptyAssignment_1_1()); }
+	(rule__Right__EmptyAssignment_1_1)
+	{ after(grammarAccess.getRightAccess().getEmptyAssignment_1_1()); }
 )
 ;
 finally {
@@ -2575,6 +2575,25 @@ rule__Right__ConvAssignment_0
 		{ before(grammarAccess.getRightAccess().getConvConvolutionParserRuleCall_0_0()); }
 		ruleConvolution
 		{ after(grammarAccess.getRightAccess().getConvConvolutionParserRuleCall_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Right__EmptyAssignment_1_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0()); }
+		(
+			{ before(grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0()); }
+			'Empty'
+			{ after(grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0()); }
+		)
+		{ after(grammarAccess.getRightAccess().getEmptyEmptyKeyword_1_1_0()); }
 	)
 ;
 finally {

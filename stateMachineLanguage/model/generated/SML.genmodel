@@ -58,6 +58,7 @@
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//Right">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Right/conv"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Right/empty"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//MergeNonRecu">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeNonRecu/db"/>

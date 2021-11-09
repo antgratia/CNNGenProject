@@ -537,13 +537,22 @@ public interface SMLPackage extends EPackage
   int RIGHT__CONV = 0;
 
   /**
+   * The feature id for the '<em><b>Empty</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RIGHT__EMPTY = 1;
+
+  /**
    * The number of structural features of the '<em>Right</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RIGHT_FEATURE_COUNT = 1;
+  int RIGHT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link xtext.sML.impl.MergeNonRecuImpl <em>Merge Non Recu</em>}' class.
@@ -1218,6 +1227,17 @@ public interface SMLPackage extends EPackage
   EReference getRight_Conv();
 
   /**
+   * Returns the meta object for the attribute '{@link xtext.sML.Right#getEmpty <em>Empty</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Empty</em>'.
+   * @see xtext.sML.Right#getEmpty()
+   * @see #getRight()
+   * @generated
+   */
+  EAttribute getRight_Empty();
+
+  /**
    * Returns the meta object for class '{@link xtext.sML.MergeNonRecu <em>Merge Non Recu</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1813,6 +1833,14 @@ public interface SMLPackage extends EPackage
      * @generated
      */
     EReference RIGHT__CONV = eINSTANCE.getRight_Conv();
+
+    /**
+     * The meta object literal for the '<em><b>Empty</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RIGHT__EMPTY = eINSTANCE.getRight_Empty();
 
     /**
      * The meta object literal for the '{@link xtext.sML.impl.MergeNonRecuImpl <em>Merge Non Recu</em>}' class.
