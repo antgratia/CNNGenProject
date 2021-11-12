@@ -142,8 +142,11 @@ class SMLGenerator extends AbstractGenerator {
 		for (elem: list){
 			if (elem.conv !== null){
 				fe_string += gestionConv(elem.conv, gestionWay.current)
+
 			}else if (elem.merge !== null){
-				fe_string += gestionMerge(elem.merge)
+				var MergeSimple ms = null
+				fe_string += gestionMerge(elem.merge, ms)
+				ms = null
 			}else {
 				// TODO HW
 				//fe_string += 
@@ -178,14 +181,25 @@ class SMLGenerator extends AbstractGenerator {
 		else return unitUpConv(x_or_shortcut)
 	}
 	
-	def gestionMerge(Merge merge) {
+	def gestionMerge(Merge merge, MergeSimple mergeSimple) {
 		var str_merge = ""
-		if(merge.mnr !== null) str_merge += gestionMergeNonRecu(merge.mnr)
-		else str_merge += gestionMergeRecu(merge.mr)
+		var ms = mergeSimple
+		if(merge.mnr !== null) {			
+			if(ms === null){
+				ms = new MergeSimple(merge.mnr)
+			}
+			str_merge += gestionMergeNonRecu(merge.mnr, ms)
+			
+		}else {
+			if(ms === null){
+				ms = new MergeSimple(merge.mr)
+			}
+			
+			str_merge += gestionMergeRecu(merge.mr, ms)
+		}
 	}
 	
-	def gestionMergeNonRecu(MergeNonRecu mergeNonRecu) {
-		var MergeSimple merge = new MergeSimple(mergeNonRecu);
+	def gestionMergeNonRecu(MergeNonRecu mergeNonRecu, MergeSimple merge) {
 		var strMergeNonRecur = ""
 	
 		//init merge
@@ -247,8 +261,8 @@ class SMLGenerator extends AbstractGenerator {
 		return strRight
 	}
 	
-	def gestionMergeRecu(MergeRecu mergeRecu) {
-		var MergeSimple ms = new MergeSimple(mergeRecu)
+	def gestionMergeRecu(MergeRecu mergeRecu, MergeSimple ms) {
+		
 		var strMerge =""
 
 		
@@ -293,7 +307,7 @@ class SMLGenerator extends AbstractGenerator {
 			}
 		}
 		
-		strLeftRecu += gestionMerge(left.merge)
+		strLeftRecu += gestionMerge(left.merge, ms)
 		
 		if (left.convdropend !== null){
 			for (convdrop: left.convdropend){

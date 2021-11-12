@@ -11,16 +11,18 @@ public class MergeSimple {
 
 	private List<LayerInterface> left = new ArrayList<LayerInterface>();
 	private List<LayerInterface> right = new ArrayList<LayerInterface>();
-	private String add_or_concat;
+	private String add_or_concat = "";
 	
 	private GestionHpp gestionHpp = GestionHpp.getGestionHpp();
 	
 	public MergeSimple(MergeNonRecu mnr) {
-		gestionHpp.gestionMergeNonRecu(mnr, this);
+		gestionHpp.gestionMergeNonRecu(mnr, this, false, this.add_or_concat);
+		if(this.add_or_concat == "concat") gestionHpp.compressedFilter();
 	}
 	
 	public MergeSimple(MergeRecu mr) {
 		gestionHpp.gestionMergeRecu(mr, this);
+		if(this.add_or_concat == "concat") gestionHpp.compressedFilter();
 	}
 
 	public List<LayerInterface> getLeft() {

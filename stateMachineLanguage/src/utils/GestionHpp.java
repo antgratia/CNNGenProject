@@ -49,6 +49,9 @@ public class GestionHpp {
 	
 	// hpp
 	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
+	private static List<Double> compressFactor = new ArrayList<Double>(List.of(0.2,0.3,0.5,0.65,0.8));
+	
+	private static String str_add_or_concat = "";
 	
 	private GestionHpp() {
 		currentNBFilters = INIT_NB_FILTER;
@@ -190,8 +193,9 @@ public class GestionHpp {
 	}
 	
 
-	private int compressedFilter(float compressFactor) {
-		currentNBFilters = (int) (currentNBFilters*compressFactor);
+	public int compressedFilter() {
+		Random rand = new Random();
+		currentNBFilters = (int) (currentNBFilters*(compressFactor.get(rand.nextInt(compressFactor.size()))));
 		return currentNBFilters;
 	}
 	
@@ -222,13 +226,15 @@ public class GestionHpp {
 		currentSizeImg = newCurrentSizeImg;
 	}
 	
-	public void gestionMergeNonRecu(MergeNonRecu mnr, MergeSimple ms){
+	public void gestionMergeNonRecu(MergeNonRecu mnr, MergeSimple ms, boolean mergeRecu, String str_add_or_concat){
 		
 		Random rand = new Random();
-		ms.setAdd_or_concat(add_or_concat.get(rand.nextInt(add_or_concat.size())));
+		if (str_add_or_concat == "")
+			str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
 		
-		if (mnr.getRight().getEmpty() != null) {
-			// one way is empty
+		ms.setAdd_or_concat(str_add_or_concat);
+		
+		if(mergeRecu == true) {
 			if(mnr.getLeftNonRec().getP() != null) {
 				Pooling p = new Pooling();
 				p.setPadding("same");
@@ -239,80 +245,18 @@ public class GestionHpp {
 			}
 			
 			// convdrop
-			if(ms.getAdd_or_concat() == "add") {
-				for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
-					Convolution c = new Convolution();
-					gestionConvolutionMerge(1, "same", c);
-					ms.addLeft(c);
-				}
-				
-				
-			}else {
-				int i = 0;
-				while (i < mnr.getLeftNonRec().getConvdrop().size()-1) {
-					Convolution c = new Convolution();
-					gestionConvolutionMerge(1, "same", c);
-					ms.addLeft(c);
-					i++;
-				}
-				
+			for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
 				Convolution c = new Convolution();
-				addInitToFilter();
 				gestionConvolutionMerge(1, "same", c);
 				ms.addLeft(c);
 			}
-			// pooling
-			if(mnr.getLeftNonRec().getPool() != null) {
-				Pooling p = new Pooling();
-				p.setPadding("same");
-				p.setStride(1);
-				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-				
-				ms.addLeft(p);
-			}
-		}else {
-			int initImgSize = currentSizeImg;
 			
-			if(mnr.getLeftNonRec().getP() != null) {
-				Pooling p = new Pooling();
-				p.setPadding("same");
-				p.setStride(1);
-				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-				
-				ms.addLeft(p);
-			}
-			
-			// management conv for reduction img
-			int countConvLeft = mnr.getLeftNonRec().getConvdrop().size();
-			int numLeft = rand.nextInt(countConvLeft);
-			Convolution reduceConv = new Convolution();
-			int i = 0;
-			while(i < countConvLeft) {
-				if(numLeft == i) {
-					gestionConvolution(reduceConv);
-					ms.addLeft(reduceConv);
-				}else {
-					Convolution c = new Convolution();
-					gestionConvolutionMerge(1, "same", c);
-					ms.addLeft(c);
-				}
-				i++;
-			}
-			
-			// add reduction on left to right
-			int countConvRight = mnr.getRight().getConv().size();
-			int numRight = rand.nextInt(countConvRight);
-			
-			i = 0;
-			while(i < countConvRight) {
-				if(numRight == i) {
-					ms.addRight(reduceConv);
-				}else {
+			if(mnr.getRight().getConv() != null) {
+				for (xtext.sML.Convolution conv: mnr.getRight().getConv()) {
 					Convolution c = new Convolution();
 					gestionConvolutionMerge(1, "same", c);
 					ms.addRight(c);
 				}
-				i++;
 			}
 			
 			// pooling
@@ -325,14 +269,117 @@ public class GestionHpp {
 				ms.addLeft(p);
 			}
 			
+		}else {
+			if (mnr.getRight().getEmpty() != null) {
+				// one way is empty
+				if(mnr.getLeftNonRec().getP() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+				// convdrop
+				if(ms.getAdd_or_concat() == "add") {
+					for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+					}
+					
+					
+				}else {
+					int i = 0;
+					while (i < mnr.getLeftNonRec().getConvdrop().size()-1) {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+						i++;
+					}
+					
+					Convolution c = new Convolution();
+					addInitToFilter();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addLeft(c);
+				}
+				// pooling
+				if(mnr.getLeftNonRec().getPool() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+			}else {
+				int initImgSize = currentSizeImg;
+				
+				if(mnr.getLeftNonRec().getP() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+				// management conv for reduction img
+				int countConvLeft = mnr.getLeftNonRec().getConvdrop().size();
+				int numLeft = rand.nextInt(countConvLeft);
+				Convolution reduceConv = new Convolution();
+				int i = 0;
+				while(i < countConvLeft) {
+					if(numLeft == i) {
+						gestionConvolution(reduceConv);
+						ms.addLeft(reduceConv);
+					}else {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+					}
+					i++;
+				}
+				
+				// add reduction on left to right
+				int countConvRight = mnr.getRight().getConv().size();
+				int numRight = rand.nextInt(countConvRight);
+				
+				i = 0;
+				while(i < countConvRight) {
+					if(numRight == i) {
+						ms.addRight(reduceConv);
+					}else {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addRight(c);
+					}
+					i++;
+				}
+				
+				// pooling
+				if(mnr.getLeftNonRec().getPool() != null) {
+					Pooling p = new Pooling();
+					p.setPadding("same");
+					p.setStride(1);
+					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
+					
+					ms.addLeft(p);
+				}
+				
+			}
 		}
 	}
 	
 	public void gestionMergeRecu(MergeRecu mr, MergeSimple ms) {
-		if (mr.getLeft().getMerge().getMr() != null) { // managmenet merge recusive
-			
-			Random rand = new Random();
-			ms.setAdd_or_concat(add_or_concat.get(rand.nextInt(add_or_concat.size())));
+		Random rand = new Random();
+		if(str_add_or_concat == "") {
+			str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
+		}
+		
+		
+			ms.setAdd_or_concat(str_add_or_concat);
 			
 				// pooling -> conv -> merge -> conv -> pooling
 				
@@ -354,11 +401,15 @@ public class GestionHpp {
 						ms.addLeft(c);
 					}
 				}
-					
+			if (mr.getLeft().getMerge().getMr() != null) { // managmenet merge recusive	
 				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
+			}else { // end of merge recusive
+				gestionMergeNonRecu(mr.getLeft().getMerge().getMnr(), ms, true, str_add_or_concat);
+				str_add_or_concat = "";
+			}
 				
 				// convdrop
-				if (mr.getLeft().getConvdropend() != null){
+				if (mr.getLeft().getConvdropend() != null){					
 					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
 						Convolution c = new Convolution();
 						gestionConvolutionMerge(1, "same", c);
@@ -383,10 +434,9 @@ public class GestionHpp {
 					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
 					
 					ms.addLeft(p);
-				}					
-		}else { // end of merge recusive
-			gestionMergeNonRecu(mr.getLeft().getMerge().getMnr(), ms);
-		}
+					
+				}
+
 	}
 	
 	
