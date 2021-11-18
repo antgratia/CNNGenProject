@@ -401,6 +401,10 @@ public class GestionHpp {
 						ms.addLeft(c);
 					}
 				}
+			
+			if (str_add_or_concat == "concat") {
+				addInitToFilter();
+			}
 			if (mr.getLeft().getMerge().getMr() != null) { // managmenet merge recusive	
 				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
 			}else { // end of merge recusive

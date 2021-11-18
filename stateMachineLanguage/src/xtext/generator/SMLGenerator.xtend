@@ -54,6 +54,7 @@ class SMLGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		gestionWay = GestionWay.gestionWay
 		GestionHpp.destroy
+		println(resource.URI)
 		for(elem : resource.allContents.toIterable.filter(Architecture)){
 			fsa.generateFile(py_dir + file_name + '.py', elem.compile())
 		}
