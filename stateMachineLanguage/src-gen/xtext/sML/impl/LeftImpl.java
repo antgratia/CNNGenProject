@@ -3,12 +3,8 @@
  */
 package xtext.sML.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -16,29 +12,26 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import xtext.sML.ConvDrop;
-import xtext.sML.LeftNonRecursive;
+import xtext.sML.ConvOrMerge;
+import xtext.sML.Left;
 import xtext.sML.SMLPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Left Non Recursive</b></em>'.
+ * An implementation of the model object '<em><b>Left</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.impl.LeftNonRecursiveImpl#getP <em>P</em>}</li>
- *   <li>{@link xtext.sML.impl.LeftNonRecursiveImpl#getConvdrop <em>Convdrop</em>}</li>
- *   <li>{@link xtext.sML.impl.LeftNonRecursiveImpl#getPool <em>Pool</em>}</li>
+ *   <li>{@link xtext.sML.impl.LeftImpl#getP <em>P</em>}</li>
+ *   <li>{@link xtext.sML.impl.LeftImpl#getCom <em>Com</em>}</li>
+ *   <li>{@link xtext.sML.impl.LeftImpl#getPool <em>Pool</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implements LeftNonRecursive
+public class LeftImpl extends MinimalEObjectImpl.Container implements Left
 {
   /**
    * The default value of the '{@link #getP() <em>P</em>}' attribute.
@@ -61,14 +54,14 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   protected String p = P_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getConvdrop() <em>Convdrop</em>}' containment reference list.
+   * The cached value of the '{@link #getCom() <em>Com</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getConvdrop()
+   * @see #getCom()
    * @generated
    * @ordered
    */
-  protected EList<ConvDrop> convdrop;
+  protected ConvOrMerge com;
 
   /**
    * The default value of the '{@link #getPool() <em>Pool</em>}' attribute.
@@ -95,7 +88,7 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  protected LeftNonRecursiveImpl()
+  protected LeftImpl()
   {
     super();
   }
@@ -108,7 +101,7 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   @Override
   protected EClass eStaticClass()
   {
-    return SMLPackage.Literals.LEFT_NON_RECURSIVE;
+    return SMLPackage.Literals.LEFT;
   }
 
   /**
@@ -133,7 +126,7 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
     String oldP = p;
     p = newP;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT_NON_RECURSIVE__P, oldP, p));
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT__P, oldP, p));
   }
 
   /**
@@ -142,13 +135,48 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
    * @generated
    */
   @Override
-  public EList<ConvDrop> getConvdrop()
+  public ConvOrMerge getCom()
   {
-    if (convdrop == null)
+    return com;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetCom(ConvOrMerge newCom, NotificationChain msgs)
+  {
+    ConvOrMerge oldCom = com;
+    com = newCom;
+    if (eNotificationRequired())
     {
-      convdrop = new EObjectContainmentEList<ConvDrop>(ConvDrop.class, this, SMLPackage.LEFT_NON_RECURSIVE__CONVDROP);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT__COM, oldCom, newCom);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return convdrop;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setCom(ConvOrMerge newCom)
+  {
+    if (newCom != com)
+    {
+      NotificationChain msgs = null;
+      if (com != null)
+        msgs = ((InternalEObject)com).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SMLPackage.LEFT__COM, null, msgs);
+      if (newCom != null)
+        msgs = ((InternalEObject)newCom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SMLPackage.LEFT__COM, null, msgs);
+      msgs = basicSetCom(newCom, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT__COM, newCom, newCom));
   }
 
   /**
@@ -173,7 +201,7 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
     String oldPool = pool;
     pool = newPool;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT_NON_RECURSIVE__POOL, oldPool, pool));
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.LEFT__POOL, oldPool, pool));
   }
 
   /**
@@ -186,8 +214,8 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case SMLPackage.LEFT_NON_RECURSIVE__CONVDROP:
-        return ((InternalEList<?>)getConvdrop()).basicRemove(otherEnd, msgs);
+      case SMLPackage.LEFT__COM:
+        return basicSetCom(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -202,11 +230,11 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case SMLPackage.LEFT_NON_RECURSIVE__P:
+      case SMLPackage.LEFT__P:
         return getP();
-      case SMLPackage.LEFT_NON_RECURSIVE__CONVDROP:
-        return getConvdrop();
-      case SMLPackage.LEFT_NON_RECURSIVE__POOL:
+      case SMLPackage.LEFT__COM:
+        return getCom();
+      case SMLPackage.LEFT__POOL:
         return getPool();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -217,20 +245,18 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case SMLPackage.LEFT_NON_RECURSIVE__P:
+      case SMLPackage.LEFT__P:
         setP((String)newValue);
         return;
-      case SMLPackage.LEFT_NON_RECURSIVE__CONVDROP:
-        getConvdrop().clear();
-        getConvdrop().addAll((Collection<? extends ConvDrop>)newValue);
+      case SMLPackage.LEFT__COM:
+        setCom((ConvOrMerge)newValue);
         return;
-      case SMLPackage.LEFT_NON_RECURSIVE__POOL:
+      case SMLPackage.LEFT__POOL:
         setPool((String)newValue);
         return;
     }
@@ -247,13 +273,13 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case SMLPackage.LEFT_NON_RECURSIVE__P:
+      case SMLPackage.LEFT__P:
         setP(P_EDEFAULT);
         return;
-      case SMLPackage.LEFT_NON_RECURSIVE__CONVDROP:
-        getConvdrop().clear();
+      case SMLPackage.LEFT__COM:
+        setCom((ConvOrMerge)null);
         return;
-      case SMLPackage.LEFT_NON_RECURSIVE__POOL:
+      case SMLPackage.LEFT__POOL:
         setPool(POOL_EDEFAULT);
         return;
     }
@@ -270,11 +296,11 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case SMLPackage.LEFT_NON_RECURSIVE__P:
+      case SMLPackage.LEFT__P:
         return P_EDEFAULT == null ? p != null : !P_EDEFAULT.equals(p);
-      case SMLPackage.LEFT_NON_RECURSIVE__CONVDROP:
-        return convdrop != null && !convdrop.isEmpty();
-      case SMLPackage.LEFT_NON_RECURSIVE__POOL:
+      case SMLPackage.LEFT__COM:
+        return com != null;
+      case SMLPackage.LEFT__POOL:
         return POOL_EDEFAULT == null ? pool != null : !POOL_EDEFAULT.equals(pool);
     }
     return super.eIsSet(featureID);
@@ -299,4 +325,4 @@ public class LeftNonRecursiveImpl extends MinimalEObjectImpl.Container implement
     return result.toString();
   }
 
-} //LeftNonRecursiveImpl
+} //LeftImpl

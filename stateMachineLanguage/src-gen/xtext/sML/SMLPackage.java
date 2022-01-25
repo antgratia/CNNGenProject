@@ -344,32 +344,14 @@ public interface SMLPackage extends EPackage
   int CONV_DROP_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link xtext.sML.impl.LeftRecuImpl <em>Left Recu</em>}' class.
+   * The meta object id for the '{@link xtext.sML.impl.MergeConvImpl <em>Merge Conv</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see xtext.sML.impl.LeftRecuImpl
-   * @see xtext.sML.impl.SMLPackageImpl#getLeftRecu()
+   * @see xtext.sML.impl.MergeConvImpl
+   * @see xtext.sML.impl.SMLPackageImpl#getMergeConv()
    * @generated
    */
-  int LEFT_RECU = 7;
-
-  /**
-   * The feature id for the '<em><b>P</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_RECU__P = 0;
-
-  /**
-   * The feature id for the '<em><b>Convdropbegin</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_RECU__CONVDROPBEGIN = 1;
+  int MERGE_CONV = 7;
 
   /**
    * The feature id for the '<em><b>Merge</b></em>' containment reference.
@@ -378,117 +360,7 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LEFT_RECU__MERGE = 2;
-
-  /**
-   * The feature id for the '<em><b>Convdropend</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_RECU__CONVDROPEND = 3;
-
-  /**
-   * The feature id for the '<em><b>Pool</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_RECU__POOL = 4;
-
-  /**
-   * The number of structural features of the '<em>Left Recu</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_RECU_FEATURE_COUNT = 5;
-
-  /**
-   * The meta object id for the '{@link xtext.sML.impl.MergeRecuImpl <em>Merge Recu</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see xtext.sML.impl.MergeRecuImpl
-   * @see xtext.sML.impl.SMLPackageImpl#getMergeRecu()
-   * @generated
-   */
-  int MERGE_RECU = 8;
-
-  /**
-   * The feature id for the '<em><b>Db</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU__DB = 0;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU__LEFT = 1;
-
-  /**
-   * The feature id for the '<em><b>Virg</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU__VIRG = 2;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU__RIGHT = 3;
-
-  /**
-   * The feature id for the '<em><b>Fm</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU__FM = 4;
-
-  /**
-   * The number of structural features of the '<em>Merge Recu</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_RECU_FEATURE_COUNT = 5;
-
-  /**
-   * The meta object id for the '{@link xtext.sML.impl.LeftNonRecursiveImpl <em>Left Non Recursive</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see xtext.sML.impl.LeftNonRecursiveImpl
-   * @see xtext.sML.impl.SMLPackageImpl#getLeftNonRecursive()
-   * @generated
-   */
-  int LEFT_NON_RECURSIVE = 9;
-
-  /**
-   * The feature id for the '<em><b>P</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEFT_NON_RECURSIVE__P = 0;
+  int MERGE_CONV__MERGE = 0;
 
   /**
    * The feature id for the '<em><b>Convdrop</b></em>' containment reference list.
@@ -497,7 +369,81 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LEFT_NON_RECURSIVE__CONVDROP = 1;
+  int MERGE_CONV__CONVDROP = 1;
+
+  /**
+   * The number of structural features of the '<em>Merge Conv</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MERGE_CONV_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link xtext.sML.impl.ConvOrMergeImpl <em>Conv Or Merge</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see xtext.sML.impl.ConvOrMergeImpl
+   * @see xtext.sML.impl.SMLPackageImpl#getConvOrMerge()
+   * @generated
+   */
+  int CONV_OR_MERGE = 8;
+
+  /**
+   * The feature id for the '<em><b>Convdrop</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONV_OR_MERGE__CONVDROP = 0;
+
+  /**
+   * The feature id for the '<em><b>Merge Conv</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONV_OR_MERGE__MERGE_CONV = 1;
+
+  /**
+   * The number of structural features of the '<em>Conv Or Merge</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONV_OR_MERGE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link xtext.sML.impl.LeftImpl <em>Left</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see xtext.sML.impl.LeftImpl
+   * @see xtext.sML.impl.SMLPackageImpl#getLeft()
+   * @generated
+   */
+  int LEFT = 9;
+
+  /**
+   * The feature id for the '<em><b>P</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LEFT__P = 0;
+
+  /**
+   * The feature id for the '<em><b>Com</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LEFT__COM = 1;
 
   /**
    * The feature id for the '<em><b>Pool</b></em>' attribute.
@@ -506,16 +452,16 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LEFT_NON_RECURSIVE__POOL = 2;
+  int LEFT__POOL = 2;
 
   /**
-   * The number of structural features of the '<em>Left Non Recursive</em>' class.
+   * The number of structural features of the '<em>Left</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LEFT_NON_RECURSIVE_FEATURE_COUNT = 3;
+  int LEFT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link xtext.sML.impl.RightImpl <em>Right</em>}' class.
@@ -555,32 +501,23 @@ public interface SMLPackage extends EPackage
   int RIGHT_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link xtext.sML.impl.MergeNonRecuImpl <em>Merge Non Recu</em>}' class.
+   * The meta object id for the '{@link xtext.sML.impl.MergeBodyImpl <em>Merge Body</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see xtext.sML.impl.MergeNonRecuImpl
-   * @see xtext.sML.impl.SMLPackageImpl#getMergeNonRecu()
+   * @see xtext.sML.impl.MergeBodyImpl
+   * @see xtext.sML.impl.SMLPackageImpl#getMergeBody()
    * @generated
    */
-  int MERGE_NON_RECU = 11;
+  int MERGE_BODY = 11;
 
   /**
-   * The feature id for the '<em><b>Db</b></em>' attribute.
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MERGE_NON_RECU__DB = 0;
-
-  /**
-   * The feature id for the '<em><b>Left Non Rec</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_NON_RECU__LEFT_NON_REC = 1;
+  int MERGE_BODY__LEFT = 0;
 
   /**
    * The feature id for the '<em><b>Virg</b></em>' attribute.
@@ -589,7 +526,7 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MERGE_NON_RECU__VIRG = 2;
+  int MERGE_BODY__VIRG = 1;
 
   /**
    * The feature id for the '<em><b>Right</b></em>' containment reference.
@@ -598,25 +535,16 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MERGE_NON_RECU__RIGHT = 3;
+  int MERGE_BODY__RIGHT = 2;
 
   /**
-   * The feature id for the '<em><b>Fm</b></em>' attribute.
+   * The number of structural features of the '<em>Merge Body</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MERGE_NON_RECU__FM = 4;
-
-  /**
-   * The number of structural features of the '<em>Merge Non Recu</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MERGE_NON_RECU_FEATURE_COUNT = 5;
+  int MERGE_BODY_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link xtext.sML.impl.MergeImpl <em>Merge</em>}' class.
@@ -629,22 +557,31 @@ public interface SMLPackage extends EPackage
   int MERGE = 12;
 
   /**
-   * The feature id for the '<em><b>Mnr</b></em>' containment reference.
+   * The feature id for the '<em><b>Db</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MERGE__MNR = 0;
+  int MERGE__DB = 0;
 
   /**
-   * The feature id for the '<em><b>Mr</b></em>' containment reference.
+   * The feature id for the '<em><b>Merge Body</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MERGE__MR = 1;
+  int MERGE__MERGE_BODY = 1;
+
+  /**
+   * The feature id for the '<em><b>Fm</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MERGE__FM = 2;
 
   /**
    * The number of structural features of the '<em>Merge</em>' class.
@@ -653,62 +590,7 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MERGE_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link xtext.sML.impl.HighwayImpl <em>Highway</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see xtext.sML.impl.HighwayImpl
-   * @see xtext.sML.impl.SMLPackageImpl#getHighway()
-   * @generated
-   */
-  int HIGHWAY = 13;
-
-  /**
-   * The feature id for the '<em><b>Db</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HIGHWAY__DB = 0;
-
-  /**
-   * The feature id for the '<em><b>Left Non Rec</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HIGHWAY__LEFT_NON_REC = 1;
-
-  /**
-   * The feature id for the '<em><b>Conv</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HIGHWAY__CONV = 2;
-
-  /**
-   * The feature id for the '<em><b>Fm</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HIGHWAY__FM = 3;
-
-  /**
-   * The number of structural features of the '<em>Highway</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HIGHWAY_FEATURE_COUNT = 4;
+  int MERGE_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link xtext.sML.impl.FeatureExtractionImpl <em>Feature Extraction</em>}' class.
@@ -718,7 +600,7 @@ public interface SMLPackage extends EPackage
    * @see xtext.sML.impl.SMLPackageImpl#getFeatureExtraction()
    * @generated
    */
-  int FEATURE_EXTRACTION = 14;
+  int FEATURE_EXTRACTION = 13;
 
   /**
    * The feature id for the '<em><b>Conv</b></em>' containment reference.
@@ -739,22 +621,13 @@ public interface SMLPackage extends EPackage
   int FEATURE_EXTRACTION__MERGE = 1;
 
   /**
-   * The feature id for the '<em><b>Hw</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FEATURE_EXTRACTION__HW = 2;
-
-  /**
    * The feature id for the '<em><b>Drop</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FEATURE_EXTRACTION__DROP = 3;
+  int FEATURE_EXTRACTION__DROP = 2;
 
   /**
    * The feature id for the '<em><b>Pool</b></em>' attribute.
@@ -763,7 +636,7 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE_EXTRACTION__POOL = 4;
+  int FEATURE_EXTRACTION__POOL = 3;
 
   /**
    * The number of structural features of the '<em>Feature Extraction</em>' class.
@@ -772,7 +645,7 @@ public interface SMLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE_EXTRACTION_FEATURE_COUNT = 5;
+  int FEATURE_EXTRACTION_FEATURE_COUNT = 4;
 
 
   /**
@@ -1033,177 +906,111 @@ public interface SMLPackage extends EPackage
   EAttribute getConvDrop_Drop();
 
   /**
-   * Returns the meta object for class '{@link xtext.sML.LeftRecu <em>Left Recu</em>}'.
+   * Returns the meta object for class '{@link xtext.sML.MergeConv <em>Merge Conv</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Left Recu</em>'.
-   * @see xtext.sML.LeftRecu
+   * @return the meta object for class '<em>Merge Conv</em>'.
+   * @see xtext.sML.MergeConv
    * @generated
    */
-  EClass getLeftRecu();
+  EClass getMergeConv();
 
   /**
-   * Returns the meta object for the attribute '{@link xtext.sML.LeftRecu#getP <em>P</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>P</em>'.
-   * @see xtext.sML.LeftRecu#getP()
-   * @see #getLeftRecu()
-   * @generated
-   */
-  EAttribute getLeftRecu_P();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link xtext.sML.LeftRecu#getConvdropbegin <em>Convdropbegin</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Convdropbegin</em>'.
-   * @see xtext.sML.LeftRecu#getConvdropbegin()
-   * @see #getLeftRecu()
-   * @generated
-   */
-  EReference getLeftRecu_Convdropbegin();
-
-  /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.LeftRecu#getMerge <em>Merge</em>}'.
+   * Returns the meta object for the containment reference '{@link xtext.sML.MergeConv#getMerge <em>Merge</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Merge</em>'.
-   * @see xtext.sML.LeftRecu#getMerge()
-   * @see #getLeftRecu()
+   * @see xtext.sML.MergeConv#getMerge()
+   * @see #getMergeConv()
    * @generated
    */
-  EReference getLeftRecu_Merge();
+  EReference getMergeConv_Merge();
 
   /**
-   * Returns the meta object for the containment reference list '{@link xtext.sML.LeftRecu#getConvdropend <em>Convdropend</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Convdropend</em>'.
-   * @see xtext.sML.LeftRecu#getConvdropend()
-   * @see #getLeftRecu()
-   * @generated
-   */
-  EReference getLeftRecu_Convdropend();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.LeftRecu#getPool <em>Pool</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Pool</em>'.
-   * @see xtext.sML.LeftRecu#getPool()
-   * @see #getLeftRecu()
-   * @generated
-   */
-  EAttribute getLeftRecu_Pool();
-
-  /**
-   * Returns the meta object for class '{@link xtext.sML.MergeRecu <em>Merge Recu</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Merge Recu</em>'.
-   * @see xtext.sML.MergeRecu
-   * @generated
-   */
-  EClass getMergeRecu();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeRecu#getDb <em>Db</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Db</em>'.
-   * @see xtext.sML.MergeRecu#getDb()
-   * @see #getMergeRecu()
-   * @generated
-   */
-  EAttribute getMergeRecu_Db();
-
-  /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.MergeRecu#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see xtext.sML.MergeRecu#getLeft()
-   * @see #getMergeRecu()
-   * @generated
-   */
-  EReference getMergeRecu_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeRecu#getVirg <em>Virg</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Virg</em>'.
-   * @see xtext.sML.MergeRecu#getVirg()
-   * @see #getMergeRecu()
-   * @generated
-   */
-  EAttribute getMergeRecu_Virg();
-
-  /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.MergeRecu#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see xtext.sML.MergeRecu#getRight()
-   * @see #getMergeRecu()
-   * @generated
-   */
-  EReference getMergeRecu_Right();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeRecu#getFm <em>Fm</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Fm</em>'.
-   * @see xtext.sML.MergeRecu#getFm()
-   * @see #getMergeRecu()
-   * @generated
-   */
-  EAttribute getMergeRecu_Fm();
-
-  /**
-   * Returns the meta object for class '{@link xtext.sML.LeftNonRecursive <em>Left Non Recursive</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Left Non Recursive</em>'.
-   * @see xtext.sML.LeftNonRecursive
-   * @generated
-   */
-  EClass getLeftNonRecursive();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.LeftNonRecursive#getP <em>P</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>P</em>'.
-   * @see xtext.sML.LeftNonRecursive#getP()
-   * @see #getLeftNonRecursive()
-   * @generated
-   */
-  EAttribute getLeftNonRecursive_P();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link xtext.sML.LeftNonRecursive#getConvdrop <em>Convdrop</em>}'.
+   * Returns the meta object for the containment reference list '{@link xtext.sML.MergeConv#getConvdrop <em>Convdrop</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Convdrop</em>'.
-   * @see xtext.sML.LeftNonRecursive#getConvdrop()
-   * @see #getLeftNonRecursive()
+   * @see xtext.sML.MergeConv#getConvdrop()
+   * @see #getMergeConv()
    * @generated
    */
-  EReference getLeftNonRecursive_Convdrop();
+  EReference getMergeConv_Convdrop();
 
   /**
-   * Returns the meta object for the attribute '{@link xtext.sML.LeftNonRecursive#getPool <em>Pool</em>}'.
+   * Returns the meta object for class '{@link xtext.sML.ConvOrMerge <em>Conv Or Merge</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Conv Or Merge</em>'.
+   * @see xtext.sML.ConvOrMerge
+   * @generated
+   */
+  EClass getConvOrMerge();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link xtext.sML.ConvOrMerge#getConvdrop <em>Convdrop</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Convdrop</em>'.
+   * @see xtext.sML.ConvOrMerge#getConvdrop()
+   * @see #getConvOrMerge()
+   * @generated
+   */
+  EReference getConvOrMerge_Convdrop();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link xtext.sML.ConvOrMerge#getMergeConv <em>Merge Conv</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Merge Conv</em>'.
+   * @see xtext.sML.ConvOrMerge#getMergeConv()
+   * @see #getConvOrMerge()
+   * @generated
+   */
+  EReference getConvOrMerge_MergeConv();
+
+  /**
+   * Returns the meta object for class '{@link xtext.sML.Left <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Left</em>'.
+   * @see xtext.sML.Left
+   * @generated
+   */
+  EClass getLeft();
+
+  /**
+   * Returns the meta object for the attribute '{@link xtext.sML.Left#getP <em>P</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>P</em>'.
+   * @see xtext.sML.Left#getP()
+   * @see #getLeft()
+   * @generated
+   */
+  EAttribute getLeft_P();
+
+  /**
+   * Returns the meta object for the containment reference '{@link xtext.sML.Left#getCom <em>Com</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Com</em>'.
+   * @see xtext.sML.Left#getCom()
+   * @see #getLeft()
+   * @generated
+   */
+  EReference getLeft_Com();
+
+  /**
+   * Returns the meta object for the attribute '{@link xtext.sML.Left#getPool <em>Pool</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Pool</em>'.
-   * @see xtext.sML.LeftNonRecursive#getPool()
-   * @see #getLeftNonRecursive()
+   * @see xtext.sML.Left#getPool()
+   * @see #getLeft()
    * @generated
    */
-  EAttribute getLeftNonRecursive_Pool();
+  EAttribute getLeft_Pool();
 
   /**
    * Returns the meta object for class '{@link xtext.sML.Right <em>Right</em>}'.
@@ -1238,69 +1045,47 @@ public interface SMLPackage extends EPackage
   EAttribute getRight_Empty();
 
   /**
-   * Returns the meta object for class '{@link xtext.sML.MergeNonRecu <em>Merge Non Recu</em>}'.
+   * Returns the meta object for class '{@link xtext.sML.MergeBody <em>Merge Body</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Merge Non Recu</em>'.
-   * @see xtext.sML.MergeNonRecu
+   * @return the meta object for class '<em>Merge Body</em>'.
+   * @see xtext.sML.MergeBody
    * @generated
    */
-  EClass getMergeNonRecu();
+  EClass getMergeBody();
 
   /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeNonRecu#getDb <em>Db</em>}'.
+   * Returns the meta object for the containment reference '{@link xtext.sML.MergeBody#getLeft <em>Left</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Db</em>'.
-   * @see xtext.sML.MergeNonRecu#getDb()
-   * @see #getMergeNonRecu()
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see xtext.sML.MergeBody#getLeft()
+   * @see #getMergeBody()
    * @generated
    */
-  EAttribute getMergeNonRecu_Db();
+  EReference getMergeBody_Left();
 
   /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.MergeNonRecu#getLeftNonRec <em>Left Non Rec</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left Non Rec</em>'.
-   * @see xtext.sML.MergeNonRecu#getLeftNonRec()
-   * @see #getMergeNonRecu()
-   * @generated
-   */
-  EReference getMergeNonRecu_LeftNonRec();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeNonRecu#getVirg <em>Virg</em>}'.
+   * Returns the meta object for the attribute '{@link xtext.sML.MergeBody#getVirg <em>Virg</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Virg</em>'.
-   * @see xtext.sML.MergeNonRecu#getVirg()
-   * @see #getMergeNonRecu()
+   * @see xtext.sML.MergeBody#getVirg()
+   * @see #getMergeBody()
    * @generated
    */
-  EAttribute getMergeNonRecu_Virg();
+  EAttribute getMergeBody_Virg();
 
   /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.MergeNonRecu#getRight <em>Right</em>}'.
+   * Returns the meta object for the containment reference '{@link xtext.sML.MergeBody#getRight <em>Right</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see xtext.sML.MergeNonRecu#getRight()
-   * @see #getMergeNonRecu()
+   * @see xtext.sML.MergeBody#getRight()
+   * @see #getMergeBody()
    * @generated
    */
-  EReference getMergeNonRecu_Right();
-
-  /**
-   * Returns the meta object for the attribute '{@link xtext.sML.MergeNonRecu#getFm <em>Fm</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Fm</em>'.
-   * @see xtext.sML.MergeNonRecu#getFm()
-   * @see #getMergeNonRecu()
-   * @generated
-   */
-  EAttribute getMergeNonRecu_Fm();
+  EReference getMergeBody_Right();
 
   /**
    * Returns the meta object for class '{@link xtext.sML.Merge <em>Merge</em>}'.
@@ -1313,80 +1098,37 @@ public interface SMLPackage extends EPackage
   EClass getMerge();
 
   /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.Merge#getMnr <em>Mnr</em>}'.
+   * Returns the meta object for the attribute '{@link xtext.sML.Merge#getDb <em>Db</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Mnr</em>'.
-   * @see xtext.sML.Merge#getMnr()
+   * @return the meta object for the attribute '<em>Db</em>'.
+   * @see xtext.sML.Merge#getDb()
    * @see #getMerge()
    * @generated
    */
-  EReference getMerge_Mnr();
+  EAttribute getMerge_Db();
 
   /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.Merge#getMr <em>Mr</em>}'.
+   * Returns the meta object for the containment reference list '{@link xtext.sML.Merge#getMergeBody <em>Merge Body</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Mr</em>'.
-   * @see xtext.sML.Merge#getMr()
+   * @return the meta object for the containment reference list '<em>Merge Body</em>'.
+   * @see xtext.sML.Merge#getMergeBody()
    * @see #getMerge()
    * @generated
    */
-  EReference getMerge_Mr();
+  EReference getMerge_MergeBody();
 
   /**
-   * Returns the meta object for class '{@link xtext.sML.Highway <em>Highway</em>}'.
+   * Returns the meta object for the attribute '{@link xtext.sML.Merge#getFm <em>Fm</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Highway</em>'.
-   * @see xtext.sML.Highway
+   * @return the meta object for the attribute '<em>Fm</em>'.
+   * @see xtext.sML.Merge#getFm()
+   * @see #getMerge()
    * @generated
    */
-  EClass getHighway();
-
-  /**
-   * Returns the meta object for the attribute list '{@link xtext.sML.Highway#getDb <em>Db</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Db</em>'.
-   * @see xtext.sML.Highway#getDb()
-   * @see #getHighway()
-   * @generated
-   */
-  EAttribute getHighway_Db();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link xtext.sML.Highway#getLeftNonRec <em>Left Non Rec</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Left Non Rec</em>'.
-   * @see xtext.sML.Highway#getLeftNonRec()
-   * @see #getHighway()
-   * @generated
-   */
-  EReference getHighway_LeftNonRec();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link xtext.sML.Highway#getConv <em>Conv</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Conv</em>'.
-   * @see xtext.sML.Highway#getConv()
-   * @see #getHighway()
-   * @generated
-   */
-  EReference getHighway_Conv();
-
-  /**
-   * Returns the meta object for the attribute list '{@link xtext.sML.Highway#getFm <em>Fm</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Fm</em>'.
-   * @see xtext.sML.Highway#getFm()
-   * @see #getHighway()
-   * @generated
-   */
-  EAttribute getHighway_Fm();
+  EAttribute getMerge_Fm();
 
   /**
    * Returns the meta object for class '{@link xtext.sML.FeatureExtraction <em>Feature Extraction</em>}'.
@@ -1419,17 +1161,6 @@ public interface SMLPackage extends EPackage
    * @generated
    */
   EReference getFeatureExtraction_Merge();
-
-  /**
-   * Returns the meta object for the containment reference '{@link xtext.sML.FeatureExtraction#getHw <em>Hw</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Hw</em>'.
-   * @see xtext.sML.FeatureExtraction#getHw()
-   * @see #getFeatureExtraction()
-   * @generated
-   */
-  EReference getFeatureExtraction_Hw();
 
   /**
    * Returns the meta object for the attribute '{@link xtext.sML.FeatureExtraction#getDrop <em>Drop</em>}'.
@@ -1683,30 +1414,14 @@ public interface SMLPackage extends EPackage
     EAttribute CONV_DROP__DROP = eINSTANCE.getConvDrop_Drop();
 
     /**
-     * The meta object literal for the '{@link xtext.sML.impl.LeftRecuImpl <em>Left Recu</em>}' class.
+     * The meta object literal for the '{@link xtext.sML.impl.MergeConvImpl <em>Merge Conv</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see xtext.sML.impl.LeftRecuImpl
-     * @see xtext.sML.impl.SMLPackageImpl#getLeftRecu()
+     * @see xtext.sML.impl.MergeConvImpl
+     * @see xtext.sML.impl.SMLPackageImpl#getMergeConv()
      * @generated
      */
-    EClass LEFT_RECU = eINSTANCE.getLeftRecu();
-
-    /**
-     * The meta object literal for the '<em><b>P</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LEFT_RECU__P = eINSTANCE.getLeftRecu_P();
-
-    /**
-     * The meta object literal for the '<em><b>Convdropbegin</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LEFT_RECU__CONVDROPBEGIN = eINSTANCE.getLeftRecu_Convdropbegin();
+    EClass MERGE_CONV = eINSTANCE.getMergeConv();
 
     /**
      * The meta object literal for the '<em><b>Merge</b></em>' containment reference feature.
@@ -1714,91 +1429,7 @@ public interface SMLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LEFT_RECU__MERGE = eINSTANCE.getLeftRecu_Merge();
-
-    /**
-     * The meta object literal for the '<em><b>Convdropend</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LEFT_RECU__CONVDROPEND = eINSTANCE.getLeftRecu_Convdropend();
-
-    /**
-     * The meta object literal for the '<em><b>Pool</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LEFT_RECU__POOL = eINSTANCE.getLeftRecu_Pool();
-
-    /**
-     * The meta object literal for the '{@link xtext.sML.impl.MergeRecuImpl <em>Merge Recu</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see xtext.sML.impl.MergeRecuImpl
-     * @see xtext.sML.impl.SMLPackageImpl#getMergeRecu()
-     * @generated
-     */
-    EClass MERGE_RECU = eINSTANCE.getMergeRecu();
-
-    /**
-     * The meta object literal for the '<em><b>Db</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MERGE_RECU__DB = eINSTANCE.getMergeRecu_Db();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MERGE_RECU__LEFT = eINSTANCE.getMergeRecu_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Virg</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MERGE_RECU__VIRG = eINSTANCE.getMergeRecu_Virg();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MERGE_RECU__RIGHT = eINSTANCE.getMergeRecu_Right();
-
-    /**
-     * The meta object literal for the '<em><b>Fm</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MERGE_RECU__FM = eINSTANCE.getMergeRecu_Fm();
-
-    /**
-     * The meta object literal for the '{@link xtext.sML.impl.LeftNonRecursiveImpl <em>Left Non Recursive</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see xtext.sML.impl.LeftNonRecursiveImpl
-     * @see xtext.sML.impl.SMLPackageImpl#getLeftNonRecursive()
-     * @generated
-     */
-    EClass LEFT_NON_RECURSIVE = eINSTANCE.getLeftNonRecursive();
-
-    /**
-     * The meta object literal for the '<em><b>P</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LEFT_NON_RECURSIVE__P = eINSTANCE.getLeftNonRecursive_P();
+    EReference MERGE_CONV__MERGE = eINSTANCE.getMergeConv_Merge();
 
     /**
      * The meta object literal for the '<em><b>Convdrop</b></em>' containment reference list feature.
@@ -1806,7 +1437,59 @@ public interface SMLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LEFT_NON_RECURSIVE__CONVDROP = eINSTANCE.getLeftNonRecursive_Convdrop();
+    EReference MERGE_CONV__CONVDROP = eINSTANCE.getMergeConv_Convdrop();
+
+    /**
+     * The meta object literal for the '{@link xtext.sML.impl.ConvOrMergeImpl <em>Conv Or Merge</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see xtext.sML.impl.ConvOrMergeImpl
+     * @see xtext.sML.impl.SMLPackageImpl#getConvOrMerge()
+     * @generated
+     */
+    EClass CONV_OR_MERGE = eINSTANCE.getConvOrMerge();
+
+    /**
+     * The meta object literal for the '<em><b>Convdrop</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONV_OR_MERGE__CONVDROP = eINSTANCE.getConvOrMerge_Convdrop();
+
+    /**
+     * The meta object literal for the '<em><b>Merge Conv</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONV_OR_MERGE__MERGE_CONV = eINSTANCE.getConvOrMerge_MergeConv();
+
+    /**
+     * The meta object literal for the '{@link xtext.sML.impl.LeftImpl <em>Left</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see xtext.sML.impl.LeftImpl
+     * @see xtext.sML.impl.SMLPackageImpl#getLeft()
+     * @generated
+     */
+    EClass LEFT = eINSTANCE.getLeft();
+
+    /**
+     * The meta object literal for the '<em><b>P</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LEFT__P = eINSTANCE.getLeft_P();
+
+    /**
+     * The meta object literal for the '<em><b>Com</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LEFT__COM = eINSTANCE.getLeft_Com();
 
     /**
      * The meta object literal for the '<em><b>Pool</b></em>' attribute feature.
@@ -1814,7 +1497,7 @@ public interface SMLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute LEFT_NON_RECURSIVE__POOL = eINSTANCE.getLeftNonRecursive_Pool();
+    EAttribute LEFT__POOL = eINSTANCE.getLeft_Pool();
 
     /**
      * The meta object literal for the '{@link xtext.sML.impl.RightImpl <em>Right</em>}' class.
@@ -1843,30 +1526,22 @@ public interface SMLPackage extends EPackage
     EAttribute RIGHT__EMPTY = eINSTANCE.getRight_Empty();
 
     /**
-     * The meta object literal for the '{@link xtext.sML.impl.MergeNonRecuImpl <em>Merge Non Recu</em>}' class.
+     * The meta object literal for the '{@link xtext.sML.impl.MergeBodyImpl <em>Merge Body</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see xtext.sML.impl.MergeNonRecuImpl
-     * @see xtext.sML.impl.SMLPackageImpl#getMergeNonRecu()
+     * @see xtext.sML.impl.MergeBodyImpl
+     * @see xtext.sML.impl.SMLPackageImpl#getMergeBody()
      * @generated
      */
-    EClass MERGE_NON_RECU = eINSTANCE.getMergeNonRecu();
+    EClass MERGE_BODY = eINSTANCE.getMergeBody();
 
     /**
-     * The meta object literal for the '<em><b>Db</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MERGE_NON_RECU__DB = eINSTANCE.getMergeNonRecu_Db();
-
-    /**
-     * The meta object literal for the '<em><b>Left Non Rec</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MERGE_NON_RECU__LEFT_NON_REC = eINSTANCE.getMergeNonRecu_LeftNonRec();
+    EReference MERGE_BODY__LEFT = eINSTANCE.getMergeBody_Left();
 
     /**
      * The meta object literal for the '<em><b>Virg</b></em>' attribute feature.
@@ -1874,7 +1549,7 @@ public interface SMLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MERGE_NON_RECU__VIRG = eINSTANCE.getMergeNonRecu_Virg();
+    EAttribute MERGE_BODY__VIRG = eINSTANCE.getMergeBody_Virg();
 
     /**
      * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
@@ -1882,15 +1557,7 @@ public interface SMLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MERGE_NON_RECU__RIGHT = eINSTANCE.getMergeNonRecu_Right();
-
-    /**
-     * The meta object literal for the '<em><b>Fm</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MERGE_NON_RECU__FM = eINSTANCE.getMergeNonRecu_Fm();
+    EReference MERGE_BODY__RIGHT = eINSTANCE.getMergeBody_Right();
 
     /**
      * The meta object literal for the '{@link xtext.sML.impl.MergeImpl <em>Merge</em>}' class.
@@ -1903,62 +1570,28 @@ public interface SMLPackage extends EPackage
     EClass MERGE = eINSTANCE.getMerge();
 
     /**
-     * The meta object literal for the '<em><b>Mnr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Db</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MERGE__MNR = eINSTANCE.getMerge_Mnr();
+    EAttribute MERGE__DB = eINSTANCE.getMerge_Db();
 
     /**
-     * The meta object literal for the '<em><b>Mr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Merge Body</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MERGE__MR = eINSTANCE.getMerge_Mr();
+    EReference MERGE__MERGE_BODY = eINSTANCE.getMerge_MergeBody();
 
     /**
-     * The meta object literal for the '{@link xtext.sML.impl.HighwayImpl <em>Highway</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see xtext.sML.impl.HighwayImpl
-     * @see xtext.sML.impl.SMLPackageImpl#getHighway()
-     * @generated
-     */
-    EClass HIGHWAY = eINSTANCE.getHighway();
-
-    /**
-     * The meta object literal for the '<em><b>Db</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Fm</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HIGHWAY__DB = eINSTANCE.getHighway_Db();
-
-    /**
-     * The meta object literal for the '<em><b>Left Non Rec</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HIGHWAY__LEFT_NON_REC = eINSTANCE.getHighway_LeftNonRec();
-
-    /**
-     * The meta object literal for the '<em><b>Conv</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HIGHWAY__CONV = eINSTANCE.getHighway_Conv();
-
-    /**
-     * The meta object literal for the '<em><b>Fm</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HIGHWAY__FM = eINSTANCE.getHighway_Fm();
+    EAttribute MERGE__FM = eINSTANCE.getMerge_Fm();
 
     /**
      * The meta object literal for the '{@link xtext.sML.impl.FeatureExtractionImpl <em>Feature Extraction</em>}' class.
@@ -1985,14 +1618,6 @@ public interface SMLPackage extends EPackage
      * @generated
      */
     EReference FEATURE_EXTRACTION__MERGE = eINSTANCE.getFeatureExtraction_Merge();
-
-    /**
-     * The meta object literal for the '<em><b>Hw</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FEATURE_EXTRACTION__HW = eINSTANCE.getFeatureExtraction_Hw();
 
     /**
      * The meta object literal for the '<em><b>Drop</b></em>' attribute feature.

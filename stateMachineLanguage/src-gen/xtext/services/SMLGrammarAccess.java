@@ -52,10 +52,10 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
 		
-		//Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)*)? output = ('output');
+		//Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)+)? output = ('output');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)*)? output = ('output')
+		//input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)+)? output = ('output')
 		public Group getGroup() { return cGroup; }
 		
 		//input = ('input')
@@ -70,7 +70,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//(FeatureExtraction)
 		public RuleCall getFeFeatureExtractionParserRuleCall_1_0() { return cFeFeatureExtractionParserRuleCall_1_0; }
 		
-		//(inter = (Interstice) class += (Classification)*)?
+		//(inter = (Interstice) class += (Classification)+)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//inter = (Interstice)
@@ -79,7 +79,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//(Interstice)
 		public RuleCall getInterIntersticeParserRuleCall_2_0_0() { return cInterIntersticeParserRuleCall_2_0_0; }
 		
-		//class += (Classification)*
+		//class += (Classification)+
 		public Assignment getClassAssignment_2_1() { return cClassAssignment_2_1; }
 		
 		//(Classification)
@@ -95,7 +95,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Dropout");
 		private final Keyword cDropoutKeyword = (Keyword)rule.eContents().get(1);
 		
-		//// Unit
+		//// litteraux
 		//Dropout: 'dropout';
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -120,107 +120,35 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'max_pooling'
 		public Keyword getMax_poolingKeyword_1() { return cMax_poolingKeyword_1; }
 	}
-	public class DebutMergeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.DebutMerge");
-		private final Keyword cLeftSquareBracketKeyword = (Keyword)rule.eContents().get(1);
-		
-		//DebutMerge: '[';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'['
-		public Keyword getLeftSquareBracketKeyword() { return cLeftSquareBracketKeyword; }
-	}
-	public class FinMergeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.FinMerge");
-		private final Keyword cRightSquareBracketKeyword = (Keyword)rule.eContents().get(1);
-		
-		//FinMerge: ']';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//']'
-		public Keyword getRightSquareBracketKeyword() { return cRightSquareBracketKeyword; }
-	}
-	public class BnConvElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.BnConv");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cBnKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cConvKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//BnConv:('(') ('bn') ('conv') (')');
-		@Override public ParserRule getRule() { return rule; }
-		
-		//('(') ('bn') ('conv') (')')
-		public Group getGroup() { return cGroup; }
-		
-		//('(')
-		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
-		
-		//('bn')
-		public Keyword getBnKeyword_1() { return cBnKeyword_1; }
-		
-		//('conv')
-		public Keyword getConvKeyword_2() { return cConvKeyword_2; }
-		
-		//(')')
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-	public class ConvBnElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.ConvBn");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cConvKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cBnKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//ConvBn:('(') ('conv') ('bn') (')');
-		@Override public ParserRule getRule() { return rule; }
-		
-		//('(') ('conv') ('bn') (')')
-		public Group getGroup() { return cGroup; }
-		
-		//('(')
-		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
-		
-		//('conv')
-		public Keyword getConvKeyword_1() { return cConvKeyword_1; }
-		
-		//('bn')
-		public Keyword getBnKeyword_2() { return cBnKeyword_2; }
-		
-		//(')')
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
 	public class ConvolutionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Convolution");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cBnconvAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cBnconvBnConvParserRuleCall_0_0 = (RuleCall)cBnconvAssignment_0.eContents().get(0);
+		private final Keyword cBnconvBnconvKeyword_0_0 = (Keyword)cBnconvAssignment_0.eContents().get(0);
 		private final Assignment cConvbnAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cConvbnConvBnParserRuleCall_1_0 = (RuleCall)cConvbnAssignment_1.eContents().get(0);
+		private final Keyword cConvbnConvbnKeyword_1_0 = (Keyword)cConvbnAssignment_1.eContents().get(0);
 		private final Assignment cConvAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final Keyword cConvConvKeyword_2_0 = (Keyword)cConvAssignment_2.eContents().get(0);
 		private final Assignment cUpconvAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
 		private final Keyword cUpconvUpconvKeyword_3_0 = (Keyword)cUpconvAssignment_3.eContents().get(0);
 		
-		//Convolution: bnconv = (BnConv)| (convbn = ConvBn ) | (conv = 'conv') | (upconv = 'upconv') ;
+		//Convolution: (bnconv = 'bnconv') | (convbn = 'convbn') | (conv = 'conv') | (upconv = 'upconv') ;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//bnconv = (BnConv)| (convbn = ConvBn ) | (conv = 'conv') | (upconv = 'upconv')
+		//(bnconv = 'bnconv') | (convbn = 'convbn') | (conv = 'conv') | (upconv = 'upconv')
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//bnconv = (BnConv)
+		//(bnconv = 'bnconv')
 		public Assignment getBnconvAssignment_0() { return cBnconvAssignment_0; }
 		
-		//(BnConv)
-		public RuleCall getBnconvBnConvParserRuleCall_0_0() { return cBnconvBnConvParserRuleCall_0_0; }
+		//'bnconv'
+		public Keyword getBnconvBnconvKeyword_0_0() { return cBnconvBnconvKeyword_0_0; }
 		
-		//(convbn = ConvBn )
+		//(convbn = 'convbn')
 		public Assignment getConvbnAssignment_1() { return cConvbnAssignment_1; }
 		
-		//ConvBn
-		public RuleCall getConvbnConvBnParserRuleCall_1_0() { return cConvbnConvBnParserRuleCall_1_0; }
+		//'convbn'
+		public Keyword getConvbnConvbnKeyword_1_0() { return cConvbnConvbnKeyword_1_0; }
 		
 		//(conv = 'conv')
 		public Assignment getConvAssignment_2() { return cConvAssignment_2; }
@@ -344,25 +272,85 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//Dropout
 		public RuleCall getDropDropoutParserRuleCall_1_0() { return cDropDropoutParserRuleCall_1_0; }
 	}
-	public class LeftRecuElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.LeftRecu");
+	public class MergeConvElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.MergeConv");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cMergeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cMergeMergeParserRuleCall_0_0 = (RuleCall)cMergeAssignment_0.eContents().get(0);
+		private final Assignment cConvdropAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cConvdropConvDropParserRuleCall_1_0 = (RuleCall)cConvdropAssignment_1.eContents().get(0);
+		
+		//// Body merge
+		//MergeConv:merge=Merge convdrop += (ConvDrop)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//merge=Merge convdrop += (ConvDrop)*
+		public Group getGroup() { return cGroup; }
+		
+		//merge=Merge
+		public Assignment getMergeAssignment_0() { return cMergeAssignment_0; }
+		
+		//Merge
+		public RuleCall getMergeMergeParserRuleCall_0_0() { return cMergeMergeParserRuleCall_0_0; }
+		
+		//convdrop += (ConvDrop)*
+		public Assignment getConvdropAssignment_1() { return cConvdropAssignment_1; }
+		
+		//(ConvDrop)
+		public RuleCall getConvdropConvDropParserRuleCall_1_0() { return cConvdropConvDropParserRuleCall_1_0; }
+	}
+	public class ConvOrMergeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.ConvOrMerge");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cConvdropAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cConvdropConvDropParserRuleCall_0_0 = (RuleCall)cConvdropAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Assignment cConvdropAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cConvdropConvDropParserRuleCall_1_0_0 = (RuleCall)cConvdropAssignment_1_0.eContents().get(0);
+		private final Assignment cMergeConvAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cMergeConvMergeConvParserRuleCall_1_1_0 = (RuleCall)cMergeConvAssignment_1_1.eContents().get(0);
+		
+		//ConvOrMerge:convdrop += (ConvDrop)+ | convdrop += (ConvDrop)* mergeConv += MergeConv+;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//convdrop += (ConvDrop)+ | convdrop += (ConvDrop)* mergeConv += MergeConv+
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//convdrop += (ConvDrop)+
+		public Assignment getConvdropAssignment_0() { return cConvdropAssignment_0; }
+		
+		//(ConvDrop)
+		public RuleCall getConvdropConvDropParserRuleCall_0_0() { return cConvdropConvDropParserRuleCall_0_0; }
+		
+		//convdrop += (ConvDrop)* mergeConv += MergeConv+
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//convdrop += (ConvDrop)*
+		public Assignment getConvdropAssignment_1_0() { return cConvdropAssignment_1_0; }
+		
+		//(ConvDrop)
+		public RuleCall getConvdropConvDropParserRuleCall_1_0_0() { return cConvdropConvDropParserRuleCall_1_0_0; }
+		
+		//mergeConv += MergeConv+
+		public Assignment getMergeConvAssignment_1_1() { return cMergeConvAssignment_1_1; }
+		
+		//MergeConv
+		public RuleCall getMergeConvMergeConvParserRuleCall_1_1_0() { return cMergeConvMergeConvParserRuleCall_1_1_0; }
+	}
+	public class LeftElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Left");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cPAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cPPoolingParserRuleCall_0_0 = (RuleCall)cPAssignment_0.eContents().get(0);
-		private final Assignment cConvdropbeginAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cConvdropbeginConvDropParserRuleCall_1_0 = (RuleCall)cConvdropbeginAssignment_1.eContents().get(0);
-		private final Assignment cMergeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cMergeMergeParserRuleCall_2_0 = (RuleCall)cMergeAssignment_2.eContents().get(0);
-		private final Assignment cConvdropendAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cConvdropendConvDropParserRuleCall_3_0 = (RuleCall)cConvdropendAssignment_3.eContents().get(0);
-		private final Assignment cPoolAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cPoolPoolingParserRuleCall_4_0 = (RuleCall)cPoolAssignment_4.eContents().get(0);
+		private final Assignment cComAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cComConvOrMergeParserRuleCall_1_0 = (RuleCall)cComAssignment_1.eContents().get(0);
+		private final Assignment cPoolAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPoolPoolingParserRuleCall_2_0 = (RuleCall)cPoolAssignment_2.eContents().get(0);
 		
-		//// Merge Recursive
-		//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
+		//Left: (p=Pooling)? com=ConvOrMerge (pool=Pooling)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?
+		//(p=Pooling)? com=ConvOrMerge (pool=Pooling)?
 		public Group getGroup() { return cGroup; }
 		
 		//(p=Pooling)?
@@ -371,113 +359,16 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//Pooling
 		public RuleCall getPPoolingParserRuleCall_0_0() { return cPPoolingParserRuleCall_0_0; }
 		
-		//convdropbegin += (ConvDrop)*
-		public Assignment getConvdropbeginAssignment_1() { return cConvdropbeginAssignment_1; }
+		//com=ConvOrMerge
+		public Assignment getComAssignment_1() { return cComAssignment_1; }
 		
-		//(ConvDrop)
-		public RuleCall getConvdropbeginConvDropParserRuleCall_1_0() { return cConvdropbeginConvDropParserRuleCall_1_0; }
-		
-		//(merge = Merge)
-		public Assignment getMergeAssignment_2() { return cMergeAssignment_2; }
-		
-		//Merge
-		public RuleCall getMergeMergeParserRuleCall_2_0() { return cMergeMergeParserRuleCall_2_0; }
-		
-		//convdropend += (ConvDrop)*
-		public Assignment getConvdropendAssignment_3() { return cConvdropendAssignment_3; }
-		
-		//(ConvDrop)
-		public RuleCall getConvdropendConvDropParserRuleCall_3_0() { return cConvdropendConvDropParserRuleCall_3_0; }
+		//ConvOrMerge
+		public RuleCall getComConvOrMergeParserRuleCall_1_0() { return cComConvOrMergeParserRuleCall_1_0; }
 		
 		//(pool=Pooling)?
-		public Assignment getPoolAssignment_4() { return cPoolAssignment_4; }
-		
-		//Pooling
-		public RuleCall getPoolPoolingParserRuleCall_4_0() { return cPoolPoolingParserRuleCall_4_0; }
-	}
-	public class MergeRecuElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.MergeRecu");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cDbAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cDbDebutMergeParserRuleCall_0_0 = (RuleCall)cDbAssignment_0.eContents().get(0);
-		private final Assignment cLeftAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cLeftLeftRecuParserRuleCall_1_0 = (RuleCall)cLeftAssignment_1.eContents().get(0);
-		private final Assignment cVirgAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cVirgCommaKeyword_2_0 = (Keyword)cVirgAssignment_2.eContents().get(0);
-		private final Assignment cRightAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cRightRightParserRuleCall_3_0 = (RuleCall)cRightAssignment_3.eContents().get(0);
-		private final Assignment cFmAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cFmFinMergeParserRuleCall_4_0 = (RuleCall)cFmAssignment_4.eContents().get(0);
-		
-		//MergeRecu:  db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge ;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge
-		public Group getGroup() { return cGroup; }
-		
-		//db = DebutMerge
-		public Assignment getDbAssignment_0() { return cDbAssignment_0; }
-		
-		//DebutMerge
-		public RuleCall getDbDebutMergeParserRuleCall_0_0() { return cDbDebutMergeParserRuleCall_0_0; }
-		
-		//left = LeftRecu
-		public Assignment getLeftAssignment_1() { return cLeftAssignment_1; }
-		
-		//LeftRecu
-		public RuleCall getLeftLeftRecuParserRuleCall_1_0() { return cLeftLeftRecuParserRuleCall_1_0; }
-		
-		//virg=','
-		public Assignment getVirgAssignment_2() { return cVirgAssignment_2; }
-		
-		//','
-		public Keyword getVirgCommaKeyword_2_0() { return cVirgCommaKeyword_2_0; }
-		
-		//right = Right
-		public Assignment getRightAssignment_3() { return cRightAssignment_3; }
-		
-		//Right
-		public RuleCall getRightRightParserRuleCall_3_0() { return cRightRightParserRuleCall_3_0; }
-		
-		//fm = FinMerge
-		public Assignment getFmAssignment_4() { return cFmAssignment_4; }
-		
-		//FinMerge
-		public RuleCall getFmFinMergeParserRuleCall_4_0() { return cFmFinMergeParserRuleCall_4_0; }
-	}
-	public class LeftNonRecursiveElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.LeftNonRecursive");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPPoolingParserRuleCall_0_0 = (RuleCall)cPAssignment_0.eContents().get(0);
-		private final Assignment cConvdropAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cConvdropConvDropParserRuleCall_1_0 = (RuleCall)cConvdropAssignment_1.eContents().get(0);
-		private final Assignment cPoolAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cPoolPoolingParserRuleCall_2_0 = (RuleCall)cPoolAssignment_2.eContents().get(0);
-		
-		//// Merge Non recusive
-		//LeftNonRecursive: p = (Pooling)? convdrop += (ConvDrop)+ pool = (Pooling)?;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//p = (Pooling)? convdrop += (ConvDrop)+ pool = (Pooling)?
-		public Group getGroup() { return cGroup; }
-		
-		//p = (Pooling)?
-		public Assignment getPAssignment_0() { return cPAssignment_0; }
-		
-		//(Pooling)
-		public RuleCall getPPoolingParserRuleCall_0_0() { return cPPoolingParserRuleCall_0_0; }
-		
-		//convdrop += (ConvDrop)+
-		public Assignment getConvdropAssignment_1() { return cConvdropAssignment_1; }
-		
-		//(ConvDrop)
-		public RuleCall getConvdropConvDropParserRuleCall_1_0() { return cConvdropConvDropParserRuleCall_1_0; }
-		
-		//pool = (Pooling)?
 		public Assignment getPoolAssignment_2() { return cPoolAssignment_2; }
 		
-		//(Pooling)
+		//Pooling
 		public RuleCall getPoolPoolingParserRuleCall_2_0() { return cPoolPoolingParserRuleCall_2_0; }
 	}
 	public class RightElements extends AbstractParserRuleElementFinder {
@@ -514,37 +405,32 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'Empty'
 		public Keyword getEmptyEmptyKeyword_1_1_0() { return cEmptyEmptyKeyword_1_1_0; }
 	}
-	public class MergeNonRecuElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.MergeNonRecu");
+	public class MergeBodyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.MergeBody");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cDbAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cDbDebutMergeParserRuleCall_0_0 = (RuleCall)cDbAssignment_0.eContents().get(0);
-		private final Assignment cLeftNonRecAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cLeftNonRecLeftNonRecursiveParserRuleCall_1_0 = (RuleCall)cLeftNonRecAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cLeftAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLeftLeftParserRuleCall_1_0 = (RuleCall)cLeftAssignment_1.eContents().get(0);
 		private final Assignment cVirgAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cVirgCommaKeyword_2_0 = (Keyword)cVirgAssignment_2.eContents().get(0);
 		private final Assignment cRightAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cRightRightParserRuleCall_3_0 = (RuleCall)cRightAssignment_3.eContents().get(0);
-		private final Assignment cFmAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cFmFinMergeParserRuleCall_4_0 = (RuleCall)cFmAssignment_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//MergeNonRecu: db = DebutMerge leftNonRec = LeftNonRecursive virg=','  right = Right fm = FinMerge;
+		//MergeBody:'(' left = Left virg=',' right = Right ')' ;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//db = DebutMerge leftNonRec = LeftNonRecursive virg=','  right = Right fm = FinMerge
+		//'(' left = Left virg=',' right = Right ')'
 		public Group getGroup() { return cGroup; }
 		
-		//db = DebutMerge
-		public Assignment getDbAssignment_0() { return cDbAssignment_0; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
 		
-		//DebutMerge
-		public RuleCall getDbDebutMergeParserRuleCall_0_0() { return cDbDebutMergeParserRuleCall_0_0; }
+		//left = Left
+		public Assignment getLeftAssignment_1() { return cLeftAssignment_1; }
 		
-		//leftNonRec = LeftNonRecursive
-		public Assignment getLeftNonRecAssignment_1() { return cLeftNonRecAssignment_1; }
-		
-		//LeftNonRecursive
-		public RuleCall getLeftNonRecLeftNonRecursiveParserRuleCall_1_0() { return cLeftNonRecLeftNonRecursiveParserRuleCall_1_0; }
+		//Left
+		public RuleCall getLeftLeftParserRuleCall_1_0() { return cLeftLeftParserRuleCall_1_0; }
 		
 		//virg=','
 		public Assignment getVirgAssignment_2() { return cVirgAssignment_2; }
@@ -558,92 +444,43 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//Right
 		public RuleCall getRightRightParserRuleCall_3_0() { return cRightRightParserRuleCall_3_0; }
 		
-		//fm = FinMerge
-		public Assignment getFmAssignment_4() { return cFmAssignment_4; }
-		
-		//FinMerge
-		public RuleCall getFmFinMergeParserRuleCall_4_0() { return cFmFinMergeParserRuleCall_4_0; }
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	public class MergeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Merge");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cMnrAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cMnrMergeNonRecuParserRuleCall_0_0 = (RuleCall)cMnrAssignment_0.eContents().get(0);
-		private final Assignment cMrAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cMrMergeRecuParserRuleCall_1_0 = (RuleCall)cMrAssignment_1.eContents().get(0);
-		
-		//// Merge
-		//Merge: mnr = MergeNonRecu | mr = MergeRecu;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//mnr = MergeNonRecu | mr = MergeRecu
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//mnr = MergeNonRecu
-		public Assignment getMnrAssignment_0() { return cMnrAssignment_0; }
-		
-		//MergeNonRecu
-		public RuleCall getMnrMergeNonRecuParserRuleCall_0_0() { return cMnrMergeNonRecuParserRuleCall_0_0; }
-		
-		//mr = MergeRecu
-		public Assignment getMrAssignment_1() { return cMrAssignment_1; }
-		
-		//MergeRecu
-		public RuleCall getMrMergeRecuParserRuleCall_1_0() { return cMrMergeRecuParserRuleCall_1_0; }
-	}
-	public class HighwayElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.Highway");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cDbAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cDbDebutMergeParserRuleCall_0_0 = (RuleCall)cDbAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Assignment cLeftNonRecAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cLeftNonRecLeftNonRecursiveParserRuleCall_1_0_0 = (RuleCall)cLeftNonRecAssignment_1_0.eContents().get(0);
-		private final Keyword cVerticalLineKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cConvAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cConvConvolutionParserRuleCall_1_2_0 = (RuleCall)cConvAssignment_1_2.eContents().get(0);
-		private final Keyword cCommaKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Keyword cDbLeftSquareBracketKeyword_0_0 = (Keyword)cDbAssignment_0.eContents().get(0);
+		private final Assignment cMergeBodyAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cMergeBodyMergeBodyParserRuleCall_1_0 = (RuleCall)cMergeBodyAssignment_1.eContents().get(0);
 		private final Assignment cFmAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cFmFinMergeParserRuleCall_2_0 = (RuleCall)cFmAssignment_2.eContents().get(0);
+		private final Keyword cFmRightSquareBracketKeyword_2_0 = (Keyword)cFmAssignment_2.eContents().get(0);
 		
-		//Highway: (db += DebutMerge) ((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+ (fm += FinMerge);
+		//// Merge
+		//Merge:db = '[' (mergeBody+=MergeBody)+  fm = ']' ;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(db += DebutMerge) ((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+ (fm += FinMerge)
+		//db = '[' (mergeBody+=MergeBody)+  fm = ']'
 		public Group getGroup() { return cGroup; }
 		
-		//(db += DebutMerge)
+		//db = '['
 		public Assignment getDbAssignment_0() { return cDbAssignment_0; }
 		
-		//DebutMerge
-		public RuleCall getDbDebutMergeParserRuleCall_0_0() { return cDbDebutMergeParserRuleCall_0_0; }
+		//'['
+		public Keyword getDbLeftSquareBracketKeyword_0_0() { return cDbLeftSquareBracketKeyword_0_0; }
 		
-		//((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+
-		public Group getGroup_1() { return cGroup_1; }
+		//(mergeBody+=MergeBody)+
+		public Assignment getMergeBodyAssignment_1() { return cMergeBodyAssignment_1; }
 		
-		//(leftNonRec+=LeftNonRecursive)
-		public Assignment getLeftNonRecAssignment_1_0() { return cLeftNonRecAssignment_1_0; }
+		//MergeBody
+		public RuleCall getMergeBodyMergeBodyParserRuleCall_1_0() { return cMergeBodyMergeBodyParserRuleCall_1_0; }
 		
-		//LeftNonRecursive
-		public RuleCall getLeftNonRecLeftNonRecursiveParserRuleCall_1_0_0() { return cLeftNonRecLeftNonRecursiveParserRuleCall_1_0_0; }
-		
-		//('|')
-		public Keyword getVerticalLineKeyword_1_1() { return cVerticalLineKeyword_1_1; }
-		
-		//(conv += Convolution)
-		public Assignment getConvAssignment_1_2() { return cConvAssignment_1_2; }
-		
-		//Convolution
-		public RuleCall getConvConvolutionParserRuleCall_1_2_0() { return cConvConvolutionParserRuleCall_1_2_0; }
-		
-		//(',')
-		public Keyword getCommaKeyword_1_3() { return cCommaKeyword_1_3; }
-		
-		//(fm += FinMerge)
+		//fm = ']'
 		public Assignment getFmAssignment_2() { return cFmAssignment_2; }
 		
-		//FinMerge
-		public RuleCall getFmFinMergeParserRuleCall_2_0() { return cFmFinMergeParserRuleCall_2_0; }
+		//']'
+		public Keyword getFmRightSquareBracketKeyword_2_0() { return cFmRightSquareBracketKeyword_2_0; }
 	}
 	public class FeatureExtractionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "xtext.SML.FeatureExtraction");
@@ -653,21 +490,19 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cConvConvolutionParserRuleCall_0_0_0 = (RuleCall)cConvAssignment_0_0.eContents().get(0);
 		private final Assignment cMergeAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
 		private final RuleCall cMergeMergeParserRuleCall_0_1_0 = (RuleCall)cMergeAssignment_0_1.eContents().get(0);
-		private final Assignment cHwAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
-		private final RuleCall cHwHighwayParserRuleCall_0_2_0 = (RuleCall)cHwAssignment_0_2.eContents().get(0);
 		private final Assignment cDropAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cDropDropoutParserRuleCall_1_0 = (RuleCall)cDropAssignment_1.eContents().get(0);
 		private final Assignment cPoolAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cPoolPoolingParserRuleCall_2_0 = (RuleCall)cPoolAssignment_2.eContents().get(0);
 		
 		////Feature extraction
-		//FeatureExtraction:     (conv = Convolution | merge = (Merge) | hw = (Highway)) drop = (Dropout)? pool= (Pooling)?;
+		//FeatureExtraction:     (conv = Convolution | merge = (Merge)) drop = (Dropout)? pool= (Pooling)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(conv = Convolution | merge = (Merge) | hw = (Highway)) drop = (Dropout)? pool= (Pooling)?
+		//(conv = Convolution | merge = (Merge)) drop = (Dropout)? pool= (Pooling)?
 		public Group getGroup() { return cGroup; }
 		
-		//(conv = Convolution | merge = (Merge) | hw = (Highway))
+		//(conv = Convolution | merge = (Merge))
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//conv = Convolution
@@ -681,12 +516,6 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		
 		//(Merge)
 		public RuleCall getMergeMergeParserRuleCall_0_1_0() { return cMergeMergeParserRuleCall_0_1_0; }
-		
-		//hw = (Highway)
-		public Assignment getHwAssignment_0_2() { return cHwAssignment_0_2; }
-		
-		//(Highway)
-		public RuleCall getHwHighwayParserRuleCall_0_2_0() { return cHwHighwayParserRuleCall_0_2_0; }
 		
 		//drop = (Dropout)?
 		public Assignment getDropAssignment_1() { return cDropAssignment_1; }
@@ -706,23 +535,18 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	private final ArchitectureElements pArchitecture;
 	private final DropoutElements pDropout;
 	private final PoolingElements pPooling;
-	private final DebutMergeElements pDebutMerge;
-	private final FinMergeElements pFinMerge;
-	private final BnConvElements pBnConv;
-	private final ConvBnElements pConvBn;
 	private final ConvolutionElements pConvolution;
 	private final GlobalPoolingElements pGlobalPooling;
 	private final FlattenOrGlobalElements pFlattenOrGlobal;
 	private final IntersticeElements pInterstice;
 	private final ClassificationElements pClassification;
 	private final ConvDropElements pConvDrop;
-	private final LeftRecuElements pLeftRecu;
-	private final MergeRecuElements pMergeRecu;
-	private final LeftNonRecursiveElements pLeftNonRecursive;
+	private final MergeConvElements pMergeConv;
+	private final ConvOrMergeElements pConvOrMerge;
+	private final LeftElements pLeft;
 	private final RightElements pRight;
-	private final MergeNonRecuElements pMergeNonRecu;
+	private final MergeBodyElements pMergeBody;
 	private final MergeElements pMerge;
-	private final HighwayElements pHighway;
 	private final FeatureExtractionElements pFeatureExtraction;
 	
 	private final Grammar grammar;
@@ -738,23 +562,18 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		this.pArchitecture = new ArchitectureElements();
 		this.pDropout = new DropoutElements();
 		this.pPooling = new PoolingElements();
-		this.pDebutMerge = new DebutMergeElements();
-		this.pFinMerge = new FinMergeElements();
-		this.pBnConv = new BnConvElements();
-		this.pConvBn = new ConvBnElements();
 		this.pConvolution = new ConvolutionElements();
 		this.pGlobalPooling = new GlobalPoolingElements();
 		this.pFlattenOrGlobal = new FlattenOrGlobalElements();
 		this.pInterstice = new IntersticeElements();
 		this.pClassification = new ClassificationElements();
 		this.pConvDrop = new ConvDropElements();
-		this.pLeftRecu = new LeftRecuElements();
-		this.pMergeRecu = new MergeRecuElements();
-		this.pLeftNonRecursive = new LeftNonRecursiveElements();
+		this.pMergeConv = new MergeConvElements();
+		this.pConvOrMerge = new ConvOrMergeElements();
+		this.pLeft = new LeftElements();
 		this.pRight = new RightElements();
-		this.pMergeNonRecu = new MergeNonRecuElements();
+		this.pMergeBody = new MergeBodyElements();
 		this.pMerge = new MergeElements();
-		this.pHighway = new HighwayElements();
 		this.pFeatureExtraction = new FeatureExtractionElements();
 	}
 	
@@ -794,7 +613,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSMLAccess().getRule();
 	}
 	
-	//Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)*)? output = ('output');
+	//Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)+)? output = ('output');
 	public ArchitectureElements getArchitectureAccess() {
 		return pArchitecture;
 	}
@@ -803,7 +622,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getArchitectureAccess().getRule();
 	}
 	
-	//// Unit
+	//// litteraux
 	//Dropout: 'dropout';
 	public DropoutElements getDropoutAccess() {
 		return pDropout;
@@ -822,43 +641,7 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getPoolingAccess().getRule();
 	}
 	
-	//DebutMerge: '[';
-	public DebutMergeElements getDebutMergeAccess() {
-		return pDebutMerge;
-	}
-	
-	public ParserRule getDebutMergeRule() {
-		return getDebutMergeAccess().getRule();
-	}
-	
-	//FinMerge: ']';
-	public FinMergeElements getFinMergeAccess() {
-		return pFinMerge;
-	}
-	
-	public ParserRule getFinMergeRule() {
-		return getFinMergeAccess().getRule();
-	}
-	
-	//BnConv:('(') ('bn') ('conv') (')');
-	public BnConvElements getBnConvAccess() {
-		return pBnConv;
-	}
-	
-	public ParserRule getBnConvRule() {
-		return getBnConvAccess().getRule();
-	}
-	
-	//ConvBn:('(') ('conv') ('bn') (')');
-	public ConvBnElements getConvBnAccess() {
-		return pConvBn;
-	}
-	
-	public ParserRule getConvBnRule() {
-		return getConvBnAccess().getRule();
-	}
-	
-	//Convolution: bnconv = (BnConv)| (convbn = ConvBn ) | (conv = 'conv') | (upconv = 'upconv') ;
+	//Convolution: (bnconv = 'bnconv') | (convbn = 'convbn') | (conv = 'conv') | (upconv = 'upconv') ;
 	public ConvolutionElements getConvolutionAccess() {
 		return pConvolution;
 	}
@@ -912,33 +695,32 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getConvDropAccess().getRule();
 	}
 	
-	//// Merge Recursive
-	//LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
-	public LeftRecuElements getLeftRecuAccess() {
-		return pLeftRecu;
+	//// Body merge
+	//MergeConv:merge=Merge convdrop += (ConvDrop)*;
+	public MergeConvElements getMergeConvAccess() {
+		return pMergeConv;
 	}
 	
-	public ParserRule getLeftRecuRule() {
-		return getLeftRecuAccess().getRule();
+	public ParserRule getMergeConvRule() {
+		return getMergeConvAccess().getRule();
 	}
 	
-	//MergeRecu:  db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge ;
-	public MergeRecuElements getMergeRecuAccess() {
-		return pMergeRecu;
+	//ConvOrMerge:convdrop += (ConvDrop)+ | convdrop += (ConvDrop)* mergeConv += MergeConv+;
+	public ConvOrMergeElements getConvOrMergeAccess() {
+		return pConvOrMerge;
 	}
 	
-	public ParserRule getMergeRecuRule() {
-		return getMergeRecuAccess().getRule();
+	public ParserRule getConvOrMergeRule() {
+		return getConvOrMergeAccess().getRule();
 	}
 	
-	//// Merge Non recusive
-	//LeftNonRecursive: p = (Pooling)? convdrop += (ConvDrop)+ pool = (Pooling)?;
-	public LeftNonRecursiveElements getLeftNonRecursiveAccess() {
-		return pLeftNonRecursive;
+	//Left: (p=Pooling)? com=ConvOrMerge (pool=Pooling)?;
+	public LeftElements getLeftAccess() {
+		return pLeft;
 	}
 	
-	public ParserRule getLeftNonRecursiveRule() {
-		return getLeftNonRecursiveAccess().getRule();
+	public ParserRule getLeftRule() {
+		return getLeftAccess().getRule();
 	}
 	
 	//Right: conv += Convolution+ | {Right} empty = 'Empty';
@@ -950,17 +732,17 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getRightAccess().getRule();
 	}
 	
-	//MergeNonRecu: db = DebutMerge leftNonRec = LeftNonRecursive virg=','  right = Right fm = FinMerge;
-	public MergeNonRecuElements getMergeNonRecuAccess() {
-		return pMergeNonRecu;
+	//MergeBody:'(' left = Left virg=',' right = Right ')' ;
+	public MergeBodyElements getMergeBodyAccess() {
+		return pMergeBody;
 	}
 	
-	public ParserRule getMergeNonRecuRule() {
-		return getMergeNonRecuAccess().getRule();
+	public ParserRule getMergeBodyRule() {
+		return getMergeBodyAccess().getRule();
 	}
 	
 	//// Merge
-	//Merge: mnr = MergeNonRecu | mr = MergeRecu;
+	//Merge:db = '[' (mergeBody+=MergeBody)+  fm = ']' ;
 	public MergeElements getMergeAccess() {
 		return pMerge;
 	}
@@ -969,17 +751,8 @@ public class SMLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getMergeAccess().getRule();
 	}
 	
-	//Highway: (db += DebutMerge) ((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+ (fm += FinMerge);
-	public HighwayElements getHighwayAccess() {
-		return pHighway;
-	}
-	
-	public ParserRule getHighwayRule() {
-		return getHighwayAccess().getRule();
-	}
-	
 	////Feature extraction
-	//FeatureExtraction:     (conv = Convolution | merge = (Merge) | hw = (Highway)) drop = (Dropout)? pool= (Pooling)?;
+	//FeatureExtraction:     (conv = Convolution | merge = (Merge)) drop = (Dropout)? pool= (Pooling)?;
 	public FeatureExtractionElements getFeatureExtractionAccess() {
 		return pFeatureExtraction;
 	}

@@ -122,24 +122,24 @@ public class SMLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SMLPackage.LEFT_RECU:
+      case SMLPackage.MERGE_CONV:
       {
-        LeftRecu leftRecu = (LeftRecu)theEObject;
-        T result = caseLeftRecu(leftRecu);
+        MergeConv mergeConv = (MergeConv)theEObject;
+        T result = caseMergeConv(mergeConv);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SMLPackage.MERGE_RECU:
+      case SMLPackage.CONV_OR_MERGE:
       {
-        MergeRecu mergeRecu = (MergeRecu)theEObject;
-        T result = caseMergeRecu(mergeRecu);
+        ConvOrMerge convOrMerge = (ConvOrMerge)theEObject;
+        T result = caseConvOrMerge(convOrMerge);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SMLPackage.LEFT_NON_RECURSIVE:
+      case SMLPackage.LEFT:
       {
-        LeftNonRecursive leftNonRecursive = (LeftNonRecursive)theEObject;
-        T result = caseLeftNonRecursive(leftNonRecursive);
+        Left left = (Left)theEObject;
+        T result = caseLeft(left);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -150,10 +150,10 @@ public class SMLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SMLPackage.MERGE_NON_RECU:
+      case SMLPackage.MERGE_BODY:
       {
-        MergeNonRecu mergeNonRecu = (MergeNonRecu)theEObject;
-        T result = caseMergeNonRecu(mergeNonRecu);
+        MergeBody mergeBody = (MergeBody)theEObject;
+        T result = caseMergeBody(mergeBody);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -161,13 +161,6 @@ public class SMLSwitch<T> extends Switch<T>
       {
         Merge merge = (Merge)theEObject;
         T result = caseMerge(merge);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SMLPackage.HIGHWAY:
-      {
-        Highway highway = (Highway)theEObject;
-        T result = caseHighway(highway);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -295,49 +288,49 @@ public class SMLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Left Recu</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Merge Conv</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Left Recu</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Merge Conv</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLeftRecu(LeftRecu object)
+  public T caseMergeConv(MergeConv object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Merge Recu</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Conv Or Merge</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Merge Recu</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Conv Or Merge</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseMergeRecu(MergeRecu object)
+  public T caseConvOrMerge(ConvOrMerge object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Left Non Recursive</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Left</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Left Non Recursive</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Left</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLeftNonRecursive(LeftNonRecursive object)
+  public T caseLeft(Left object)
   {
     return null;
   }
@@ -359,17 +352,17 @@ public class SMLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Merge Non Recu</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Merge Body</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Merge Non Recu</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Merge Body</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseMergeNonRecu(MergeNonRecu object)
+  public T caseMergeBody(MergeBody object)
   {
     return null;
   }
@@ -386,22 +379,6 @@ public class SMLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMerge(Merge object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Highway</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Highway</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseHighway(Highway object)
   {
     return null;
   }

@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import xtext.sML.Convolution;
 import xtext.sML.FeatureExtraction;
-import xtext.sML.Highway;
 import xtext.sML.Merge;
 import xtext.sML.SMLPackage;
 
@@ -28,7 +27,6 @@ import xtext.sML.SMLPackage;
  * <ul>
  *   <li>{@link xtext.sML.impl.FeatureExtractionImpl#getConv <em>Conv</em>}</li>
  *   <li>{@link xtext.sML.impl.FeatureExtractionImpl#getMerge <em>Merge</em>}</li>
- *   <li>{@link xtext.sML.impl.FeatureExtractionImpl#getHw <em>Hw</em>}</li>
  *   <li>{@link xtext.sML.impl.FeatureExtractionImpl#getDrop <em>Drop</em>}</li>
  *   <li>{@link xtext.sML.impl.FeatureExtractionImpl#getPool <em>Pool</em>}</li>
  * </ul>
@@ -56,16 +54,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected Merge merge;
-
-  /**
-   * The cached value of the '{@link #getHw() <em>Hw</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getHw()
-   * @generated
-   * @ordered
-   */
-  protected Highway hw;
 
   /**
    * The default value of the '{@link #getDrop() <em>Drop</em>}' attribute.
@@ -234,56 +222,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public Highway getHw()
-  {
-    return hw;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetHw(Highway newHw, NotificationChain msgs)
-  {
-    Highway oldHw = hw;
-    hw = newHw;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SMLPackage.FEATURE_EXTRACTION__HW, oldHw, newHw);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setHw(Highway newHw)
-  {
-    if (newHw != hw)
-    {
-      NotificationChain msgs = null;
-      if (hw != null)
-        msgs = ((InternalEObject)hw).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SMLPackage.FEATURE_EXTRACTION__HW, null, msgs);
-      if (newHw != null)
-        msgs = ((InternalEObject)newHw).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SMLPackage.FEATURE_EXTRACTION__HW, null, msgs);
-      msgs = basicSetHw(newHw, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.FEATURE_EXTRACTION__HW, newHw, newHw));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public String getDrop()
   {
     return drop;
@@ -342,8 +280,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
         return basicSetConv(null, msgs);
       case SMLPackage.FEATURE_EXTRACTION__MERGE:
         return basicSetMerge(null, msgs);
-      case SMLPackage.FEATURE_EXTRACTION__HW:
-        return basicSetHw(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -362,8 +298,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
         return getConv();
       case SMLPackage.FEATURE_EXTRACTION__MERGE:
         return getMerge();
-      case SMLPackage.FEATURE_EXTRACTION__HW:
-        return getHw();
       case SMLPackage.FEATURE_EXTRACTION__DROP:
         return getDrop();
       case SMLPackage.FEATURE_EXTRACTION__POOL:
@@ -387,9 +321,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
         return;
       case SMLPackage.FEATURE_EXTRACTION__MERGE:
         setMerge((Merge)newValue);
-        return;
-      case SMLPackage.FEATURE_EXTRACTION__HW:
-        setHw((Highway)newValue);
         return;
       case SMLPackage.FEATURE_EXTRACTION__DROP:
         setDrop((String)newValue);
@@ -417,9 +348,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
       case SMLPackage.FEATURE_EXTRACTION__MERGE:
         setMerge((Merge)null);
         return;
-      case SMLPackage.FEATURE_EXTRACTION__HW:
-        setHw((Highway)null);
-        return;
       case SMLPackage.FEATURE_EXTRACTION__DROP:
         setDrop(DROP_EDEFAULT);
         return;
@@ -444,8 +372,6 @@ public class FeatureExtractionImpl extends MinimalEObjectImpl.Container implemen
         return conv != null;
       case SMLPackage.FEATURE_EXTRACTION__MERGE:
         return merge != null;
-      case SMLPackage.FEATURE_EXTRACTION__HW:
-        return hw != null;
       case SMLPackage.FEATURE_EXTRACTION__DROP:
         return DROP_EDEFAULT == null ? drop != null : !DROP_EDEFAULT.equals(drop);
       case SMLPackage.FEATURE_EXTRACTION__POOL:

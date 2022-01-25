@@ -3,6 +3,8 @@
  */
 package xtext.sML;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,8 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.Merge#getMnr <em>Mnr</em>}</li>
- *   <li>{@link xtext.sML.Merge#getMr <em>Mr</em>}</li>
+ *   <li>{@link xtext.sML.Merge#getDb <em>Db</em>}</li>
+ *   <li>{@link xtext.sML.Merge#getMergeBody <em>Merge Body</em>}</li>
+ *   <li>{@link xtext.sML.Merge#getFm <em>Fm</em>}</li>
  * </ul>
  *
  * @see xtext.sML.SMLPackage#getMerge()
@@ -25,47 +28,59 @@ import org.eclipse.emf.ecore.EObject;
 public interface Merge extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Mnr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Db</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Mnr</em>' containment reference.
-   * @see #setMnr(MergeNonRecu)
-   * @see xtext.sML.SMLPackage#getMerge_Mnr()
+   * @return the value of the '<em>Db</em>' attribute.
+   * @see #setDb(String)
+   * @see xtext.sML.SMLPackage#getMerge_Db()
+   * @model
+   * @generated
+   */
+  String getDb();
+
+  /**
+   * Sets the value of the '{@link xtext.sML.Merge#getDb <em>Db</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Db</em>' attribute.
+   * @see #getDb()
+   * @generated
+   */
+  void setDb(String value);
+
+  /**
+   * Returns the value of the '<em><b>Merge Body</b></em>' containment reference list.
+   * The list contents are of type {@link xtext.sML.MergeBody}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Merge Body</em>' containment reference list.
+   * @see xtext.sML.SMLPackage#getMerge_MergeBody()
    * @model containment="true"
    * @generated
    */
-  MergeNonRecu getMnr();
+  EList<MergeBody> getMergeBody();
 
   /**
-   * Sets the value of the '{@link xtext.sML.Merge#getMnr <em>Mnr</em>}' containment reference.
+   * Returns the value of the '<em><b>Fm</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Mnr</em>' containment reference.
-   * @see #getMnr()
+   * @return the value of the '<em>Fm</em>' attribute.
+   * @see #setFm(String)
+   * @see xtext.sML.SMLPackage#getMerge_Fm()
+   * @model
    * @generated
    */
-  void setMnr(MergeNonRecu value);
+  String getFm();
 
   /**
-   * Returns the value of the '<em><b>Mr</b></em>' containment reference.
+   * Sets the value of the '{@link xtext.sML.Merge#getFm <em>Fm</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Mr</em>' containment reference.
-   * @see #setMr(MergeRecu)
-   * @see xtext.sML.SMLPackage#getMerge_Mr()
-   * @model containment="true"
+   * @param value the new value of the '<em>Fm</em>' attribute.
+   * @see #getFm()
    * @generated
    */
-  MergeRecu getMr();
-
-  /**
-   * Sets the value of the '{@link xtext.sML.Merge#getMr <em>Mr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Mr</em>' containment reference.
-   * @see #getMr()
-   * @generated
-   */
-  void setMr(MergeRecu value);
+  void setFm(String value);
 
 } // Merge

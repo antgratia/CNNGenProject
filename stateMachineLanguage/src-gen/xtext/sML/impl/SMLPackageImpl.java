@@ -13,16 +13,15 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
 import xtext.sML.ConvDrop;
+import xtext.sML.ConvOrMerge;
 import xtext.sML.Convolution;
 import xtext.sML.FeatureExtraction;
 import xtext.sML.FlattenOrGlobal;
-import xtext.sML.Highway;
 import xtext.sML.Interstice;
-import xtext.sML.LeftNonRecursive;
-import xtext.sML.LeftRecu;
+import xtext.sML.Left;
 import xtext.sML.Merge;
-import xtext.sML.MergeNonRecu;
-import xtext.sML.MergeRecu;
+import xtext.sML.MergeBody;
+import xtext.sML.MergeConv;
 import xtext.sML.Right;
 import xtext.sML.SMLFactory;
 import xtext.sML.SMLPackage;
@@ -89,21 +88,21 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass leftRecuEClass = null;
+  private EClass mergeConvEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass mergeRecuEClass = null;
+  private EClass convOrMergeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass leftNonRecursiveEClass = null;
+  private EClass leftEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -117,7 +116,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass mergeNonRecuEClass = null;
+  private EClass mergeBodyEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,13 +124,6 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   private EClass mergeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass highwayEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -473,9 +465,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EClass getLeftRecu()
+  public EClass getMergeConv()
   {
-    return leftRecuEClass;
+    return mergeConvEClass;
   }
 
   /**
@@ -484,9 +476,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getLeftRecu_P()
+  public EReference getMergeConv_Merge()
   {
-    return (EAttribute)leftRecuEClass.getEStructuralFeatures().get(0);
+    return (EReference)mergeConvEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -495,9 +487,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getLeftRecu_Convdropbegin()
+  public EReference getMergeConv_Convdrop()
   {
-    return (EReference)leftRecuEClass.getEStructuralFeatures().get(1);
+    return (EReference)mergeConvEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -506,9 +498,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getLeftRecu_Merge()
+  public EClass getConvOrMerge()
   {
-    return (EReference)leftRecuEClass.getEStructuralFeatures().get(2);
+    return convOrMergeEClass;
   }
 
   /**
@@ -517,9 +509,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getLeftRecu_Convdropend()
+  public EReference getConvOrMerge_Convdrop()
   {
-    return (EReference)leftRecuEClass.getEStructuralFeatures().get(3);
+    return (EReference)convOrMergeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -528,9 +520,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getLeftRecu_Pool()
+  public EReference getConvOrMerge_MergeConv()
   {
-    return (EAttribute)leftRecuEClass.getEStructuralFeatures().get(4);
+    return (EReference)convOrMergeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -539,9 +531,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EClass getMergeRecu()
+  public EClass getLeft()
   {
-    return mergeRecuEClass;
+    return leftEClass;
   }
 
   /**
@@ -550,9 +542,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getMergeRecu_Db()
+  public EAttribute getLeft_P()
   {
-    return (EAttribute)mergeRecuEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)leftEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -561,9 +553,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getMergeRecu_Left()
+  public EReference getLeft_Com()
   {
-    return (EReference)mergeRecuEClass.getEStructuralFeatures().get(1);
+    return (EReference)leftEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -572,75 +564,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getMergeRecu_Virg()
+  public EAttribute getLeft_Pool()
   {
-    return (EAttribute)mergeRecuEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getMergeRecu_Right()
-  {
-    return (EReference)mergeRecuEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getMergeRecu_Fm()
-  {
-    return (EAttribute)mergeRecuEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getLeftNonRecursive()
-  {
-    return leftNonRecursiveEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getLeftNonRecursive_P()
-  {
-    return (EAttribute)leftNonRecursiveEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getLeftNonRecursive_Convdrop()
-  {
-    return (EReference)leftNonRecursiveEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getLeftNonRecursive_Pool()
-  {
-    return (EAttribute)leftNonRecursiveEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)leftEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -682,9 +608,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EClass getMergeNonRecu()
+  public EClass getMergeBody()
   {
-    return mergeNonRecuEClass;
+    return mergeBodyEClass;
   }
 
   /**
@@ -693,9 +619,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getMergeNonRecu_Db()
+  public EReference getMergeBody_Left()
   {
-    return (EAttribute)mergeNonRecuEClass.getEStructuralFeatures().get(0);
+    return (EReference)mergeBodyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -704,9 +630,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getMergeNonRecu_LeftNonRec()
+  public EAttribute getMergeBody_Virg()
   {
-    return (EReference)mergeNonRecuEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)mergeBodyEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -715,31 +641,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EAttribute getMergeNonRecu_Virg()
+  public EReference getMergeBody_Right()
   {
-    return (EAttribute)mergeNonRecuEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getMergeNonRecu_Right()
-  {
-    return (EReference)mergeNonRecuEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getMergeNonRecu_Fm()
-  {
-    return (EAttribute)mergeNonRecuEClass.getEStructuralFeatures().get(4);
+    return (EReference)mergeBodyEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -759,9 +663,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getMerge_Mnr()
+  public EAttribute getMerge_Db()
   {
-    return (EReference)mergeEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)mergeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -770,7 +674,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getMerge_Mr()
+  public EReference getMerge_MergeBody()
   {
     return (EReference)mergeEClass.getEStructuralFeatures().get(1);
   }
@@ -781,53 +685,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EClass getHighway()
+  public EAttribute getMerge_Fm()
   {
-    return highwayEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getHighway_Db()
-  {
-    return (EAttribute)highwayEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHighway_LeftNonRec()
-  {
-    return (EReference)highwayEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHighway_Conv()
-  {
-    return (EReference)highwayEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getHighway_Fm()
-  {
-    return (EAttribute)highwayEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)mergeEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -869,20 +729,9 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
    * @generated
    */
   @Override
-  public EReference getFeatureExtraction_Hw()
-  {
-    return (EReference)featureExtractionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getFeatureExtraction_Drop()
   {
-    return (EAttribute)featureExtractionEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)featureExtractionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -893,7 +742,7 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
   @Override
   public EAttribute getFeatureExtraction_Pool()
   {
-    return (EAttribute)featureExtractionEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)featureExtractionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -958,50 +807,36 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
     createEReference(convDropEClass, CONV_DROP__CONV);
     createEAttribute(convDropEClass, CONV_DROP__DROP);
 
-    leftRecuEClass = createEClass(LEFT_RECU);
-    createEAttribute(leftRecuEClass, LEFT_RECU__P);
-    createEReference(leftRecuEClass, LEFT_RECU__CONVDROPBEGIN);
-    createEReference(leftRecuEClass, LEFT_RECU__MERGE);
-    createEReference(leftRecuEClass, LEFT_RECU__CONVDROPEND);
-    createEAttribute(leftRecuEClass, LEFT_RECU__POOL);
+    mergeConvEClass = createEClass(MERGE_CONV);
+    createEReference(mergeConvEClass, MERGE_CONV__MERGE);
+    createEReference(mergeConvEClass, MERGE_CONV__CONVDROP);
 
-    mergeRecuEClass = createEClass(MERGE_RECU);
-    createEAttribute(mergeRecuEClass, MERGE_RECU__DB);
-    createEReference(mergeRecuEClass, MERGE_RECU__LEFT);
-    createEAttribute(mergeRecuEClass, MERGE_RECU__VIRG);
-    createEReference(mergeRecuEClass, MERGE_RECU__RIGHT);
-    createEAttribute(mergeRecuEClass, MERGE_RECU__FM);
+    convOrMergeEClass = createEClass(CONV_OR_MERGE);
+    createEReference(convOrMergeEClass, CONV_OR_MERGE__CONVDROP);
+    createEReference(convOrMergeEClass, CONV_OR_MERGE__MERGE_CONV);
 
-    leftNonRecursiveEClass = createEClass(LEFT_NON_RECURSIVE);
-    createEAttribute(leftNonRecursiveEClass, LEFT_NON_RECURSIVE__P);
-    createEReference(leftNonRecursiveEClass, LEFT_NON_RECURSIVE__CONVDROP);
-    createEAttribute(leftNonRecursiveEClass, LEFT_NON_RECURSIVE__POOL);
+    leftEClass = createEClass(LEFT);
+    createEAttribute(leftEClass, LEFT__P);
+    createEReference(leftEClass, LEFT__COM);
+    createEAttribute(leftEClass, LEFT__POOL);
 
     rightEClass = createEClass(RIGHT);
     createEReference(rightEClass, RIGHT__CONV);
     createEAttribute(rightEClass, RIGHT__EMPTY);
 
-    mergeNonRecuEClass = createEClass(MERGE_NON_RECU);
-    createEAttribute(mergeNonRecuEClass, MERGE_NON_RECU__DB);
-    createEReference(mergeNonRecuEClass, MERGE_NON_RECU__LEFT_NON_REC);
-    createEAttribute(mergeNonRecuEClass, MERGE_NON_RECU__VIRG);
-    createEReference(mergeNonRecuEClass, MERGE_NON_RECU__RIGHT);
-    createEAttribute(mergeNonRecuEClass, MERGE_NON_RECU__FM);
+    mergeBodyEClass = createEClass(MERGE_BODY);
+    createEReference(mergeBodyEClass, MERGE_BODY__LEFT);
+    createEAttribute(mergeBodyEClass, MERGE_BODY__VIRG);
+    createEReference(mergeBodyEClass, MERGE_BODY__RIGHT);
 
     mergeEClass = createEClass(MERGE);
-    createEReference(mergeEClass, MERGE__MNR);
-    createEReference(mergeEClass, MERGE__MR);
-
-    highwayEClass = createEClass(HIGHWAY);
-    createEAttribute(highwayEClass, HIGHWAY__DB);
-    createEReference(highwayEClass, HIGHWAY__LEFT_NON_REC);
-    createEReference(highwayEClass, HIGHWAY__CONV);
-    createEAttribute(highwayEClass, HIGHWAY__FM);
+    createEAttribute(mergeEClass, MERGE__DB);
+    createEReference(mergeEClass, MERGE__MERGE_BODY);
+    createEAttribute(mergeEClass, MERGE__FM);
 
     featureExtractionEClass = createEClass(FEATURE_EXTRACTION);
     createEReference(featureExtractionEClass, FEATURE_EXTRACTION__CONV);
     createEReference(featureExtractionEClass, FEATURE_EXTRACTION__MERGE);
-    createEReference(featureExtractionEClass, FEATURE_EXTRACTION__HW);
     createEAttribute(featureExtractionEClass, FEATURE_EXTRACTION__DROP);
     createEAttribute(featureExtractionEClass, FEATURE_EXTRACTION__POOL);
   }
@@ -1068,50 +903,36 @@ public class SMLPackageImpl extends EPackageImpl implements SMLPackage
     initEReference(getConvDrop_Conv(), this.getConvolution(), null, "conv", null, 0, 1, ConvDrop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConvDrop_Drop(), ecorePackage.getEString(), "drop", null, 0, 1, ConvDrop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(leftRecuEClass, LeftRecu.class, "LeftRecu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLeftRecu_P(), ecorePackage.getEString(), "p", null, 0, 1, LeftRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLeftRecu_Convdropbegin(), this.getConvDrop(), null, "convdropbegin", null, 0, -1, LeftRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLeftRecu_Merge(), this.getMerge(), null, "merge", null, 0, 1, LeftRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLeftRecu_Convdropend(), this.getConvDrop(), null, "convdropend", null, 0, -1, LeftRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getLeftRecu_Pool(), ecorePackage.getEString(), "pool", null, 0, 1, LeftRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(mergeConvEClass, MergeConv.class, "MergeConv", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMergeConv_Merge(), this.getMerge(), null, "merge", null, 0, 1, MergeConv.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMergeConv_Convdrop(), this.getConvDrop(), null, "convdrop", null, 0, -1, MergeConv.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(mergeRecuEClass, MergeRecu.class, "MergeRecu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMergeRecu_Db(), ecorePackage.getEString(), "db", null, 0, 1, MergeRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMergeRecu_Left(), this.getLeftRecu(), null, "left", null, 0, 1, MergeRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMergeRecu_Virg(), ecorePackage.getEString(), "virg", null, 0, 1, MergeRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMergeRecu_Right(), this.getRight(), null, "right", null, 0, 1, MergeRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMergeRecu_Fm(), ecorePackage.getEString(), "fm", null, 0, 1, MergeRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(convOrMergeEClass, ConvOrMerge.class, "ConvOrMerge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConvOrMerge_Convdrop(), this.getConvDrop(), null, "convdrop", null, 0, -1, ConvOrMerge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConvOrMerge_MergeConv(), this.getMergeConv(), null, "mergeConv", null, 0, -1, ConvOrMerge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(leftNonRecursiveEClass, LeftNonRecursive.class, "LeftNonRecursive", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLeftNonRecursive_P(), ecorePackage.getEString(), "p", null, 0, 1, LeftNonRecursive.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLeftNonRecursive_Convdrop(), this.getConvDrop(), null, "convdrop", null, 0, -1, LeftNonRecursive.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getLeftNonRecursive_Pool(), ecorePackage.getEString(), "pool", null, 0, 1, LeftNonRecursive.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(leftEClass, Left.class, "Left", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLeft_P(), ecorePackage.getEString(), "p", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLeft_Com(), this.getConvOrMerge(), null, "com", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLeft_Pool(), ecorePackage.getEString(), "pool", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(rightEClass, Right.class, "Right", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRight_Conv(), this.getConvolution(), null, "conv", null, 0, -1, Right.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRight_Empty(), ecorePackage.getEString(), "empty", null, 0, 1, Right.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(mergeNonRecuEClass, MergeNonRecu.class, "MergeNonRecu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMergeNonRecu_Db(), ecorePackage.getEString(), "db", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMergeNonRecu_LeftNonRec(), this.getLeftNonRecursive(), null, "leftNonRec", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMergeNonRecu_Virg(), ecorePackage.getEString(), "virg", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMergeNonRecu_Right(), this.getRight(), null, "right", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMergeNonRecu_Fm(), ecorePackage.getEString(), "fm", null, 0, 1, MergeNonRecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(mergeBodyEClass, MergeBody.class, "MergeBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMergeBody_Left(), this.getLeft(), null, "left", null, 0, 1, MergeBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMergeBody_Virg(), ecorePackage.getEString(), "virg", null, 0, 1, MergeBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMergeBody_Right(), this.getRight(), null, "right", null, 0, 1, MergeBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mergeEClass, Merge.class, "Merge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMerge_Mnr(), this.getMergeNonRecu(), null, "mnr", null, 0, 1, Merge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMerge_Mr(), this.getMergeRecu(), null, "mr", null, 0, 1, Merge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(highwayEClass, Highway.class, "Highway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHighway_Db(), ecorePackage.getEString(), "db", null, 0, -1, Highway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHighway_LeftNonRec(), this.getLeftNonRecursive(), null, "leftNonRec", null, 0, -1, Highway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHighway_Conv(), this.getConvolution(), null, "conv", null, 0, -1, Highway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHighway_Fm(), ecorePackage.getEString(), "fm", null, 0, -1, Highway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMerge_Db(), ecorePackage.getEString(), "db", null, 0, 1, Merge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMerge_MergeBody(), this.getMergeBody(), null, "mergeBody", null, 0, -1, Merge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMerge_Fm(), ecorePackage.getEString(), "fm", null, 0, 1, Merge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(featureExtractionEClass, FeatureExtraction.class, "FeatureExtraction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFeatureExtraction_Conv(), this.getConvolution(), null, "conv", null, 0, 1, FeatureExtraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeatureExtraction_Merge(), this.getMerge(), null, "merge", null, 0, 1, FeatureExtraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFeatureExtraction_Hw(), this.getHighway(), null, "hw", null, 0, 1, FeatureExtraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFeatureExtraction_Drop(), ecorePackage.getEString(), "drop", null, 0, 1, FeatureExtraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFeatureExtraction_Pool(), ecorePackage.getEString(), "pool", null, 0, 1, FeatureExtraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

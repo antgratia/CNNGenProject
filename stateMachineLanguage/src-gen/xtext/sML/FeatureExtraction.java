@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link xtext.sML.FeatureExtraction#getConv <em>Conv</em>}</li>
  *   <li>{@link xtext.sML.FeatureExtraction#getMerge <em>Merge</em>}</li>
- *   <li>{@link xtext.sML.FeatureExtraction#getHw <em>Hw</em>}</li>
  *   <li>{@link xtext.sML.FeatureExtraction#getDrop <em>Drop</em>}</li>
  *   <li>{@link xtext.sML.FeatureExtraction#getPool <em>Pool</em>}</li>
  * </ul>
@@ -70,28 +69,6 @@ public interface FeatureExtraction extends EObject
    * @generated
    */
   void setMerge(Merge value);
-
-  /**
-   * Returns the value of the '<em><b>Hw</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Hw</em>' containment reference.
-   * @see #setHw(Highway)
-   * @see xtext.sML.SMLPackage#getFeatureExtraction_Hw()
-   * @model containment="true"
-   * @generated
-   */
-  Highway getHw();
-
-  /**
-   * Sets the value of the '{@link xtext.sML.FeatureExtraction#getHw <em>Hw</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Hw</em>' containment reference.
-   * @see #getHw()
-   * @generated
-   */
-  void setHw(Highway value);
 
   /**
    * Returns the value of the '<em><b>Drop</b></em>' attribute.

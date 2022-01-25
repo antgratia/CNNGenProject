@@ -17,16 +17,15 @@ import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransi
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
 import xtext.sML.ConvDrop;
+import xtext.sML.ConvOrMerge;
 import xtext.sML.Convolution;
 import xtext.sML.FeatureExtraction;
 import xtext.sML.FlattenOrGlobal;
-import xtext.sML.Highway;
 import xtext.sML.Interstice;
-import xtext.sML.LeftNonRecursive;
-import xtext.sML.LeftRecu;
+import xtext.sML.Left;
 import xtext.sML.Merge;
-import xtext.sML.MergeNonRecu;
-import xtext.sML.MergeRecu;
+import xtext.sML.MergeBody;
+import xtext.sML.MergeConv;
 import xtext.sML.Right;
 import xtext.sML.SML;
 import xtext.sML.SMLPackage;
@@ -55,6 +54,9 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case SMLPackage.CONV_DROP:
 				sequence_ConvDrop(context, (ConvDrop) semanticObject); 
 				return; 
+			case SMLPackage.CONV_OR_MERGE:
+				sequence_ConvOrMerge(context, (ConvOrMerge) semanticObject); 
+				return; 
 			case SMLPackage.CONVOLUTION:
 				sequence_Convolution(context, (Convolution) semanticObject); 
 				return; 
@@ -64,26 +66,20 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case SMLPackage.FLATTEN_OR_GLOBAL:
 				sequence_FlattenOrGlobal(context, (FlattenOrGlobal) semanticObject); 
 				return; 
-			case SMLPackage.HIGHWAY:
-				sequence_Highway(context, (Highway) semanticObject); 
-				return; 
 			case SMLPackage.INTERSTICE:
 				sequence_Interstice(context, (Interstice) semanticObject); 
 				return; 
-			case SMLPackage.LEFT_NON_RECURSIVE:
-				sequence_LeftNonRecursive(context, (LeftNonRecursive) semanticObject); 
-				return; 
-			case SMLPackage.LEFT_RECU:
-				sequence_LeftRecu(context, (LeftRecu) semanticObject); 
+			case SMLPackage.LEFT:
+				sequence_Left(context, (Left) semanticObject); 
 				return; 
 			case SMLPackage.MERGE:
 				sequence_Merge(context, (Merge) semanticObject); 
 				return; 
-			case SMLPackage.MERGE_NON_RECU:
-				sequence_MergeNonRecu(context, (MergeNonRecu) semanticObject); 
+			case SMLPackage.MERGE_BODY:
+				sequence_MergeBody(context, (MergeBody) semanticObject); 
 				return; 
-			case SMLPackage.MERGE_RECU:
-				sequence_MergeRecu(context, (MergeRecu) semanticObject); 
+			case SMLPackage.MERGE_CONV:
+				sequence_MergeConv(context, (MergeConv) semanticObject); 
 				return; 
 			case SMLPackage.RIGHT:
 				sequence_Right(context, (Right) semanticObject); 
@@ -101,7 +97,7 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Architecture returns Architecture
 	 *
 	 * Constraint:
-	 *     (input='input' fe+=FeatureExtraction+ (inter=Interstice class+=Classification*)? output='output')
+	 *     (input='input' fe+=FeatureExtraction+ (inter=Interstice class+=Classification+)? output='output')
 	 */
 	protected void sequence_Architecture(ISerializationContext context, Architecture semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -134,10 +130,22 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     ConvOrMerge returns ConvOrMerge
+	 *
+	 * Constraint:
+	 *     (convdrop+=ConvDrop+ | (convdrop+=ConvDrop* mergeConv+=MergeConv+))
+	 */
+	protected void sequence_ConvOrMerge(ISerializationContext context, ConvOrMerge semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Convolution returns Convolution
 	 *
 	 * Constraint:
-	 *     (bnconv=BnConv | convbn=ConvBn | conv='conv' | upconv='upconv')
+	 *     (bnconv='bnconv' | convbn='convbn' | conv='conv' | upconv='upconv')
 	 */
 	protected void sequence_Convolution(ISerializationContext context, Convolution semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -149,7 +157,7 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     FeatureExtraction returns FeatureExtraction
 	 *
 	 * Constraint:
-	 *     ((conv=Convolution | merge=Merge | hw=Highway) drop=Dropout? pool=Pooling?)
+	 *     ((conv=Convolution | merge=Merge) drop=Dropout? pool=Pooling?)
 	 */
 	protected void sequence_FeatureExtraction(ISerializationContext context, FeatureExtraction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -164,18 +172,6 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (flat='flatten' | gp=GlobalPooling)
 	 */
 	protected void sequence_FlattenOrGlobal(ISerializationContext context, FlattenOrGlobal semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Highway returns Highway
-	 *
-	 * Constraint:
-	 *     (db+=DebutMerge (leftNonRec+=LeftNonRecursive conv+=Convolution)+ fm+=FinMerge)
-	 */
-	protected void sequence_Highway(ISerializationContext context, Highway semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -200,85 +196,49 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     LeftNonRecursive returns LeftNonRecursive
+	 *     Left returns Left
 	 *
 	 * Constraint:
-	 *     (p=Pooling? convdrop+=ConvDrop+ pool=Pooling?)
+	 *     (p=Pooling? com=ConvOrMerge pool=Pooling?)
 	 */
-	protected void sequence_LeftNonRecursive(ISerializationContext context, LeftNonRecursive semanticObject) {
+	protected void sequence_Left(ISerializationContext context, Left semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     LeftRecu returns LeftRecu
+	 *     MergeBody returns MergeBody
 	 *
 	 * Constraint:
-	 *     (p=Pooling? convdropbegin+=ConvDrop* merge=Merge convdropend+=ConvDrop* pool=Pooling?)
+	 *     (left=Left virg=',' right=Right)
 	 */
-	protected void sequence_LeftRecu(ISerializationContext context, LeftRecu semanticObject) {
+	protected void sequence_MergeBody(ISerializationContext context, MergeBody semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_BODY__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_BODY__LEFT));
+			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_BODY__VIRG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_BODY__VIRG));
+			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_BODY__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_BODY__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMergeBodyAccess().getLeftLeftParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getMergeBodyAccess().getVirgCommaKeyword_2_0(), semanticObject.getVirg());
+		feeder.accept(grammarAccess.getMergeBodyAccess().getRightRightParserRuleCall_3_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MergeConv returns MergeConv
+	 *
+	 * Constraint:
+	 *     (merge=Merge convdrop+=ConvDrop*)
+	 */
+	protected void sequence_MergeConv(ISerializationContext context, MergeConv semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MergeNonRecu returns MergeNonRecu
-	 *
-	 * Constraint:
-	 *     (db=DebutMerge leftNonRec=LeftNonRecursive virg=',' right=Right fm=FinMerge)
-	 */
-	protected void sequence_MergeNonRecu(ISerializationContext context, MergeNonRecu semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__DB) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__DB));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__LEFT_NON_REC) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__LEFT_NON_REC));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__VIRG) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__VIRG));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__RIGHT));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__FM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_NON_RECU__FM));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMergeNonRecuAccess().getDbDebutMergeParserRuleCall_0_0(), semanticObject.getDb());
-		feeder.accept(grammarAccess.getMergeNonRecuAccess().getLeftNonRecLeftNonRecursiveParserRuleCall_1_0(), semanticObject.getLeftNonRec());
-		feeder.accept(grammarAccess.getMergeNonRecuAccess().getVirgCommaKeyword_2_0(), semanticObject.getVirg());
-		feeder.accept(grammarAccess.getMergeNonRecuAccess().getRightRightParserRuleCall_3_0(), semanticObject.getRight());
-		feeder.accept(grammarAccess.getMergeNonRecuAccess().getFmFinMergeParserRuleCall_4_0(), semanticObject.getFm());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MergeRecu returns MergeRecu
-	 *
-	 * Constraint:
-	 *     (db=DebutMerge left=LeftRecu virg=',' right=Right fm=FinMerge)
-	 */
-	protected void sequence_MergeRecu(ISerializationContext context, MergeRecu semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_RECU__DB) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_RECU__DB));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_RECU__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_RECU__LEFT));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_RECU__VIRG) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_RECU__VIRG));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_RECU__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_RECU__RIGHT));
-			if (transientValues.isValueTransient(semanticObject, SMLPackage.Literals.MERGE_RECU__FM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SMLPackage.Literals.MERGE_RECU__FM));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMergeRecuAccess().getDbDebutMergeParserRuleCall_0_0(), semanticObject.getDb());
-		feeder.accept(grammarAccess.getMergeRecuAccess().getLeftLeftRecuParserRuleCall_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getMergeRecuAccess().getVirgCommaKeyword_2_0(), semanticObject.getVirg());
-		feeder.accept(grammarAccess.getMergeRecuAccess().getRightRightParserRuleCall_3_0(), semanticObject.getRight());
-		feeder.accept(grammarAccess.getMergeRecuAccess().getFmFinMergeParserRuleCall_4_0(), semanticObject.getFm());
-		feeder.finish();
 	}
 	
 	
@@ -287,7 +247,7 @@ public class SMLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Merge returns Merge
 	 *
 	 * Constraint:
-	 *     (mnr=MergeNonRecu | mr=MergeRecu)
+	 *     (db='[' mergeBody+=MergeBody+ fm=']')
 	 */
 	protected void sequence_Merge(ISerializationContext context, Merge semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

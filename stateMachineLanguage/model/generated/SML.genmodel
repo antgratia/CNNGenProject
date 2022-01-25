@@ -37,50 +37,36 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//ConvDrop/conv"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//ConvDrop/drop"/>
     </genClasses>
-    <genClasses ecoreClass="SML.ecore#//LeftRecu">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//LeftRecu/p"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//LeftRecu/convdropbegin"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//LeftRecu/merge"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//LeftRecu/convdropend"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//LeftRecu/pool"/>
+    <genClasses ecoreClass="SML.ecore#//MergeConv">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeConv/merge"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeConv/convdrop"/>
     </genClasses>
-    <genClasses ecoreClass="SML.ecore#//MergeRecu">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeRecu/db"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeRecu/left"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeRecu/virg"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeRecu/right"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeRecu/fm"/>
+    <genClasses ecoreClass="SML.ecore#//ConvOrMerge">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//ConvOrMerge/convdrop"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//ConvOrMerge/mergeConv"/>
     </genClasses>
-    <genClasses ecoreClass="SML.ecore#//LeftNonRecursive">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//LeftNonRecursive/p"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//LeftNonRecursive/convdrop"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//LeftNonRecursive/pool"/>
+    <genClasses ecoreClass="SML.ecore#//Left">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Left/p"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Left/com"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Left/pool"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//Right">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Right/conv"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Right/empty"/>
     </genClasses>
-    <genClasses ecoreClass="SML.ecore#//MergeNonRecu">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeNonRecu/db"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeNonRecu/leftNonRec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeNonRecu/virg"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeNonRecu/right"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeNonRecu/fm"/>
+    <genClasses ecoreClass="SML.ecore#//MergeBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeBody/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//MergeBody/virg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//MergeBody/right"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//Merge">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Merge/mnr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Merge/mr"/>
-    </genClasses>
-    <genClasses ecoreClass="SML.ecore#//Highway">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Highway/db"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Highway/leftNonRec"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Highway/conv"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Highway/fm"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Merge/db"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//Merge/mergeBody"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//Merge/fm"/>
     </genClasses>
     <genClasses ecoreClass="SML.ecore#//FeatureExtraction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//FeatureExtraction/conv"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//FeatureExtraction/merge"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SML.ecore#//FeatureExtraction/hw"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//FeatureExtraction/drop"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SML.ecore#//FeatureExtraction/pool"/>
     </genClasses>

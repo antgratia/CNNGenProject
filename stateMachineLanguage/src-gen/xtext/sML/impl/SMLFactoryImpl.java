@@ -72,13 +72,12 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
       case SMLPackage.INTERSTICE: return createInterstice();
       case SMLPackage.CLASSIFICATION: return createClassification();
       case SMLPackage.CONV_DROP: return createConvDrop();
-      case SMLPackage.LEFT_RECU: return createLeftRecu();
-      case SMLPackage.MERGE_RECU: return createMergeRecu();
-      case SMLPackage.LEFT_NON_RECURSIVE: return createLeftNonRecursive();
+      case SMLPackage.MERGE_CONV: return createMergeConv();
+      case SMLPackage.CONV_OR_MERGE: return createConvOrMerge();
+      case SMLPackage.LEFT: return createLeft();
       case SMLPackage.RIGHT: return createRight();
-      case SMLPackage.MERGE_NON_RECU: return createMergeNonRecu();
+      case SMLPackage.MERGE_BODY: return createMergeBody();
       case SMLPackage.MERGE: return createMerge();
-      case SMLPackage.HIGHWAY: return createHighway();
       case SMLPackage.FEATURE_EXTRACTION: return createFeatureExtraction();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -175,10 +174,10 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
    * @generated
    */
   @Override
-  public LeftRecu createLeftRecu()
+  public MergeConv createMergeConv()
   {
-    LeftRecuImpl leftRecu = new LeftRecuImpl();
-    return leftRecu;
+    MergeConvImpl mergeConv = new MergeConvImpl();
+    return mergeConv;
   }
 
   /**
@@ -187,10 +186,10 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
    * @generated
    */
   @Override
-  public MergeRecu createMergeRecu()
+  public ConvOrMerge createConvOrMerge()
   {
-    MergeRecuImpl mergeRecu = new MergeRecuImpl();
-    return mergeRecu;
+    ConvOrMergeImpl convOrMerge = new ConvOrMergeImpl();
+    return convOrMerge;
   }
 
   /**
@@ -199,10 +198,10 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
    * @generated
    */
   @Override
-  public LeftNonRecursive createLeftNonRecursive()
+  public Left createLeft()
   {
-    LeftNonRecursiveImpl leftNonRecursive = new LeftNonRecursiveImpl();
-    return leftNonRecursive;
+    LeftImpl left = new LeftImpl();
+    return left;
   }
 
   /**
@@ -223,10 +222,10 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
    * @generated
    */
   @Override
-  public MergeNonRecu createMergeNonRecu()
+  public MergeBody createMergeBody()
   {
-    MergeNonRecuImpl mergeNonRecu = new MergeNonRecuImpl();
-    return mergeNonRecu;
+    MergeBodyImpl mergeBody = new MergeBodyImpl();
+    return mergeBody;
   }
 
   /**
@@ -239,18 +238,6 @@ public class SMLFactoryImpl extends EFactoryImpl implements SMLFactory
   {
     MergeImpl merge = new MergeImpl();
     return merge;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Highway createHighway()
-  {
-    HighwayImpl highway = new HighwayImpl();
-    return highway;
   }
 
   /**

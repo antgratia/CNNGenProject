@@ -38,29 +38,22 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="drop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LeftRecu">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="p" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="convdropbegin" upperBound="-1"
-        eType="#//ConvDrop" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MergeConv">
     <eStructuralFeatures xsi:type="ecore:EReference" name="merge" eType="#//Merge"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="convdropend" upperBound="-1"
-        eType="#//ConvDrop" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MergeRecu">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//LeftRecu"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="virg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Right"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LeftNonRecursive">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="p" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="convdrop" upperBound="-1"
         eType="#//ConvDrop" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvOrMerge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="convdrop" upperBound="-1"
+        eType="#//ConvDrop" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mergeConv" upperBound="-1"
+        eType="#//MergeConv" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Left">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="p" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="com" eType="#//ConvOrMerge"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Right">
@@ -68,37 +61,22 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="empty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MergeNonRecu">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="leftNonRec" eType="#//LeftNonRecursive"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MergeBody">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Left" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="virg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Right"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Merge">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mnr" eType="#//MergeNonRecu"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mr" eType="#//MergeRecu"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Highway">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="leftNonRec" upperBound="-1"
-        eType="#//LeftNonRecursive" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="conv" upperBound="-1" eType="#//Convolution"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fm" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mergeBody" upperBound="-1"
+        eType="#//MergeBody" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FeatureExtraction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="conv" eType="#//Convolution"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="merge" eType="#//Merge"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hw" eType="#//Highway"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="drop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

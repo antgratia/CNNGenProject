@@ -87,31 +87,31 @@ public interface SMLFactory extends EFactory
   ConvDrop createConvDrop();
 
   /**
-   * Returns a new object of class '<em>Left Recu</em>'.
+   * Returns a new object of class '<em>Merge Conv</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Left Recu</em>'.
+   * @return a new object of class '<em>Merge Conv</em>'.
    * @generated
    */
-  LeftRecu createLeftRecu();
+  MergeConv createMergeConv();
 
   /**
-   * Returns a new object of class '<em>Merge Recu</em>'.
+   * Returns a new object of class '<em>Conv Or Merge</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Merge Recu</em>'.
+   * @return a new object of class '<em>Conv Or Merge</em>'.
    * @generated
    */
-  MergeRecu createMergeRecu();
+  ConvOrMerge createConvOrMerge();
 
   /**
-   * Returns a new object of class '<em>Left Non Recursive</em>'.
+   * Returns a new object of class '<em>Left</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Left Non Recursive</em>'.
+   * @return a new object of class '<em>Left</em>'.
    * @generated
    */
-  LeftNonRecursive createLeftNonRecursive();
+  Left createLeft();
 
   /**
    * Returns a new object of class '<em>Right</em>'.
@@ -123,13 +123,13 @@ public interface SMLFactory extends EFactory
   Right createRight();
 
   /**
-   * Returns a new object of class '<em>Merge Non Recu</em>'.
+   * Returns a new object of class '<em>Merge Body</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Merge Non Recu</em>'.
+   * @return a new object of class '<em>Merge Body</em>'.
    * @generated
    */
-  MergeNonRecu createMergeNonRecu();
+  MergeBody createMergeBody();
 
   /**
    * Returns a new object of class '<em>Merge</em>'.
@@ -139,15 +139,6 @@ public interface SMLFactory extends EFactory
    * @generated
    */
   Merge createMerge();
-
-  /**
-   * Returns a new object of class '<em>Highway</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Highway</em>'.
-   * @generated
-   */
-  Highway createHighway();
 
   /**
    * Returns a new object of class '<em>Feature Extraction</em>'.

@@ -3,8 +3,12 @@
  */
 package xtext.sML.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -12,9 +16,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import xtext.sML.Merge;
-import xtext.sML.MergeNonRecu;
-import xtext.sML.MergeRecu;
+import xtext.sML.MergeBody;
 import xtext.sML.SMLPackage;
 
 /**
@@ -25,8 +31,9 @@ import xtext.sML.SMLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.impl.MergeImpl#getMnr <em>Mnr</em>}</li>
- *   <li>{@link xtext.sML.impl.MergeImpl#getMr <em>Mr</em>}</li>
+ *   <li>{@link xtext.sML.impl.MergeImpl#getDb <em>Db</em>}</li>
+ *   <li>{@link xtext.sML.impl.MergeImpl#getMergeBody <em>Merge Body</em>}</li>
+ *   <li>{@link xtext.sML.impl.MergeImpl#getFm <em>Fm</em>}</li>
  * </ul>
  *
  * @generated
@@ -34,24 +41,54 @@ import xtext.sML.SMLPackage;
 public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
 {
   /**
-   * The cached value of the '{@link #getMnr() <em>Mnr</em>}' containment reference.
+   * The default value of the '{@link #getDb() <em>Db</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMnr()
+   * @see #getDb()
    * @generated
    * @ordered
    */
-  protected MergeNonRecu mnr;
+  protected static final String DB_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getMr() <em>Mr</em>}' containment reference.
+   * The cached value of the '{@link #getDb() <em>Db</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMr()
+   * @see #getDb()
    * @generated
    * @ordered
    */
-  protected MergeRecu mr;
+  protected String db = DB_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getMergeBody() <em>Merge Body</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMergeBody()
+   * @generated
+   * @ordered
+   */
+  protected EList<MergeBody> mergeBody;
+
+  /**
+   * The default value of the '{@link #getFm() <em>Fm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFm()
+   * @generated
+   * @ordered
+   */
+  protected static final String FM_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFm() <em>Fm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFm()
+   * @generated
+   * @ordered
+   */
+  protected String fm = FM_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -80,9 +117,9 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * @generated
    */
   @Override
-  public MergeNonRecu getMnr()
+  public String getDb()
   {
-    return mnr;
+    return db;
   }
 
   /**
@@ -90,16 +127,13 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetMnr(MergeNonRecu newMnr, NotificationChain msgs)
+  @Override
+  public void setDb(String newDb)
   {
-    MergeNonRecu oldMnr = mnr;
-    mnr = newMnr;
+    String oldDb = db;
+    db = newDb;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__MNR, oldMnr, newMnr);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__DB, oldDb, db));
   }
 
   /**
@@ -108,20 +142,13 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * @generated
    */
   @Override
-  public void setMnr(MergeNonRecu newMnr)
+  public EList<MergeBody> getMergeBody()
   {
-    if (newMnr != mnr)
+    if (mergeBody == null)
     {
-      NotificationChain msgs = null;
-      if (mnr != null)
-        msgs = ((InternalEObject)mnr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SMLPackage.MERGE__MNR, null, msgs);
-      if (newMnr != null)
-        msgs = ((InternalEObject)newMnr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SMLPackage.MERGE__MNR, null, msgs);
-      msgs = basicSetMnr(newMnr, msgs);
-      if (msgs != null) msgs.dispatch();
+      mergeBody = new EObjectContainmentEList<MergeBody>(MergeBody.class, this, SMLPackage.MERGE__MERGE_BODY);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__MNR, newMnr, newMnr));
+    return mergeBody;
   }
 
   /**
@@ -130,9 +157,9 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * @generated
    */
   @Override
-  public MergeRecu getMr()
+  public String getFm()
   {
-    return mr;
+    return fm;
   }
 
   /**
@@ -140,38 +167,13 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetMr(MergeRecu newMr, NotificationChain msgs)
+  @Override
+  public void setFm(String newFm)
   {
-    MergeRecu oldMr = mr;
-    mr = newMr;
+    String oldFm = fm;
+    fm = newFm;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__MR, oldMr, newMr);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setMr(MergeRecu newMr)
-  {
-    if (newMr != mr)
-    {
-      NotificationChain msgs = null;
-      if (mr != null)
-        msgs = ((InternalEObject)mr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SMLPackage.MERGE__MR, null, msgs);
-      if (newMr != null)
-        msgs = ((InternalEObject)newMr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SMLPackage.MERGE__MR, null, msgs);
-      msgs = basicSetMr(newMr, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__MR, newMr, newMr));
+      eNotify(new ENotificationImpl(this, Notification.SET, SMLPackage.MERGE__FM, oldFm, fm));
   }
 
   /**
@@ -184,10 +186,8 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
   {
     switch (featureID)
     {
-      case SMLPackage.MERGE__MNR:
-        return basicSetMnr(null, msgs);
-      case SMLPackage.MERGE__MR:
-        return basicSetMr(null, msgs);
+      case SMLPackage.MERGE__MERGE_BODY:
+        return ((InternalEList<?>)getMergeBody()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -202,10 +202,12 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
   {
     switch (featureID)
     {
-      case SMLPackage.MERGE__MNR:
-        return getMnr();
-      case SMLPackage.MERGE__MR:
-        return getMr();
+      case SMLPackage.MERGE__DB:
+        return getDb();
+      case SMLPackage.MERGE__MERGE_BODY:
+        return getMergeBody();
+      case SMLPackage.MERGE__FM:
+        return getFm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -215,16 +217,21 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case SMLPackage.MERGE__MNR:
-        setMnr((MergeNonRecu)newValue);
+      case SMLPackage.MERGE__DB:
+        setDb((String)newValue);
         return;
-      case SMLPackage.MERGE__MR:
-        setMr((MergeRecu)newValue);
+      case SMLPackage.MERGE__MERGE_BODY:
+        getMergeBody().clear();
+        getMergeBody().addAll((Collection<? extends MergeBody>)newValue);
+        return;
+      case SMLPackage.MERGE__FM:
+        setFm((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -240,11 +247,14 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
   {
     switch (featureID)
     {
-      case SMLPackage.MERGE__MNR:
-        setMnr((MergeNonRecu)null);
+      case SMLPackage.MERGE__DB:
+        setDb(DB_EDEFAULT);
         return;
-      case SMLPackage.MERGE__MR:
-        setMr((MergeRecu)null);
+      case SMLPackage.MERGE__MERGE_BODY:
+        getMergeBody().clear();
+        return;
+      case SMLPackage.MERGE__FM:
+        setFm(FM_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -260,12 +270,33 @@ public class MergeImpl extends MinimalEObjectImpl.Container implements Merge
   {
     switch (featureID)
     {
-      case SMLPackage.MERGE__MNR:
-        return mnr != null;
-      case SMLPackage.MERGE__MR:
-        return mr != null;
+      case SMLPackage.MERGE__DB:
+        return DB_EDEFAULT == null ? db != null : !DB_EDEFAULT.equals(db);
+      case SMLPackage.MERGE__MERGE_BODY:
+        return mergeBody != null && !mergeBody.isEmpty();
+      case SMLPackage.MERGE__FM:
+        return FM_EDEFAULT == null ? fm != null : !FM_EDEFAULT.equals(fm);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (db: ");
+    result.append(db);
+    result.append(", fm: ");
+    result.append(fm);
+    result.append(')');
+    return result.toString();
   }
 
 } //MergeImpl

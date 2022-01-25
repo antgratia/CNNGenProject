@@ -4,23 +4,15 @@ generate sML "http://www.SML.xtext"
 
 SML : sml = (Architecture);
 
-Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)*)? output = ('output');
+Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)+)? output = ('output');
 
-// Unit
+// litteraux
 
 Dropout: 'dropout';
 
 Pooling: 'avg_pooling' | 'max_pooling';
 
-DebutMerge: '[';
-
-FinMerge: ']';
-
-BnConv:('(') ('bn') ('conv') (')');
-
-ConvBn:('(') ('conv') ('bn') (')');
-
-Convolution: bnconv = (BnConv)| (convbn = ConvBn ) | (conv = 'conv') | (upconv = 'upconv') ;
+Convolution: (bnconv = 'bnconv') | (convbn = 'convbn') | (conv = 'conv') | (upconv = 'upconv') ;
 
 GlobalPooling: ('global_avg_pooling') | ("global_max_pooling");
 
@@ -30,24 +22,22 @@ Interstice: fg = (FlattenOrGlobal);
 
 Classification: drop =(Dropout)? d=('dense') ;
 
-ConvDrop: conv = Convolution (drop = Dropout)?;	
+ConvDrop: conv = Convolution (drop = Dropout)?;
 
-// Merge Recursive
-LeftRecu: (p=Pooling)? convdropbegin += (ConvDrop)* (merge = Merge) convdropend += (ConvDrop)* (pool=Pooling)?;
+// Body merge
+MergeConv:merge=Merge convdrop += (ConvDrop)*;
 
-MergeRecu:  db = DebutMerge left = LeftRecu virg=','  right = Right  fm = FinMerge ;
+ConvOrMerge:convdrop += (ConvDrop)+ | convdrop += (ConvDrop)* mergeConv += MergeConv+;
 
-// Merge Non recusive
-LeftNonRecursive: p = (Pooling)? convdrop += (ConvDrop)+ pool = (Pooling)?;
+Left: (p=Pooling)? com=ConvOrMerge (pool=Pooling)?;
 
 Right: conv += Convolution+ | {Right} empty = 'Empty';
 
-MergeNonRecu: db = DebutMerge leftNonRec = LeftNonRecursive virg=','  right = Right fm = FinMerge;
+MergeBody:'(' left = Left virg=',' right = Right ')' ;
 
 // Merge
-Merge: mnr = MergeNonRecu | mr = MergeRecu;
-
-Highway: (db += DebutMerge) ((leftNonRec+=LeftNonRecursive) ('|') (conv += Convolution) (','))+ (fm += FinMerge);
+Merge:db = '[' (mergeBody+=MergeBody)+  fm = ']' ;
 
 //Feature extraction
-FeatureExtraction: 	(conv = Convolution | merge = (Merge) | hw = (Highway)) drop = (Dropout)? pool= (Pooling)?;
+FeatureExtraction: 	(conv = Convolution | merge = (Merge)) drop = (Dropout)? pool= (Pooling)?;
+

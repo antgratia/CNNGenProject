@@ -3,29 +3,27 @@
  */
 package xtext.sML;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Left Non Recursive</b></em>'.
+ * A representation of the model object '<em><b>Left</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link xtext.sML.LeftNonRecursive#getP <em>P</em>}</li>
- *   <li>{@link xtext.sML.LeftNonRecursive#getConvdrop <em>Convdrop</em>}</li>
- *   <li>{@link xtext.sML.LeftNonRecursive#getPool <em>Pool</em>}</li>
+ *   <li>{@link xtext.sML.Left#getP <em>P</em>}</li>
+ *   <li>{@link xtext.sML.Left#getCom <em>Com</em>}</li>
+ *   <li>{@link xtext.sML.Left#getPool <em>Pool</em>}</li>
  * </ul>
  *
- * @see xtext.sML.SMLPackage#getLeftNonRecursive()
+ * @see xtext.sML.SMLPackage#getLeft()
  * @model
  * @generated
  */
-public interface LeftNonRecursive extends EObject
+public interface Left extends EObject
 {
   /**
    * Returns the value of the '<em><b>P</b></em>' attribute.
@@ -33,14 +31,14 @@ public interface LeftNonRecursive extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>P</em>' attribute.
    * @see #setP(String)
-   * @see xtext.sML.SMLPackage#getLeftNonRecursive_P()
+   * @see xtext.sML.SMLPackage#getLeft_P()
    * @model
    * @generated
    */
   String getP();
 
   /**
-   * Sets the value of the '{@link xtext.sML.LeftNonRecursive#getP <em>P</em>}' attribute.
+   * Sets the value of the '{@link xtext.sML.Left#getP <em>P</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>P</em>' attribute.
@@ -50,16 +48,26 @@ public interface LeftNonRecursive extends EObject
   void setP(String value);
 
   /**
-   * Returns the value of the '<em><b>Convdrop</b></em>' containment reference list.
-   * The list contents are of type {@link xtext.sML.ConvDrop}.
+   * Returns the value of the '<em><b>Com</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Convdrop</em>' containment reference list.
-   * @see xtext.sML.SMLPackage#getLeftNonRecursive_Convdrop()
+   * @return the value of the '<em>Com</em>' containment reference.
+   * @see #setCom(ConvOrMerge)
+   * @see xtext.sML.SMLPackage#getLeft_Com()
    * @model containment="true"
    * @generated
    */
-  EList<ConvDrop> getConvdrop();
+  ConvOrMerge getCom();
+
+  /**
+   * Sets the value of the '{@link xtext.sML.Left#getCom <em>Com</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Com</em>' containment reference.
+   * @see #getCom()
+   * @generated
+   */
+  void setCom(ConvOrMerge value);
 
   /**
    * Returns the value of the '<em><b>Pool</b></em>' attribute.
@@ -67,14 +75,14 @@ public interface LeftNonRecursive extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Pool</em>' attribute.
    * @see #setPool(String)
-   * @see xtext.sML.SMLPackage#getLeftNonRecursive_Pool()
+   * @see xtext.sML.SMLPackage#getLeft_Pool()
    * @model
    * @generated
    */
   String getPool();
 
   /**
-   * Sets the value of the '{@link xtext.sML.LeftNonRecursive#getPool <em>Pool</em>}' attribute.
+   * Sets the value of the '{@link xtext.sML.Left#getPool <em>Pool</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Pool</em>' attribute.
@@ -83,4 +91,4 @@ public interface LeftNonRecursive extends EObject
    */
   void setPool(String value);
 
-} // LeftNonRecursive
+} // Left

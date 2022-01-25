@@ -111,19 +111,19 @@ public class SMLAdapterFactory extends AdapterFactoryImpl
         return createConvDropAdapter();
       }
       @Override
-      public Adapter caseLeftRecu(LeftRecu object)
+      public Adapter caseMergeConv(MergeConv object)
       {
-        return createLeftRecuAdapter();
+        return createMergeConvAdapter();
       }
       @Override
-      public Adapter caseMergeRecu(MergeRecu object)
+      public Adapter caseConvOrMerge(ConvOrMerge object)
       {
-        return createMergeRecuAdapter();
+        return createConvOrMergeAdapter();
       }
       @Override
-      public Adapter caseLeftNonRecursive(LeftNonRecursive object)
+      public Adapter caseLeft(Left object)
       {
-        return createLeftNonRecursiveAdapter();
+        return createLeftAdapter();
       }
       @Override
       public Adapter caseRight(Right object)
@@ -131,19 +131,14 @@ public class SMLAdapterFactory extends AdapterFactoryImpl
         return createRightAdapter();
       }
       @Override
-      public Adapter caseMergeNonRecu(MergeNonRecu object)
+      public Adapter caseMergeBody(MergeBody object)
       {
-        return createMergeNonRecuAdapter();
+        return createMergeBodyAdapter();
       }
       @Override
       public Adapter caseMerge(Merge object)
       {
         return createMergeAdapter();
-      }
-      @Override
-      public Adapter caseHighway(Highway object)
-      {
-        return createHighwayAdapter();
       }
       @Override
       public Adapter caseFeatureExtraction(FeatureExtraction object)
@@ -278,46 +273,46 @@ public class SMLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link xtext.sML.LeftRecu <em>Left Recu</em>}'.
+   * Creates a new adapter for an object of class '{@link xtext.sML.MergeConv <em>Merge Conv</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see xtext.sML.LeftRecu
+   * @see xtext.sML.MergeConv
    * @generated
    */
-  public Adapter createLeftRecuAdapter()
+  public Adapter createMergeConvAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link xtext.sML.MergeRecu <em>Merge Recu</em>}'.
+   * Creates a new adapter for an object of class '{@link xtext.sML.ConvOrMerge <em>Conv Or Merge</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see xtext.sML.MergeRecu
+   * @see xtext.sML.ConvOrMerge
    * @generated
    */
-  public Adapter createMergeRecuAdapter()
+  public Adapter createConvOrMergeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link xtext.sML.LeftNonRecursive <em>Left Non Recursive</em>}'.
+   * Creates a new adapter for an object of class '{@link xtext.sML.Left <em>Left</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see xtext.sML.LeftNonRecursive
+   * @see xtext.sML.Left
    * @generated
    */
-  public Adapter createLeftNonRecursiveAdapter()
+  public Adapter createLeftAdapter()
   {
     return null;
   }
@@ -338,16 +333,16 @@ public class SMLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link xtext.sML.MergeNonRecu <em>Merge Non Recu</em>}'.
+   * Creates a new adapter for an object of class '{@link xtext.sML.MergeBody <em>Merge Body</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see xtext.sML.MergeNonRecu
+   * @see xtext.sML.MergeBody
    * @generated
    */
-  public Adapter createMergeNonRecuAdapter()
+  public Adapter createMergeBodyAdapter()
   {
     return null;
   }
@@ -363,21 +358,6 @@ public class SMLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMergeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link xtext.sML.Highway <em>Highway</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see xtext.sML.Highway
-   * @generated
-   */
-  public Adapter createHighwayAdapter()
   {
     return null;
   }
