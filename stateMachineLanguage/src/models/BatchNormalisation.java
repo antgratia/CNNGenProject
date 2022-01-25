@@ -1,10 +1,18 @@
 package models;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import utils.GestionHpp;
 
+@Data
 public class BatchNormalisation implements LayerInterface {
 
 	private double epsilon;
+	
+	@Setter(AccessLevel.PRIVATE)
+	@Getter(AccessLevel.PRIVATE)
 	private GestionHpp gestionHpp;
 	
 	public BatchNormalisation() {
@@ -17,17 +25,6 @@ public class BatchNormalisation implements LayerInterface {
 		gestionHpp.gestionBN(this);
 		return this;
 	}
-
-
-	public double getEpsilon() {
-		return epsilon;
-	}
-
-
-	public void setEpsilon(double epsilon) {
-		this.epsilon = epsilon;
-	}
-	
 	
 	
 	

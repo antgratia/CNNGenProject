@@ -96,11 +96,11 @@ public class FonctionStringPy {
 	}
 	
 	public String writeGloAvgPooling(String X_or_shortcut) {
-		return String.format("\n\t\t%s GlobalAveragePooling2D()("+ X_or_shortcut+ ")\n", X_or_shortcut);
+		return String.format("\n\t\t%s = GlobalAveragePooling2D()("+ X_or_shortcut+ ")\n", X_or_shortcut);
 	}
 	
 	public String writeGloMaxPooling(String X_or_shortcut) {
-		return String.format("\n\t\t%s GlobalMaxPooling2D()("+ X_or_shortcut+ ")\n", X_or_shortcut);
+		return String.format("\n\t\t%s = GlobalMaxPooling2D()("+ X_or_shortcut+ ")\n", X_or_shortcut);
 	}
 	
 	public String writeFlatten(String X_or_shortcut) {
@@ -132,7 +132,7 @@ public class FonctionStringPy {
 		return "\tstart = time()\n"
 				+ "\tes = tf.keras.callbacks.EarlyStopping(monitor='loss', verbose=1, restore_best_weights=True, patience=8)\r\n"
 				+ "\tlist_cb = [es]\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=5, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
+				+ "\thistory = model.fit(train_x, train_y, epochs=1, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
 				+ "\ttraining_time = time()-start\n"
 				+ "\tprint(model.evaluate(test_x, test_y))\n\n";
 	}
@@ -194,7 +194,7 @@ public class FonctionStringPy {
 			   +"                      'nb_layers': nb_layers,\n"
 			   +"                      'epochs' : epochs\n"
 			   +"                      })\n"
-			   +"\t\tprint('add line into architecture_results_v4.csv')\n"
+			   +"\t\tprint('add line into architecture_results.csv')\n"
 			   +"\tfile.close()\n";
 	}
 }

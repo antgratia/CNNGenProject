@@ -3,6 +3,7 @@
  */
 package xtext.generator
 
+import models.ArchiSkel
 import models.BatchNormalisation
 import models.Convolution
 import models.Dense
@@ -15,18 +16,18 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import utils.FonctionStringPy
+import utils.GestionHpp
 import utils.GestionWay
 import xtext.sML.Architecture
 import xtext.sML.Classification
 import xtext.sML.FeatureExtraction
 import xtext.sML.Interstice
-import xtext.sML.LeftNonRecursive
-import xtext.sML.LeftRecu
+import xtext.sML.Left
 import xtext.sML.Merge
-import xtext.sML.MergeNonRecu
-import xtext.sML.MergeRecu
+import xtext.sML.MergeBody
 import xtext.sML.Right
-import utils.GestionHpp
+import xtext.sML.SML
+import java.io.PrintWriter
 
 /**
  * Generates code from your model files on save.
@@ -39,6 +40,8 @@ class SMLGenerator extends AbstractGenerator {
 	
 	var gestionWay = GestionWay.gestionWay;
 	
+	var archiskel = ArchiSkel.archiSkel
+		
 	// python directory
     var py_dir = "architecture_py/"
     
@@ -48,20 +51,39 @@ class SMLGenerator extends AbstractGenerator {
     // png directory
     var png_dir = "../architecture_img/"
     
-    var file_name = "architecture"
+	var file_name = ""
     
-
+	// entry for ui
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		gestionWay = GestionWay.gestionWay
 		GestionHpp.destroy
 		println(resource.URI)
+		file_name = "architecture"
 		for(elem : resource.allContents.toIterable.filter(Architecture)){
 			fsa.generateFile(py_dir + file_name + '.py', elem.compile())
 		}
 	}
 	
+	// entry for generator
+	def void generate(SML sml, String filename) {
+		gestionWay = GestionWay.gestionWay
+		GestionHpp.destroy
+		file_name = filename.split("/").get(2).split('.py').get(0)
+		
+		//println("smlgenerator:  " + sml.sml)
+		var archi = compile(sml.sml)
+		//println(archi)
+		
+		var writer = new PrintWriter(filename, "UTF-8");
+		writer.println(archi);
+		writer.close();
+	}
+	
 	
 	private def compile(Architecture archi ){
+		archiskel.createSkel(archi)
+
+		
 		var py_file = ""
 		
 		// write import
@@ -73,7 +95,7 @@ class SMLGenerator extends AbstractGenerator {
 		// write init value 
 		py_file += fsp.writeInitValue()
 		
-		println(archi)
+		//println(archi)
 		
 		// try	
     	py_file += "try:\n"
@@ -146,11 +168,10 @@ class SMLGenerator extends AbstractGenerator {
 
 			}else if (elem.merge !== null){
 				var MergeSimple ms = null
-				fe_string += gestionMerge(elem.merge, ms)
+				fe_string += gestionMerge(elem.merge, ms, true)
 				ms = null
 			}else {
-				// TODO HW
-				//fe_string += 
+				throw new Exception("gestionFe errors")
 			}
 			
 			if (elem.drop !== null)
@@ -182,65 +203,117 @@ class SMLGenerator extends AbstractGenerator {
 		else return unitUpConv(x_or_shortcut)
 	}
 	
-	def gestionMerge(Merge merge, MergeSimple mergeSimple) {
+	def gestionMerge(Merge merge, MergeSimple mergeSimple, boolean isRecu) {
 		var str_merge = ""
 		var ms = mergeSimple
-		if(merge.mnr !== null) {			
+		
+		if(merge.mergeBody.size <= 1){
 			if(ms === null){
-				ms = new MergeSimple(merge.mnr)
+				ms = new MergeSimple(merge)
 			}
-			str_merge += gestionMergeNonRecu(merge.mnr, ms)
 			
+			str_merge += gestionMergeBody(merge.mergeBody.get(0), ms, isRecu)
 		}else {
 			if(ms === null){
-				ms = new MergeSimple(merge.mr)
+				ms = new MergeSimple(merge.mergeBody)
 			}
-			
-			str_merge += gestionMergeRecu(merge.mr, ms)
+			str_merge += gestionHighway(merge.mergeBody, ms, isRecu)
 		}
+		
+		return str_merge
 	}
 	
-	def gestionMergeNonRecu(MergeNonRecu mergeNonRecu, MergeSimple merge) {
-		var strMergeNonRecur = ""
-	
+	def gestionHighway(EList<MergeBody> listMerge, MergeSimple merge, boolean isRecu) {
+		var str_highway = ""
+		
 		//init merge
 		gestionWay.add
-		strMergeNonRecur += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
+		str_highway += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
 		
-		// body merge (i.e Left & Right)
-		strMergeNonRecur += gestionLeftNonRecursive(mergeNonRecu.leftNonRec, merge)
-		strMergeNonRecur += '\n'
-		strMergeNonRecur += gestionRight(mergeNonRecu.right, merge, false)
-		
-		// end merge (i.e Add/Concatenate)
-		if (merge.add_or_concat == 'concat'){
-			strMergeNonRecur += fsp.writeConcat(gestionWay.current, gestionWay.next)
-		}else{
-			strMergeNonRecur += fsp.writeAdd(gestionWay.current, gestionWay.next)
+		for (mb: listMerge){	
+			// body merge (i.e Left & Right)
+			str_highway += gestionLeft(mb.left, merge, false)
+			str_highway += '\n'
+			str_highway += gestionRight(mb.right, merge, false)
+			
+			// end merge (i.e Add/Concatenate)
+			if (merge.add_or_concat == 'concat'){
+				str_highway += fsp.writeConcat(gestionWay.current, gestionWay.next)
+			}else{
+				str_highway += fsp.writeAdd(gestionWay.current, gestionWay.next)
+			}
+			
 		}
 		gestionWay.removeLastFromList
 		
-		return strMergeNonRecur
+		return str_highway
 	}
 	
-	def gestionLeftNonRecursive(LeftNonRecursive left, MergeSimple merge) {
+	def gestionMergeBody(MergeBody mb, MergeSimple merge, boolean isRecu) {
+		var strMergeBody = ""
+	
+		//init merge
+		gestionWay.add
+		strMergeBody += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
+		
+		// body merge (i.e Left & Right)
+		strMergeBody += gestionLeft(mb.left, merge, isRecu)
+		strMergeBody += '\n'
+		strMergeBody += gestionRight(mb.right, merge, isRecu)
+		
+		// end merge (i.e Add/Concatenate)
+		if (merge.add_or_concat == 'concat'){
+			strMergeBody += fsp.writeConcat(gestionWay.current, gestionWay.next)
+		}else{
+			strMergeBody += fsp.writeAdd(gestionWay.current, gestionWay.next)
+		}
+		gestionWay.removeLastFromList
+		
+		return strMergeBody
+	}
+	
+	def gestionLeft(Left left, MergeSimple merge, boolean isRecu) {
 		var strLeft = ""
 		if (left.p !== null){
-			strLeft += unitPooling(left.p, gestionWay.current, merge.left.get(0) as Pooling)
+			if(isRecu) strLeft += unitPooling(left.p, gestionWay.next, merge.left.get(0) as Pooling)
+			else strLeft += unitPooling(left.p, gestionWay.current, merge.left.get(0) as Pooling)
 			merge.removeFirstLeft
 		}
 		
-		if(left.convdrop !== null){
-			for (convdrop: left.convdrop){
-				strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
+		if (left.com.convdrop !== null){
+			for (convdrop: left.com.convdrop){
+				if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
+				else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
 				merge.removeFirstLeft
-				if(convdrop.drop !== null)
-					strLeft += unitDropout(gestionWay.current)
+				if(convdrop.drop !== null){
+					if(isRecu) strLeft += unitDropout(gestionWay.next)
+					else strLeft += unitDropout(gestionWay.current)
+				}
+			}
+		}
+		
+		if(left.com.mergeConv !== null){
+			
+			for(mc : left.com.mergeConv){
+				
+				strLeft += gestionMerge(mc.merge, merge, true)
+				
+				if (mc.convdrop !== null){
+					for (convdrop: mc.convdrop){
+						if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
+						else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
+						merge.removeFirstLeft
+						if(convdrop.drop !== null)
+							if(isRecu)strLeft += unitDropout(gestionWay.next)
+							else strLeft += unitDropout(gestionWay.current)
+						}
+				}
 			}
 		}
 		
 		if (left.pool !== null){
-			strLeft += unitPooling(left.pool, gestionWay.current, merge.left.get(0) as Pooling)
+			if(isRecu) strLeft += unitPooling(left.pool, gestionWay.next, merge.left.get(0) as Pooling)
+			else strLeft += unitPooling(left.pool, gestionWay.current, merge.left.get(0) as Pooling)
 			merge.removeFirstLeft
 		}
 		
@@ -262,71 +335,6 @@ class SMLGenerator extends AbstractGenerator {
 		return strRight
 	}
 	
-	def gestionMergeRecu(MergeRecu mergeRecu, MergeSimple ms) {
-		
-		var strMerge =""
-
-		
-		//init merge
-		gestionWay.add
-		strMerge += fsp.writeInitMerge(gestionWay.current, gestionWay.next)
-		
-		//body
-		strMerge += gestionLeftRecursive(mergeRecu.left, ms)
-		strMerge += '\n'
-		strMerge += gestionRight(mergeRecu.right, ms, true)
-		
-		// end
-		if (ms.add_or_concat == 'concat'){
-			strMerge += fsp.writeConcat(gestionWay.next, gestionWay.current)
-		}else{
-			strMerge += fsp.writeAdd(gestionWay.next, gestionWay.current)
-		}
-		gestionWay.removeBeforeLastFromList
-		
-		
-			
-		return strMerge
-	}
-	
-	
-	def gestionLeftRecursive(LeftRecu left, MergeSimple ms) {
-		var strLeftRecu = ""
-		
-		if(left.p !== null){
-			strLeftRecu += unitPooling(left.p, gestionWay.next, ms.left.get(0) as Pooling)
-			ms.removeFirstLeft
-		}
-			
-		
-		if (left.convdropbegin !== null){
-			for (convdrop: left.convdropbegin){
-				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next, ms.left.get(0) as Convolution)
-				ms.removeFirstLeft
-				if(convdrop.drop !== null)
-					strLeftRecu += unitDropout(gestionWay.next)
-			}
-		}
-		
-		strLeftRecu += gestionMerge(left.merge, ms)
-		
-		if (left.convdropend !== null){
-			for (convdrop: left.convdropend){
-				strLeftRecu += gestionConv(convdrop.conv, gestionWay.next, ms.left.get(0) as Convolution)
-				ms.removeFirstLeft
-				if(convdrop.drop !== null)
-					strLeftRecu += unitDropout(gestionWay.next)
-			}
-		}
-		
-		if(left.pool !== null){
-			strLeftRecu += unitPooling(left.pool, gestionWay.next, ms.left.get(0) as Pooling)
-			ms.removeFirstLeft
-		}
-
-		
-		return strLeftRecu
-	}
 	
 	def gestionInter(Interstice inter) {
 		var string_inter = ""
@@ -450,9 +458,6 @@ class SMLGenerator extends AbstractGenerator {
 			return fsp.writeGloMaxPooling(X_or_shortcut)
 		}
 	}
-	
-	
-
 		
 	
 }

@@ -1,10 +1,18 @@
 package models;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import utils.GestionHpp;
 
+@Data
 public class Dropout implements LayerInterface {
 
 	private double dropoutRate;
+	
+	@Setter(AccessLevel.PRIVATE)
+	@Getter(AccessLevel.PRIVATE)
 	private GestionHpp gestionHpp;
 	
 	public Dropout() {
@@ -17,13 +25,6 @@ public class Dropout implements LayerInterface {
 		return this;
 	}
 
-	public double getDropoutRate() {
-		return dropoutRate;
-	}
-
-	public void setDropoutRate(double dropoutRate) {
-		this.dropoutRate = dropoutRate;
-	}
 	
 	
 

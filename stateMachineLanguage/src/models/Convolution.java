@@ -1,7 +1,12 @@
 package models;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import utils.GestionHpp;
 
+@Data
 public class Convolution implements LayerInterface {
 
 	private int nbFilter;
@@ -9,6 +14,9 @@ public class Convolution implements LayerInterface {
 	private int stride;
 	private String fct_activation;
 	private String padding;
+	
+	@Setter(AccessLevel.PRIVATE)
+	@Getter(AccessLevel.PRIVATE)
 	private GestionHpp gestionHpp;
 	
 	public Convolution() {
@@ -23,64 +31,6 @@ public class Convolution implements LayerInterface {
 	}
 
 
-
-	public int getNbFilter() {
-		return nbFilter;
-	}
-
-
-
-	public void setNbFilter(int nbFilter) {
-		this.nbFilter = nbFilter;
-	}
-
-
-
-	public int getKernel() {
-		return kernel;
-	}
-
-
-
-	public void setKernel(int kernel) {
-		this.kernel = kernel;
-	}
-
-
-
-	public int getStride() {
-		return stride;
-	}
-
-
-
-	public void setStride(int stride) {
-		this.stride = stride;
-	}
-
-
-
-	public String getFct_activation() {
-		return fct_activation;
-	}
-
-
-
-	public void setFct_activation(String fct_activation) {
-		this.fct_activation = fct_activation;
-	}
-
-
-
-	public String getPadding() {
-		return padding;
-	}
-
-
-
-	public void setPadding(String padding) {
-		this.padding = padding;
-	}
 	
 	
 

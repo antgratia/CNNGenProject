@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
+
 import models.BatchNormalisation;
 import models.Convolution;
 import models.Dense;
@@ -13,8 +15,10 @@ import models.LayerInterface;
 import models.MergeSimple;
 import models.Pooling;
 import xtext.sML.ConvDrop;
-import xtext.sML.MergeNonRecu;
-import xtext.sML.MergeRecu;
+import xtext.sML.Merge;
+import xtext.sML.MergeBody;
+import xtext.sML.MergeConv;
+
 
 @SuppressWarnings("unused")
 public class GestionHpp {
@@ -49,9 +53,11 @@ public class GestionHpp {
 	
 	// hpp
 	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
-	private static List<Double> compressFactor = new ArrayList<Double>(List.of(0.2,0.3,0.5,0.65,0.8));
+	private static List<Double> compressFactor = new ArrayList<Double>(List.of(0.5,0.6,0.7,0.8,0.9));
 	
 	private static String str_add_or_concat = "";
+	
+	private static Random rand = new Random();
 	
 	private GestionHpp() {
 		currentNBFilters = INIT_NB_FILTER;
@@ -73,13 +79,11 @@ public class GestionHpp {
 		
 		multFilterby2();
 		conv.setNbFilter(currentNBFilters);
-		Random rand = new Random();
 		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
 			
 	}
 	
 	public void gestionConvolutionMerge(int s, String pad, Convolution conv){
-		Random rand = new Random();
 		// kernel <= input size
 		List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
 		int knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
@@ -100,13 +104,11 @@ public class GestionHpp {
 	}
 
 	public void gestionDropout(Dropout dropout) {
-		Random rand = new Random();
 		dropout.setDropoutRate(dropoutRate.get(rand.nextInt(dropoutRate.size())));
 		
 	}
 
 	public void gestionBN(BatchNormalisation bn) {
-		Random rand = new Random();
 		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
 	}
 
@@ -117,7 +119,6 @@ public class GestionHpp {
 			dense.setUnits(NB_CLASS);
 			dense.setFctActivation(FCT_ACTIVATION);
 		}else {
-			Random rand = new Random();
 			int units;
 			if (entryParams >=1000) {
 				units = (int)(entryParams*20/100);
@@ -132,7 +133,6 @@ public class GestionHpp {
 	
 	
 	private static void optimisationKernelPaddingStride(LayerInterface layer) {
-		Random rand = new Random();
 		
 		String pad = padding.get(rand.nextInt(padding.size()));
 		int knl = 1; // kernel
@@ -194,7 +194,7 @@ public class GestionHpp {
 	
 
 	public int compressedFilter() {
-		Random rand = new Random();
+		multFilterby2();
 		currentNBFilters = (int) (currentNBFilters*(compressFactor.get(rand.nextInt(compressFactor.size()))));
 		return currentNBFilters;
 	}
@@ -226,107 +226,67 @@ public class GestionHpp {
 		currentSizeImg = newCurrentSizeImg;
 	}
 	
-	public void gestionMergeNonRecu(MergeNonRecu mnr, MergeSimple ms, boolean mergeRecu, String str_add_or_concat){
-		
-		Random rand = new Random();
+	public void gestionMerge(Merge merge, MergeSimple ms) {
+		if(merge.getMergeBody() != null) {
+			for(MergeBody mb: merge.getMergeBody()) {
+				gestionMergeBody(mb, ms, str_add_or_concat);
+			}
+		}
+	}
+	
+	public void gestionMergeBody(MergeBody mb, MergeSimple ms, String str_add_or_concat){
+
 		if (str_add_or_concat == "")
 			str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
 		
 		ms.setAdd_or_concat(str_add_or_concat);
 		
-		if(mergeRecu == true) {
-			if(mnr.getLeftNonRec().getP() != null) {
-				Pooling p = new Pooling();
-				p.setPadding("same");
-				p.setStride(1);
-				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-				
-				ms.addLeft(p);
-			}
+		if(mb.getLeft().getP() != null) {
+			ms.addLeft(new Pooling(kernel.get(rand.nextInt(kernel.size())),1,"same"));
+		}
+		
+
+		
+		if(mb.getLeft().getCom().getMergeConv() != null) {
+			// Merge recursive
 			
 			// convdrop
-			for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
-				Convolution c = new Convolution();
-				gestionConvolutionMerge(1, "same", c);
-				ms.addLeft(c);
+			if(mb.getLeft().getCom().getConvdrop() != null) {
+				for (ConvDrop conv: mb.getLeft().getCom().getConvdrop()) {
+					Convolution c = new Convolution();
+					gestionConvolutionMerge(1, "same", c);
+					ms.addLeft(c);
+				}
 			}
 			
-			if(mnr.getRight().getConv() != null) {
-				for (xtext.sML.Convolution conv: mnr.getRight().getConv()) {
+			for(MergeConv mc :mb.getLeft().getCom().getMergeConv()) {
+				gestionMerge(mc.getMerge(), ms);
+				
+				if(mc.getConvdrop() != null) {
+					for (ConvDrop conv: mc.getConvdrop()) {
+						Convolution c = new Convolution();
+						gestionConvolutionMerge(1, "same", c);
+						ms.addLeft(c);
+					}
+				}
+			}
+			
+			if(mb.getRight().getConv() != null) {
+				for (xtext.sML.Convolution conv: mb.getRight().getConv()) {
 					Convolution c = new Convolution();
 					gestionConvolutionMerge(1, "same", c);
 					ms.addRight(c);
 				}
 			}
 			
-			// pooling
-			if(mnr.getLeftNonRec().getPool() != null) {
-				Pooling p = new Pooling();
-				p.setPadding("same");
-				p.setStride(1);
-				p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-				
-				ms.addLeft(p);
-			}
-			
 		}else {
-			if (mnr.getRight().getEmpty() != null) {
-				// one way is empty
-				if(mnr.getLeftNonRec().getP() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
+			// Merge Non Recusive
+			if(mb.getRight().getEmpty() != null) {
 				
-				// convdrop
-				if(ms.getAdd_or_concat() == "add") {
-					for (ConvDrop conv: mnr.getLeftNonRec().getConvdrop()) {
-						Convolution c = new Convolution();
-						gestionConvolutionMerge(1, "same", c);
-						ms.addLeft(c);
-					}
-					
-					
-				}else {
-					int i = 0;
-					while (i < mnr.getLeftNonRec().getConvdrop().size()-1) {
-						Convolution c = new Convolution();
-						gestionConvolutionMerge(1, "same", c);
-						ms.addLeft(c);
-						i++;
-					}
-					
-					Convolution c = new Convolution();
-					addInitToFilter();
-					gestionConvolutionMerge(1, "same", c);
-					ms.addLeft(c);
-				}
-				// pooling
-				if(mnr.getLeftNonRec().getPool() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-			}else {
 				int initImgSize = currentSizeImg;
 				
-				if(mnr.getLeftNonRec().getP() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-				
 				// management conv for reduction img
-				int countConvLeft = mnr.getLeftNonRec().getConvdrop().size();
+				int countConvLeft = mb.getLeft().getCom().getConvdrop().size();
 				int numLeft = rand.nextInt(countConvLeft);
 				Convolution reduceConv = new Convolution();
 				int i = 0;
@@ -343,7 +303,7 @@ public class GestionHpp {
 				}
 				
 				// add reduction on left to right
-				int countConvRight = mnr.getRight().getConv().size();
+				int countConvRight = mb.getRight().getConv().size();
 				int numRight = rand.nextInt(countConvRight);
 				
 				i = 0;
@@ -358,89 +318,23 @@ public class GestionHpp {
 					i++;
 				}
 				
-				// pooling
-				if(mnr.getLeftNonRec().getPool() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-				
-			}
-		}
-	}
-	
-	public void gestionMergeRecu(MergeRecu mr, MergeSimple ms) {
-		Random rand = new Random();
-		if(str_add_or_concat == "") {
-			str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
-		}
-		
-		
-			ms.setAdd_or_concat(str_add_or_concat);
-			
-				// pooling -> conv -> merge -> conv -> pooling
-				
-				// one way is empty
-				if(mr.getLeft().getP() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-				}
-				
+			}else {
 				// convdrop
-				if (mr.getLeft().getConvdropbegin() != null){
-					for (ConvDrop conv: mr.getLeft().getConvdropbegin()) {
+				if(mb.getLeft().getCom().getConvdrop() != null) {
+					for (ConvDrop conv: mb.getLeft().getCom().getConvdrop()) {
 						Convolution c = new Convolution();
 						gestionConvolutionMerge(1, "same", c);
 						ms.addLeft(c);
 					}
 				}
-			
-			if (str_add_or_concat == "concat") {
-				addInitToFilter();
 			}
-			if (mr.getLeft().getMerge().getMr() != null) { // managmenet merge recusive	
-				gestionMergeRecu(mr.getLeft().getMerge().getMr(), ms);
-			}else { // end of merge recusive
-				gestionMergeNonRecu(mr.getLeft().getMerge().getMnr(), ms, true, str_add_or_concat);
-				str_add_or_concat = "";
-			}
-				
-				// convdrop
-				if (mr.getLeft().getConvdropend() != null){					
-					for (ConvDrop conv: mr.getLeft().getConvdropend()) {
-						Convolution c = new Convolution();
-						gestionConvolutionMerge(1, "same", c);
-						ms.addLeft(c);
-					}
-				}
-				
-				if (mr.getRight().getEmpty() == null) {
-					// add to right
-					for (xtext.sML.Convolution conv: mr.getRight().getConv()) {
-						Convolution c = new Convolution();
-						gestionConvolutionMerge(1, "same", c);
-						ms.addRight(c);
-					}
-				}
-				
-				// pooling
-				if(mr.getLeft().getPool() != null) {
-					Pooling p = new Pooling();
-					p.setPadding("same");
-					p.setStride(1);
-					p.setKernel(kernel.get(rand.nextInt(kernel.size())));
-					
-					ms.addLeft(p);
-					
-				}
-
+		}
+		
+		// pooling
+		if(mb.getLeft().getPool() != null) {
+			ms.addLeft(new Pooling(kernel.get(rand.nextInt(kernel.size())),1,"same"));
+		}
+		
 	}
 	
 	
