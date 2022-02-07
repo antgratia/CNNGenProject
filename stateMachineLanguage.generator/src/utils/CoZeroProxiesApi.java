@@ -1,3 +1,4 @@
+
 package utils;
 
 import java.io.BufferedReader;
@@ -6,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import xtext.sML.SML;
 
@@ -14,9 +16,9 @@ public class CoZeroProxiesApi {
 	private static final String ROOT_URL = "http://127.0.0.1:5000/";
 	private static final String ROOT_ZEN_SCORE_URL = "api/v1/zenScore";
 	
-	public String callZenScore(String json, String filename) throws IOException {
+	public String callZenScore(ArrayList<String> json, String filename) throws IOException {
 		
-		String file_name = (filename.split("/")[2]).split(".py")[0];
+		String file_name = (filename.split("/")[3]).split(".py")[0];
 		
 		String strReturn = "";
 		
@@ -27,7 +29,7 @@ public class CoZeroProxiesApi {
 		con.setRequestProperty("Accept", "application/json");
 		con.setDoOutput(true);
 		
-		String jsonInputString = "{\"architecture\" : \"" + json + "\",\"filename\" :\"" + file_name + "\"}";
+		String jsonInputString = "{\"architecture\" : \"" + json.get(0) + "\",\"stride\" : \"" + json.get(1) + "\",\"filename\" :\"" + file_name + "\"}";
 		OutputStream os = con.getOutputStream();
 	    byte[] input = jsonInputString.getBytes("utf-8");
 		os.write(input, 0, input.length);			
