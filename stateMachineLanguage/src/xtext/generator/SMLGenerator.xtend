@@ -46,12 +46,19 @@ class SMLGenerator extends AbstractGenerator {
     var py_dir = "architecture_py/"
     
     // log directory
-    var log_dir = "../architecture_log/"
+    var log_dir = "../../architecture_log/"
     
     // png directory
-    var png_dir = "../architecture_img/"
+    var png_dir = "../../architecture_img/"
+    
+       // csv directory
+    static String csvDir = "../../architecture_csv/";
     
 	var file_name = ""
+	
+	var exp_dir = ""
+	
+	var str_stride = ""
     
 	// entry for ui
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -65,18 +72,20 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def void generate(SML sml, String filename) {
+	def String generate(SML sml, String filename, String expDir) {
 		gestionWay = GestionWay.gestionWay
 		GestionHpp.destroy
-		file_name = filename.split("/").get(2).split('.py').get(0)
+		exp_dir = expDir
+		file_name = filename.split("/").get(3).split('.py').get(0)
 		
 		//println("smlgenerator:  " + sml.sml)
 		var archi = compile(sml.sml)
 		//println(archi)
 		
-		//var writer = new PrintWriter(filename, "UTF-8");
-		//writer.println(archi);
-		//writer.close();
+		var writer = new PrintWriter(filename, "UTF-8");
+		writer.println(archi);
+		writer.close();
+		return str_stride
 	}
 	
 	
@@ -106,11 +115,11 @@ class SMLGenerator extends AbstractGenerator {
 		
 		py_file += fsp.writeTrain()
 		
-		py_file += fsp.gestionGood(log_dir, file_name)
+		py_file += fsp.gestionGood(log_dir + exp_dir, file_name)
 		
-		py_file += fsp.gestionError(log_dir, file_name)
+		py_file += fsp.gestionError(log_dir + exp_dir, file_name)
 		
-		py_file += fsp.gestionFinally(file_name)
+		py_file += fsp.gestionFinally(csvDir + exp_dir, file_name)
 		
 		
 		return py_file
@@ -150,7 +159,7 @@ class SMLGenerator extends AbstractGenerator {
 			
 			// write : create png of the model
     		str_archi += String.format("\tplot_model(model, show_shapes=True, to_file=\"%s\")\n", 
-    			png_dir+file_name+".png"
+    			png_dir+exp_dir+file_name+".png"
     		)
     		// write compiler
     		str_archi += "\tmodel.compile(optimizer='adam', loss=keras.losses.sparse_categorical_crossentropy, metrics=['accuracy'])\n\n"
@@ -374,10 +383,12 @@ class SMLGenerator extends AbstractGenerator {
 	def unitConv(String X_or_shortcut){
 		var Convolution conv = new Convolution
 		conv.hyperparameters
+		str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitConv(String X_or_shortcut, Convolution conv){
+		str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
@@ -391,6 +402,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 		var Convolution conv = new Convolution
 		conv.hyperparameters
+		str_stride += conv.stride + " "
 		
 		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
@@ -398,6 +410,7 @@ class SMLGenerator extends AbstractGenerator {
 	def unitBnConv(String X_or_shortcut, Convolution conv){
 		var BatchNormalisation bn = new BatchNormalisation
 		bn.hyperparameters
+		str_stride += conv.stride + " "
 		
 		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
@@ -408,14 +421,14 @@ class SMLGenerator extends AbstractGenerator {
 		
 		var Convolution conv = new Convolution
 		conv.hyperparameters
-		
+		str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut, Convolution conv){
 		var BatchNormalisation bn = new BatchNormalisation
 		bn.hyperparameters
-		
+		str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	

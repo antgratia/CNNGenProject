@@ -130,7 +130,7 @@ public class FonctionStringPy {
 	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\tes = tf.keras.callbacks.EarlyStopping(monitor='loss', verbose=1, restore_best_weights=True, patience=8)\r\n"
+				+ "\tes = tf.keras.callbacks.EarlyStopping(monitor='loss', verbose=1, restore_best_weights=True, patience=7)\r\n"
 				+ "\tlist_cb = [es]\n"
 				+ "\thistory = model.fit(train_x, train_y, epochs=1, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
 				+ "\ttraining_time = time()-start\n"
@@ -172,9 +172,9 @@ public class FonctionStringPy {
 	    		+ "\terror_file.close()\n\n";
 	}
 	
-	public String gestionFinally(String file_name) {
+	public String gestionFinally(String log_dir, String file_name) {
 		return "finally:\n"
-			   + "\tfile = open('../architecture_results.csv', 'a', newline ='')\n"
+			   + "\tfile = open(\""+log_dir+ file_name+".csv\", 'a', newline ='')\n"
 			   +"\twith file:\n"
 			   
 			   +"\t\t# identifying header \n"  

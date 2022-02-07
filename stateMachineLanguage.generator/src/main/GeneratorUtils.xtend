@@ -22,18 +22,18 @@ class GeneratorUtils {
 		
 		static List<String> flatOrGLo = new ArrayList<String>(List.of("flatten", "global_avg_pooling", "global_max_pooling"));
 		static List<String> poolOrNot = new ArrayList<String>(List.of("", "avg_pooling", "max_pooling"));
-		static List<String> dropOrNot = new ArrayList<String>(List.of("", "", "", "dropout"));
+		static List<String> dropOrNot = new ArrayList<String>(List.of("", "", "", "", "dropout"));
 		static List<String> convs = new ArrayList<String>(List.of("conv", "convbn", "bnconv"));
 		static List<String> convOrMerge = new ArrayList<String>(List.of("conv", "conv", "merge"));
 		static List<String> convOrEmpty = new ArrayList<String>(List.of("conv", "Empty"));
 		
-		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(2))
+		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(2,3,4,5,6,7))
 		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3,4))
 		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2,3))
 		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2,3))
 		
 		
-		def generate(String filename){
+		def generate(String filename, String expDir){
 		
 			
 			// init sentence
@@ -66,9 +66,13 @@ class GeneratorUtils {
 			// System.out.println(sml.eContents());
 			
 			// generate python file
-			smlGenerator.generate(sml, filename);
+			var strStride = smlGenerator.generate(sml, filename, expDir);
 			
-			return strAchitectureSimplify
+			var strReturnList = new ArrayList<String>()
+			strReturnList.add(strAchitectureSimplify)
+			strReturnList.add(strStride)
+			
+			return strReturnList
 		}
 		
 		def featureExtractionManagement(){

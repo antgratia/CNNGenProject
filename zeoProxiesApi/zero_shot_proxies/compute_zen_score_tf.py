@@ -11,7 +11,7 @@ import time
 
 
 
-def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma):
+def compute_zen_score(list_layer, list_stride, filename, batch_size, resolution, mixup_gamma):
 
     time_start = time.time()
     info = {}
@@ -21,7 +21,7 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
     nb_layer = 0
 
     for i in range(32):
-        model, pooling, dropout, nb_layer = init_model(list_layer)
+        model, pooling, dropout, nb_layer = init_model(list_layer, list_stride)
 
         input = tf.random.normal([batch_size,resolution,resolution,1])
         input2 = tf.random.normal([batch_size,resolution,resolution,1])
@@ -51,7 +51,7 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
     
     time_glo = (time.time() - time_start)  
     time_cost = time_glo/32
-    info['filename'] = filename
+    info['file_name'] = filename
     info['pooling'] = pooling
     info['dropout'] = dropout
     info['nb_layer'] = nb_layer
@@ -64,15 +64,17 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
 
     return info
 
-def init_model(list_layer):
+def init_model(list_layer,list_stride):
     pooling = 0
     dropout = 0
     nb_layer = 0
+    index_stride = 0
     model = Sequential()
     for i in list_layer:
         if (i == "conv"):
-            model.add(layers.Conv2D(32,kernel_size=1,kernel_initializer=tf.random_normal_initializer, bias_initializer=tf.zeros_initializer))
+            model.add(layers.Conv2D(32,kernel_size=int(list_stride[index_stride]),kernel_initializer=tf.random_normal_initializer, bias_initializer=tf.zeros_initializer))
             nb_layer +=1
+            index_stride += 1
         elif (i == "bn"):
             model.add(layers.BatchNormalization())
             nb_layer +=1
