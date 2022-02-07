@@ -34,15 +34,16 @@ def compute_zen_score(list_layer, list_stride, filename, batch_size, resolution,
         nas_score = tf.math.reduce_mean(nas_score, keepdims=True)
         
         #compute bn scaling
-        log_bn_scaling_factor = 0.0
+        #log_bn_scaling_factor = 0.0
+        bn_scaling_factor = 0.0
         for i in model.layers:
             if isinstance(i, layers.BatchNormalization):
-                bn_scaling_factor = tf.math.sqrt(tf.math.reduce_mean(i.moving_variance))
-                log_bn_scaling_factor += tf.math.log(bn_scaling_factor)
+                bn_scaling_factor += tf.math.sqrt(tf.math.reduce_mean(i.moving_variance))
+                #log_bn_scaling_factor += tf.math.log(bn_scaling_factor)
             pass
         pass
 
-        nas_score = tf.math.log(nas_score) + log_bn_scaling_factor
+        nas_score = tf.math.log(nas_score) + tf.math.log(bn_scaling_factor)
         nas_score_list.append(float(nas_score))
 
     std_nas_score = np.std(nas_score_list)
