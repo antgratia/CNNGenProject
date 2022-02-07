@@ -16,6 +16,8 @@ class GeneratorUtils {
 		
 		var SMLGenerator smlGenerator = new SMLGenerator()
 		
+		var strAchitectureSimplify = ""
+		
 		static Random rand = new Random();
 		
 		static List<String> flatOrGLo = new ArrayList<String>(List.of("flatten", "global_avg_pooling", "global_max_pooling"));
@@ -25,7 +27,7 @@ class GeneratorUtils {
 		static List<String> convOrMerge = new ArrayList<String>(List.of("conv", "conv", "merge"));
 		static List<String> convOrEmpty = new ArrayList<String>(List.of("conv", "Empty"));
 		
-		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(3,4,5,6,7,8))
+		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(2))
 		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3,4))
 		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2,3))
 		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2,3))
@@ -66,6 +68,7 @@ class GeneratorUtils {
 			// generate python file
 			smlGenerator.generate(sml, filename);
 			
+			return strAchitectureSimplify
 		}
 		
 		def featureExtractionManagement(){
@@ -85,10 +88,12 @@ class GeneratorUtils {
 			// === DROPOUT
 			var strDropOrNot = dropOrNot.get(rand.nextInt(dropOrNot.size()));
 			
+			
 			if(strDropOrNot === ""){
 				// do nothing
 			} else{
 				fe.drop = strDropOrNot
+				strAchitectureSimplify += "dropout "
 			}
 			
 			
@@ -99,6 +104,7 @@ class GeneratorUtils {
 				// do nothing
 			} else{
 				fe.pool = strPoolOrNot
+				strAchitectureSimplify += "pooling "
 			}
 			
 			
@@ -148,11 +154,15 @@ class GeneratorUtils {
 			var conv = factory.createConvolution
 			if(strConv == "conv"){
 				conv.conv = strConv
+				strAchitectureSimplify += "conv "
 			}else if (strConv == "bnconv"){
 				conv.bnconv = strConv
+				strAchitectureSimplify += "bn conv "
 			}else {
 				conv.convbn = strConv
+				strAchitectureSimplify += "conv bn "
 			}
+			
 			return conv
 		}
 		
@@ -192,6 +202,7 @@ class GeneratorUtils {
 				// do nothing
 			} else{
 				left.p = strPoolOrNot
+				strAchitectureSimplify += "pooling "
 			}
 			
 			// conv or merge
@@ -205,6 +216,7 @@ class GeneratorUtils {
 				// do nothing
 			} else{
 				left.pool = strPoolOrNot
+				strAchitectureSimplify += "pooling "
 			}
 			
 			
@@ -272,6 +284,7 @@ class GeneratorUtils {
 				// do nothing
 			} else{
 				convDrop.drop = strDropOrNot
+				strAchitectureSimplify += "dropout "
 			}
 			
 			

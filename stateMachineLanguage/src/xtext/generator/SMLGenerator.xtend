@@ -74,20 +74,20 @@ class SMLGenerator extends AbstractGenerator {
 		var archi = compile(sml.sml)
 		//println(archi)
 		
-		var writer = new PrintWriter(filename, "UTF-8");
-		writer.println(archi);
-		writer.close();
+		//var writer = new PrintWriter(filename, "UTF-8");
+		//writer.println(archi);
+		//writer.close();
 	}
 	
 	
 	private def compile(Architecture archi ){
 		archiskel.createSkel(archi)
-
 		
 		var py_file = ""
 		
 		// write import
 		py_file += fsp.strImport()
+		
 		
 		// write dataset 
 		py_file += fsp.writeMnistDataSet()
@@ -100,7 +100,9 @@ class SMLGenerator extends AbstractGenerator {
 		// try	
     	py_file += "try:\n"
 		
+		
 		py_file += gestionArchi(archi)
+		
 		
 		py_file += fsp.writeTrain()
 		

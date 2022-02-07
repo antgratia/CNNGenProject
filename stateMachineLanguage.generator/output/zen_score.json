@@ -1,0 +1,20 @@
+[
+{"avg_nas_score":2.2376115322113037,"avg_precision":0.04969984024737247,"dropout":1,"filename":"architecture_1","nb_layer":4,"nb_layer_tot":5,"pooling":0,"std_nas_score":0.035860300064086914,"time_cost":0.0022500380873680115,"time_glo":0.07200121879577637}
+,
+{"avg_nas_score":0.8535180985927582,"avg_precision":0.04535256225380477,"dropout":2,"filename":"architecture_2","nb_layer":7,"nb_layer_tot":10,"pooling":1,"std_nas_score":0.032723575830459595,"time_cost":0.0029061734676361084,"time_glo":0.09299755096435547}
+,
+POST request not worked
+,
+POST request not worked
+,
+POST request not worked
+,
+POST request not worked
+,
+POST request not worked
+,
+POST request not worked
+,
+POST request not worked
+,
+]
