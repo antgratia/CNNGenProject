@@ -1,4 +1,5 @@
 from operator import mod
+import random
 from flask import session
 import tensorflow as tf
 from tensorflow import keras
@@ -11,7 +12,7 @@ import time
 
 
 
-def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma):
+def compute_zen_score(list_layer, list_stride, filename, batch_size, resolution, mixup_gamma, repeat):
 
     time_start = time.time()
     info = {}
@@ -20,8 +21,8 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
     dropout = 0
     nb_layer = 0
 
-    for i in range(32):
-        model, pooling, dropout, nb_layer = init_model(list_layer)
+    for i in range(2):
+        model, pooling, dropout, nb_layer = init_model(list_layer, list_stride)
 
         input = tf.random.normal([batch_size,resolution,resolution,1])
         input2 = tf.random.normal([batch_size,resolution,resolution,1])
@@ -34,15 +35,14 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
         nas_score = tf.math.reduce_mean(nas_score, keepdims=True)
         
         #compute bn scaling
-        log_bn_scaling_factor = 0.0
+        bn_scaling_factor = 0.0
         for i in model.layers:
             if isinstance(i, layers.BatchNormalization):
-                bn_scaling_factor = tf.math.sqrt(tf.math.reduce_mean(i.moving_variance))
-                log_bn_scaling_factor += tf.math.log(bn_scaling_factor)
+                bn_scaling_factor += tf.math.sqrt(tf.math.reduce_mean(i.moving_variance))
+                #log_bn_scaling_factor += tf.math.log(bn_scaling_factor)
             pass
         pass
-
-        nas_score = tf.math.log(nas_score) + log_bn_scaling_factor
+        nas_score = tf.math.log(nas_score) + tf.math.log(bn_scaling_factor)
         nas_score_list.append(float(nas_score))
 
     std_nas_score = np.std(nas_score_list)
@@ -50,8 +50,8 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
     avg_nas_score = np.mean(nas_score_list)
     
     time_glo = (time.time() - time_start)  
-    time_cost = time_glo/32
-    info['filename'] = filename
+    time_cost = time_glo/repeat
+    info['file_name'] = filename
     info['pooling'] = pooling
     info['dropout'] = dropout
     info['nb_layer'] = nb_layer
@@ -64,17 +64,19 @@ def compute_zen_score(list_layer , filename, batch_size, resolution, mixup_gamma
 
     return info
 
-def init_model(list_layer):
+def init_model(list_layer, list_stride):
     pooling = 0
     dropout = 0
     nb_layer = 0
+    index_conv = 0
     model = Sequential()
     for i in list_layer:
         if (i == "conv"):
-            model.add(layers.Conv2D(32,kernel_size=1,kernel_initializer=tf.random_normal_initializer, bias_initializer=tf.zeros_initializer))
+            model.add(layers.Conv2D(32,kernel_size=int(list_stride[index_conv]),kernel_initializer=tf.random_normal_initializer, bias_initializer=tf.zeros_initializer))
             nb_layer +=1
+            index_conv+=1
         elif (i == "bn"):
-            model.add(layers.BatchNormalization())
+            model.add(layers.BatchNormalization(beta_initializer=tf.keras.initializers.Zeros,gamma_initializer=tf.keras.initializers.Ones))
             nb_layer +=1
         elif(i == "pooling"):
             pooling +=1

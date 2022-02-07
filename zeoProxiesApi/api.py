@@ -21,10 +21,12 @@ def zenScore():
 
     info = compute_zen_score(
         architecture_data['architecture'].split(), 
+        architecture_data['stride'].split(), 
         architecture_data['filename'],
         16,
         28,
-        1e-2)
+        1e-2,
+        32)
     print(info)
     return jsonify(info)
 
