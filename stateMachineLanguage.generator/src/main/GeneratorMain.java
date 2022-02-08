@@ -4,19 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import utils.CoZeroProxiesApi;
 
 
 public class GeneratorMain{
 	
+	
+	static String expDir = "experiment_1/";
+	static final int REPEAT = 10;
+	
 	// output dir
 	static String output_dir = "output/";
 	// python directory
 	static String pyDir = "architecture_py/";
 
-	static String expDir = "experiment_1/";
     // log directory
     static String logDir = "architecture_log/";
     
@@ -35,7 +37,7 @@ public class GeneratorMain{
 		
 		CoZeroProxiesApi api = new CoZeroProxiesApi();
 		
-		int repeat = 2;
+		
 		
 		createFolder();
 		
@@ -45,7 +47,7 @@ public class GeneratorMain{
 			writer = new PrintWriter(output_dir+ jsonDir + expDir +"zen_score.json");
 			writer.println('[');
 		
-			for (int i=1; i<(repeat+1); i++) {
+			for (int i=1; i<(REPEAT+1); i++) {
 				GeneratorUtils tg = new GeneratorUtils();
 				
 				String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";
@@ -56,13 +58,12 @@ public class GeneratorMain{
 				
 				try {
 					String reponse = api.callZenScore(strReturnList, filename);
-					while(reponse == null){
-						
-					}
-					System.out.println(reponse);
+					while(reponse == null){}
+					
+					System.out.println(reponse+ "\n\n");
 					
 					writer.println(reponse);
-					if(i<repeat) writer.println(',');
+					if(i<REPEAT) writer.println(',');
 					
 					
 				} catch (IOException e) {
