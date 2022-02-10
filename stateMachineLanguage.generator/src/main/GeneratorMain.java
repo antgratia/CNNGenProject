@@ -11,8 +11,8 @@ import utils.CoZeroProxiesApi;
 public class GeneratorMain{
 	
 	
-	static String expDir = "experiment_1/";
-	static final int REPEAT = 10;
+	static String expDir = "experiment_2/";
+	static final int REPEAT = 30;
 	
 	// output dir
 	static String output_dir = "output/";

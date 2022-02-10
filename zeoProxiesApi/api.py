@@ -24,7 +24,9 @@ def zenScore():
         architecture_data['stride'].split(),
         architecture_data['filename'],
         16,
-        28,
+        32,
+        3,
+        2,
         1e-2)
     print(info)
     return jsonify(info)

@@ -26,7 +26,7 @@ public class GestionHpp {
 	private static GestionHpp gestionHpp;
 	
 	// info img
-	private final static int MAX_SIZE_IMG = 28;
+	private final static int MAX_SIZE_IMG = 32;
 	private static int currentSizeImg;
 	
 	private final static int NB_CLASS = 10;

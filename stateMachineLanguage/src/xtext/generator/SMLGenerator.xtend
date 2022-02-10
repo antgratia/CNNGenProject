@@ -98,9 +98,12 @@ class SMLGenerator extends AbstractGenerator {
 		py_file += fsp.strImport()
 		
 		
-		// write dataset 
-		py_file += fsp.writeMnistDataSet()
+		// write dataset minist
+		//py_file += fsp.writeMnistDataSet()
 		
+		// write dataset cifar10
+		py_file += fsp.writecifar10Dataset
+				
 		// write init value 
 		py_file += fsp.writeInitValue()
 		
@@ -131,7 +134,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 		// verify input not missing
 		if (!a.input.empty){
-			str_archi += fsp.writeInput("[28, 28, 1]", gestionWay.current)
+			str_archi += fsp.writeInput("[32, 32, 3]", gestionWay.current)
 		}else{
 			throw new Exception("missing Input")
 		}
