@@ -21,7 +21,7 @@ public class Dropout implements LayerInterface {
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		gestionHpp.gestionDropout(this);
+		//gestionHpp.gestionDropout(this);
 		return this;
 	}
 

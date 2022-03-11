@@ -3,7 +3,6 @@
  */
 package xtext.generator
 
-import models.ArchiSkel
 import models.BatchNormalisation
 import models.Convolution
 import models.Dense
@@ -16,7 +15,6 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import utils.FonctionStringPy
-import utils.GestionHpp
 import utils.GestionWay
 import xtext.sML.Architecture
 import xtext.sML.Classification
@@ -28,6 +26,9 @@ import xtext.sML.MergeBody
 import xtext.sML.Right
 import xtext.sML.SML
 import java.io.PrintWriter
+import models.ArchitectureGraph
+import controller.MainController
+import models.TypeLayerEnum
 
 /**
  * Generates code from your model files on save.
@@ -38,13 +39,23 @@ class SMLGenerator extends AbstractGenerator {
 
 	var fsp = new FonctionStringPy()
 	
-	var gestionWay = GestionWay.gestionWay;
+	var GestionWay gestionWay = null //GestionWay.gestionWay
 	
-	var archiskel = ArchiSkel.archiSkel
+	MainController mainCtrl = null
+	
+	ArchitectureGraph graph = null
+	var currentPos = 1
 		
 	// python directory
     var py_dir = "architecture_py/"
     
+   	/*
+   	 * 
+   	 * USING GENERATOR
+   	 * 
+   	 * 
+   	 * */
+   	
     // log directory
     var log_dir = "../../architecture_log/"
     
@@ -54,16 +65,33 @@ class SMLGenerator extends AbstractGenerator {
        // csv directory
     static String csvDir = "../../architecture_csv/";
     
+    
+    /*
+     * 
+     * USING MANUAL CONSTRUCTION
+     * 
+     */
+    /*
+    // log directory
+    var log_dir = "../architecture_log/"
+    
+    // png directory
+    var png_dir = "../architecture_img/"
+    
+    // csv directory
+    static String csvDir = "../architecture_csv/";
+     */
+    
+    
 	var file_name = ""
 	
 	var exp_dir = ""
 	
-	var str_stride = ""
+	//var str_stride = ""
     
 	// entry for ui
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		gestionWay = GestionWay.gestionWay
-		GestionHpp.destroy
+		
 		println(resource.URI)
 		file_name = "architecture"
 		for(elem : resource.allContents.toIterable.filter(Architecture)){
@@ -72,9 +100,8 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def String generate(SML sml, String filename, String expDir) {
-		gestionWay = GestionWay.gestionWay
-		GestionHpp.destroy
+	def String generate(SML sml, String filename, String expDir) {		
+	
 		exp_dir = expDir
 		file_name = filename.split("/").get(3).split('.py').get(0)
 		
@@ -85,14 +112,50 @@ class SMLGenerator extends AbstractGenerator {
 		var writer = new PrintWriter(filename, "UTF-8");
 		writer.println(archi);
 		writer.close();
-		return str_stride
+		return "" // str_stride
 	}
 	
 	
 	private def compile(Architecture archi ){
-		archiskel.createSkel(archi)
 		
+		currentPos = 1
+		mainCtrl = new MainController()
+		gestionWay = mainCtrl.gestionWay
+		
+		mainCtrl.createGraph(archi)
+	
+		
+		graph = mainCtrl.graph
+		
+		println("\n\n")
+		for(i: graph.graph.entrySet){
+			
+			println(i)
+			println("\n")
+		}
+		
+
+				
+		mainCtrl.getGraphHyperparameters
+		
+		println("\n\n")
+		for(i: graph.graph.entrySet){
+			
+			println(i)
+			println("\n")
+		}
+		
+		println("\n\n")
+		for(i: graph.inverse.entrySet){
+			
+			println(i)
+			println("\n")
+		}
+		
+
+
 		var py_file = ""
+		
 		
 		// write import
 		py_file += fsp.strImport()
@@ -207,16 +270,6 @@ class SMLGenerator extends AbstractGenerator {
 		else return unitUpConv(x_or_shortcut)
 	}
 	
-	def gestionConv(xtext.sML.Convolution conv, String x_or_shortcut, Convolution hppConv) {
-		if( conv.bnconv !== null)
-			return unitBnConv(x_or_shortcut, hppConv)
-		else if (conv.convbn !== null)
-			return unitConvBn(x_or_shortcut, hppConv)
-		else if (conv.conv !== null)
-			return unitConv(x_or_shortcut, hppConv)
-		else return unitUpConv(x_or_shortcut)
-	}
-	
 	def gestionMerge(Merge merge, MergeSimple mergeSimple, boolean isRecu) {
 		var str_merge = ""
 		var ms = mergeSimple
@@ -251,12 +304,12 @@ class SMLGenerator extends AbstractGenerator {
 			str_highway += gestionRight(mb.right, merge, false)
 			
 			// end merge (i.e Add/Concatenate)
-			if (merge.add_or_concat == 'concat'){
-				str_highway += fsp.writeConcat(gestionWay.current, gestionWay.next)
+			if (graph.getByID(currentPos).typeLayer == TypeLayerEnum.CONCAT){
+			str_highway += fsp.writeConcat(gestionWay.current, gestionWay.next)
 			}else{
 				str_highway += fsp.writeAdd(gestionWay.current, gestionWay.next)
 			}
-			
+			currentPos++
 		}
 		gestionWay.removeLastFromList
 		
@@ -276,11 +329,12 @@ class SMLGenerator extends AbstractGenerator {
 		strMergeBody += gestionRight(mb.right, merge, isRecu)
 		
 		// end merge (i.e Add/Concatenate)
-		if (merge.add_or_concat == 'concat'){
+		if (graph.getByID(currentPos).typeLayer == TypeLayerEnum.CONCAT){
 			strMergeBody += fsp.writeConcat(gestionWay.current, gestionWay.next)
 		}else{
 			strMergeBody += fsp.writeAdd(gestionWay.current, gestionWay.next)
 		}
+		currentPos++
 		gestionWay.removeLastFromList
 		
 		return strMergeBody
@@ -289,15 +343,19 @@ class SMLGenerator extends AbstractGenerator {
 	def gestionLeft(Left left, MergeSimple merge, boolean isRecu) {
 		var strLeft = ""
 		if (left.p !== null){
-			if(isRecu) strLeft += unitPooling(left.p, gestionWay.next, merge.left.get(0) as Pooling)
-			else strLeft += unitPooling(left.p, gestionWay.current, merge.left.get(0) as Pooling)
+			if(isRecu) strLeft += unitPooling(left.p, gestionWay.next)
+			else strLeft += unitPooling(left.p, gestionWay.current)
 			merge.removeFirstLeft
 		}
 		
 		if (left.com.convdrop !== null){
 			for (convdrop: left.com.convdrop){
-				if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
-				else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
+				/*if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
+				else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)*/
+				
+				if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next)
+				else strLeft += gestionConv(convdrop.conv, gestionWay.current)
+				
 				merge.removeFirstLeft
 				if(convdrop.drop !== null){
 					if(isRecu) strLeft += unitDropout(gestionWay.next)
@@ -314,8 +372,11 @@ class SMLGenerator extends AbstractGenerator {
 				
 				if (mc.convdrop !== null){
 					for (convdrop: mc.convdrop){
-						if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
-						else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)
+					/*if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next, merge.left.get(0) as Convolution)
+					else strLeft += gestionConv(convdrop.conv, gestionWay.current, merge.left.get(0) as Convolution)*/
+				
+					if(isRecu) strLeft += gestionConv(convdrop.conv, gestionWay.next)
+					else strLeft += gestionConv(convdrop.conv, gestionWay.current)
 						merge.removeFirstLeft
 						if(convdrop.drop !== null)
 							if(isRecu)strLeft += unitDropout(gestionWay.next)
@@ -326,8 +387,8 @@ class SMLGenerator extends AbstractGenerator {
 		}
 		
 		if (left.pool !== null){
-			if(isRecu) strLeft += unitPooling(left.pool, gestionWay.next, merge.left.get(0) as Pooling)
-			else strLeft += unitPooling(left.pool, gestionWay.current, merge.left.get(0) as Pooling)
+			if(isRecu) strLeft += unitPooling(left.pool, gestionWay.next)
+			else strLeft += unitPooling(left.pool, gestionWay.current)
 			merge.removeFirstLeft
 		}
 		
@@ -339,9 +400,10 @@ class SMLGenerator extends AbstractGenerator {
 		
 		if(right.conv !== null){
 			for (conv: right.conv){
-				if (isRecu)
-					strRight += gestionConv(conv, gestionWay.current, merge.right.get(0) as Convolution)
-				else strRight += gestionConv(conv, gestionWay.next, merge.right.get(0) as Convolution)
+				/*if (isRecu)strRight += gestionConv(conv, gestionWay.current, merge.right.get(0) as Convolution)
+				else strRight += gestionConv(conv, gestionWay.next, merge.right.get(0) as Convolution)*/
+				if (isRecu)strRight += gestionConv(conv, gestionWay.current)
+				else strRight += gestionConv(conv, gestionWay.next)
 				merge.removeFirstRight
 			}
 		}
@@ -364,17 +426,12 @@ class SMLGenerator extends AbstractGenerator {
 	
 	def gestionDense(EList<Classification> list) {
 		var strDense = ""
-		var i = 0; 
-		while (i<list.size()-1){
-			if(list.get(i).drop !== null)
-				strDense += unitDropout(gestionWay.current)
-			strDense += unitDense(gestionWay.current, false)
-			i++;
-		}
 		
-		if(list.get(i).drop !== null)
+		for(i: list){
+			if(i.drop !== null)
 				strDense += unitDropout(gestionWay.current)
-		strDense += unitDense(gestionWay.current, true);
+			strDense += unitDense(gestionWay.current)
+		}
 		
 		return strDense
 	}
@@ -384,14 +441,9 @@ class SMLGenerator extends AbstractGenerator {
 	// ===== Units =====
 	
 	def unitConv(String X_or_shortcut){
-		var Convolution conv = new Convolution
-		conv.hyperparameters
-		str_stride += conv.stride + " "
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
-	}
-	
-	def unitConv(String X_or_shortcut, Convolution conv){
-		str_stride += conv.stride + " "
+		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		// str_stride += conv.stride + " "
+		currentPos++
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
@@ -400,52 +452,31 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitBnConv(String X_or_shortcut){
-		var BatchNormalisation bn = new BatchNormalisation
-		bn.hyperparameters
+		var BatchNormalisation bn = graph.getByID(currentPos).layer as BatchNormalisation
+		currentPos++
 		
-		var Convolution conv = new Convolution
-		conv.hyperparameters
-		str_stride += conv.stride + " "
-		
-		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
-	}
-	
-	def unitBnConv(String X_or_shortcut, Convolution conv){
-		var BatchNormalisation bn = new BatchNormalisation
-		bn.hyperparameters
-		str_stride += conv.stride + " "
+		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		currentPos++
+		// str_stride += conv.stride + " "
 		
 		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut){
-		var BatchNormalisation bn = new BatchNormalisation
-		bn.hyperparameters
 		
-		var Convolution conv = new Convolution
-		conv.hyperparameters
-		str_stride += conv.stride + " "
+		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		currentPos++
+		
+		var BatchNormalisation bn = graph.getByID(currentPos).layer as BatchNormalisation
+		currentPos++
+		// str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
-	def unitConvBn(String X_or_shortcut, Convolution conv){
-		var BatchNormalisation bn = new BatchNormalisation
-		bn.hyperparameters
-		str_stride += conv.stride + " "
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
-	}
-	
+	 
 	def unitPooling(String pool, String X_or_shortcut){
-		var Pooling p = new Pooling
-		p.hyperparameters
-		if(pool == "avg_pooling"){
-			return fsp.writeAvgPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
-		}else{
-			return fsp.writeMaxPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
-		}
-	}
-	
-		def unitPooling(String pool, String X_or_shortcut, Pooling p){
+		var Pooling p = graph.getByID(currentPos).layer as Pooling
+		currentPos++
 		if(pool == "avg_pooling"){
 			return fsp.writeAvgPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
 		}else{
@@ -454,22 +485,24 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitDropout(String X_or_shortcut){
-		var Dropout dropout = new Dropout
-		dropout.hyperparameters
+		var Dropout dropout = graph.getByID(currentPos).layer as Dropout
+		currentPos++;
 		return fsp.writeDropout(dropout.dropoutRate, X_or_shortcut)
 	}
 	
-	def unitDense(String X_or_shortcut, boolean last){
-		var Dense dense = new Dense(last)
-		dense.hyperparameters
+	def unitDense(String X_or_shortcut){
+		var Dense dense = graph.getByID(currentPos).layer as Dense
+		currentPos++
 		return fsp.writeDense(dense.units,dense.fctActivation, X_or_shortcut)
 	}
 	
 	def unitFlatten(String X_or_shortcut){
+		currentPos++
 		return fsp.writeFlatten(X_or_shortcut)
 	}
 	
 	def unitGlobalPooling(String elem, String X_or_shortcut){
+		currentPos++
 		if(elem == "global_avg_pooling"){
 			return fsp.writeGloAvgPooling(X_or_shortcut)	
 		}else {

@@ -30,7 +30,7 @@ public class Dense implements LayerInterface {
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		gestionHpp.gestionDense(this);
+		//gestionHpp.gestionDense(this);
 		return this;
 	}
 	

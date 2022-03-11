@@ -22,7 +22,7 @@ public class BatchNormalisation implements LayerInterface {
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		gestionHpp.gestionBN(this);
+		//gestionHpp.gestionBN(this);
 		return this;
 	}
 	

@@ -26,7 +26,7 @@ public class Convolution implements LayerInterface {
 	
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		gestionHpp.gestionConvolution(this);
+		//gestionHpp.gestionConvolution(this);
 		return this;
 	}
 

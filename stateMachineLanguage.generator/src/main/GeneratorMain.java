@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import utils.CoZeroProxiesApi;
 public class GeneratorMain{
 	
 	
-	static String expDir = "experiment_2/";
-	static final int REPEAT = 30;
+	static String expDir = "test_1/";
+	static final int REPEAT = 1;
 	
 	// output dir
 	static String output_dir = "output/";
@@ -34,53 +35,17 @@ public class GeneratorMain{
 	
 	public static void main(String[] args) {
 		
-		
-		CoZeroProxiesApi api = new CoZeroProxiesApi();
-		
-		
-		
 		createFolder();
 		
-		PrintWriter writer = null;
-		
-		try {
-			writer = new PrintWriter(output_dir+ jsonDir + expDir +"zen_score.json");
-			writer.println('[');
-		
-			for (int i=1; i<(REPEAT+1); i++) {
-				GeneratorUtils tg = new GeneratorUtils();
+		for (int i=1; i<(REPEAT+1); i++) {
+			GeneratorUtils tg = new GeneratorUtils();
 				
-				String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";
-				System.out.println("Random Generation...");
-				ArrayList<String> strReturnList = tg.generate(filename, expDir);
-				System.out.println(filename + " generate\n");
-				
-				
-				try {
-					String reponse = api.callZenScore(strReturnList, filename);
-					while(reponse == null){}
-					
-					System.out.println(reponse+ "\n\n");
-					
-					writer.println(reponse);
-					if(i<REPEAT) writer.println(',');
-					
-					
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
-				}
-			}
-			writer.println(']');
-		}catch (Exception e) {
-			System.out.println(e.getMessage());
-		}finally {
-			
-			writer.close();
+			String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";
+			System.out.println("Random Generation...");
+			tg.generate(filename, expDir);
+			System.out.println(filename + " generate\n");
+						
 		}
-		
-		
-		
-
 	}
 
 	private static void createFolder() {

@@ -1,6 +1,6 @@
 package models;
 
 public enum TypeLayerEnum {
-		C,P,ID,RES_BLOCK,H,RECU
+		CONV,POOL,DROP,BN,IN,OUT,FLAT,GLOPOOL,DENSE,TEMP_ADD_CONCAT,ADD,CONCAT,TEMP_LAYER
 	
 }

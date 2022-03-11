@@ -34,7 +34,7 @@ public class Pooling implements LayerInterface {
 
 	@Override
 	public LayerInterface getHyperparameters() throws Exception {
-		gestionHpp.gestionPooling(this);
+		//gestionHpp.gestionPooling(this);
 		return this;
 	}
 	

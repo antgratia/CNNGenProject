@@ -50,5 +50,4 @@ public interface ConvOrMerge extends EObject
    */
   EList<MergeConv> getMergeConv();
 
-
 } // ConvOrMerge

@@ -1,15 +1,14 @@
 package main
 
+import java.util.ArrayList
 import java.util.List
 import java.util.Random
-import java.util.ArrayList
-import xtext.sML.impl.SMLFactoryImpl
 import xtext.generator.SMLGenerator
-import xtext.sML.SML
 import xtext.sML.Architecture
 import xtext.sML.FeatureExtraction
 import xtext.sML.Merge
-
+import xtext.sML.SML
+import xtext.sML.impl.SMLFactoryImpl
 
 class GeneratorUtils {
 		var SMLFactoryImpl factory = new SMLFactoryImpl()
@@ -20,6 +19,7 @@ class GeneratorUtils {
 		
 		static Random rand = new Random();
 		
+			
 		static List<String> flatOrGLo = new ArrayList<String>(List.of("flatten", "global_avg_pooling", "global_max_pooling"));
 		static List<String> poolOrNot = new ArrayList<String>(List.of("", "avg_pooling", "max_pooling"));
 		static List<String> dropOrNot = new ArrayList<String>(List.of("", "", "", "", "dropout"));
@@ -62,8 +62,6 @@ class GeneratorUtils {
 				
 			}
 			
-			
-			// System.out.println(sml.eContents());
 			
 			// generate python file
 			var strStride = smlGenerator.generate(sml, filename, expDir);
