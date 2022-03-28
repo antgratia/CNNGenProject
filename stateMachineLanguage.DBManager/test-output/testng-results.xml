@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2022-03-28T15:14:18 CEST" name="Default suite" finished-at="2022-03-28T15:14:21 CEST" duration-ms="3301">
+    <groups>
+    </groups>
+    <test started-at="2022-03-28T15:14:18 CEST" name="Default test" finished-at="2022-03-28T15:14:21 CEST" duration-ms="3301">
+      <class name="stateMachineLanguage.DBManager.LayerIntegrationTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2022-03-28T15:14:18 CEST" name="init" finished-at="2022-03-28T15:14:21 CEST" duration-ms="2795" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="addEdgeConvPoolTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2022-03-28T15:14:21 CEST" name="addEdgeConvPoolTest" finished-at="2022-03-28T15:14:21 CEST" duration-ms="157" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addEdgeConvPoolTest -->
+        <test-method signature="addEdgePoolBNTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2022-03-28T15:14:21 CEST" name="addEdgePoolBNTest" finished-at="2022-03-28T15:14:21 CEST" duration-ms="225" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addEdgePoolBNTest -->
+        <test-method signature="addnewEdgeConv()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2022-03-28T15:14:21 CEST" name="addnewEdgeConv" finished-at="2022-03-28T15:14:21 CEST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addnewEdgeConv -->
+        <test-method signature="updateConvTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2022-03-28T15:14:21 CEST" name="updateConvTest" finished-at="2022-03-28T15:14:21 CEST" duration-ms="63" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateConvTest -->
+      </class> <!-- stateMachineLanguage.DBManager.LayerIntegrationTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
