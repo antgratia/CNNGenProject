@@ -3,12 +3,16 @@
  */
 package xtext.generator
 
-import models.BatchNormalisation
-import models.Convolution
-import models.Dense
-import models.Dropout
+import controller.MainController
+import domain.BatchNormalisation
+import domain.Concatenate
+import domain.Convolution
+import domain.Dense
+import domain.Dropout
+import domain.Pooling
+import java.io.PrintWriter
+import models.ArchitectureGraph
 import models.MergeSimple
-import models.Pooling
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -25,10 +29,6 @@ import xtext.sML.Merge
 import xtext.sML.MergeBody
 import xtext.sML.Right
 import xtext.sML.SML
-import java.io.PrintWriter
-import models.ArchitectureGraph
-import controller.MainController
-import models.TypeLayerEnum
 
 /**
  * Generates code from your model files on save.
@@ -127,12 +127,12 @@ class SMLGenerator extends AbstractGenerator {
 		
 		graph = mainCtrl.graph
 		
-		println("\n\n")
+		/*println("\n\n")
 		for(i: graph.graph.entrySet){
 			
 			println(i)
 			println("\n")
-		}
+		}*/
 		
 
 				
@@ -140,13 +140,6 @@ class SMLGenerator extends AbstractGenerator {
 		
 		println("\n\n")
 		for(i: graph.graph.entrySet){
-			
-			println(i)
-			println("\n")
-		}
-		
-		println("\n\n")
-		for(i: graph.inverse.entrySet){
 			
 			println(i)
 			println("\n")
@@ -304,7 +297,7 @@ class SMLGenerator extends AbstractGenerator {
 			str_highway += gestionRight(mb.right, merge, false)
 			
 			// end merge (i.e Add/Concatenate)
-			if (graph.getByID(currentPos).typeLayer == TypeLayerEnum.CONCAT){
+			if (graph.getByID(currentPos) instanceof Concatenate){
 			str_highway += fsp.writeConcat(gestionWay.current, gestionWay.next)
 			}else{
 				str_highway += fsp.writeAdd(gestionWay.current, gestionWay.next)
@@ -329,7 +322,7 @@ class SMLGenerator extends AbstractGenerator {
 		strMergeBody += gestionRight(mb.right, merge, isRecu)
 		
 		// end merge (i.e Add/Concatenate)
-		if (graph.getByID(currentPos).typeLayer == TypeLayerEnum.CONCAT){
+		if (graph.getByID(currentPos) instanceof Concatenate){
 			strMergeBody += fsp.writeConcat(gestionWay.current, gestionWay.next)
 		}else{
 			strMergeBody += fsp.writeAdd(gestionWay.current, gestionWay.next)
@@ -441,7 +434,7 @@ class SMLGenerator extends AbstractGenerator {
 	// ===== Units =====
 	
 	def unitConv(String X_or_shortcut){
-		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		var Convolution conv = graph.getByID(currentPos) as Convolution
 		// str_stride += conv.stride + " "
 		currentPos++
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
@@ -452,10 +445,10 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitBnConv(String X_or_shortcut){
-		var BatchNormalisation bn = graph.getByID(currentPos).layer as BatchNormalisation
+		var BatchNormalisation bn = graph.getByID(currentPos) as BatchNormalisation
 		currentPos++
 		
-		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		var Convolution conv = graph.getByID(currentPos) as Convolution
 		currentPos++
 		// str_stride += conv.stride + " "
 		
@@ -464,10 +457,10 @@ class SMLGenerator extends AbstractGenerator {
 	
 	def unitConvBn(String X_or_shortcut){
 		
-		var Convolution conv = graph.getByID(currentPos).layer as Convolution
+		var Convolution conv = graph.getByID(currentPos) as Convolution
 		currentPos++
 		
-		var BatchNormalisation bn = graph.getByID(currentPos).layer as BatchNormalisation
+		var BatchNormalisation bn = graph.getByID(currentPos) as BatchNormalisation
 		currentPos++
 		// str_stride += conv.stride + " "
 		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
@@ -475,7 +468,7 @@ class SMLGenerator extends AbstractGenerator {
 	
 	 
 	def unitPooling(String pool, String X_or_shortcut){
-		var Pooling p = graph.getByID(currentPos).layer as Pooling
+		var Pooling p = graph.getByID(currentPos) as Pooling
 		currentPos++
 		if(pool == "avg_pooling"){
 			return fsp.writeAvgPooling(p.kernel,p.stride,p.padding, X_or_shortcut)
@@ -485,13 +478,13 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitDropout(String X_or_shortcut){
-		var Dropout dropout = graph.getByID(currentPos).layer as Dropout
+		var Dropout dropout = graph.getByID(currentPos) as Dropout
 		currentPos++;
 		return fsp.writeDropout(dropout.dropoutRate, X_or_shortcut)
 	}
 	
 	def unitDense(String X_or_shortcut){
-		var Dense dense = graph.getByID(currentPos).layer as Dense
+		var Dense dense = graph.getByID(currentPos) as Dense
 		currentPos++
 		return fsp.writeDense(dense.units,dense.fctActivation, X_or_shortcut)
 	}

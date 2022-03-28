@@ -1,9 +1,11 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,6 +15,7 @@ import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.EList;
 
+import domain.*;
 import lombok.Data;
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
@@ -29,10 +32,12 @@ import xtext.sML.Right;
 @Data
 public class ArchitectureGraph {
 	
-	private Map<LayerCell, Set<LayerCell>> graph;
-	private Map<LayerCell, Set<LayerCell>> reverseGraph;
+	private Map<LayerInterface, List<LayerInterface>> graph;
+	private Map<LayerInterface, List<LayerInterface>> reverseGraph;
 	private int layerPos;
 	
+	private static Random rand = new Random();
+	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
 	
 	public ArchitectureGraph(){
 		this.graph = new TreeMap<>();
@@ -40,38 +45,38 @@ public class ArchitectureGraph {
 		this.layerPos=0;
 	}
 	
-	public ArchitectureGraph(Map<LayerCell, Set<LayerCell>> graph) {
+	public ArchitectureGraph(Map<LayerInterface, List<LayerInterface>> graph) {
 		this.graph = graph;
 	}
 	
 	// add new cell
-	public void addCell(LayerCell cell) {
-		this.graph.putIfAbsent(cell, new TreeSet<>());
+	public void addCell(LayerInterface cell) {
+		this.graph.putIfAbsent(cell, new ArrayList<>());
 	}
 
 	// remove the cell
-	public void removeCell(LayerCell cell) {
+	public void removeCell(LayerInterface cell) {
 	    this.graph.values().stream().forEach(e -> e.remove(cell));
 	    this.graph.remove(cell);
 	}
 	
 	// add edge cell1 -> cell2
-	public void addEdge(LayerCell cell1, LayerCell cell2) {
+	public void addEdge(LayerInterface cell1, LayerInterface cell2) {
 	    this.graph.get(cell1).add(cell2);
 	}
 	
 	
 	// return last layer of the graph
-	public LayerCell getLastLayer() {
+	public LayerInterface getLastLayer() {
 		int size = graph.keySet().size();
-		return (LayerCell) graph.keySet().toArray()[size-1];
+		return (LayerInterface) graph.keySet().toArray()[size-1];
 		
 	}
 	
 	// remove edge cell1 -> cell2
-	public void removeEdge(LayerCell cell1, LayerCell cell2) {
-	    Set<LayerCell> eV1 = graph.get(cell1);
-	    Set<LayerCell> eV2 = graph.get(cell2);
+	public void removeEdge(LayerInterface cell1, LayerInterface cell2) {
+	    List<LayerInterface> eV1 = graph.get(cell1);
+	    List<LayerInterface> eV2 = graph.get(cell2);
 	    if (eV1 != null)
 	        eV1.remove(cell2);
 	    if (eV2 != null)
@@ -79,42 +84,45 @@ public class ArchitectureGraph {
 	}
 	
 	// return List of edge form cell
-	public Set<LayerCell> getEdge(LayerCell cell) {
+	public List<LayerInterface> getEdge(LayerInterface cell) {
 	    return graph.get(cell);
 	}
 	
-	public Set<LayerCell> getReverseEdge(LayerCell cell) {
+	public List<LayerInterface> getReverseEdge(LayerInterface cell) {
 	    return reverseGraph.get(cell);
 	}
 	
 	// return cell form given id else return null
-	public LayerCell getByID(int id) {
-		for(LayerCell lc: graph.keySet()) {
-			if(lc.getID() == id)
-				return lc;
+	public LayerInterface getByID(int id) {
+		for(LayerInterface layer: graph.keySet()) {
+			if(layer instanceof Layer) {
+				if(((Layer) layer).getLayerPos() == id)
+					return layer;
+			}
+			
 		}
 		
 		return null;
 	}
 	
 	private void reverseGraph() {
-		for(Entry<LayerCell, Set<LayerCell>> cell: graph.entrySet()) {
-			for(LayerCell edge:cell.getValue()) {
-				if(cell.getKey().getID() == 0) {
-					reverseGraph.putIfAbsent(cell.getKey(), new TreeSet<>());
+		for(Entry<LayerInterface, List<LayerInterface>> cell: graph.entrySet()) {
+			for(LayerInterface edge:cell.getValue()) {
+				if(cell.getKey().getLayerPos() == 0) {
+					reverseGraph.putIfAbsent(cell.getKey(), new ArrayList<>());
 				}
 				
 				if(reverseGraph.containsKey(edge)) {
 					reverseGraph.get(edge).add(cell.getKey());
 				}else {
-					reverseGraph.putIfAbsent(edge, new TreeSet<>());
+					reverseGraph.putIfAbsent(edge, new ArrayList<>());
 					reverseGraph.get(edge).add(cell.getKey());
 				}
 			}
 		}
 	}
 	
-	public Map<LayerCell, Set<LayerCell>> inverse() {
+	public Map<LayerInterface, List<LayerInterface>> inverse() {
 		return this.reverseGraph;
 	}
 
@@ -125,8 +133,7 @@ public class ArchitectureGraph {
 		// verify input not missing
 		if (!archi.getInput().isEmpty()){
 			
-			LayerCell input = new LayerCell(layerPos, TypeLayerEnum.IN);
-			input.setImgSize(32);
+			Input input = new Input(layerPos);
 			this.addCell(input);
 			layerPos++;
 		}else{
@@ -151,7 +158,7 @@ public class ArchitectureGraph {
 		
 		if(!archi.getOutput().isEmpty()){
 			
-			LayerCell ouput = new LayerCell(layerPos, TypeLayerEnum.OUT);
+			Output ouput = new Output(layerPos);
 			// add edge for lastlayer -> output
 			this.addEdge(getLastLayer(), ouput);
 			
@@ -189,7 +196,7 @@ public class ArchitectureGraph {
 			
 			if (elem.getDrop() != null) {
 				// add prevlayer -> Dropout 
-				LayerCell drop = new LayerCell(layerPos, TypeLayerEnum.DROP);
+				Dropout drop = new Dropout(layerPos);
 				// add edge prevLayer -> dropout
 				this.addEdge(getLastLayer(), drop);
 				this.addCell(drop);
@@ -198,7 +205,7 @@ public class ArchitectureGraph {
 				
 			if (elem.getPool() != null) {
 				// add prevlayer -> Dropout 
-				LayerCell pool = new LayerCell(layerPos, TypeLayerEnum.POOL);
+				Pooling pool = new Pooling(layerPos);
 				// add edge prevLayer -> dropout
 				this.addEdge(getLastLayer(), pool);
 				this.addCell(pool);
@@ -211,9 +218,9 @@ public class ArchitectureGraph {
 
 	
 	// handle convolutionnal layer
-	private LayerCell gestionConv(Convolution conv, LayerCell prevLayer) throws Exception {
+	private LayerInterface gestionConv(Convolution conv, LayerInterface prevLayer) throws Exception {
 		if(conv.getConv() != null) {
-			LayerCell LCconv = new LayerCell(layerPos, TypeLayerEnum.CONV);
+			domain.Convolution LCconv = new domain.Convolution(layerPos);
 			
 			this.addEdge(prevLayer, LCconv);
 			this.addCell(LCconv);
@@ -221,13 +228,13 @@ public class ArchitectureGraph {
 			return LCconv;
 			
 		}else if (conv.getBnconv() != null) {
-			LayerCell bn = new LayerCell(layerPos, TypeLayerEnum.BN);
+			BatchNormalisation bn = new BatchNormalisation(layerPos);
 			
 			this.addEdge(prevLayer, bn);
 			this.addCell(bn);
 			layerPos++;
 			
-			LayerCell LCconv = new LayerCell(layerPos, TypeLayerEnum.CONV);
+			domain.Convolution LCconv = new domain.Convolution(layerPos);
 			
 			this.addEdge(getLastLayer(), LCconv);
 			this.addCell(LCconv);
@@ -235,13 +242,13 @@ public class ArchitectureGraph {
 			return LCconv;
 			
 		}else if(conv.getConvbn() != null) {
-			LayerCell LCconv = new LayerCell(layerPos, TypeLayerEnum.CONV);
+			domain.Convolution LCconv = new domain.Convolution(layerPos);
 			
 			this.addEdge(prevLayer, LCconv);
 			this.addCell(LCconv);
 			layerPos++;
 			
-			LayerCell bn = new LayerCell(layerPos, TypeLayerEnum.BN);
+			BatchNormalisation bn = new BatchNormalisation(layerPos);
 			
 			this.addEdge(getLastLayer(), bn);
 			this.addCell(bn);
@@ -255,8 +262,8 @@ public class ArchitectureGraph {
 	// handle merge
 	private void gestionMerge(Merge merge) throws Exception {
 		//conv [(conv conv, Empty)] conv
-		LayerCell layerPrevMerge = getLastLayer();
-		LayerCell firstLayer = getLastLayer();
+		LayerInterface layerPrevMerge = getLastLayer();
+		LayerInterface firstLayer = getLastLayer();
 		
 		if(merge.getMergeBody().size()==1) {
 			gestionMergeBody(merge.getMergeBody().get(0), layerPrevMerge);
@@ -271,11 +278,15 @@ public class ArchitectureGraph {
 	}
 	
 	// handle hightway 
-	private LayerCell gestionMergeBody(MergeBody mb, LayerCell layerPrevMerge, LayerCell fl) throws Exception {
-		LayerCell lastLayerLeft = gestionLeft(mb.getLeft(), layerPrevMerge);
-		LayerCell lastLayerRight = gestionRight(mb.getRight(), fl);
+	private LayerInterface gestionMergeBody(MergeBody mb, LayerInterface layerPrevMerge, LayerInterface fl) throws Exception {
+		LayerInterface lastLayerLeft = gestionLeft(mb.getLeft(), layerPrevMerge);
+		LayerInterface lastLayerRight = gestionRight(mb.getRight(), fl);
 		
-		LayerCell LayerTemp = new LayerCell(layerPos, TypeLayerEnum.TEMP_ADD_CONCAT);
+		String str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
+		LayerInterface LayerTemp;
+		if(str_add_or_concat == "add") LayerTemp = new Add(layerPos);
+		else LayerTemp = new Concatenate(layerPos);
+	
 		addEdge(lastLayerLeft, LayerTemp);
 		addEdge(lastLayerRight, LayerTemp);
 		
@@ -286,11 +297,16 @@ public class ArchitectureGraph {
 	}
 	
 	// handle residual connection
-	private void gestionMergeBody(MergeBody mb, LayerCell layerPrevMerge) throws Exception {
-		LayerCell lastLayerLeft = gestionLeft(mb.getLeft(), layerPrevMerge);
-		LayerCell lastLayerRight = gestionRight(mb.getRight(), layerPrevMerge);
+	private void gestionMergeBody(MergeBody mb, LayerInterface layerPrevMerge) throws Exception {
+		LayerInterface lastLayerLeft = gestionLeft(mb.getLeft(), layerPrevMerge);
+		LayerInterface lastLayerRight = gestionRight(mb.getRight(), layerPrevMerge);
 		
-		LayerCell LayerTemp = new LayerCell(layerPos, TypeLayerEnum.TEMP_ADD_CONCAT);
+		String str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
+		LayerInterface LayerTemp;
+		if(str_add_or_concat == "add") LayerTemp = new Add(layerPos);
+		else LayerTemp = new Concatenate(layerPos);
+		
+		
 		addEdge(lastLayerLeft, LayerTemp);
 		addEdge(lastLayerRight, LayerTemp);
 		
@@ -300,11 +316,11 @@ public class ArchitectureGraph {
 	}
 	
 	// handle left way in residual connection
-	private LayerCell gestionLeft(Left left, LayerCell layerPrevMerge) throws Exception {
-		LayerCell leftPrevLayer = layerPrevMerge;
+	private LayerInterface gestionLeft(Left left, LayerInterface layerPrevMerge) throws Exception {
+		LayerInterface leftPrevLayer = layerPrevMerge;
 		if (left.getP() != null) {
 			// add prevlayer -> Dropout 
-			LayerCell pool = new LayerCell(layerPos, TypeLayerEnum.POOL);
+			Pooling pool = new Pooling(layerPos);
 			// add edge prevLayer -> dropout
 			this.addEdge(leftPrevLayer, pool);
 			this.addCell(pool);
@@ -318,7 +334,7 @@ public class ArchitectureGraph {
 				leftPrevLayer = gestionConv(convdrop.getConv(), getLastLayer());
 				
 				if(convdrop.getDrop() != null) {
-					LayerCell drop = new LayerCell(layerPos, TypeLayerEnum.DROP);
+					Dropout drop = new Dropout(layerPos);
 					// add edge prevLayer -> dropout
 					this.addEdge(leftPrevLayer, drop);
 					this.addCell(drop);
@@ -339,7 +355,7 @@ public class ArchitectureGraph {
 						leftPrevLayer = gestionConv(convdrop.getConv(), getLastLayer());
 						
 						if(convdrop.getDrop() != null) {
-							LayerCell drop = new LayerCell(layerPos, TypeLayerEnum.DROP);
+							Dropout drop = new Dropout(layerPos);
 							// add edge prevLayer -> dropout
 							this.addEdge(leftPrevLayer, drop);
 							this.addCell(drop);
@@ -354,7 +370,7 @@ public class ArchitectureGraph {
 		
 		if (left.getPool() != null) {
 			// add prevlayer -> Dropout 
-			LayerCell pool = new LayerCell(layerPos, TypeLayerEnum.POOL);
+			Pooling pool = new Pooling(layerPos);
 			// add edge prevLayer -> dropout
 			this.addEdge(getLastLayer(), pool);
 			this.addCell(pool);
@@ -369,8 +385,8 @@ public class ArchitectureGraph {
 	}
 
 	// handle right way in Residual connection
-	private LayerCell gestionRight(Right right, LayerCell layerPrevMerge) throws Exception {
-		LayerCell rightPrevLayer = layerPrevMerge;
+	private LayerInterface gestionRight(Right right, LayerInterface layerPrevMerge) throws Exception {
+		LayerInterface rightPrevLayer = layerPrevMerge;
 		if(!right.getConv().isEmpty()) {
 			for (Convolution c: right.getConv()) {
 				gestionConv(c, rightPrevLayer);
@@ -385,9 +401,9 @@ public class ArchitectureGraph {
 
 	// handle GAP / flatten layer
 	private void gestionInter(Interstice inter) {
-		if (inter.getFg().getFlat() != null){
+		if (inter.getFg().getFlat() != null || inter.getFg().getGp() != null){
 			
-			LayerCell flatten = new LayerCell(layerPos, TypeLayerEnum.FLAT);
+			domain.Interstice flatten = new domain.Interstice(layerPos);
 			
 			// add edge prevlayer -> flatten
 			this.addEdge(getLastLayer(), flatten);
@@ -397,18 +413,6 @@ public class ArchitectureGraph {
 			layerPos++;
 			
 			
-		}else{
-			
-			LayerCell gloPool = new LayerCell(layerPos, TypeLayerEnum.GLOPOOL);
-			
-			// add edge prevlayer -> flatten
-			this.addEdge(getLastLayer(), gloPool);
-			
-			// add glopol to graph
-			this.addCell(gloPool);
-			layerPos++;
-			
-
 		}
 	}
 	
@@ -418,7 +422,8 @@ public class ArchitectureGraph {
 			
 			if (c.getDrop() != null) {
 				// add prevlayer -> Dropout 
-				LayerCell drop = new LayerCell(layerPos, TypeLayerEnum.DROP);
+				Dropout drop = new Dropout(layerPos);
+				
 				// add edge prevLayer -> dropout
 				this.addEdge(getLastLayer(), drop);
 				this.addCell(drop);
@@ -426,7 +431,7 @@ public class ArchitectureGraph {
 				
 			}
 			
-			LayerCell dense = new LayerCell(layerPos, TypeLayerEnum.DENSE);
+			Dense dense = new Dense(layerPos);
 			// add edge prevLayer -> Dense
 			this.addEdge(getLastLayer(), dense);
 			// add dense layer to graph
@@ -438,26 +443,26 @@ public class ArchitectureGraph {
 	
 	// add temp layer when there is more than 3 edges for 1 layer
 	private void addTempLayer() throws Exception {
-		Map<LayerCell, Set<LayerCell>> listMoreThreeEdges = graph.entrySet().stream().filter(c -> c.getValue().size()>2).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		Map<LayerInterface, List<LayerInterface>> listMoreThreeEdges = graph.entrySet().stream().filter(c -> c.getValue().size()>2).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		
-		for(Entry<LayerCell, Set<LayerCell>> cell: listMoreThreeEdges.entrySet()) {
+		for(Entry<LayerInterface, List<LayerInterface>> cell: listMoreThreeEdges.entrySet()) {
 			while(cell.getValue().size()>2) {
 				layerPos++;
-				LayerCell layerTemp = new LayerCell(layerPos, TypeLayerEnum.TEMP_LAYER);
+				TempLayer layerTemp = new TempLayer(layerPos);
 					
 				// add layerTemp into graph
 				this.addCell(layerTemp);
 				
 				// add edge in layerTemp
-				this.addEdge(layerTemp, cell.getValue().stream().collect(Collectors.toList()).get(0));
-				this.addEdge(layerTemp, cell.getValue().stream().collect(Collectors.toList()).get(1));
+				this.addEdge(layerTemp, cell.getValue().get(0));
+				this.addEdge(layerTemp, cell.getValue().get(1));
 				
 				// add edge cell -> LayerTemp
 				this.addEdge(cell.getKey(), layerTemp);
 				
 				// remove edge from cell
-				removeEdge(cell.getValue().stream().collect(Collectors.toList()).get(0),cell.getKey());
-				removeEdge(cell.getValue().stream().collect(Collectors.toList()).get(0),cell.getKey());
+				removeEdge(cell.getValue().get(0),cell.getKey());
+				removeEdge(cell.getValue().get(0),cell.getKey());
 					
 				// insert the new layerTemp in the right possition
 				InsertLayerRightPosition();
@@ -468,38 +473,38 @@ public class ArchitectureGraph {
 	}
 	
 	private void InsertLayerRightPosition() throws Exception {
-		LayerCell lastLayer = getLastLayer();
-		if(lastLayer.getTypeLayer() == TypeLayerEnum.OUT) {
+		LayerInterface lastLayer = getLastLayer();
+		if(lastLayer instanceof Output) {
 			throw new Exception("ArchitectureGraph verifyID: not possible");
 		}else {
-			int idInsertion = this.getEdge(lastLayer).stream().collect(Collectors.toList()).get(0).getID();
-			List<LayerCell> listLayers = this.graph.keySet()
+			int idInsertion = this.getEdge(lastLayer).stream().collect(Collectors.toList()).get(0).getLayerPos();
+			List<LayerInterface> listLayers = this.graph.keySet()
 					  .stream()
-					  .sorted(Comparator.comparingInt(LayerCell::getID)
+					  .sorted(Comparator.comparingInt(LayerInterface::getLayerPos)
 							  .reversed())
 					  .collect(Collectors.toList());
 			int i =0;
-			while(listLayers.get(i).getID() > idInsertion-1) {
-				listLayers.get(i).setID(listLayers.get(i).getID()+1);
+			while(listLayers.get(i).getLayerPos() > idInsertion-1) {
+				listLayers.get(i).setLayerPos(listLayers.get(i).getLayerPos()+1);
 				i++;
 			}
 			
-			lastLayer.setID(idInsertion);
+			lastLayer.setLayerPos(idInsertion);
 		}
 		
 		reorder();
 	}
 
 	private void reorder() {
-		Map<LayerCell, Set<LayerCell>> newGraph = graph.entrySet().stream()
-				.sorted(Map.Entry.comparingByKey())
+		Map<LayerInterface, List<LayerInterface>> newGraph = graph.entrySet().stream()
+				.sorted((e1,e2) -> Integer.compare(e1.getKey().getLayerPos(), e2.getKey().getLayerPos()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-				(oldValue, newValue) -> oldValue, TreeMap<LayerCell, Set<LayerCell>>::new));
+				(oldValue, newValue) -> oldValue, TreeMap<LayerInterface, List<LayerInterface>>::new));
 
-		for(Entry<LayerCell, Set<LayerCell>> cell: newGraph.entrySet()) {
-			List<LayerCell> listEdgeSorted = cell.getValue().stream().sorted(Comparator.comparingInt(LayerCell::getID)).collect(Collectors.toList());
+		for(Entry<LayerInterface, List<LayerInterface>> cell: newGraph.entrySet()) {
+			List<LayerInterface> listEdgeSorted = cell.getValue().stream().sorted(Comparator.comparingInt(LayerInterface::getLayerPos)).collect(Collectors.toList());
 			cell.getValue().clear();
-			for(LayerCell edge: listEdgeSorted) {
+			for(LayerInterface edge: listEdgeSorted) {
 				newGraph.get(cell.getKey()).add(edge);
 			}
 		}
@@ -508,24 +513,24 @@ public class ArchitectureGraph {
 	}
 	
 	private void verifyID() {
-		List<LayerCell> listCell = graph.keySet().stream().collect(Collectors.toList());
+		List<LayerInterface> listCell = graph.keySet().stream().collect(Collectors.toList());
 		for(int i =0; i<listCell.size()-1; i++) {
-			if(listCell.get(i).getID()+1 != listCell.get(i+1).getID()) {
-				listCell.get(i+1).setID(listCell.get(i).getID()+1);
+			if(listCell.get(i).getLayerPos()+1 != listCell.get(i+1).getLayerPos()) {
+				listCell.get(i+1).setLayerPos(listCell.get(i).getLayerPos()+1);
 			}
 		}
 	}
 	
 	public void removeTempLayer() {
-		List<LayerCell> tempLayer = graph.keySet().stream().filter(c -> c.getTypeLayer() == TypeLayerEnum.TEMP_LAYER).collect(Collectors.toList());
+		List<LayerInterface> tempLayer = graph.keySet().stream().filter(c -> c instanceof TempLayer).collect(Collectors.toList());
 		
-		for(LayerCell currentLayer : tempLayer) {
-			LayerCell prevLayer = getByID(currentLayer.getID()-1);
+		for(LayerInterface currentLayer : tempLayer) {
+			LayerInterface prevLayer = getByID(currentLayer.getLayerPos()-1);
 			//LayerCell nextLayer = getByID(layer.getID()+1);
-			Set<LayerCell> currentLayerEdges = getEdge(currentLayer);
-			Set<LayerCell> prevLayerEdges = getEdge(prevLayer);
+			List<LayerInterface> currentLayerEdges = getEdge(currentLayer);
+			List<LayerInterface> prevLayerEdges = getEdge(prevLayer);
 			
-			for(LayerCell edges: currentLayerEdges) {
+			for(LayerInterface edges: currentLayerEdges) {
 				prevLayerEdges.add(edges);
 			}
 			

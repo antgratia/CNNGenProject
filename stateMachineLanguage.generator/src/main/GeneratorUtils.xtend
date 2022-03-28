@@ -27,8 +27,8 @@ class GeneratorUtils {
 		static List<String> convOrMerge = new ArrayList<String>(List.of("conv", "conv", "merge"));
 		static List<String> convOrEmpty = new ArrayList<String>(List.of("conv", "Empty"));
 		
-		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(2,3,4,5,6,7))
-		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3,4))
+		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(4,5,6,7))
+		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3))
 		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2,3))
 		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2,3))
 		
@@ -38,6 +38,7 @@ class GeneratorUtils {
 			
 			// init sentence
 			var SML sml = factory.createSML()
+			
 			
 			// creation architecture 
 			var Architecture archi = factory.createArchitecture()

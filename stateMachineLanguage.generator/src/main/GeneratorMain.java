@@ -30,7 +30,7 @@ public class GeneratorMain{
     static String csvDir = "architecture_csv/";
     
     // json directory
-    static String jsonDir = "architecture_json/";
+    //static String jsonDir = "architecture_json/";
 	
 	
 	public static void main(String[] args) {
@@ -61,8 +61,8 @@ public class GeneratorMain{
 		folder = new File(output_dir+csvDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+jsonDir+expDir);
-		if(!folder.exists()) folder.mkdirs();
+		//folder = new File(output_dir+jsonDir+expDir);
+		//if(!folder.exists()) folder.mkdirs();
 		
 	}
 

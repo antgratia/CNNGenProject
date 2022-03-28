@@ -5,33 +5,26 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.eclipse.emf.common.util.EList;
-
-import lombok.Getter;
+import domain.Add;
+import domain.BatchNormalisation;
+import domain.Concatenate;
+import domain.Convolution;
+import domain.Dense;
+import domain.Dropout;
+import domain.Input;
+import domain.Interstice;
+import domain.LayerInterface;
+import domain.Output;
+import domain.Pooling;
+import domain.TempLayer;
 import models.ArchitectureGraph;
-import models.BatchNormalisation;
-import models.Convolution;
-import models.Dense;
-import models.Dropout;
-import models.LayerCell;
-import models.LayerInterface;
 import models.MergeSimple;
-import models.Pooling;
 import models.TypeLayerEnum;
-import xtext.sML.Architecture;
-import xtext.sML.Classification;
 import xtext.sML.ConvDrop;
-import xtext.sML.FeatureExtraction;
-import xtext.sML.Interstice;
 import xtext.sML.Merge;
 import xtext.sML.MergeBody;
 import xtext.sML.MergeConv;
@@ -91,9 +84,7 @@ public class GestionHpp {
 		return gestionHpp;
 	}
 	
-	// entry point
-	public Convolution gestionConvolution(boolean reduction){
-		Convolution conv = new Convolution();
+	public void gestionConvolution(Convolution conv, boolean reduction){
 		
 		if(reduction) {
 			optimisationKernelPaddingStride(conv);
@@ -111,34 +102,35 @@ public class GestionHpp {
 		
 		conv.setNbFilter(currentNBFilters);
 		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
-		
-		return conv;
 			
 	}
 	
-	public Pooling gestionPooling(boolean reduction) {
-		Pooling pool = new Pooling();
-		optimisationKernelPaddingStride(pool);
-		return pool;
+	public void gestionPooling(Pooling pool, boolean reduction) {
+		if(reduction) {
+			optimisationKernelPaddingStride(pool);
+		}else {
+			// kernel <= input size
+			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+			int knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+						
+			pool.setKernel(knl);
+			pool.setStride(1);
+			pool.setPadding("same");
+		}
 	}
 
-	public Dropout gestionDropout() {
-		Dropout drop = new Dropout();
+	public void gestionDropout(Dropout drop) {
 		drop.setDropoutRate(dropoutRate.get(rand.nextInt(dropoutRate.size())));
-		return drop;
 	}
 
-	public BatchNormalisation gestionBN() {
-		BatchNormalisation bn = new BatchNormalisation();
+	public void gestionBN(BatchNormalisation bn) {
 		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
-		return bn;
 	}
 
-	public Dense gestionDense(boolean last) {
-		Dense dense = new Dense(last);
+	public void gestionDense(Dense dense, boolean isLast) {
 		if(entryParams == 0) entryParams = currentSizeImg*currentSizeImg*currentNBFilters;
 		
-		if(dense.isLast()) {
+		if(isLast) {
 			dense.setUnits(NB_CLASS);
 			dense.setFctActivation(FCT_ACTIVATION);
 		}else {
@@ -152,8 +144,7 @@ public class GestionHpp {
 			dense.setFctActivation(fctActivation.get(rand.nextInt(fctActivation.size())));
 			entryParams = units;
 		}
-		
-		return dense;
+
 	}
 	
 	
@@ -163,14 +154,22 @@ public class GestionHpp {
 		int knl = 1; // kernel
 		int strd = 1; // stride
 		
-		List<Integer> kernel_value_filtered;
+		List<Integer> kernel_value_filtered = null;
 		List<Integer> stride_value_filtered;
+		
+		if(currentSizeImg == 2) {
+			kernel_value_filtered = new ArrayList<Integer>(List.of(1,2));
+		}else if(currentSizeImg == 1) {
+			kernel_value_filtered = new ArrayList<Integer>(List.of(1));
+		}
+		
 		
 		if(pad == "valid") {
 			  // kernel <= input size
-			  kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
-			  knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
-				        
+			 if(kernel_value_filtered == null) {
+				 kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+				 knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+			 }    
 			  //stride <= kernel
 			  strd = (int)currentSizeImg/knl;
 			  if(strd > knl) {
@@ -181,12 +180,8 @@ public class GestionHpp {
 				            
 		}else {
 			 // Kernel <= output/2
-			 if(currentSizeImg == 2) {
-				kernel_value_filtered = new ArrayList<Integer>(List.of(1,2));
-			 }else if(currentSizeImg == 1){
-				 kernel_value_filtered = new ArrayList<Integer>(List.of(1));
-			 }else {
-				kernel_value_filtered = kernel.stream().filter(k -> k <= Math.ceil(currentSizeImg/2)).collect(Collectors.toList());
+			 if(kernel_value_filtered == null) {
+				 kernel_value_filtered = kernel.stream().filter(k -> k <= Math.ceil(currentSizeImg/2)).collect(Collectors.toList());
 			 }
 				            
 			 knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
@@ -213,7 +208,7 @@ public class GestionHpp {
 			pool.setStride(strd);
 		}
 		
-		calculCurrentSize(pad, knl, strd);
+		currentSizeImg = calculCurrentSize(pad, knl, strd, currentSizeImg);
 			 
 	}
 	
@@ -248,31 +243,12 @@ public class GestionHpp {
 		return currentNBFilters;
 	}
 	
-	private static void calculCurrentSize(String pad, int knl, int strd) {
-		int newCurrentSizeImg = 0;
-		if(pad == "valid") {
-			
-	        while(currentSizeImg>=knl) {
-	        	currentSizeImg -= strd;
-	        	newCurrentSizeImg += 1;
-	        }
-		}else {
-	        if(currentSizeImg%strd == 0)
-	        	newCurrentSizeImg = (int)(currentSizeImg/strd);
-	        else
-	        	newCurrentSizeImg = (int)(currentSizeImg/strd)+1;
-		}
-		currentSizeImg = newCurrentSizeImg;
-	}
-	
 	private static int calculCurrentSize(String pad, int knl, int strd, int imgSize) {
 		int newCurrentSizeImg = 0;
 		if(pad == "valid") {
 			
-	        while(imgSize>=knl) {
-	        	imgSize -= strd;
-	        	newCurrentSizeImg += 1;
-	        }
+			newCurrentSizeImg = ((imgSize-knl)/strd)+1;
+			
 		}else {
 	        if(imgSize%strd == 0)
 	        	newCurrentSizeImg = (int)(imgSize/strd);
@@ -298,7 +274,7 @@ public class GestionHpp {
 		ms.setAdd_or_concat(str_add_or_concat);
 		
 		if(mb.getLeft().getP() != null) {
-			ms.addLeft(new Pooling(kernel.get(rand.nextInt(kernel.size())),1,"same"));
+			ms.addLeft(new Pooling());
 		}
 		
 
@@ -388,7 +364,7 @@ public class GestionHpp {
 		
 		// pooling
 		if(mb.getLeft().getPool() != null) {
-			ms.addLeft(new Pooling(kernel.get(rand.nextInt(kernel.size())),1,"same"));
+			ms.addLeft(new Pooling());
 		}
 		
 	}
@@ -400,9 +376,6 @@ public class GestionHpp {
 	    }
 	}
 
-	public static void destroy() {
-		gestionHpp = null;
-	}
 	
 	/** 
 	 * 
@@ -412,8 +385,6 @@ public class GestionHpp {
 	 **/
 	
 	public void setGraphHPP(ArchitectureGraph graph) throws Exception {
-		
-		replaceTempToAddOrConcat(graph);
 		
 		/*
 		System.out.println("\n\n");
@@ -426,86 +397,62 @@ public class GestionHpp {
 		// find last layer
 		int idLastLayer = graph.getGraph().keySet()
 						  .stream()
-						  .filter(c -> c.getTypeLayer() == TypeLayerEnum.OUT)
+						  .filter(c -> c instanceof Output)
 						  .collect(Collectors.toList())
 						  .get(0)
-						  .getID() - 1;
+						  .getLayerPos() - 1;
 	    graph.getByID(idLastLayer).setLast(true);
 		
-	    
+	    // init Input
 		int i = 0;
-		LayerCell layer = graph.getByID(i);
+		LayerInterface layer = graph.getByID(i);
 		layer.setNbFilter(INPUT_FILTER);
+		layer.setImgSize(MAX_SIZE_IMG);
 		i++;
 		
 		while(i<graph.getGraph().size()) {
 			layer = graph.getByID(i);
-			Set<LayerCell> edges = graph.getEdge(layer);
-			if(edges.size()<=1) {
-				if(layer.getLayer() == null) {
-					layer.setLayer(getHyperParametters(layer.getTypeLayer(), layer.isReduction(), layer.isLast()));
-					layer.setImgSize(currentSizeImg);
-					layer.setNbFilter(currentNBFilters);
-				}
+			List<LayerInterface> edges = graph.getEdge(layer);
+			
+			if(edges.size()==1 || (layer instanceof Output)) {
+			// manage simple layer	
+				getHyperparametters(
+						layer, 
+						graph.getReverseEdge(layer).get(0), 
+						(graph.getReverseEdge(layer).size()==2) ?  graph.getReverseEdge(layer).get(1) : null);
 				i++;
 			}else if(edges.size()==2) {
-			
-				layer.setLayer(getHyperParametters(layer.getTypeLayer(), layer.isReduction(), layer.isLast()));
-				layer.setImgSize(currentSizeImg);
-				layer.setNbFilter(currentNBFilters);
-					
-				List<LayerCell> listLayerCell = new ArrayList<>(edges)
-						.stream()
-						.sorted(Comparator.comparingInt(LayerCell::getID)
-								.reversed())
-						.collect(Collectors.toList());
-				LayerCell lastLayer = null;
-				for(int j =0; j<listLayerCell.size()-1; j++) {
-					lastLayer = listLayerCell.get(j);
-					boolean empty = true;
-					while(lastLayer.getTypeLayer() != TypeLayerEnum.CONCAT &&
-						lastLayer.getTypeLayer() != TypeLayerEnum.ADD ) {
-							
-						List<LayerCell> edge = new ArrayList<>(graph.getEdge(lastLayer))
-								.stream()
-								.sorted(Comparator.comparingInt(LayerCell::getID)
-										.reversed())
-								.collect(Collectors.toList());
-						lastLayer = edge.get(0);
-						empty = false;
-					}
-					
-					gestionMerge(graph, layer, lastLayer, empty);
+			// manage Merge
+				getHyperparametters(
+						layer, 
+						graph.getReverseEdge(layer).get(0), 
+						(graph.getReverseEdge(layer).size()==2) ?  graph.getReverseEdge(layer).get(1) : null);
+				
+				LayerInterface lastLayer = null;
+				if(edges.get(1) instanceof Concatenate || edges.get(1) instanceof Add) {
+					lastLayer = edges.get(1);
+					gestionMerge(graph, layer, lastLayer, true);
+				}else {
+					lastLayer = edges.get(0);
+					while(!(lastLayer instanceof Concatenate) &&
+							 !(lastLayer instanceof Add) ) {
+								
+							List<LayerInterface> lastLayerEdges = graph.getEdge(lastLayer);
+							lastLayer = lastLayerEdges.get(0);
+						}
+						
+						gestionMerge(graph, layer, lastLayer, false);
 				}
 				
-				i=lastLayer.getID();
-				if(lastLayer.getTypeLayer() == TypeLayerEnum.CONCAT) {
-					List<LayerCell> reverseEdge = graph.getReverseEdge(lastLayer)
-							.stream()
-							.sorted(Comparator.comparingInt(LayerCell::getID))
-							.collect(Collectors.toList());
-					
-					lastLayer.setNbFilter(reverseEdge.get(0).getNbFilter() + reverseEdge.get(1).getNbFilter());
-					lastLayer.setImgSize(reverseEdge.get(0).getImgSize());
-					currentNBFilters = reverseEdge.get(0).getNbFilter() + reverseEdge.get(1).getNbFilter();
-					compressedFilter();
-				}
-				
-				if (lastLayer.getTypeLayer() == TypeLayerEnum.ADD) {
-					List<LayerCell> reverseEdge = graph.getReverseEdge(lastLayer)
-							.stream()
-							.sorted(Comparator.comparingInt(LayerCell::getID))
-							.collect(Collectors.toList());
-					
-					lastLayer.setNbFilter(reverseEdge.get(0).getNbFilter());
-					lastLayer.setImgSize(reverseEdge.get(0).getImgSize());
-				}
+				i=lastLayer.getLayerPos();
 			}else {
-				throw new Exception("GestionHpp setGraphHPP: edges > 2");
+				throw new Exception("GestionHpp setGraphHPP: edges > 2 or < 1");
 			}
 		}
 	    
 		graph.removeTempLayer();
+		
+		verifyAllLayer(graph);
 
 		verifyImgSize(graph);
 		
@@ -514,34 +461,71 @@ public class GestionHpp {
 	    
 
 	}
-	
 
+	private void verifyAllLayer(ArchitectureGraph graph) throws Exception {
+		Map<LayerInterface, List<LayerInterface>> listFiltred = graph.getReverseGraph().entrySet().stream()
+				.filter(c -> c.getKey().getNbFilter() == 0 || (c instanceof Convolution && ((Convolution)c).getFct_activation() == null))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		
+		for(Entry<LayerInterface, List<LayerInterface>> cell : listFiltred.entrySet()) {
+			cell.getKey().setReduction(false);
+			getHyperparametters(
+					cell.getKey(), 
+					cell.getValue().get(0), 
+					(cell.getValue().size()==2) ?  cell.getValue().get(1) : null);
+		}
+	}
 
 	private void verifyImgSize(ArchitectureGraph graph) throws Exception {
-		for(LayerCell listCellAddOrConcat:graph.inverse().keySet().stream()
-				.filter(c-> c.getTypeLayer() == TypeLayerEnum.ADD || c.getTypeLayer() == TypeLayerEnum.CONCAT)
-				.sorted(Comparator.comparingInt(LayerCell::getID)
+		for(LayerInterface listCellAddOrConcat:graph.inverse().keySet().stream()
+				.filter(c-> c instanceof Add || c instanceof Concatenate)
+				.sorted(Comparator.comparingInt(LayerInterface::getLayerPos)
 						.reversed())
 				.collect(Collectors.toList())) {
 			
-			List<LayerCell> listEdges = graph.getReverseEdge(listCellAddOrConcat).stream().collect(Collectors.toList());
+			List<LayerInterface> listEdges = graph.getReverseEdge(listCellAddOrConcat).stream().collect(Collectors.toList());
 			
-			if(listEdges.get(0).getImgSize() != listEdges.get(1).getImgSize()) {
-				if(listEdges.get(1).getTypeLayer() == TypeLayerEnum.CONV) {
-					int startImgSize = graph.getReverseEdge(listEdges.get(0)).stream().collect(Collectors.toList()).get(0).getImgSize();
-					recomputeSize(listEdges.get(1), startImgSize, listEdges.get(0).getImgSize());
+			if(listEdges.get(0).getImgSize() < listEdges.get(1).getImgSize()) {
+				// right way don't reduce enough 
+				LayerInterface findConv = listEdges.get(1);
+				while(!(findConv instanceof Convolution)) {
+					findConv = graph.getReverseEdge(findConv).get(0);
+				}
+				
+				if(findConv instanceof Convolution) {
+					int startImgSize = graph.getReverseEdge(findConv).get(0).getImgSize();
+					recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
 					
 				}
+			}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
+				// right way reduce too much
+				LayerInterface findConv = listEdges.get(0);
+				while(!(findConv instanceof Convolution) && !(findConv instanceof Pooling)) {
+					if(findConv instanceof Input) {
+						throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
+					}
+					findConv = graph.getReverseEdge(findConv).get(0);
+				}
+				
+				int startImgSize = graph.getReverseEdge(findConv).get(0).getImgSize();
+				recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
+				
+				
+			}else {
+				// all good
 			}
 		}
 		
 	}
 
-	private void recomputeSize(LayerCell layerCell, int startImgSize, int objectifImgSize) throws Exception {
-		LayerInterface layerInterface = layerCell.getLayer();
+	private void recomputeSize(LayerInterface layerInterface, int startImgSize, int objectifImgSize) throws Exception {
 		
 		int newKnl = 0;
 		String newPad = "";
+		
+		if(startImgSize<objectifImgSize) {
+			throw new Exception("GestionHPP recomputeSize: startimg < ObjectifImg");
+		}
 		
 		int newStride = Math.round(startImgSize/objectifImgSize);
 		
@@ -549,12 +533,28 @@ public class GestionHpp {
 			newPad="same";
 			int s = newStride;
 			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= startImgSize && k>=s).collect(Collectors.toList());
-			newKnl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+			
+			if(kernel_value_filtered.size() <1) {
+				newKnl = newStride;
+			}else {
+				newKnl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+			}
+			
+			
 		}else {
 			newPad = "valid";
-			newKnl = newStride;
-			while((calculCurrentSize(newPad, newKnl, newStride,  startImgSize) != objectifImgSize) && (newKnl<= Math.round(startImgSize/2))){
-				newKnl+=1;
+			newKnl = startImgSize -((objectifImgSize-1)*newStride);
+			boolean knlReduction = false; 
+			while(calculCurrentSize("valid", newKnl, newStride, startImgSize) != objectifImgSize){
+				if(newKnl-1> 0 && !knlReduction) {
+					newKnl -=1;
+					knlReduction = true;
+				}else if(newStride-1 > 0 && knlReduction) {
+					newStride-=1;
+					knlReduction = false;
+				}else {
+					throw new Exception("HPP invalide");
+				}
 			}
 		}
 		
@@ -573,37 +573,36 @@ public class GestionHpp {
 			throw new Exception("GestionHPP recomputeSize : layerinterface Wrong type");
 		}
 		
-		layerCell.setImgSize(calculCurrentSize(newPad, newKnl, newStride,  startImgSize));
-		layerCell.setLayer(layerInterface);
+		layerInterface.setImgSize(calculCurrentSize(newPad, newKnl, newStride,  startImgSize));
 		
 	}
 
 	private void verifyFilters(ArchitectureGraph graph) throws Exception {
 				
-		for(LayerCell cell:graph.inverse().keySet().stream().sorted(Comparator.comparingInt(LayerCell::getID)
+		for(LayerInterface cell:graph.inverse().keySet().stream().sorted(Comparator.comparingInt(LayerInterface::getLayerPos)
 				.reversed()).collect(Collectors.toList())) {
-			if(cell.getTypeLayer() == TypeLayerEnum.ADD) {
-				List<LayerCell> edge = graph.getReverseEdge(cell)
+			if(cell instanceof Add) {
+				List<LayerInterface> edge = graph.getReverseEdge(cell)
 						.stream()
-						.sorted(Comparator.comparingInt(LayerCell::getID)
+						.sorted(Comparator.comparingInt(LayerInterface::getLayerPos)
 								.reversed())
 						.collect(Collectors.toList());
 				
-				LayerCell lastLayerRight = edge.get(0);
-				LayerCell lastLayerLeft = edge.get(1);
+				LayerInterface lastLayerRight = edge.get(0);
+				LayerInterface lastLayerLeft = edge.get(1);
 				
 					
 				if(lastLayerRight.getNbFilter() != lastLayerLeft.getNbFilter()) {
 					lastLayerRight.setNbFilter(lastLayerLeft.getNbFilter());
 					
-					LayerCell lastConvRight = lastLayerRight;
-					while(lastConvRight.getTypeLayer() != TypeLayerEnum.CONV) {
+					LayerInterface lastConvRight = lastLayerRight;
+					while(!(lastConvRight instanceof Convolution)) {
 						lastConvRight = graph.getReverseEdge(lastLayerRight).stream().collect(Collectors.toList()).get(0);
 					}
 					
-					if(lastConvRight.getLayer() instanceof Convolution) {
-						Convolution conv = (Convolution) lastConvRight.getLayer();
-						conv.setNbFilter(lastLayerLeft.getNbFilter());
+					if(lastConvRight instanceof Convolution) {
+						
+						((Convolution)lastConvRight).setNbFilter(lastLayerLeft.getNbFilter());
 					}else {
 						throw new Exception("GestionHPP verifyFilters: conv not find");
 					}
@@ -616,83 +615,84 @@ public class GestionHpp {
 		
 	}
 
-	void gestionMerge(ArchitectureGraph graph, LayerCell layerFirst, LayerCell layerLast, boolean isEmpty) throws Exception {
+	void gestionMerge(ArchitectureGraph graph, LayerInterface layerFirst, LayerInterface layerLast, boolean isEmpty) throws Exception {
 		
-		if(layerFirst.getTypeLayer() == TypeLayerEnum.TEMP_LAYER) {
-			LayerCell reverseEdge = graph.getReverseEdge(layerFirst).stream().collect(Collectors.toList()).get(0);
+		if(layerFirst instanceof TempLayer) {
+			LayerInterface reverseEdge = graph.getReverseEdge(layerFirst).stream().collect(Collectors.toList()).get(0);
 			layerFirst.setImgSize(reverseEdge.getImgSize());
 			layerFirst.setNbFilter(reverseEdge.getNbFilter());
 		}
 		
 		if(isEmpty) {
-			for(Entry<LayerCell, Set<LayerCell>> cell: graph.getGraph().entrySet()) {
-				if(cell.getKey().getID()>layerFirst.getID() && cell.getKey().getID()<layerLast.getID()) {
+			for(Entry<LayerInterface, List<LayerInterface>> cell: graph.getGraph().entrySet()) {
+				if(cell.getKey().getLayerPos()>layerFirst.getLayerPos() && cell.getKey().getLayerPos()<layerLast.getLayerPos()) {
 					cell.getKey().setReduction(false);
-					cell.getKey().setLayer(
-							getHyperParametters(
-									cell.getKey().getTypeLayer(), 
-									cell.getKey().isReduction(), 
-									cell.getKey().isLast()));
-					cell.getKey().setImgSize(currentSizeImg);
-					cell.getKey().setNbFilter(currentNBFilters);
+					getHyperparametters(
+							cell.getKey(), 
+							graph.getReverseEdge(cell.getKey()).get(0), 
+							(graph.getReverseEdge(cell.getKey()).size()==2) ?  graph.getReverseEdge(cell.getKey()).get(1) : null);
 				}
 			}
 		}else {
-			LayerCell FirstLayerLeft = graph.getEdge(layerFirst)
+			LayerInterface FirstLayerLeft = graph.getEdge(layerFirst)
 					.stream()
 					.collect(Collectors.toList()).get(0);
 			
-			LayerCell FirstLayerRight = graph.getEdge(layerFirst)
+			LayerInterface FirstLayerRight = graph.getEdge(layerFirst)
 					.stream()
 					.collect(Collectors.toList()).get(1);
 
 			// list that contain layer in leftway
-			List<LayerCell> leftWay = new ArrayList<>();
+			List<LayerInterface> leftWay = new ArrayList<>();
 
-			LayerCell layerLeft = FirstLayerLeft;
-			while(layerLeft.getID() != layerLast.getID()) {
+			LayerInterface layerLeft = FirstLayerLeft;
+			while((layerLeft.getLayerPos() != layerLast.getLayerPos()) && (layerLeft.getLayerPos() <= layerLast.getLayerPos())) {
 				leftWay.add(layerLeft);
 				layerLeft = graph.getEdge(layerLeft).stream()
-						.sorted(Comparator.comparingInt(LayerCell::getID))
+						.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 						.collect(Collectors.toList()).get(0);
 			}
 			
 			// list that contain all layer in RightWay
-			List<LayerCell> RightWay = new ArrayList<>();
+			List<LayerInterface> RightWay = new ArrayList<>();
 
-			LayerCell layerRight = FirstLayerRight;
-			while(layerRight.getID() != layerLast.getID()) {
+			LayerInterface layerRight = FirstLayerRight;
+			while((layerRight.getLayerPos() != layerLast.getLayerPos()) &&
+					((layerRight.getLayerPos() <= layerLast.getLayerPos()) && 
+					(!(layerRight instanceof Add) || !(layerRight instanceof Concatenate)))) {
+				
 				RightWay.add(layerRight);
 				if(graph.getEdge(layerRight).stream()
-						.sorted(Comparator.comparingInt(LayerCell::getID))
+						.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 						.collect(Collectors.toList()).size()==2) {
 					layerRight = graph.getEdge(layerRight).stream()
-							.sorted(Comparator.comparingInt(LayerCell::getID))
+							.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 							.collect(Collectors.toList()).get(1);
 				}else {
 					layerRight = graph.getEdge(layerRight).stream()
-							.sorted(Comparator.comparingInt(LayerCell::getID))
+							.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 							.collect(Collectors.toList()).get(0);
+					
 				}
 				
 				
 			}
 			
 			//find if other merge exist in leftway
-			List<LayerCell> listOfMerge = leftWay.stream()
+			List<LayerInterface> listOfMerge = leftWay.stream()
 					.filter(c -> graph.getEdge(c).size()>1)
-					.sorted(Comparator.comparingInt(LayerCell::getID))
+					.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 					.collect(Collectors.toList());
 			if(listOfMerge.size()>0) {
-				LayerCell firstMerge = listOfMerge.get(0);
-				List<LayerCell> edges = graph.getEdge(firstMerge).stream().collect(Collectors.toList());
-				boolean newIsEmpty = (edges.get(1).getTypeLayer() == TypeLayerEnum.ADD ||  edges.get(1).getTypeLayer() == TypeLayerEnum.CONCAT);
+				LayerInterface firstMerge = listOfMerge.get(0);
+				List<LayerInterface> edges = graph.getEdge(firstMerge).stream().collect(Collectors.toList());
+				boolean newIsEmpty = (edges.get(1) instanceof Add ||  edges.get(1) instanceof Concatenate);
 				
-				LayerCell lastMerge = edges.get(1);
-				while(lastMerge.getTypeLayer() != TypeLayerEnum.ADD && lastMerge.getTypeLayer() != TypeLayerEnum.CONCAT) {
+				LayerInterface lastMerge = edges.get(1);
+				while(lastMerge instanceof Add && lastMerge instanceof Concatenate) {
 					leftWay.add(layerRight);
 					lastMerge = graph.getEdge(lastMerge).stream()
-							.sorted(Comparator.comparingInt(LayerCell::getID))
+							.sorted(Comparator.comparingInt(LayerInterface::getLayerPos))
 							.collect(Collectors.toList()).get(0);
 					
 				}
@@ -700,108 +700,118 @@ public class GestionHpp {
 				gestionMerge(graph, firstMerge, lastMerge, newIsEmpty);
 			}
 			
-			List<LayerCell> leftWayEmptyLayer = leftWay.stream()
-					.filter(c -> c.getLayer() == null)
+			List<LayerInterface> leftWayEmptyLayer = leftWay.stream()
+					.filter(c -> c.getNbFilter() == 0)
 					.collect(Collectors.toList());
 			
 			if(leftWayEmptyLayer.stream()
-					.filter(c -> (c.getTypeLayer() == TypeLayerEnum.CONV || c.getTypeLayer() == TypeLayerEnum.POOL))
+					.filter(c -> (c instanceof Convolution || c instanceof Pooling))
 					.collect(Collectors.toList()).isEmpty() || 
 			   RightWay.stream()
-					.filter(c -> (c.getTypeLayer() == TypeLayerEnum.CONV || c.getTypeLayer() == TypeLayerEnum.POOL))
+					.filter(c -> (c instanceof Convolution || c instanceof Pooling))
 					.collect(Collectors.toList()).isEmpty()) {
 				// no reduction
 				
 				//handle leftway
 				for(int i=0; i<leftWay.size();i++)
-					if(leftWay.get(i).getLayer() == null) {
-						LayerCell prevlayer = graph.getByID(leftWay.get(i).getID()-1);
+					if(leftWay.get(i).getNbFilter() == 0) {
+						LayerInterface prevlayer = graph.getByID(leftWay.get(i).getLayerPos()-1);
 						leftWay.get(i).setReduction(false);
-						leftWay.get(i).setLayer(getHyperParametters(leftWay.get(i).getTypeLayer(), leftWay.get(i).isReduction(), leftWay.get(i).isLast()));
-						leftWay.get(i).setNbFilter(prevlayer.getNbFilter());
-						leftWay.get(i).setImgSize(prevlayer.getImgSize());
+						getHyperparametters(
+								leftWay.get(i), 
+								graph.getReverseEdge(leftWay.get(i)).get(0), 
+								(graph.getReverseEdge(leftWay.get(i)).size()==2) ? graph.getReverseEdge(leftWay.get(i)).get(1) : null);
 				}
 				
 				//handle rightway
 				for(int i=0; i<RightWay.size();i++)
-					if(RightWay.get(i).getLayer() == null) {
-						LayerCell prevlayer = graph.getByID(RightWay.get(i).getID()-1);
+					if(RightWay.get(i).getNbFilter() == 0) {
+						LayerInterface prevlayer = graph.getByID(RightWay.get(i).getLayerPos()-1);
 						RightWay.get(i).setReduction(false);
-						RightWay.get(i).setLayer(getHyperParametters(RightWay.get(i).getTypeLayer(), RightWay.get(i).isReduction(), RightWay.get(i).isLast()));
-						RightWay.get(i).setNbFilter(prevlayer.getNbFilter());
-						RightWay.get(i).setImgSize(prevlayer.getImgSize());
+						getHyperparametters(
+								RightWay.get(i), 
+								graph.getReverseEdge(RightWay.get(i)).get(0), 
+								(graph.getReverseEdge(RightWay.get(i)).size()==2) ? graph.getReverseEdge(RightWay.get(i)).get(1) : null);
 				}
 			}else {
 				// reduction
 				
 				//handle leftway
-				List<LayerCell> leftWayEmptyLayerConvOrPool = leftWayEmptyLayer.stream().filter(c -> (c.getTypeLayer() == TypeLayerEnum.CONV || c.getTypeLayer() == TypeLayerEnum.POOL))
+				List<LayerInterface> leftWayEmptyLayerConvOrPool = leftWayEmptyLayer.stream().filter(c -> (c instanceof Convolution || c instanceof Pooling))
 						.collect(Collectors.toList());
 				int redu = rand.nextInt(leftWayEmptyLayerConvOrPool.size());
 				for(int i = 0; i<leftWay.size();i++) {
-					if(leftWay.get(i).getID() == leftWayEmptyLayerConvOrPool.get(redu).getID()) {
-						leftWay.get(i).setLayer(getHyperParametters(leftWay.get(i).getTypeLayer(), leftWay.get(i).isReduction(), leftWay.get(i).isLast()));
-						leftWay.get(i).setImgSize(currentSizeImg);
-						leftWay.get(i).setNbFilter(currentNBFilters);
+					if(leftWay.get(i).getLayerPos() == leftWayEmptyLayerConvOrPool.get(redu).getLayerPos()) {
+						getHyperparametters(
+								leftWay.get(i), 
+								graph.getReverseEdge(leftWay.get(i)).get(0), 
+								(graph.getReverseEdge(leftWay.get(i)).size()==2) ? graph.getReverseEdge(leftWay.get(i)).get(1) : null);
+
 					}else { 
-						if(leftWay.get(i).getLayer() == null) {
-							LayerCell prevlayer = graph.getByID(leftWay.get(i).getID()-1);
+						if(leftWay.get(i).getNbFilter() == 0) {
+							LayerInterface prevlayer = graph.getByID(leftWay.get(i).getLayerPos()-1);
 							leftWay.get(i).setReduction(false);
-							leftWay.get(i).setLayer(getHyperParametters(leftWay.get(i).getTypeLayer(),leftWay.get(i).isReduction(), leftWay.get(i).isLast()));
-							leftWay.get(i).setNbFilter(prevlayer.getNbFilter());
-							leftWay.get(i).setImgSize(prevlayer.getImgSize());
+							getHyperparametters(
+									leftWay.get(i), 
+									graph.getReverseEdge(leftWay.get(i)).get(0), 
+									(graph.getReverseEdge(leftWay.get(i)).size()==2) ? graph.getReverseEdge(leftWay.get(i)).get(1) : null);
+
 						}
 					}
 				}
 					
-				LayerCell layerRedu = leftWayEmptyLayerConvOrPool.get(redu);
+				LayerInterface layerRedu = leftWayEmptyLayerConvOrPool.get(redu);
 				
 				//hangle rightWay
-				List<LayerCell> rightWayEmptyLayerConvOrPool = RightWay.stream()
-						.filter(c -> (c.getTypeLayer() == TypeLayerEnum.CONV || c.getTypeLayer() == TypeLayerEnum.POOL))
+				List<LayerInterface> rightWayEmptyLayerConvOrPool = RightWay.stream()
+						.filter(c -> (c instanceof Convolution || c instanceof Pooling))
 						.collect(Collectors.toList());
 				
 				redu = rand.nextInt(rightWayEmptyLayerConvOrPool.size());
 				for(int i = 0; i<RightWay.size();i++) {
-					if(RightWay.get(i).getID() == rightWayEmptyLayerConvOrPool.get(redu).getID()) {
-						if(layerRedu.getTypeLayer() == RightWay.get(i).getTypeLayer()) {
-							if(layerRedu.getTypeLayer() == TypeLayerEnum.CONV) {
-								Convolution conv = (Convolution) layerRedu.getLayer();
-								RightWay.get(i).setLayer(conv);
+					if(RightWay.get(i).getLayerPos() == rightWayEmptyLayerConvOrPool.get(redu).getLayerPos()) {
+						if((layerRedu instanceof Convolution &&  RightWay.get(i) instanceof Convolution) 
+								|| layerRedu instanceof Pooling &&  RightWay.get(i) instanceof Pooling) {
+							if(layerRedu instanceof Convolution) {
+								Convolution conv = (Convolution) layerRedu;
+								((Convolution) RightWay.get(i)).setFct_activation(conv.getFct_activation());
+								((Convolution) RightWay.get(i)).setKernel(conv.getKernel());
+								((Convolution) RightWay.get(i)).setPadding(conv.getPadding());
+								((Convolution) RightWay.get(i)).setStride(conv.getStride());
 								RightWay.get(i).setImgSize(calculCurrentSize(conv.getPadding(),conv.getKernel(), conv.getStride(), layerFirst.getImgSize()));
 								RightWay.get(i).setNbFilter(layerRedu.getNbFilter());
 							}else {
-								Pooling poolRedu = (Pooling) layerRedu.getLayer();
-								RightWay.get(i).setLayer(poolRedu);
+								Pooling poolRedu = (Pooling) layerRedu;
+								((Pooling)RightWay.get(i)).setPadding(poolRedu.getPadding());
+								((Pooling)RightWay.get(i)).setKernel(poolRedu.getKernel());
+								((Pooling)RightWay.get(i)).setStride(poolRedu.getStride());
 								RightWay.get(i).setImgSize(calculCurrentSize(poolRedu.getPadding(),poolRedu.getKernel(), poolRedu.getStride(), layerFirst.getImgSize()));
 								RightWay.get(i).setNbFilter(layerRedu.getNbFilter());
 							}
 
-						}else if(layerRedu.getTypeLayer() == TypeLayerEnum.CONV){
-							Convolution convRedu = (Convolution) layerRedu.getLayer();
-							if(RightWay.get(i).getTypeLayer() == TypeLayerEnum.POOL) {
+						}else if(layerRedu instanceof Convolution){
+							Convolution convRedu = (Convolution) layerRedu;
+							if(RightWay.get(i) instanceof Pooling) {
 								Pooling pool = new Pooling();
 								pool.setKernel(convRedu.getKernel());
 								pool.setPadding(convRedu.getPadding());
 								pool.setStride(convRedu.getStride());
 								
-								RightWay.get(i).setLayer(pool);
 								RightWay.get(i).setImgSize(calculCurrentSize(pool.getPadding(),pool.getKernel(), pool.getStride(), layerFirst.getImgSize()));
 								RightWay.get(i).setNbFilter(layerRedu.getNbFilter());
 							}else {
 								throw new Exception("GestionHPP gestionMerge: rightway not pool");
 							}
-						}else if(layerRedu.getTypeLayer() == TypeLayerEnum.POOL) {
-							Pooling poolRedu = (Pooling) layerRedu.getLayer();
-							if(RightWay.get(i).getTypeLayer() == TypeLayerEnum.CONV) {
+						}else if(layerRedu instanceof Pooling) {
+							Pooling poolRedu = (Pooling) layerRedu;
+							if(RightWay.get(i) instanceof Convolution) {
 								Convolution conv = new Convolution();
 								conv.setKernel(poolRedu.getKernel());
 								conv.setPadding(poolRedu.getPadding());
 								conv.setStride(poolRedu.getStride());
 								conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
 								conv.setNbFilter(layerRedu.getNbFilter());
-								
-								RightWay.get(i).setLayer(conv);
+
 								RightWay.get(i).setImgSize(calculCurrentSize(conv.getPadding(),conv.getKernel(), conv.getStride(), layerFirst.getImgSize()));
 								RightWay.get(i).setNbFilter(layerRedu.getNbFilter());
 							}else {
@@ -813,12 +823,14 @@ public class GestionHpp {
 						}
 
 					}else {
-						if(RightWay.get(i).getLayer() == null) {
-							LayerCell prevlayer = graph.getByID(RightWay.get(i).getID()-1);
+						if(RightWay.get(i).getNbFilter() == 0) {
+							LayerInterface prevlayer = graph.getByID(RightWay.get(i).getLayerPos()-1);
 							RightWay.get(i).setReduction(false);
-							RightWay.get(i).setLayer(getHyperParametters(RightWay.get(i).getTypeLayer(),RightWay.get(i).isReduction(), RightWay.get(i).isLast()));
-							RightWay.get(i).setImgSize(prevlayer.getImgSize());
-							RightWay.get(i).setNbFilter(prevlayer.getNbFilter());
+							getHyperparametters(
+									RightWay.get(i), 
+									graph.getReverseEdge(RightWay.get(i)).get(0), 
+									(graph.getReverseEdge(RightWay.get(i)).size()==2) ? graph.getReverseEdge(RightWay.get(i)).get(1) : null);
+
 						}
 					}
 					
@@ -830,32 +842,62 @@ public class GestionHpp {
 
 	}
 
-	private LayerInterface getHyperParametters(TypeLayerEnum typeLayer, boolean reduction, boolean last) throws Exception {
-		if(TypeLayerEnum.CONV == typeLayer) {
-			return gestionConvolution(reduction);
-		}else if (TypeLayerEnum.POOL == typeLayer) {
-			return gestionPooling(reduction);
-		}else if (TypeLayerEnum.BN == typeLayer) {
-			return gestionBN();
-		}else if (TypeLayerEnum.DROP == typeLayer) {
-			return gestionDropout();
-		}else if (TypeLayerEnum.DENSE == typeLayer) {
-			return gestionDense(last);
-		}else {
-			return null;
+	private void getHyperparametters(LayerInterface layer, LayerInterface prevLayer, LayerInterface prevLayerConcat) throws Exception {
+		currentSizeImg = prevLayer.getImgSize();
+		if(currentSizeImg == 0) {
+			System.out.println(layer);
+			System.out.println(prevLayer);
 		}
+		currentNBFilters = prevLayer.getNbFilter();
 		
-	}
-
-	// replace TypeLayerEnum.TEMP to TypeLayerEnum.ADD or TypeLayerEnum.CONCAT
-	public void replaceTempToAddOrConcat(ArchitectureGraph graph) {
-
-		
-		List<LayerCell> listTemp = graph.getGraph().keySet().stream().filter(c -> c.getTypeLayer() == TypeLayerEnum.TEMP_ADD_CONCAT).collect(Collectors.toList());
-		for(LayerCell elem: listTemp) {
-			str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
-			if(str_add_or_concat == "add") elem.setTypeLayer(TypeLayerEnum.ADD);
-			else elem.setTypeLayer(TypeLayerEnum.CONCAT);
+		if(layer instanceof Convolution) {
+			gestionConvolution((Convolution) layer,layer.isReduction());
+			layer.setImgSize(calculCurrentSize(
+					((Convolution) layer).getPadding(), 
+					((Convolution) layer).getKernel(), 
+					((Convolution) layer).getStride(), 
+					prevLayer.getImgSize()));
+			
+		}else if (layer instanceof Pooling) {
+			gestionPooling((Pooling) layer, layer.isReduction());
+			layer.setImgSize(calculCurrentSize(
+					((Pooling) layer).getPadding(), 
+					((Pooling) layer).getKernel(), 
+					((Pooling) layer).getStride(), 
+					prevLayer.getImgSize()));
+			layer.setNbFilter(currentNBFilters);
+			
+		}else if (layer instanceof BatchNormalisation) {
+			gestionBN((BatchNormalisation) layer);
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+			
+		}else if (layer instanceof Dropout) {
+			gestionDropout((Dropout) layer);
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+		}else if (layer instanceof Dense) {
+			gestionDense((Dense) layer, layer.isLast());
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+			
+		}else if (layer instanceof Concatenate){
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(prevLayer.getNbFilter() + prevLayerConcat.getNbFilter());
+		}else if (layer instanceof Add) {
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+		}else if (layer instanceof TempLayer) {
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+		}else if (layer instanceof Interstice) {
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+		}else if(layer instanceof Output){
+			layer.setImgSize(currentSizeImg);
+			layer.setNbFilter(currentNBFilters);
+		}else {
+			throw new Exception("GestionHpp getHyperparametters: Layer Forgotten ?");
 		}
 		
 	}

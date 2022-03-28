@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 
+import domain.LayerInterface;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
