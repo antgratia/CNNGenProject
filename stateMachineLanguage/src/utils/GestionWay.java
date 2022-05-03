@@ -18,9 +18,7 @@ public class GestionWay {
 	}
 	
 	public String getCurrent() {
-		if(nb == 0)
-			return listX.get(nb);
-		else return listX.get(nb-1);
+		return listX.get(0);
 	}
 	
 	public String getNext() {
@@ -43,8 +41,8 @@ public class GestionWay {
 	
 	public void removeBeforeLastFromList() {
 		if(nb>=1) {
-		listX.remove(nb-1);
-		nb--;
+			listX.remove(nb-1);
+			nb--;
 		}
 	}
 	
