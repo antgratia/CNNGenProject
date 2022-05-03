@@ -1,0 +1,4 @@
+[
+{"avg_nas_score":-74.29392671585083,"avg_precision":0.2430620453513325,"dropout":9,"filename":"architecture_1","nb_layer":103,"nb_layer_tot":137,"pooling":25,"std_nas_score":0.7015135531306097,"time_cost":0.9629336148500443,"time_glo":30.813875675201416}
+,
+]

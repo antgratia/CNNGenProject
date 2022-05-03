@@ -1,22 +1,78 @@
 package main;
 
-public class GeneratorMain {
+import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
 
+
+public class GeneratorMain{
+	
+	
+	static String expDir = "tensorboard_1/";
+	static final int REPEAT = 10;
+	
+	// output dir
+	static String output_dir = "output/";
+	// python directory
+	static String pyDir = "architecture_py/";
+
+    // log directory
+    static String logDir = "architecture_log/";
+    
+    // png directory
+    static String pngDir = "architecture_img/";
+    
+    // csv directory
+    static String csvDir = "architecture_csv/";
+    
+    // tensorboard directory
+    static String tensorboardDir = "architecture_tb/";
+    
+    // json directory
+    //static String jsonDir = "architecture_json/";
+	
+	
 	public static void main(String[] args) {
-		GeneratorUtils tg = new GeneratorUtils();
 		
-		// output dir
-		var output_dir = "output/";
-		// python directory
-		var py_dir = "architecture_py/";
-		
-		for (int i=1; i<11; i++) {
-			String filename = output_dir + py_dir + "architecture_"+i+".py";
-			System.out.println("Random Generation...");
-			tg.generate(filename);
-			System.out.println(filename + " generate\n");
+		createFolder();
+		int total_time = 0;
+		for (int i=1; i<(REPEAT+1); i++) {
+			GeneratorUtils tg = new GeneratorUtils();
+			String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";
+			System.out.println("Random Generation no : " + i);
+			Instant start = Instant.now();
+			String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+i;
+			tg.generate(filename, expDir, DBName);
+			Instant end = Instant.now();
+			System.out.println(filename + " generate");
+			Duration timeElapsed = Duration.between(start, end);
+			total_time += timeElapsed.toMillis();
+			System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds\n");
+						
 		}
+		
+		System.out.println("Total Time : " + total_time + " milliseconds\n");
+	}
 
+	private static void createFolder() {
+		File folder = new File(output_dir+pyDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+logDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+pngDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+csvDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+tensorboardDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		//folder = new File(output_dir+jsonDir+expDir);
+		//if(!folder.exists()) folder.mkdirs();
+		
 	}
 
 }
