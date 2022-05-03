@@ -1,4 +1,5 @@
-package domain;
+package domain.bk;
+
 
 
 import lombok.Data;
@@ -10,13 +11,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Dropout extends Layer implements LayerInterface{
+public class Pooling extends Layer implements LayerInterface{
 	
-	private double dropoutRate;
-
-	public Dropout(int layerPos) {
+	private int kernel;
+	private int stride;
+	private String padding;
+	
+	
+	public Pooling(int layerPos) {
 		super(layerPos);
+		// TODO Auto-generated constructor stub
 	}
-
+	
 	
 }

@@ -1,4 +1,4 @@
-package domain;
+package domain.bk;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,13 +9,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Interstice extends Layer implements LayerInterface{
+public class Output extends Layer implements LayerInterface {
 	
-	public Interstice(int layerPos) {
+	
+	public Output(int layerPos) {
 		super(layerPos);
-		// TODO Auto-generated constructor stub
 	}
-
 	
 	
 }

@@ -7,14 +7,14 @@ import static org.testng.Assert.fail;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import domain.BatchNormalisation;
 import domain.DBManagment;
-import servicesImpl.BatchNormalisationServiceImpl;
+import domain.Input;
+import servicesImpl.InputServiceImpl;
 
-public class BatchNormalisationServiceTest {
-	
-	
-	BatchNormalisationServiceImpl bns;
+public class InputServiceTest {
+
+
+	InputServiceImpl inputs;
 	DBManagment dbm = new DBManagment();
 	String dbname = "test1";
 	
@@ -24,43 +24,43 @@ public class BatchNormalisationServiceTest {
 	  try {
 			dbm.createNewDB(dbname);
 			dbm.clearDB();
-			bns = new BatchNormalisationServiceImpl();
+			inputs = new InputServiceImpl();
 		}catch (Exception e) {
 			fail("create DB");
 			e.printStackTrace();
 		} 
   }
   
-  BatchNormalisation bn = new BatchNormalisation();
+  Input input = new Input();
   
   @Test (priority = 0)
 	public void createConvTest() {
-	  	BatchNormalisation nbn = bns.createOrUpdate(bn);
-		assertEquals(bn, nbn);
+	  	Input ninput = inputs.createOrUpdate(input);
+		assertEquals(input, ninput);
 	}
 	
 	@Test (priority = 1)
 	public void findByIDTest() {
-		BatchNormalisation nbn = bns.find(bn.getId());
-		assertEquals(nbn.getId(), bn.getId());
+		Input ninput = inputs.find(input.getId());
+		assertEquals(ninput.getId(), input.getId());
 	}
 	
 	@Test (priority = 1)
 	public void findByIDNotExistTest() {
-		BatchNormalisation nbn = bns.find((long) 5);
-		assertNull(nbn);
+		Input ninput = inputs.find((long) 5);
+		assertNull(ninput);
 	}
 	
 	@Test (priority = 2)
 	public void findAllTest() {
-		BatchNormalisation bn1 = new BatchNormalisation();
-		BatchNormalisation bn2 = new BatchNormalisation();
-		bns.createOrUpdate(bn1);
-		bns.createOrUpdate(bn2);
+		Input input1 = new Input();
+		Input input2 = new Input();
+		inputs.createOrUpdate(input1);
+		inputs.createOrUpdate(input2);
 		
-		Iterable<BatchNormalisation> it = bns.findAll();
+		Iterable<Input> it = inputs.findAll();
 		int i =0;
-		for(BatchNormalisation c: it) {
+		for(Input c: it) {
 			i++;
 		}
 		assertEquals(i, 3);
@@ -68,8 +68,7 @@ public class BatchNormalisationServiceTest {
 	
 	@Test (priority = 3)
 	public void deleteTest() {
-		bns.delete(bn.getId());
-		assertNull(bns.find(bn.getId()));
+		inputs.delete(input.getId());
+		assertNull(inputs.find(input.getId()));
 	}
-
 }

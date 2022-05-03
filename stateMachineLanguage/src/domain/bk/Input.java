@@ -1,4 +1,4 @@
-package domain;
+package domain.bk;
 
 
 import lombok.Data;
@@ -10,15 +10,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Dense extends Layer implements LayerInterface{
+public class Input extends Layer implements LayerInterface{
 
-	private int units;
-	private String fctActivation;
-	
-	public Dense(int layerPos) {
+	public Input(int layerPos) {
 		super(layerPos);
-		// TODO Auto-generated constructor stub
 	}
-	
-	
 }

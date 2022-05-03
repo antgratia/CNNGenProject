@@ -3,13 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="stateMachineLanguage.DBManager.LayerIntegrationTest">
+      <class name="controllerTest.DBQueryControllerTest">
         <methods>
-          <include name="updateConvTest"/>
-          <include name="init"/>
-          <include name="addEdgeConvPoolTest"/>
+          <include name="countEdgesNodesTest"/>
+          <include name="beforeTest"/>
         </methods>
-      </class> <!-- stateMachineLanguage.DBManager.LayerIntegrationTest -->
+      </class> <!-- controllerTest.DBQueryControllerTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

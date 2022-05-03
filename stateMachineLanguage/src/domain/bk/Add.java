@@ -1,4 +1,4 @@
-package domain;
+package domain.bk;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,12 +9,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Output extends Layer implements LayerInterface {
+public class Add extends Layer implements LayerInterface{
 	
-	
-	public Output(int layerPos) {
+	public Add(int layerPos) {
 		super(layerPos);
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	
 }
