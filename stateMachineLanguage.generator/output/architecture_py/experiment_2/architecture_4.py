@@ -40,20 +40,23 @@ epochs = 0
 try:
 	def getModel():
 		X_input = X = Input([32, 32, 3])
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(32, kernel_size=3, strides=2, activation='relu', padding='valid')(X)
-		X = AveragePooling2D(pool_size=5, strides=3, padding='valid')(X)
-		X = Conv2D(64, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(128, kernel_size=4, strides=1, activation='tanh', padding='valid')(X)
-		X = Dropout(0.80)(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(256, kernel_size=1, strides=1, activation='tanh', padding='valid')(X)
 
-		X = Flatten()(X)
-		X = Dense(197, activation='relu')(X)
-		X = Dense(94, activation='relu')(X)
-		X = Dense(53, activation='selu')(X)
+		X1 = X
+		X = Conv2D(3, kernel_size=5, strides=1, activation='tanh', padding='same')(X)
+		X = MaxPooling2D(pool_size=6, strides=1, padding='same')(X)
+
+		X = Add()([X, X1])
+		X = Dropout(0.40)(X)
+		X = AveragePooling2D(pool_size=6, strides=5, padding='valid')(X)
+		X = BatchNormalization(epsilon=0.00, axis=3)(X)
+		X = Conv2D(16, kernel_size=1, strides=1, activation='relu', padding='valid')(X)
+		X = Conv2D(32, kernel_size=2, strides=1, activation='tanh', padding='same')(X)
+		X = BatchNormalization(epsilon=0.00, axis=3)(X)
+		X = BatchNormalization(epsilon=0.00, axis=3)(X)
+		X = Conv2D(48, kernel_size=3, strides=2, activation='tanh', padding='same')(X)
+
+		X = GlobalMaxPooling2D()(X)
+		X = Dense(220, activation='selu')(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model

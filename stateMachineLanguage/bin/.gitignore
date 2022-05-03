@@ -1,4 +1,6 @@
+/controller/
+/domain/
 /models/
 /utils/
+/views/
 /xtext/
-/domain/

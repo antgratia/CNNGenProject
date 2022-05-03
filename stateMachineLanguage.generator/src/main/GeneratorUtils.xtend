@@ -9,6 +9,7 @@ import xtext.sML.FeatureExtraction
 import xtext.sML.Merge
 import xtext.sML.SML
 import xtext.sML.impl.SMLFactoryImpl
+import xtext.sML.Convolution
 
 class GeneratorUtils {
 		var SMLFactoryImpl factory = new SMLFactoryImpl()
@@ -27,13 +28,13 @@ class GeneratorUtils {
 		static List<String> convOrMerge = new ArrayList<String>(List.of("conv", "conv", "merge"));
 		static List<String> convOrEmpty = new ArrayList<String>(List.of("conv", "Empty"));
 		
-		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(4,5,6,7))
+		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(3,4,5))
 		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3))
-		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2,3))
-		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2,3))
+		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2))
+		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2))
 		
 		
-		def generate(String filename, String expDir){
+		def generate(String filename, String expDir, String DBName){
 		
 			
 			// init sentence
@@ -61,17 +62,42 @@ class GeneratorUtils {
 			for (var j=0; j<nbCla; j++){
 				archi.class_.add(classificationManagement)
 				
-			}
+			} 
+			
+			//var SML sml = test
 			
 			
 			// generate python file
-			var strStride = smlGenerator.generate(sml, filename, expDir);
+			var strStride = smlGenerator.generate(sml, filename, expDir, DBName);
 			
 			var strReturnList = new ArrayList<String>()
 			strReturnList.add(strAchitectureSimplify)
 			strReturnList.add(strStride)
 			
 			return strReturnList
+		}
+		
+		def test(){
+			var SML sml = factory.createSML()
+			
+			var Architecture archi = factory.createArchitecture()
+			archi.input = "input"
+			archi.output = "output"
+			sml.sml = archi
+			
+			var FeatureExtraction fe = factory.createFeatureExtraction()
+			fe.conv = factory.createConvolution
+			fe.conv.bnconv = "bnconv"
+			
+			var FeatureExtraction fe1 = factory.createFeatureExtraction()
+			fe1.drop = "drop"
+			
+			archi.fe.add(fe)
+			archi.fe.add(fe1)
+			
+			
+			
+			return sml
 		}
 		
 		def featureExtractionManagement(){
@@ -172,25 +198,25 @@ class GeneratorUtils {
 		def mergeManagement(boolean recu){
 			var merge = factory.createMerge
 			if(recu){
-				merge.mergeBody.add(mergeBodyManagement)
+				merge.mergeBody.add(mergeBodyManagement(1))
 			}else{
 				var nbMerge = nbOther.get(rand.nextInt(nbOther.size())); 
 				for(var i=0; i<nbMerge; i++){
-					merge.mergeBody.add(mergeBodyManagement)
+					merge.mergeBody.add(mergeBodyManagement(nbMerge))
 				}
 			}
 			
 			return merge
 		}
 		
-		def mergeBodyManagement(){
+		def mergeBodyManagement(int nbMerge){
 			var mergeBody = factory.createMergeBody
 			
 			// LEFT
 			mergeBody.left = leftManagement
 			
 			// RIGHT
-			mergeBody.right = rightManagement
+			mergeBody.right = rightManagement(nbMerge)
 			
 			return mergeBody
 		}
@@ -226,10 +252,12 @@ class GeneratorUtils {
 			return left
 		}
 		
-		def rightManagement(){
+		def rightManagement(int nbMerge){
 			var right = factory.createRight
+			var strConvOrEmpty = ""
+			if(nbMerge > 1 ) strConvOrEmpty = "conv"
+			else strConvOrEmpty = convOrEmpty.get(rand.nextInt(convOrEmpty.size()))
 			
-			var strConvOrEmpty = convOrEmpty.get(rand.nextInt(convOrEmpty.size()))
 			var nb = nbOther.get(rand.nextInt(nbOther.size())); 
 			
 			if(strConvOrEmpty === "conv"){
@@ -259,7 +287,7 @@ class GeneratorUtils {
 				}
 			}else{
 				// === MERGE
-				var nbConv = nbOtherZero.get(rand.nextInt(nbOtherZero.size()))
+				var nbConv = nbOther.get(rand.nextInt(nbOther.size()))
 				var nbMerge = nbOther.get(rand.nextInt(nbOther.size())); 
 			
 			

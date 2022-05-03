@@ -40,21 +40,15 @@ epochs = 0
 try:
 	def getModel():
 		X_input = X = Input([32, 32, 3])
-		X = Conv2D(32, kernel_size=3, strides=1, activation='tanh', padding='valid')(X)
 		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = MaxPooling2D(pool_size=2, strides=2, padding='valid')(X)
+		X = Conv2D(16, kernel_size=5, strides=3, activation='selu', padding='valid')(X)
+		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = Conv2D(32, kernel_size=4, strides=3, activation='relu', padding='same')(X)
 		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(64, kernel_size=4, strides=3, activation='relu', padding='valid')(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(128, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = MaxPooling2D(pool_size=2, strides=2, padding='valid')(X)
-		X = Conv2D(256, kernel_size=2, strides=1, activation='tanh', padding='same')(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
+		X = Conv2D(48, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
+		X = AveragePooling2D(pool_size=3, strides=1, padding='valid')(X)
 
-		X = GlobalAveragePooling2D()(X)
-		X = Dropout(0.40)(X)
-		X = Dense(204, activation='relu')(X)
-		X = Dense(46, activation='tanh')(X)
+		X = GlobalMaxPooling2D()(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model

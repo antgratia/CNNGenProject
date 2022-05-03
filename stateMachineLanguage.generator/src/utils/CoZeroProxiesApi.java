@@ -9,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import xtext.sML.SML;
 
 public class CoZeroProxiesApi {
 
