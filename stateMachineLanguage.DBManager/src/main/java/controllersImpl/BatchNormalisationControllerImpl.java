@@ -6,27 +6,38 @@ import servicesImpl.BatchNormalisationServiceImpl;
 
 public class BatchNormalisationControllerImpl implements IBatchNormalisationController {
 	
-	BatchNormalisationServiceImpl batchNormalisationServiceImpl = new BatchNormalisationServiceImpl();
+	BatchNormalisationServiceImpl batchNormalisationService = new BatchNormalisationServiceImpl();
 
 	@Override
 	public Iterable<BatchNormalisation> findAll() {
-		return batchNormalisationServiceImpl.findAll();
+		return batchNormalisationService.findAll();
 	}
 
 	@Override
 	public BatchNormalisation find(Long id) {
-		return batchNormalisationServiceImpl.find(id);
+		return batchNormalisationService.find(id);
 	}
 
 	@Override
 	public void delete(Long id) {
-		batchNormalisationServiceImpl.delete(id);
+		batchNormalisationService.delete(id);
 		
 	}
 
 	@Override
 	public BatchNormalisation createOrUpdate(BatchNormalisation bn) {
-		return batchNormalisationServiceImpl.createOrUpdate(bn);
+		return batchNormalisationService.createOrUpdate(bn);
+	}
+
+	@Override
+	public BatchNormalisation findByLayerpos(int layerpos) {
+		try {
+			return batchNormalisationService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 

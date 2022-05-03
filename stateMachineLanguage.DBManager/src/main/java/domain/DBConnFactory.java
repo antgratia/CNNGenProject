@@ -60,10 +60,5 @@ public class DBConnFactory {
 		}
 		return conn;
 	}
-	
-
-	
-	public static void clearDB() throws SQLException{
-	}
 
 }

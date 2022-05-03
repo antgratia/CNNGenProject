@@ -6,27 +6,38 @@ import servicesImpl.ConcatenateServiceImpl;
 
 public class ConcatenateControllerImpl implements IConcatenateController {
 	
-	ConcatenateServiceImpl concatenateServiceImpl = new ConcatenateServiceImpl();
+	ConcatenateServiceImpl concatenateService = new ConcatenateServiceImpl();
 
 	@Override
 	public Iterable<Concatenate> findAll() {
-		return concatenateServiceImpl.findAll();
+		return concatenateService.findAll();
 	}
 
 	@Override
 	public Concatenate find(Long id) {
-		return concatenateServiceImpl.find(id);
+		return concatenateService.find(id);
 	}
 
 	@Override
 	public void delete(Long id) {
-		concatenateServiceImpl.delete(id);
+		concatenateService.delete(id);
 		
 	}
 
 	@Override
 	public Concatenate createOrUpdate(Concatenate concat) {
-		return concatenateServiceImpl.createOrUpdate(concat);
+		return concatenateService.createOrUpdate(concat);
+	}
+
+	@Override
+	public Concatenate findByLayerpos(int layerpos) {
+		try {
+			return concatenateService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

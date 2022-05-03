@@ -29,6 +29,10 @@ public class Convolution extends Layer{
 		this.padding = padding;
 		this.fct_activation = fct_activation;
 	}
+
+	public Convolution(int layerPos) {
+		this.layerPos = layerPos;
+	}
 	
 	
 }

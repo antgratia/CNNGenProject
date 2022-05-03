@@ -28,11 +28,20 @@ public class PoolingControllerImpl implements IPoolingController {
 		
 	}
 
-
-
 	@Override
 	public Pooling createOrUpdate(Pooling pool) {
 		return poolingService.createOrUpdate(pool);
+	}
+
+	@Override
+	public Pooling findByLayerpos(int layerpos) {
+		try {
+			return poolingService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

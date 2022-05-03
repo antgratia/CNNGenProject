@@ -29,5 +29,16 @@ public class DenseControllerImpl implements IDenseController {
 		return denseService.createOrUpdate(dense);
 	}
 
+	@Override
+	public Dense findByLayerpos(int layerpos) {
+		try {
+			return denseService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 }

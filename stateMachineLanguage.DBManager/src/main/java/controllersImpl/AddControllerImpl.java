@@ -6,27 +6,38 @@ import servicesImpl.AddServiceImpl;
 
 public class AddControllerImpl implements IAddController {
 	
-	AddServiceImpl addServiceImpl = new AddServiceImpl();
+	AddServiceImpl addService = new AddServiceImpl();
 
 	@Override
 	public Iterable<Add> findAll() {
-		return addServiceImpl.findAll();
+		return addService.findAll();
 	}
 
 	@Override
 	public Add find(Long id) {
-		return addServiceImpl.find(id);
+		return addService.find(id);
 	}
 
 	@Override
 	public void delete(Long id) {
-		addServiceImpl.delete(id);
+		addService.delete(id);
 		
 	}
 
 	@Override
 	public Add createOrUpdate(Add add) {
-		return addServiceImpl.createOrUpdate(add);
+		return addService.createOrUpdate(add);
+	}
+
+	@Override
+	public Add findByLayerpos(int layerpos) {
+		try {
+			return addService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

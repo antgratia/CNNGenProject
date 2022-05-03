@@ -32,4 +32,15 @@ public class ConvolutionControllerImpl implements IConvolutionController{
 		return convService.createOrUpdate(convolution);
 	}
 
+	@Override
+	public Convolution findByLayerpos(int layerpos) {
+		try {
+			return convService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

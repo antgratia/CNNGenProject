@@ -12,9 +12,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Concatenate extends Layer {
+public class Output extends Layer {
 	
-	public Concatenate(int layerPos) {
+	public Output(int layerPos) {
 		this.layerPos = layerPos;
 	}
 

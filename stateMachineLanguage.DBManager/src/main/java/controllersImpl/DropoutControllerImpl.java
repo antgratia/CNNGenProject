@@ -29,6 +29,19 @@ public class DropoutControllerImpl implements IDropoutController {
 		return dropoutService.createOrUpdate(dropout);
 	}
 
+	@Override
+	public Dropout findByLayerpos(int layerpos) {
+		try {
+			return dropoutService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+
+	
 	
 
 }

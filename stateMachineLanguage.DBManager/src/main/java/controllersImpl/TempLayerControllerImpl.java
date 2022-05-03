@@ -29,4 +29,15 @@ public class TempLayerControllerImpl implements ITempLayerController {
 		return tempLayerService.createOrUpdate(tempLayer);
 	}
 
+	@Override
+	public TempLayer findByLayerpos(int layerpos) {
+		try {
+			return tempLayerService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

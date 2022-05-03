@@ -29,4 +29,15 @@ public class IntersticeControllerImpl implements IIntersticeController {
 		return intersticeService.createOrUpdate(interstice);
 	}
 
+	@Override
+	public Interstice findByLayerpos(int layerpos) {
+		try {
+			return intersticeService.findByLayerpos(layerpos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

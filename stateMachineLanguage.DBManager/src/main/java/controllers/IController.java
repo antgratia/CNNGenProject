@@ -9,4 +9,6 @@ public interface IController<T> {
 	void delete(Long id);
 
 	T createOrUpdate(T object);
+	
+	T findByLayerpos(int layerpos);
 }
