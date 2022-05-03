@@ -1,21 +1,27 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.Random;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.EList;
 
-import domain.*;
+import domain.bk.Add;
+import domain.bk.BatchNormalisation;
+import domain.bk.Concatenate;
+import domain.bk.Dense;
+import domain.bk.Dropout;
+import domain.bk.Input;
+import domain.bk.Layer;
+import domain.bk.LayerInterface;
+import domain.bk.Output;
+import domain.bk.Pooling;
+import domain.bk.TempLayer;
 import lombok.Data;
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
@@ -220,7 +226,7 @@ public class ArchitectureGraph {
 	// handle convolutionnal layer
 	private LayerInterface gestionConv(Convolution conv, LayerInterface prevLayer) throws Exception {
 		if(conv.getConv() != null) {
-			domain.Convolution LCconv = new domain.Convolution(layerPos);
+			domain.bk.Convolution LCconv = new domain.bk.Convolution(layerPos);
 			
 			this.addEdge(prevLayer, LCconv);
 			this.addCell(LCconv);
@@ -234,7 +240,7 @@ public class ArchitectureGraph {
 			this.addCell(bn);
 			layerPos++;
 			
-			domain.Convolution LCconv = new domain.Convolution(layerPos);
+			domain.bk.Convolution LCconv = new domain.bk.Convolution(layerPos);
 			
 			this.addEdge(getLastLayer(), LCconv);
 			this.addCell(LCconv);
@@ -242,7 +248,7 @@ public class ArchitectureGraph {
 			return LCconv;
 			
 		}else if(conv.getConvbn() != null) {
-			domain.Convolution LCconv = new domain.Convolution(layerPos);
+			domain.bk.Convolution LCconv = new domain.bk.Convolution(layerPos);
 			
 			this.addEdge(prevLayer, LCconv);
 			this.addCell(LCconv);
@@ -403,7 +409,7 @@ public class ArchitectureGraph {
 	private void gestionInter(Interstice inter) {
 		if (inter.getFg().getFlat() != null || inter.getFg().getGp() != null){
 			
-			domain.Interstice flatten = new domain.Interstice(layerPos);
+			domain.bk.Interstice flatten = new domain.bk.Interstice(layerPos);
 			
 			// add edge prevlayer -> flatten
 			this.addEdge(getLastLayer(), flatten);

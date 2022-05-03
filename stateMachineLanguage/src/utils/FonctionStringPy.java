@@ -11,7 +11,7 @@ public class FonctionStringPy {
 		return "import numpy as np\r\n"
 				+ "import os\r\n"
 				+ "from tensorflow import keras\r\n"
-				+ "from tensorflow.keras.callbacks import EarlyStopping\r\n"
+				+ "from tensorflow.keras.callbacks import EarlyStopping, TensorBoard\r\n"
 				+ "from tensorflow.keras.models import Sequential, Model,load_model\r\n"
 				+ "from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, GlobalAveragePooling2D, MaxPool2D, Concatenate, Dropout\r\n"
 				+ "from tensorflow.keras.initializers import glorot_uniform\r\n"
@@ -128,11 +128,15 @@ public class FonctionStringPy {
 		return String.format("\t\t%s = UpSampling2D(size = %d)(%s)", x1, kernel, x1);
 	}
 	
+	public String writeCallbackMethode(String tbDir) {
+		return "\tes = EarlyStopping(monitor='loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
+				+ "\ttb = TensorBoard(log_dir=\""+ tbDir+"\")\r\n"
+				+ "\tlist_cb = [es, tb]\n";
+	}
+	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\tes = tf.keras.callbacks.EarlyStopping(monitor='loss', verbose=1, restore_best_weights=True, patience=7)\r\n"
-				+ "\tlist_cb = [es]\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=1, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
+				+ "\thistory = model.fit(train_x, train_y, epochs=100, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
 				+ "\ttraining_time = time()-start\n"
 				+ "\tprint(model.evaluate(test_x, test_y))\n\n";
 	}

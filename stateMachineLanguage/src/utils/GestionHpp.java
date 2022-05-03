@@ -9,27 +9,29 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import domain.Add;
-import domain.BatchNormalisation;
-import domain.Concatenate;
-import domain.Convolution;
-import domain.Dense;
-import domain.Dropout;
-import domain.Input;
-import domain.Interstice;
-import domain.LayerInterface;
-import domain.Output;
-import domain.Pooling;
-import domain.TempLayer;
+
+import domain.bk.Add;
+import domain.bk.BatchNormalisation;
+import domain.bk.Concatenate;
+import domain.bk.Convolution;
+import domain.bk.Dense;
+import domain.bk.Dropout;
+import domain.bk.Input;
+import domain.bk.Interstice;
+import domain.bk.LayerInterface;
+import domain.bk.MergeSimple;
+import domain.bk.Output;
+import domain.bk.Pooling;
+import domain.bk.TempLayer;
+import lombok.Data;
 import models.ArchitectureGraph;
-import models.MergeSimple;
-import models.TypeLayerEnum;
+import views.ArchitectureGraphView;
 import xtext.sML.ConvDrop;
 import xtext.sML.Merge;
 import xtext.sML.MergeBody;
 import xtext.sML.MergeConv;
 
-
+@Data
 @SuppressWarnings("unused")
 public class GestionHpp {
 	
@@ -74,6 +76,10 @@ public class GestionHpp {
 		currentNBFilters = INPUT_FILTER;
 		entryParams = 0;
 		currentSizeImg = MAX_SIZE_IMG;
+	}
+	
+	public int getCurrentSizeImg(){
+		return currentSizeImg;
 	}
 	
 	// design singleton
@@ -901,5 +907,6 @@ public class GestionHpp {
 		}
 		
 	}
+	
 	
 }

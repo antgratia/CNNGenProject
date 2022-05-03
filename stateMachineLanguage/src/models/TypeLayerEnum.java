@@ -1,6 +1,0 @@
-package models;
-
-public enum TypeLayerEnum {
-		CONV,POOL,DROP,BN,IN,OUT,FLAT,GLOPOOL,DENSE,TEMP_ADD_CONCAT,ADD,CONCAT,TEMP_LAYER
-	
-}
