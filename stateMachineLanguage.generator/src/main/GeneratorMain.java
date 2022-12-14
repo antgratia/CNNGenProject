@@ -8,8 +8,8 @@ import java.time.Instant;
 public class GeneratorMain{
 	
 	
-	static String expDir = "tensorboard_1/";
-	static final int REPEAT = 10;
+	static String expDir = "test_3/";
+	static final int REPEAT = 1;
 	
 	// output dir
 	static String output_dir = "output/";
@@ -30,12 +30,15 @@ public class GeneratorMain{
     
     // json directory
     //static String jsonDir = "architecture_json/";
+    
 	
 	
 	public static void main(String[] args) {
 		
-		createFolder();
+		
+		//createFolder();
 		int total_time = 0;
+		
 		for (int i=1; i<(REPEAT+1); i++) {
 			GeneratorUtils tg = new GeneratorUtils();
 			String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";

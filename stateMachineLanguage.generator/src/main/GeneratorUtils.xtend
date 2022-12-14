@@ -9,9 +9,10 @@ import xtext.sML.FeatureExtraction
 import xtext.sML.Merge
 import xtext.sML.SML
 import xtext.sML.impl.SMLFactoryImpl
-import xtext.sML.Convolution
+import utils.CheckArchitectureValidity
 
 class GeneratorUtils {
+	
 		var SMLFactoryImpl factory = new SMLFactoryImpl()
 		
 		var SMLGenerator smlGenerator = new SMLGenerator()
@@ -32,6 +33,8 @@ class GeneratorUtils {
 		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3))
 		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2))
 		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2))
+	
+		CheckArchitectureValidity cav
 		
 		
 		def generate(String filename, String expDir, String DBName){
@@ -47,7 +50,6 @@ class GeneratorUtils {
 			archi.output = "output"
 			sml.sml = archi
 			
-			
 			// feature extration
 			var nbfe = nbFeatureExtraction.get(rand.nextInt(nbFeatureExtraction.size()));
 			for (var i=0; i<nbfe; i++){
@@ -62,42 +64,20 @@ class GeneratorUtils {
 			for (var j=0; j<nbCla; j++){
 				archi.class_.add(classificationManagement)
 				
-			} 
+			}
 			
-			//var SML sml = test
-			
+		
+			cav = new CheckArchitectureValidity()
+			cav.checkValidity(expDir + filename + ".SML", sml)
 			
 			// generate python file
-			var strStride = smlGenerator.generate(sml, filename, expDir, DBName);
+			var strStride = "" //smlGenerator.generate(sml, filename, expDir, DBName);
 			
 			var strReturnList = new ArrayList<String>()
 			strReturnList.add(strAchitectureSimplify)
 			strReturnList.add(strStride)
 			
 			return strReturnList
-		}
-		
-		def test(){
-			var SML sml = factory.createSML()
-			
-			var Architecture archi = factory.createArchitecture()
-			archi.input = "input"
-			archi.output = "output"
-			sml.sml = archi
-			
-			var FeatureExtraction fe = factory.createFeatureExtraction()
-			fe.conv = factory.createConvolution
-			fe.conv.bnconv = "bnconv"
-			
-			var FeatureExtraction fe1 = factory.createFeatureExtraction()
-			fe1.drop = "drop"
-			
-			archi.fe.add(fe)
-			archi.fe.add(fe1)
-			
-			
-			
-			return sml
 		}
 		
 		def featureExtractionManagement(){

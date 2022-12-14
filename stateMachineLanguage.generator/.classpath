@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="xtend-gen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.DBManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ui"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -10,9 +14,13 @@
 	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.common_2.23.0.v20210924-1718.jar"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.xtext.testing_2.25.0.v20210301-0843.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ui"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ide"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.DBManager"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/com.google.inject_5.0.1.v20210324-2015.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/com.google.guava_30.1.0.v20210127-2300.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/javax.inject_1.0.0.v20091030.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.antlr.runtime_3.2.0.v201101311130.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.xtext.xbase_2.26.0.v20220228-0758.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.xtext_2.26.0.v20220228-0751.jar"/>
+	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.mwe.utils_1.6.2.v20220118-1914.jar"/>
+	<classpathentry kind="lib" path="C:/java_external_lib/lombok.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

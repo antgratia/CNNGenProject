@@ -50,6 +50,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 	// python directory
     var py_dir = "architecture_py/"
+
     
    	/*
    	 * 
@@ -106,7 +107,6 @@ class SMLGenerator extends AbstractGenerator {
 	
 	// entry for generator
 	def String generate(SML sml, String filename, String expDir, String DBName) {	
-		
 		
 	
 		exp_dir = expDir

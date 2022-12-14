@@ -15,6 +15,7 @@ import xtext.sML.SML
 @ExtendWith(InjectionExtension)
 @InjectWith(SMLInjectorProvider)
 class SMLParsingTest {
+	
 	@Inject
 	ParseHelper<SML> parseHelper
 	

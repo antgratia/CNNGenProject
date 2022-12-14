@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
 
+import com.google.inject.Inject;
+
 import controllers.IAddController;
 import controllers.IBatchNormalisationController;
 import controllers.IConcatenateController;
@@ -88,6 +90,8 @@ public class ArchitectureGraphView {
 		this.graph = new ArrayList<>();
 		this.layerPos = 0;
 	}
+	
+	
 	
 	public void init(String dbName) {
 		dbQueryController = new DBQueryControllerImpl();
