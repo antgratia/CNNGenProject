@@ -2,6 +2,13 @@ package utils;
 
 import java.util.Locale;
 
+/*
+ * 
+ * Class for all python instruction to write in a python file
+ * 
+ */
+
+
 public class FonctionStringPy {
 	public FonctionStringPy () {
 		

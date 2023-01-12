@@ -56,7 +56,7 @@ public class LayerIntegrationTest {
 	public void updateConvTest() {
 		convCtrl.createOrUpdate(conv);
 		
-		conv.setFct_activation("gelu");
+		conv.setFctActivation("gelu");
 		conv.setImgSize(32);
 		
 		Convolution modifConv = convCtrl.createOrUpdate(conv);

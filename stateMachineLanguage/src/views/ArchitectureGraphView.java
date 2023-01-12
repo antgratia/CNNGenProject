@@ -84,11 +84,14 @@ public class ArchitectureGraphView {
 	private Layer lastLayer; 
 	private String str_add_or_concat;
 	
+	
+	// constructor
 	public ArchitectureGraphView(){
 		this.graph = new ArrayList<>();
 		this.layerPos = 0;
 	}
 	
+	// init the DB and all the controller
 	public void init(String dbName) {
 		dbQueryController = new DBQueryControllerImpl();
 		
@@ -109,6 +112,8 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	
+	// store the architecture in the DB
 	public void createGraph(Architecture archi) throws Exception {
 		
 		str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
@@ -153,8 +158,6 @@ public class ArchitectureGraphView {
 			
 			lastLayer.getNextLayer().add(output);
 			
-			//updateLayer(lastLayer);
-			
 			
 		}else{
 			throw new Exception("missing output");
@@ -179,9 +182,6 @@ public class ArchitectureGraphView {
 			  layers.add((Layer) i.get("n"));
 			}	
 		}
-		
-		
-		
 	}*/
 
 	private void gestionDense(EList<Classification> class_) throws Exception {
@@ -213,8 +213,6 @@ public class ArchitectureGraphView {
 			
 			// add edge prevLayer -> Dense
 			lastLayer.getNextLayer().add(dense);
-			
-
 			
 			layerPos++;
 			lastLayer = dense;
@@ -522,6 +520,7 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	// Persist the layer in the DB
 	private void createOrUpdateLayer(Layer layer) throws Exception {
 		if(layer instanceof domain.Convolution) convolutionController.createOrUpdate((domain.Convolution) layer);
 		else if (layer instanceof Pooling) poolingController.createOrUpdate((Pooling) layer);
@@ -537,6 +536,7 @@ public class ArchitectureGraphView {
 		else throw new Exception("ArchitectureGraphView updateLayer : forgot Layer ? " + layer.getClass());
 	}
 	
+	// persist the graph in the DB
 	private void PersiteGraphDB() throws Exception {
 		for (Layer layer: graph) {
 			createOrUpdateLayer(layer);
@@ -544,17 +544,25 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	// add hyperparameters value to architecture 
 	public void architectureHpp(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
 		// find last layer
 		graph.get(graph.size()-2).setLast(true);
 		
+		// set activation function
+		gestionHPPNeo4j.setStr_fctActivation(gestionHPPNeo4j.getFctActivation().get(rand.nextInt(gestionHPPNeo4j.getFctActivation().size())));
+		
+		
 		int indice = 0;
 		while (indice<graph.size()) {
+			// set hpp for normal layer
 			if(graph.get(indice).getNextLayer().size()<2) 
 				layerAndHppManagement(graph.get(indice)	,gestionHPPNeo4j);
+			// set hpp for residual connetion
 			else if (graph.get(indice).getNextLayer().size() == 2) 
 				gestionMerge(graph.get(indice), gestionHPPNeo4j, indice);
 			else 
+			// not handle
 				throw new Exception("ArchitectureGraphView architectureHpp: nb edges > 2 " + graph.get(indice));
 			
 			indice++;
@@ -562,18 +570,21 @@ public class ArchitectureGraphView {
 		
 		System.out.println("graph hpp saved");
 		
+		// save in DB
 		PersiteGraphDB();
 		
 		System.out.println("verifications...");
 
+		// verify the img size
 		verifyImgSize(gestionHPPNeo4j);
 		
 		System.out.println("1");
 		
+		// verify hpp filter
 	    verifyFilters();
 	    
 	    System.out.println("2");
-	    
+	    // save change in DB
 		PersiteGraphDB();
 		
 		System.out.println("verification clear");
@@ -581,7 +592,7 @@ public class ArchitectureGraphView {
 		
 	}
 	
-
+	// verify the img size
 	private void verifyImgSize(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
 		for(Layer cellAddOrConcat :graph.stream()
 												.filter(c-> c instanceof Add || c instanceof Concatenate)
@@ -815,7 +826,7 @@ public class ArchitectureGraphView {
 							|| layerRedu instanceof Pooling &&  rightWay.get(i) instanceof Pooling) {
 						if(layerRedu instanceof domain.Convolution) {
 							domain.Convolution conv = (domain.Convolution) layerRedu;
-							((domain.Convolution) rightWay.get(i)).setFct_activation(conv.getFct_activation());
+							((domain.Convolution) rightWay.get(i)).setFctActivation(conv.getFctActivation());
 							((domain.Convolution) rightWay.get(i)).setKernel(conv.getKernel());
 							((domain.Convolution) rightWay.get(i)).setPadding(conv.getPadding());
 							((domain.Convolution) rightWay.get(i)).setStride(conv.getStride());
@@ -850,7 +861,7 @@ public class ArchitectureGraphView {
 							conv.setKernel(poolRedu.getKernel());
 							conv.setPadding(poolRedu.getPadding());
 							conv.setStride(poolRedu.getStride());
-							conv.setFct_activation(gestionHPPNeo4j.getFctActivation().get(rand.nextInt(gestionHPPNeo4j.getFctActivation().size())));
+							conv.setFctActivation(gestionHPPNeo4j.getStr_fctActivation());
 							conv.setNbFilter(layerRedu.getNbFilter());
 
 							rightWay.get(i).setImgSize(GestionHPPNeo4j.calculCurrentSize(conv.getPadding(),conv.getKernel(), conv.getStride(), firstLayerLeft.getPrevLayer().get(0).getImgSize()));

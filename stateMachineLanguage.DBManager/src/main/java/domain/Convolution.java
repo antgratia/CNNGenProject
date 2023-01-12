@@ -19,15 +19,15 @@ public class Convolution extends Layer{
 	private int kernel;
 	private int stride;
 	private String padding;
-	private String fct_activation;
+	private String fctActivation;
 
 	public Convolution(int layerPos, boolean reduction, boolean last, int imgSize, int nbFilter, int kernel, int stride,
-			String padding, String fct_activation) {
+			String padding, String fctActivation) {
 		super(layerPos, reduction, last, imgSize, nbFilter);
 		this.kernel = kernel;
 		this.stride = stride;
 		this.padding = padding;
-		this.fct_activation = fct_activation;
+		this.fctActivation = fctActivation;
 	}
 
 	public Convolution(int layerPos) {
