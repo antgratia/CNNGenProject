@@ -23,3 +23,5 @@
 hs_err_pid*
 
 *.ipynb_checkpoints
+
+stateMachineLanguage.generator/output/
