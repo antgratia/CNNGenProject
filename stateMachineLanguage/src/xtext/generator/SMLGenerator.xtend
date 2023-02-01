@@ -112,8 +112,8 @@ class SMLGenerator extends AbstractGenerator {
 	def void generate(SML sml, String filename, String expDir, String DBName) {	
 	
 		exp_dir = expDir
-		file_name = filename.split("/").get(3).split('.py').get(0)
-		
+		file_name = filename.split("/").last.split('.py').get(0)
+
 		mainCtrl = new MainController(DBName)	
 		
 		var archi = compile(sml.sml)

@@ -637,6 +637,7 @@ public class ArchitectureGraphView {
 		
 	}
 	
+	// verify filters
 	private void verifyFilters() throws Exception {
 		List<Layer> addList = graph.stream()
 								   .filter(c -> c instanceof Add)

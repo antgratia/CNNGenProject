@@ -20,8 +20,12 @@ public class GeneratorMain{
 	
 	// output dir
 	static String output_dir = "output/";
+	
 	// python directory
 	static String pyDir = "architecture_py/";
+	
+	// python directory
+	static String smlDir = "architecture_sml/";
 
     // log directory
     static String logDir = "architecture_log/";
@@ -75,13 +79,14 @@ public class GeneratorMain{
 			int total_time = 0;
 			for (int i=1; i<(repeat+1); i++) {
 				GeneratorUtils gu = new GeneratorUtils();
-				String filename = output_dir + pyDir+ expDir + "architecture_"+i+".py";
+				String pyFilename = output_dir + pyDir + expDir + "architecture_"+i+".py";
+				String smlFilename = output_dir + smlDir + expDir + "architecture_"+i+".sml";
 				System.out.println("Random Generation no : " + i);
 				Instant start = Instant.now();
 				String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+i;
-				gu.generate(filename, expDir, DBName);
+				gu.generate(pyFilename, smlFilename, expDir, DBName);
 				Instant end = Instant.now();
-				System.out.println(filename + " generate");
+				System.out.println(pyFilename + " generate");
 				Duration timeElapsed = Duration.between(start, end);
 				total_time += timeElapsed.toMillis();
 				System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds\n");
@@ -92,7 +97,6 @@ public class GeneratorMain{
 			
 			
 		}else if(args.length == 3) {
-			createFolder();
 			
 			if(args[0] != "") expDir = args[0];
 			else {
@@ -111,14 +115,16 @@ public class GeneratorMain{
 				System.exit(1);
 			}
 			
+			createFolder();
 			GeneratorUtils gu = new GeneratorUtils();
-			String filename = output_dir + pyDir+ expDir + "architecture_"+nb+".py";
+			String pyFilename = output_dir + pyDir + expDir + "architecture_"+nb+".py";
+			String smlFilename = output_dir + smlDir + expDir + "architecture_"+nb+".sml";
 			System.out.println("Create Architecture no : " + nb);
 			Instant start = Instant.now();
 			String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+nb;
-			gu.generate(filename, expDir, DBName, args[2]);
+			gu.generate(pyFilename, smlFilename, expDir, DBName, args[2]);
 			Instant end = Instant.now();
-			System.out.println(filename + " generate");
+			System.out.println(pyFilename + " generate");
 			Duration timeElapsed = Duration.between(start, end);
 			System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds\n");
 			
@@ -145,6 +151,9 @@ public class GeneratorMain{
 		if(!folder.exists()) folder.mkdirs();
 		
 		folder = new File(output_dir+tensorboardDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+smlDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
 		//folder = new File(output_dir+jsonDir+expDir);

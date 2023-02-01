@@ -1,10 +1,12 @@
 package utils;
 
 import com.google.common.base.Objects;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import xtext.generator.SMLGenerator;
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
@@ -52,7 +54,7 @@ public class GeneratorUtils {
   
   private CheckArchitectureValidity cav;
   
-  public void generate(final String filename, final String expDir, final String DBName) {
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName) {
     try {
       SML sml = this.factory.createSML();
       Architecture archi = this.factory.createArchitecture();
@@ -70,20 +72,28 @@ public class GeneratorUtils {
       }
       CheckArchitectureValidity _checkArchitectureValidity = new CheckArchitectureValidity();
       this.cav = _checkArchitectureValidity;
-      this.cav.checkValidity(((expDir + filename) + ".SML"), sml);
-      this.smlGenerator.generate(sml, filename, expDir, DBName);
+      String strSML = this.cav.checkValidity(smlFilename, sml);
+      PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
+      writer.println(strSML);
+      writer.close();
+      this.smlGenerator.generate(sml, pyFilename, expDir, DBName);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void generate(final String filename, final String expDir, final String DBName, final String strSML) {
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final String strSML) {
     try {
       CheckArchitectureValidity _checkArchitectureValidity = new CheckArchitectureValidity();
       this.cav = _checkArchitectureValidity;
       this.cav.checkValidity(strSML);
       ConvertSML csml = new ConvertSML();
       SML sml = csml.stringToSML(strSML);
+      InputOutput.<String>println(smlFilename);
+      PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
+      writer.println(strSML);
+      writer.close();
+      this.smlGenerator.generate(sml, pyFilename, expDir, DBName);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

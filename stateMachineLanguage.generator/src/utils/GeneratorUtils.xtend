@@ -10,6 +10,7 @@ import xtext.sML.FeatureExtraction
 import xtext.sML.Merge
 import xtext.sML.SML
 import xtext.sML.impl.SMLFactoryImpl
+import java.io.PrintWriter
 
 class GeneratorUtils {
 	
@@ -35,7 +36,7 @@ class GeneratorUtils {
 		CheckArchitectureValidity cav;
 		
 		// generate a random architecture valid and create the py file
-		def generate(String filename, String expDir, String DBName){
+		def generate(String pyFilename, String smlFilename, String expDir, String DBName){
 		
 			
 			// init sentence
@@ -68,28 +69,38 @@ class GeneratorUtils {
 			//var SML sml = test
 			
 			cav = new CheckArchitectureValidity()
-			cav.checkValidity(expDir + filename + ".SML", sml)
+			var strSML = cav.checkValidity(smlFilename, sml)
+			
+			var writer = new PrintWriter(smlFilename, "UTF-8");
+			writer.println(strSML);
+			writer.close();
 			
 			
 			// generate python file
-			smlGenerator.generate(sml, filename, expDir, DBName);
+			smlGenerator.generate(sml, pyFilename, expDir, DBName);
 			
 
 		}
 		
 		// generate a random architecture valid and create the py file
-		def generate(String filename, String expDir, String DBName, String strSML){
+		def generate(String pyFilename, String smlFilename, String expDir, String DBName, String strSML){
 			
 			// verify
 			cav = new CheckArchitectureValidity()
-			cav.checkValidity(strSML)		
+			cav.checkValidity(strSML)
 			
 			// convert into SML
 			var csml = new ConvertSML()
 			var sml = csml.stringToSML(strSML)
 			
+			println(smlFilename)
+			
+			var writer = new PrintWriter(smlFilename, "UTF-8");
+			writer.println(strSML);
+			writer.close();
+			
 			// generate python file
-			//smlGenerator.generate(sml, filename, expDir, DBName);
+			smlGenerator.generate(sml, pyFilename, expDir, DBName);
 			
 		}
 		

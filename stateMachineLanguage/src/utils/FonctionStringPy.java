@@ -136,14 +136,14 @@ public class FonctionStringPy {
 	}
 	
 	public String writeCallbackMethode(String tbDir) {
-		return "\tes = EarlyStopping(monitor='loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
-				+ "\ttb = TensorBoard(log_dir=\""+ tbDir+"\")\r\n"
+		return "\tes = EarlyStopping(monitor='val_loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
+				+ "\ttb = TensorBoard(log_dir=\""+ tbDir +"\")\r\n"
 				+ "\tlist_cb = [es, tb]\n";
 	}
 	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=100, batch_size=64, validation_split=0.3, callbacks=list_cb)\n"
+				+ "\thistory = model.fit(train_x, train_y, epochs=5, batch_size=64, validation_split=0.2, callbacks=list_cb)\n"
 				+ "\ttraining_time = time()-start\n"
 				+ "\tprint(model.evaluate(test_x, test_y))\n\n";
 	}

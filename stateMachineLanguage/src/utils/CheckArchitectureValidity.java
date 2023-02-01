@@ -44,7 +44,7 @@ public class CheckArchitectureValidity {
 	 * 
 	 */
 
-	public void checkValidity(String file, SML sml) throws IOException {
+	public String checkValidity(String file, SML sml) throws IOException {
 
 		String smlArchi = SMLToString(sml.getSml());
 
@@ -57,6 +57,8 @@ public class CheckArchitectureValidity {
 		r.load(new StringInputStream(smlArchi), null);
 				
 		System.out.println(r.getErrors());
+		
+		return smlArchi;
 	}
 	
 	/*
