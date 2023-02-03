@@ -12,12 +12,17 @@ import java.util.stream.Collectors;
 
 import domain.*;
 import lombok.Data;
-import models.ArchitectureGraph;
 import views.ArchitectureGraphView;
 import xtext.sML.ConvDrop;
 import xtext.sML.Merge;
 import xtext.sML.MergeBody;
 import xtext.sML.MergeConv;
+
+/*
+ * 
+ * Class handle all the value of HPP
+ * 
+ */
 
 @Data
 @SuppressWarnings("unused")
@@ -36,7 +41,7 @@ public class GestionHPPNeo4j {
 	private static List<Integer> stride = new ArrayList<Integer>(List.of(1,2,3,4));
 	private static List<String> padding = new ArrayList<String>(List.of("same","valid"));
 		// hpp Convolution supp
-	private List<String> fctActivation = new ArrayList<String>(List.of("relu","selu","tanh"));
+	private List<String> fctActivation = new ArrayList<String>(List.of("relu","selu","tanh", "gelu"));
 	//private int currentNBFilters;
 	private static final int INPUT_FILTER= 3;
 	private static final int INIT_NB_FILTER = 16;
@@ -55,6 +60,7 @@ public class GestionHPPNeo4j {
 	private static List<Double> compressFactor = new ArrayList<Double>(List.of(0.5,0.6,0.7,0.8,0.9));
 	
 	private static String str_add_or_concat = "";
+	private String str_fctActivation = "";
 	
 	private static Random rand = new Random();
 	
@@ -72,6 +78,7 @@ public class GestionHPPNeo4j {
 		return INPUT_FILTER;
 	}
 	
+	// set HPP for convolution layer
 	public void gestionConvolution(Convolution conv, boolean reduction){
 		
 		if(reduction) {
@@ -90,10 +97,12 @@ public class GestionHPPNeo4j {
 		
 		
 		
-		conv.setFct_activation(fctActivation.get(rand.nextInt(fctActivation.size())));
+		conv.setFctActivation(str_fctActivation);
 			
 	}
 	
+	
+	// set HPP for pooling layer
 	public void gestionPooling(Pooling pool, boolean reduction) {
 		if(reduction) {
 			optimisationKernelPaddingStride(pool);
@@ -108,14 +117,17 @@ public class GestionHPPNeo4j {
 		}
 	}
 
+	// set HPP for Dropout layer
 	public void gestionDropout(Dropout drop) {
 		drop.setDropoutRate(dropoutRate.get(rand.nextInt(dropoutRate.size())));
 	}
 
+	// set Hpp for Batch Normalization Layer
 	public void gestionBN(BatchNormalisation bn) {
 		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
 	}
 
+	// set HPP for Dense layer
 	public void gestionDense(Dense dense, boolean isLast) {
 		if(entryParams == 0) entryParams = currentSizeImg*currentSizeImg*dense.getPrevLayer().get(0).getNbFilter();
 		
@@ -130,13 +142,13 @@ public class GestionHPPNeo4j {
 				units = (int)(entryParams*Randomizer.generate(10, 80)/100);
 			}
 			dense.setUnits(units);
-			dense.setFctActivation(fctActivation.get(rand.nextInt(fctActivation.size())));
+			dense.setFctActivation(str_fctActivation);
 			entryParams = units;
 		}
 
 	}
 	
-	
+	// handle HPP kernel Padding Stride
 	private static void optimisationKernelPaddingStride(Layer layer) {
 		
 		String pad = padding.get(rand.nextInt(padding.size()));
@@ -201,6 +213,7 @@ public class GestionHPPNeo4j {
 			 
 	}
 	
+	// reduce HPP filter
 	public int compressedFilter(int nbFilter) {
 		int nbFilterCompress = (int) (nbFilter*(compressFactor.get(rand.nextInt(compressFactor.size()))));
 		
@@ -210,6 +223,7 @@ public class GestionHPPNeo4j {
 		return nbFilterCompress;
 	}
 	
+	// multiple by 2 the filter
 	private int multFilterby2(int currentNBFilters) {
 		if(currentNBFilters == INPUT_FILTER) currentNBFilters = 8;
 		currentNBFilters *= 2;
@@ -221,6 +235,7 @@ public class GestionHPPNeo4j {
 		return currentNBFilters;
 	}
 	
+	// add fixe number to filter
 	private int addInitToFilter(int currentNBFilters) {
 		
 		if(currentNBFilters == INPUT_FILTER) currentNBFilters = 0;
@@ -234,6 +249,7 @@ public class GestionHPPNeo4j {
 		return currentNBFilters;
 	}
 	
+	// compute the current img size
 	public static int calculCurrentSize(String pad, int knl, int strd, int imgSize) {
 		int newCurrentSizeImg = 0;
 		if(pad == "valid") {
@@ -257,6 +273,7 @@ public class GestionHPPNeo4j {
 	}
 
 	
+	// compute the img size
 	public void recomputeSize(Layer layer, int startImgSize, int objectifImgSize) throws Exception {
 		
 		int newKnl = 0;
@@ -295,9 +312,7 @@ public class GestionHPPNeo4j {
 					throw new Exception("HPP invalide");
 				}
 			}
-		}
-		
-		
+		}		
 		
 		if(layer instanceof Convolution) {
 			((Convolution) layer).setKernel(newKnl);

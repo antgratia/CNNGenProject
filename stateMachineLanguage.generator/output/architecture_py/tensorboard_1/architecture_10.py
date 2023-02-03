@@ -42,165 +42,21 @@ try:
 		X_input = X = Input([32, 32, 3])
 
 		X1 = X
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
-		X = Conv2D(3, kernel_size=4, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
 		X = Conv2D(3, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = BatchNormalization(epsilon=0.00, axis=3)(X)
+		X = Conv2D(16, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.80)(X)
 
-		X1 = Conv2D(3, kernel_size=2, strides=1, activation='selu', padding='same')(X1)
+		X1 = Conv2D(16, kernel_size=1, strides=1, activation='relu', padding='same')(X1)
 		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X = Concatenate()([X, X1])
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(20, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-
-		X2 = X
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(20, kernel_size=3, strides=1, activation='relu', padding='same')(X)
-		X = Conv2D(20, kernel_size=2, strides=1, activation='tanh', padding='same')(X)
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
-
-		X = Concatenate()([X, X2])
-		X = Conv2D(28, kernel_size=2, strides=1, activation='tanh', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Dropout(0.50)(X)
-		X = Conv2D(28, kernel_size=2, strides=1, activation='relu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X1 = Conv2D(16, kernel_size=2, strides=1, activation='tanh', padding='same')(X1)
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X1 = Conv2D(16, kernel_size=3, strides=1, activation='relu', padding='same')(X1)
-		X = Concatenate()([X, X1])
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X1 = X
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(30, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(30, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-
-		X1 = Conv2D(30, kernel_size=1, strides=1, activation='tanh', padding='same')(X1)
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X1 = Conv2D(46, kernel_size=1, strides=1, activation='tanh', padding='same')(X1)
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X = Concatenate()([X, X1])
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(54, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-
-		X2 = X
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(54, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-
-		X3 = X
-		X = Conv2D(70, kernel_size=1, strides=1, activation='tanh', padding='valid')(X)
-		X = Conv2D(86, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-
-		X4 = X
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(102, kernel_size=1, strides=1, activation='tanh', padding='valid')(X)
-
-		X5 = X
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(102, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = Dropout(0.40)(X)
-		X = Conv2D(102, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-
-		X = Concatenate()([X, X5])
-
-		X5 = X
-		X = Conv2D(142, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(142, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
+		X = Add()([X, X1])
+		X = AveragePooling2D(pool_size=3, strides=1, padding='same')(X)
+		X = Conv2D(32, kernel_size=1, strides=1, activation='relu', padding='same')(X)
 		X = Dropout(0.20)(X)
-
-		X6 = X
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(142, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = Dropout(0.20)(X)
-		X = Conv2D(158, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-
-		X7 = X
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(128, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-
-		X8 = X
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(174, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-
-		X9 = X
-		X = Conv2D(174, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X = Concatenate()([X, X9])
-		X = Conv2D(128, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X = Concatenate()([X, X8])
-		X = Conv2D(154, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-
-		X7 = Conv2D(128, kernel_size=1, strides=1, activation='relu', padding='valid')(X7)
-		X7 = Conv2D(128, kernel_size=1, strides=1, activation='tanh', padding='same')(X7)
-		X = Concatenate()([X, X7])
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(154, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-
-		X6 = Conv2D(142, kernel_size=1, strides=1, activation='selu', padding='same')(X6)
-		X6 = BatchNormalization(epsilon=0.00, axis=3)(X6)
-		X6 = Conv2D(158, kernel_size=1, strides=1, activation='selu', padding='valid')(X6)
-		X = Concatenate()([X, X6])
-
-		X6 = X
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(32, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-
-		X6 = Conv2D(32, kernel_size=1, strides=1, activation='selu', padding='valid')(X6)
-		X6 = BatchNormalization(epsilon=0.00, axis=3)(X6)
-		X = Concatenate()([X, X6])
-		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
-
-		X5 = Conv2D(64, kernel_size=1, strides=1, activation='selu', padding='valid')(X5)
-		X5 = BatchNormalization(epsilon=0.00, axis=3)(X5)
-		X = Concatenate()([X, X5])
-
-		X4 = Conv2D(64, kernel_size=1, strides=1, activation='tanh', padding='same')(X4)
-		X4 = BatchNormalization(epsilon=0.00, axis=3)(X4)
-		X4 = Conv2D(32, kernel_size=1, strides=1, activation='relu', padding='same')(X4)
-		X = Concatenate()([X, X4])
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X3 = Conv2D(64, kernel_size=1, strides=1, activation='relu', padding='same')(X3)
-		X = Concatenate()([X, X3])
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-
-		X2 = BatchNormalization(epsilon=0.00, axis=3)(X2)
-		X2 = Conv2D(32, kernel_size=1, strides=1, activation='relu', padding='valid')(X2)
-		X2 = Conv2D(64, kernel_size=1, strides=1, activation='relu', padding='same')(X2)
-		X2 = BatchNormalization(epsilon=0.00, axis=3)(X2)
-		X = Concatenate()([X, X2])
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(128, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(128, kernel_size=1, strides=1, activation='tanh', padding='same')(X)
-
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X1 = Conv2D(46, kernel_size=1, strides=1, activation='relu', padding='same')(X1)
-		X = Concatenate()([X, X1])
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(128, kernel_size=1, strides=1, activation='relu', padding='same')(X)
-		X = Dropout(0.20)(X)
+		X = Conv2D(48, kernel_size=7, strides=1, activation='tanh', padding='valid')(X)
+		X = AveragePooling2D(pool_size=2, strides=2, padding='valid')(X)
 
 		X = GlobalMaxPooling2D()(X)
-		X = Dropout(0.10)(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model

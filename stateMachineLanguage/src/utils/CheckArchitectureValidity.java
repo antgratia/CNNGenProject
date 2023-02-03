@@ -2,8 +2,10 @@ package utils;
 
 import java.io.IOException;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.StringInputStream;
 
@@ -25,42 +27,82 @@ import xtext.sML.Right;
 import xtext.sML.SML;
 
 
+/*
+ * 
+ *	class that check the validity of a sentence
+ *
+ */
+
+
 public class CheckArchitectureValidity {
-	
+
 	private String path = "../../../stateMachineLanguage.generator/output/architecture_SML/test.SML";
 	
-	public void checkValidity(String file, SML sml) throws IOException {
+	/*
+	 * 
+	 * 	Check the validity of SML type
+	 * 
+	 */
+
+	public String checkValidity(String file, SML sml) throws IOException {
 
 		String smlArchi = SMLToString(sml.getSml());
-		
+
 		System.out.println(smlArchi);
-		
+
 		Injector injector = new SMLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-		
+
 		Resource r = rs.createResource(URI.createURI(path));
 		r.load(new StringInputStream(smlArchi), null);
+				
 		System.out.println(r.getErrors());
+		
+		return smlArchi;
+	}
+	
+	/*
+	 * 
+	 * Check validity of a string
+	 * 
+	 */
+	
+	public Object[] checkValidity(String smlArchi) throws IOException {
+
+
+		Injector injector = new SMLStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+
+		Resource r = rs.createResource(URI.createURI(path));
+		r.load(new StringInputStream(smlArchi), null);
+		
+		return(r.getErrors().toArray());
 	}
 
+	/*
+	 * 
+	 * 	convert type SML to string
+	 * 
+	 */
+	
 	private String SMLToString(Architecture architecture) {
-		
+
 		String smlArchi = "";
-		
+
 		if(architecture.getInput() != "") smlArchi += "input ";
-		
+
 		for(FeatureExtraction fe : architecture.getFe()) {
 			smlArchi += feToString(fe);
 		}
-		
+
 		if(architecture.getInter() != null)
 			smlArchi += interToString(architecture.getInter());
-		
+
 		for(Classification dense: architecture.getClass_())
 			smlArchi += classToString(dense);
-		
+
 		if(architecture.getOutput() != "") smlArchi += "output ";
-		
+
 		return smlArchi;
 	}
 
@@ -73,19 +115,18 @@ public class CheckArchitectureValidity {
 			// === MERGE
 			strFe = mergeToString(fe.getMerge());
 		}
-				
-				
+
+
 		// === DROPOUT
 		if(fe.getDrop() != null){
 			strFe += "dropout ";
 		}
-		
 		// === POOL		
 		if(fe.getPool() != null){
 			strFe += poolToString(fe.getPool());
 		}
-				
-				
+
+
 		return strFe;
 	}
 
@@ -102,45 +143,44 @@ public class CheckArchitectureValidity {
 		String strMerge = "[ ";
 		for(MergeBody mb: merge.getMergeBody())
 			strMerge += mergeBodyToString(mb);
-		
 		strMerge += "] ";
 		return strMerge;
 	}
 
 	private String mergeBodyToString(MergeBody mb) {
 		String strMb ="( ";
-		
+
 		strMb += leftToString(mb.getLeft());
-		
+
 		strMb += ", ";
-		
+
 		strMb += rightToString(mb.getRight());
-		
+
 		strMb += ") ";
 		return strMb;
 	}
 
 	private String leftToString(Left left) {
 		String strLeft = "";
-		
+
 		if(left.getP() != null)
 			strLeft += poolToString(left.getP());
-		
+
 		strLeft += convOrMergeToString(left.getCom());
-		
-		
+
+
 		if(left.getPool() != null)
 			strLeft += poolToString(left.getPool());
-		
+
 		return strLeft;
 	}
 
 	private String convOrMergeToString(ConvOrMerge com) {
 		String strCom = "";
-		
+
 		for(ConvDrop cd : com.getConvdrop())
 			strCom += convDropToString(cd);
-		
+
 		if(com.getMergeConv() != null) {
 			for (MergeConv mc: com.getMergeConv()) {
 				for(ConvDrop cd: mc.getConvdrop())
@@ -148,7 +188,6 @@ public class CheckArchitectureValidity {
 					strCom += mergeToString(mc.getMerge());
 			}
 		}
-		
 		return strCom;
 	}
 

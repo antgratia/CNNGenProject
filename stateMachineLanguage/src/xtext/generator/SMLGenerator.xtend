@@ -11,7 +11,6 @@ import domain.Dense
 import domain.Dropout
 import domain.Pooling
 import java.io.PrintWriter
-import models.ArchitectureGraph
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -30,6 +29,11 @@ import xtext.sML.MergeBody
 import xtext.sML.Right
 import xtext.sML.SML
 
+import xtext.sML.impl.SMLFactoryImpl
+import com.google.inject.Injector
+import xtext.SMLStandaloneSetup
+import org.eclipse.xtext.resource.XtextResourceSet
+
 /**
  * Generates code from your model files on save.
  * 
@@ -42,8 +46,6 @@ class SMLGenerator extends AbstractGenerator {
 	var GestionWay gestionWay = null //GestionWay.gestionWay
 	
 	MainController mainCtrl = null
-	
-	ArchitectureGraph graph = null
 	
 	ArchitectureGraphView graphview = null;
 	var currentPos = 1
@@ -92,6 +94,8 @@ class SMLGenerator extends AbstractGenerator {
 	
 	var exp_dir = ""
 	
+	var SMLFactoryImpl factory = new SMLFactoryImpl()
+	
 	//var str_stride = ""
     
 	// entry for ui
@@ -106,53 +110,27 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def String generate(SML sml, String filename, String expDir, String DBName) {	
-		
+	def void generate(SML sml, String filename, String expDir, String DBName) {	
 	
 		exp_dir = expDir
-		file_name = filename.split("/").get(3).split('.py').get(0)
-		
+		file_name = filename.split("/").last.split('.py').get(0)
+
 		mainCtrl = new MainController(DBName)	
 		
-		//println("smlgenerator:  " + sml.sml)
 		var archi = compile(sml.sml)
-		//println(archi)
+		
 		
 		var writer = new PrintWriter(filename, "UTF-8");
 		writer.println(archi);
 		writer.close();
-		return "" // str_stride
+		
 	}
 	
+	// create py file
 	private def compile(Architecture archi ){
 		
 		
 		gestionWay = mainCtrl.gestionWay
-		
-		/*
-		mainCtrl.createGraph(archi)
-	
-		
-		graph = mainCtrl.graph
-		
-		println("\n\n")
-		for(i: graph.graph.entrySet){
-			
-			println(i)
-			println("\n")
-		}
-		
-
-				
-		mainCtrl.getGraphHyperparameters
-		
-		println("\n\n")
-		for(i: graph.graph.entrySet){
-			
-			println(i)
-			println("\n")
-		} */
-		
 		
 		graphview = mainCtrl.graphview
 		
@@ -425,7 +403,7 @@ class SMLGenerator extends AbstractGenerator {
 		//var Convolution conv = graph.getByID(currentPos) as Convolution
 		// str_stride += conv.stride + " "
 		currentPos++
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
+		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitUpConv(String X_or_shortcut){
@@ -442,7 +420,7 @@ class SMLGenerator extends AbstractGenerator {
 		currentPos++
 		// str_stride += conv.stride + " "
 		
-		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut)
+		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut){
@@ -454,7 +432,7 @@ class SMLGenerator extends AbstractGenerator {
 		//var BatchNormalisation bn = graph.getByID(currentPos) as BatchNormalisation
 		currentPos++
 		// str_stride += conv.stride + " "
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fct_activation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
+		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
 	 

@@ -76,7 +76,7 @@ public class ArchitectureGraphView {
 	private ITempLayerController tempLayerController;
 
 	
-	
+	private final static int MAX_NB_VERIF = 10;
 	
 	private List<Layer> graph;
 	private int layerPos;
@@ -86,13 +86,14 @@ public class ArchitectureGraphView {
 	private Layer lastLayer; 
 	private String str_add_or_concat;
 	
+	
+	// constructor
 	public ArchitectureGraphView(){
 		this.graph = new ArrayList<>();
 		this.layerPos = 0;
 	}
 	
-	
-	
+	// init the DB and all the controller
 	public void init(String dbName) {
 		dbQueryController = new DBQueryControllerImpl();
 		
@@ -113,6 +114,8 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	
+	// store the architecture in the DB
 	public void createGraph(Architecture archi) throws Exception {
 		
 		str_add_or_concat = add_or_concat.get(rand.nextInt(add_or_concat.size()));
@@ -157,8 +160,6 @@ public class ArchitectureGraphView {
 			
 			lastLayer.getNextLayer().add(output);
 			
-			//updateLayer(lastLayer);
-			
 			
 		}else{
 			throw new Exception("missing output");
@@ -183,9 +184,6 @@ public class ArchitectureGraphView {
 			  layers.add((Layer) i.get("n"));
 			}	
 		}
-		
-		
-		
 	}*/
 
 	private void gestionDense(EList<Classification> class_) throws Exception {
@@ -217,8 +215,6 @@ public class ArchitectureGraphView {
 			
 			// add edge prevLayer -> Dense
 			lastLayer.getNextLayer().add(dense);
-			
-
 			
 			layerPos++;
 			lastLayer = dense;
@@ -526,6 +522,7 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	// Persist the layer in the DB
 	private void createOrUpdateLayer(Layer layer) throws Exception {
 		if(layer instanceof domain.Convolution) convolutionController.createOrUpdate((domain.Convolution) layer);
 		else if (layer instanceof Pooling) poolingController.createOrUpdate((Pooling) layer);
@@ -541,24 +538,33 @@ public class ArchitectureGraphView {
 		else throw new Exception("ArchitectureGraphView updateLayer : forgot Layer ? " + layer.getClass());
 	}
 	
-	private void PersiteGraphDB() throws Exception {
+	// persist the graph in the DB
+	public void PersiteGraphDB() throws Exception {
 		for (Layer layer: graph) {
 			createOrUpdateLayer(layer);
 		}
 	}
 	
 	
+	// add hyperparameters value to architecture 
 	public void architectureHpp(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
 		// find last layer
 		graph.get(graph.size()-2).setLast(true);
 		
+		// set activation function
+		gestionHPPNeo4j.setStr_fctActivation(gestionHPPNeo4j.getFctActivation().get(rand.nextInt(gestionHPPNeo4j.getFctActivation().size())));
+		
+		
 		int indice = 0;
 		while (indice<graph.size()) {
+			// set hpp for normal layer
 			if(graph.get(indice).getNextLayer().size()<2) 
 				layerAndHppManagement(graph.get(indice)	,gestionHPPNeo4j);
+			// set hpp for residual connetion
 			else if (graph.get(indice).getNextLayer().size() == 2) 
 				gestionMerge(graph.get(indice), gestionHPPNeo4j, indice);
 			else 
+			// not handle
 				throw new Exception("ArchitectureGraphView architectureHpp: nb edges > 2 " + graph.get(indice));
 			
 			indice++;
@@ -566,18 +572,21 @@ public class ArchitectureGraphView {
 		
 		System.out.println("graph hpp saved");
 		
+		// save in DB
 		PersiteGraphDB();
 		
 		System.out.println("verifications...");
 
+		// verify the img size
 		verifyImgSize(gestionHPPNeo4j);
 		
 		System.out.println("1");
 		
+		// verify hpp filter
 	    verifyFilters();
 	    
 	    System.out.println("2");
-	    
+	    // save change in DB
 		PersiteGraphDB();
 		
 		System.out.println("verification clear");
@@ -585,88 +594,130 @@ public class ArchitectureGraphView {
 		
 	}
 	
-
-	private void verifyImgSize(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
-		for(Layer cellAddOrConcat :graph.stream()
-												.filter(c-> c instanceof Add || c instanceof Concatenate)
-												.sorted(Comparator.comparingInt(Layer::getLayerPos))
-												.collect(Collectors.toList())) {
-			
-			List<Layer> listEdges = cellAddOrConcat.getPrevLayer();
-			
-			if(listEdges.get(0).getImgSize() < listEdges.get(1).getImgSize()) {
-				// right way don't reduce enough 
-				Layer findConv = listEdges.get(1);
-				while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-					if(findConv instanceof Input) throw new Exception("ArchitectureGraphView verifyImgSize: can't find conv or pool");
-					findConv = findConv.getPrevLayer().get(0);
-				}
+	// verify the img size
+	public void verifyImgSize(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
+		boolean verify = true;
+		int nb_verif = 0;
+		while(verify && nb_verif < MAX_NB_VERIF) {
+			verify = false;
+			for(Layer cellAddOrConcat :graph.stream()
+													.filter(c-> c instanceof Add || c instanceof Concatenate)
+													.sorted(Comparator.comparingInt(Layer::getLayerPos))
+													.collect(Collectors.toList())) {
 				
-				if(findConv instanceof domain.Convolution) {
-					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+				List<Layer> listEdges = cellAddOrConcat.getPrevLayer();
+				
+				if(listEdges.get(0).getImgSize() < listEdges.get(1).getImgSize()) {
+					// right way don't reduce enough 
+					Layer findConv = listEdges.get(1);
+					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
+						if(findConv instanceof Input) throw new Exception("ArchitectureGraphView verifyImgSize: can't find conv or pool");
+						findConv = findConv.getPrevLayer().get(0);
+					}
 					
-				}else if (findConv instanceof Pooling){
-					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+					if(findConv instanceof domain.Convolution) {
+						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+						gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+						
+					}else if (findConv instanceof Pooling){
+						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+						gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+						
+					}else throw new Exception("ArchitectureGraphView verifyImgSize: not possible ");
 					
-				}else throw new Exception("ArchitectureGraphView verifyImgSize: not possible ");
-			}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
-				// right way reduce too much
-				Layer findConv = listEdges.get(0);
-				while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-					if(findConv instanceof Input) throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
-					findConv = findConv.getPrevLayer().get(0);
+					// propagation of img change
+					while( !(findConv instanceof Output) && (findConv.getNextLayer().get(0).getId() != cellAddOrConcat.getId())) {
+						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
+						findConv = findConv.getNextLayer().get(0);
+					}
+					
+					verify = true;
+				}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
+					// right way reduce too much
+					Layer findConv = listEdges.get(0);
+					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
+						if(findConv instanceof Input) throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
+						findConv = findConv.getPrevLayer().get(0);
+					}
+					
+					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
+					
+					// propagation of img change
+					while(!(findConv instanceof Output) && (findConv.getNextLayer().get(0).getId() != cellAddOrConcat.getId())) {
+						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
+						findConv = findConv.getNextLayer().get(0);
+					}
+					
+					verify = true;
+				}else {
+					
 				}
-				
-				int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-				gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
-				
-				
-			}else {
-				// all good
 			}
+			nb_verif++;
 		}
 		
 	}
 	
-	private void verifyFilters() throws Exception {
-		List<Layer> addList = graph.stream()
-								   .filter(c -> c instanceof Add)
-								   .sorted(Comparator.comparingInt(Layer::getLayerPos))
-								   .collect(Collectors.toList());
-		for(Layer cell:addList) {
-			List<Layer> edge = cell.getPrevLayer()
-					.stream()
-					.sorted(Comparator.comparingInt(Layer::getLayerPos)
-							.reversed())
-					.collect(Collectors.toList());
-			
-			Layer lastLayerRight = edge.get(0);
-			Layer lastLayerLeft = edge.get(1);
-			
-				
-			if(lastLayerRight.getNbFilter() != lastLayerLeft.getNbFilter()) {
+	// verify filters
+	public void verifyFilters() throws Exception {
+		boolean verif = true;
+		int nb_verif = 0;
+		while (verif && nb_verif < MAX_NB_VERIF) {
+			verif = false;
+			for(Layer cellAdd :graph.stream()
+									.filter(c-> c instanceof Add)
+									.sorted(Comparator.comparingInt(Layer::getLayerPos))
+									.collect(Collectors.toList())) {
 				
 				
-				Layer lastConvRight = lastLayerRight;
-				while(!(lastConvRight instanceof domain.Convolution)) {
-					lastConvRight = lastConvRight.getPrevLayer().stream()
-							.sorted(Comparator.comparingInt(Layer::getLayerPos)
-									.reversed())
-							.collect(Collectors.toList()).get(0);
-				}
 				
-				if(lastConvRight instanceof domain.Convolution) {
+				List<Layer> listEdges = cellAdd.getPrevLayer();
 					
-					((domain.Convolution)lastConvRight).setNbFilter(lastLayerLeft.getNbFilter());
-				}else {
-					throw new Exception("GestionHPP verifyFilters: conv not find");
+				if(listEdges.get(0).getNbFilter() != listEdges.get(1).getNbFilter()) {
+					
+					Layer lastLayerLeft = listEdges.get(0);
+					Layer lastLayerRight = listEdges.get(1);
+					int nbFilterLeft = listEdges.get(0).getNbFilter();
+					int nbFilterRight = listEdges.get(1).getNbFilter();
+					
+					while(!(lastLayerRight instanceof domain.Convolution) && !(lastLayerLeft instanceof domain.Convolution) 
+							&& !(lastLayerRight instanceof Input && lastLayerLeft instanceof Input)) {
+						
+						if(!(lastLayerRight instanceof Input)) {
+							lastLayerRight = lastLayerRight.getPrevLayer().get(0);
+						}
+						if(!(lastLayerLeft instanceof Input)) {
+							lastLayerLeft = lastLayerLeft.getPrevLayer().get(0);
+						}
+					}
+					
+					
+					if(lastLayerRight instanceof domain.Convolution) {
+						
+						lastLayerRight.setNbFilter(nbFilterLeft);
+						// propagation of img change
+						while(!(lastLayerRight instanceof Output) && (lastLayerRight.getNextLayer().get(0).getId() != cellAdd.getId()) ) {
+							lastLayerRight.getNextLayer().get(0).setNbFilter(lastLayerRight.getNbFilter());
+							lastLayerRight = lastLayerRight.getNextLayer().get(0);
+						}
+					}else if (lastLayerLeft instanceof domain.Convolution) {
+						lastLayerLeft.setNbFilter(nbFilterRight);
+						// propagation of filter change
+						while(!(lastLayerLeft instanceof Output) && (lastLayerLeft.getNextLayer().get(0).getId() != cellAdd.getId())) {
+							lastLayerLeft.getNextLayer().get(0).setNbFilter(lastLayerLeft.getNbFilter());
+							lastLayerLeft = lastLayerLeft.getNextLayer().get(0);
+						}
+					}else {
+						throw new Exception("GestionHPP verifyFilters: conv not find");
+					}					
+					
+					verif = true;
 				}
-				lastLayerRight.setNbFilter(lastLayerLeft.getNbFilter());
-				cell.setNbFilter(lastLayerLeft.getNbFilter());
+	
 			}
-
+			System.out.println(nb_verif);
+			nb_verif++;
 		}
 		
 	}
@@ -819,7 +870,7 @@ public class ArchitectureGraphView {
 							|| layerRedu instanceof Pooling &&  rightWay.get(i) instanceof Pooling) {
 						if(layerRedu instanceof domain.Convolution) {
 							domain.Convolution conv = (domain.Convolution) layerRedu;
-							((domain.Convolution) rightWay.get(i)).setFct_activation(conv.getFct_activation());
+							((domain.Convolution) rightWay.get(i)).setFctActivation(conv.getFctActivation());
 							((domain.Convolution) rightWay.get(i)).setKernel(conv.getKernel());
 							((domain.Convolution) rightWay.get(i)).setPadding(conv.getPadding());
 							((domain.Convolution) rightWay.get(i)).setStride(conv.getStride());
@@ -854,7 +905,7 @@ public class ArchitectureGraphView {
 							conv.setKernel(poolRedu.getKernel());
 							conv.setPadding(poolRedu.getPadding());
 							conv.setStride(poolRedu.getStride());
-							conv.setFct_activation(gestionHPPNeo4j.getFctActivation().get(rand.nextInt(gestionHPPNeo4j.getFctActivation().size())));
+							conv.setFctActivation(gestionHPPNeo4j.getStr_fctActivation());
 							conv.setNbFilter(layerRedu.getNbFilter());
 
 							rightWay.get(i).setImgSize(GestionHPPNeo4j.calculCurrentSize(conv.getPadding(),conv.getKernel(), conv.getStride(), firstLayerLeft.getPrevLayer().get(0).getImgSize()));

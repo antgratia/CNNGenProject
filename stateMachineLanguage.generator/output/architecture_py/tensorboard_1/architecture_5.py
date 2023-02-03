@@ -40,35 +40,36 @@ epochs = 0
 try:
 	def getModel():
 		X_input = X = Input([32, 32, 3])
+		X = Conv2D(16, kernel_size=2, strides=1, activation='selu', padding='valid')(X)
+		X = AveragePooling2D(pool_size=2, strides=1, padding='valid')(X)
 		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(16, kernel_size=7, strides=4, activation='tanh', padding='same')(X)
-		X = Dropout(0.50)(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(32, kernel_size=2, strides=1, activation='tanh', padding='valid')(X)
+		X = Conv2D(32, kernel_size=2, strides=2, activation='selu', padding='same')(X)
+		X = Conv2D(48, kernel_size=3, strides=1, activation='tanh', padding='valid')(X)
 		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
 
 		X1 = X
-		X = Conv2D(32, kernel_size=3, strides=2, activation='selu', padding='valid')(X)
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = Conv2D(48, kernel_size=4, strides=1, activation='selu', padding='same')(X)
+		X = Conv2D(48, kernel_size=5, strides=1, activation='tanh', padding='same')(X)
 		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Dropout(0.50)(X)
+		X = Dropout(0.40)(X)
 
-		X1 = BatchNormalization(epsilon=0.00, axis=3)(X1)
-		X1 = Conv2D(32, kernel_size=4, strides=1, activation='selu', padding='same')(X1)
-		X1 = Conv2D(48, kernel_size=2, strides=2, activation='selu', padding='valid')(X1)
-		X = Concatenate()([X, X1])
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(72, kernel_size=2, strides=1, activation='selu', padding='same')(X)
+		X2 = X
+		X = MaxPooling2D(pool_size=5, strides=1, padding='same')(X)
+		X = Conv2D(48, kernel_size=3, strides=1, activation='relu', padding='same')(X)
 		X = BatchNormalization(epsilon=0.00, axis=3)(X)
-		X = Conv2D(72, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Conv2D(48, kernel_size=3, strides=1, activation='tanh', padding='same')(X)
+
+		X2 = BatchNormalization(epsilon=0.00, axis=3)(X2)
+		X2 = Conv2D(48, kernel_size=3, strides=1, activation='relu', padding='same')(X2)
+		X2 = Conv2D(48, kernel_size=3, strides=1, activation='relu', padding='same')(X2)
+		X = Add()([X, X2])
 		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
 
-		X1 = Conv2D(48, kernel_size=1, strides=1, activation='relu', padding='same')(X1)
-		X = Concatenate()([X, X1])
+		X = Add()([X, X1])
+
+		X = Flatten()(X)
 		X = Dropout(0.01)(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X = GlobalAveragePooling2D()(X)
-		X = Dense(146, activation='tanh')(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model
