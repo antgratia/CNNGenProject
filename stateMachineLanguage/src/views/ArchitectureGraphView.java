@@ -74,7 +74,7 @@ public class ArchitectureGraphView {
 	private ITempLayerController tempLayerController;
 
 	
-	
+	private final static int MAX_NB_VERIF = 10;
 	
 	private List<Layer> graph;
 	private int layerPos;
@@ -537,7 +537,7 @@ public class ArchitectureGraphView {
 	}
 	
 	// persist the graph in the DB
-	private void PersiteGraphDB() throws Exception {
+	public void PersiteGraphDB() throws Exception {
 		for (Layer layer: graph) {
 			createOrUpdateLayer(layer);
 		}
@@ -593,88 +593,129 @@ public class ArchitectureGraphView {
 	}
 	
 	// verify the img size
-	private void verifyImgSize(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
-		for(Layer cellAddOrConcat :graph.stream()
-												.filter(c-> c instanceof Add || c instanceof Concatenate)
-												.sorted(Comparator.comparingInt(Layer::getLayerPos))
-												.collect(Collectors.toList())) {
-			
-			List<Layer> listEdges = cellAddOrConcat.getPrevLayer();
-			
-			if(listEdges.get(0).getImgSize() < listEdges.get(1).getImgSize()) {
-				// right way don't reduce enough 
-				Layer findConv = listEdges.get(1);
-				while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-					if(findConv instanceof Input) throw new Exception("ArchitectureGraphView verifyImgSize: can't find conv or pool");
-					findConv = findConv.getPrevLayer().get(0);
-				}
+	public void verifyImgSize(GestionHPPNeo4j gestionHPPNeo4j) throws Exception {
+		boolean verify = true;
+		int nb_verif = 0;
+		while(verify && nb_verif < MAX_NB_VERIF) {
+			verify = false;
+			for(Layer cellAddOrConcat :graph.stream()
+													.filter(c-> c instanceof Add || c instanceof Concatenate)
+													.sorted(Comparator.comparingInt(Layer::getLayerPos))
+													.collect(Collectors.toList())) {
 				
-				if(findConv instanceof domain.Convolution) {
-					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+				List<Layer> listEdges = cellAddOrConcat.getPrevLayer();
+				
+				if(listEdges.get(0).getImgSize() < listEdges.get(1).getImgSize()) {
+					// right way don't reduce enough 
+					Layer findConv = listEdges.get(1);
+					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
+						if(findConv instanceof Input) throw new Exception("ArchitectureGraphView verifyImgSize: can't find conv or pool");
+						findConv = findConv.getPrevLayer().get(0);
+					}
 					
-				}else if (findConv instanceof Pooling){
-					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+					if(findConv instanceof domain.Convolution) {
+						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+						gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+						
+					}else if (findConv instanceof Pooling){
+						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+						gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
+						
+					}else throw new Exception("ArchitectureGraphView verifyImgSize: not possible ");
 					
-				}else throw new Exception("ArchitectureGraphView verifyImgSize: not possible ");
-			}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
-				// right way reduce too much
-				Layer findConv = listEdges.get(0);
-				while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-					if(findConv instanceof Input) throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
-					findConv = findConv.getPrevLayer().get(0);
+					// propagation of img change
+					while( !(findConv instanceof Output) && (findConv.getNextLayer().get(0).getId() != cellAddOrConcat.getId())) {
+						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
+						findConv = findConv.getNextLayer().get(0);
+					}
+					
+					verify = true;
+				}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
+					// right way reduce too much
+					Layer findConv = listEdges.get(0);
+					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
+						if(findConv instanceof Input) throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
+						findConv = findConv.getPrevLayer().get(0);
+					}
+					
+					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
+					gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
+					
+					// propagation of img change
+					while(!(findConv instanceof Output) && (findConv.getNextLayer().get(0).getId() != cellAddOrConcat.getId())) {
+						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
+						findConv = findConv.getNextLayer().get(0);
+					}
+					
+					verify = true;
+				}else {
+					
 				}
-				
-				int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-				gestionHPPNeo4j.recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
-				
-				
-			}else {
-				// all good
 			}
+			nb_verif++;
 		}
 		
 	}
 	
 	// verify filters
-	private void verifyFilters() throws Exception {
-		List<Layer> addList = graph.stream()
-								   .filter(c -> c instanceof Add)
-								   .sorted(Comparator.comparingInt(Layer::getLayerPos))
-								   .collect(Collectors.toList());
-		for(Layer cell:addList) {
-			List<Layer> edge = cell.getPrevLayer()
-					.stream()
-					.sorted(Comparator.comparingInt(Layer::getLayerPos)
-							.reversed())
-					.collect(Collectors.toList());
-			
-			Layer lastLayerRight = edge.get(0);
-			Layer lastLayerLeft = edge.get(1);
-			
-				
-			if(lastLayerRight.getNbFilter() != lastLayerLeft.getNbFilter()) {
+	public void verifyFilters() throws Exception {
+		boolean verif = true;
+		int nb_verif = 0;
+		while (verif && nb_verif < MAX_NB_VERIF) {
+			verif = false;
+			for(Layer cellAdd :graph.stream()
+									.filter(c-> c instanceof Add)
+									.sorted(Comparator.comparingInt(Layer::getLayerPos))
+									.collect(Collectors.toList())) {
 				
 				
-				Layer lastConvRight = lastLayerRight;
-				while(!(lastConvRight instanceof domain.Convolution)) {
-					lastConvRight = lastConvRight.getPrevLayer().stream()
-							.sorted(Comparator.comparingInt(Layer::getLayerPos)
-									.reversed())
-							.collect(Collectors.toList()).get(0);
-				}
 				
-				if(lastConvRight instanceof domain.Convolution) {
+				List<Layer> listEdges = cellAdd.getPrevLayer();
 					
-					((domain.Convolution)lastConvRight).setNbFilter(lastLayerLeft.getNbFilter());
-				}else {
-					throw new Exception("GestionHPP verifyFilters: conv not find");
+				if(listEdges.get(0).getNbFilter() != listEdges.get(1).getNbFilter()) {
+					
+					Layer lastLayerLeft = listEdges.get(0);
+					Layer lastLayerRight = listEdges.get(1);
+					int nbFilterLeft = listEdges.get(0).getNbFilter();
+					int nbFilterRight = listEdges.get(1).getNbFilter();
+					
+					while(!(lastLayerRight instanceof domain.Convolution) && !(lastLayerLeft instanceof domain.Convolution) 
+							&& !(lastLayerRight instanceof Input && lastLayerLeft instanceof Input)) {
+						
+						if(!(lastLayerRight instanceof Input)) {
+							lastLayerRight = lastLayerRight.getPrevLayer().get(0);
+						}
+						if(!(lastLayerLeft instanceof Input)) {
+							lastLayerLeft = lastLayerLeft.getPrevLayer().get(0);
+						}
+					}
+					
+					
+					if(lastLayerRight instanceof domain.Convolution) {
+						
+						lastLayerRight.setNbFilter(nbFilterLeft);
+						// propagation of img change
+						while(!(lastLayerRight instanceof Output) && (lastLayerRight.getNextLayer().get(0).getId() != cellAdd.getId()) ) {
+							lastLayerRight.getNextLayer().get(0).setNbFilter(lastLayerRight.getNbFilter());
+							lastLayerRight = lastLayerRight.getNextLayer().get(0);
+						}
+					}else if (lastLayerLeft instanceof domain.Convolution) {
+						lastLayerLeft.setNbFilter(nbFilterRight);
+						// propagation of filter change
+						while(!(lastLayerLeft instanceof Output) && (lastLayerLeft.getNextLayer().get(0).getId() != cellAdd.getId())) {
+							lastLayerLeft.getNextLayer().get(0).setNbFilter(lastLayerLeft.getNbFilter());
+							lastLayerLeft = lastLayerLeft.getNextLayer().get(0);
+						}
+					}else {
+						throw new Exception("GestionHPP verifyFilters: conv not find");
+					}					
+					
+					verif = true;
 				}
-				lastLayerRight.setNbFilter(lastLayerLeft.getNbFilter());
-				cell.setNbFilter(lastLayerLeft.getNbFilter());
+	
 			}
-
+			System.out.println(nb_verif);
+			nb_verif++;
 		}
 		
 	}

@@ -1,5 +1,6 @@
+/controllers/
+/controllersImpl/
 /domain/
 /services/
 /servicesImpl/
-/controllers/
-/controllersImpl/
+/utils/

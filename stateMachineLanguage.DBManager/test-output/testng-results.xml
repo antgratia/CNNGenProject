@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="2" total="3" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2022-03-31T15:19:40 CEST" name="Default suite" finished-at="2022-03-31T15:19:41 CEST" duration-ms="1263">
+  <suite started-at="2023-02-02T13:48:04 CET" name="Default suite" finished-at="2023-02-02T13:48:10 CET" duration-ms="6032">
     <groups>
     </groups>
-    <test started-at="2022-03-31T15:19:40 CEST" name="Default test" finished-at="2022-03-31T15:19:41 CEST" duration-ms="1263">
-      <class name="controllerTest.DBQueryControllerTest">
-        <test-method is-config="true" signature="beforeTest()[pri:0, instance:controllerTest.DBQueryControllerTest@5524cca1]" started-at="2022-03-31T15:19:40 CEST" name="beforeTest" finished-at="2022-03-31T15:19:41 CEST" duration-ms="1135" status="PASS">
+    <test started-at="2023-02-02T13:48:04 CET" name="Default test" finished-at="2023-02-02T13:48:10 CET" duration-ms="6032">
+      <class name="stateMachineLanguage.DBManager.LayerIntegrationTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2023-02-02T13:48:04 CET" name="init" finished-at="2023-02-02T13:48:07 CET" duration-ms="3888" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- beforeTest -->
-        <test-method signature="countEdgesNodesTest()[pri:0, instance:controllerTest.DBQueryControllerTest@5524cca1]" started-at="2022-03-31T15:19:41 CEST" name="countEdgesNodesTest" finished-at="2022-03-31T15:19:41 CEST" duration-ms="106" status="PASS">
+        </test-method> <!-- init -->
+        <test-method signature="addEdgeConvPoolTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2023-02-02T13:48:07 CET" name="addEdgeConvPoolTest" finished-at="2023-02-02T13:48:08 CET" duration-ms="770" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- countEdgesNodesTest -->
-      </class> <!-- controllerTest.DBQueryControllerTest -->
+        </test-method> <!-- addEdgeConvPoolTest -->
+        <test-method signature="addEdgePoolBNTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2023-02-02T13:48:08 CET" name="addEdgePoolBNTest" finished-at="2023-02-02T13:48:09 CET" duration-ms="815" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addEdgePoolBNTest -->
+        <test-method signature="addnewEdgeConv()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2023-02-02T13:48:09 CET" name="addnewEdgeConv" finished-at="2023-02-02T13:48:09 CET" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addnewEdgeConv -->
+        <test-method signature="updateConvTest()[pri:0, instance:stateMachineLanguage.DBManager.LayerIntegrationTest@16eb3ea3]" started-at="2023-02-02T13:48:09 CET" name="updateConvTest" finished-at="2023-02-02T13:48:10 CET" duration-ms="496" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateConvTest -->
+      </class> <!-- stateMachineLanguage.DBManager.LayerIntegrationTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
