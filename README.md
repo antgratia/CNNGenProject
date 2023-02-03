@@ -2,13 +2,17 @@
 
 # StateMachineLanguage
 
+# Librairies
+- eclipse
+- xtext/xtend
+- lombok
+
 # Tree Description
 
 - Folders ide, ui, ui.tests auto generate by xtext no change apport
 
 - Folder utils contains 3 files 
     - FonctionStringPy contains all functions to translate grammar to python
-    - GestionHpp contains all the functions to manage the Hyperparameters
     - GestionHppNeo4j contains all the functions to manage the Hyperparameters using neo4j
     - GestionWay is used for the management of Merge word in grammar
 
@@ -33,3 +37,5 @@
         - architecture_log : history of the training or errors
         - architecture_py : python code
         - architecture_tb : tensorboard information
+        - architecture_sml : description of the architecture (grammar)
+        - emissions : emission informations
