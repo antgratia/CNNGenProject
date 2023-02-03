@@ -714,7 +714,6 @@ public class ArchitectureGraphView {
 				}
 	
 			}
-			System.out.println(nb_verif);
 			nb_verif++;
 		}
 		

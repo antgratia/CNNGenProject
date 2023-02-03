@@ -70,6 +70,8 @@ class SMLGenerator extends AbstractGenerator {
     
     var tensorboardDir = "../../architecture_tb/"
     
+    var emission_dir = "../../emissions/"
+    
        // csv directory
     static String csvDir = "../../architecture_csv/";
     
@@ -169,7 +171,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name);
 		
-		py_file += fsp.writeStartCodeCarbon(countryISOCode)
+		py_file += fsp.writeStartCodeCarbon(countryISOCode, file_name, emission_dir)
 		
 		py_file += fsp.writeTrain
 		

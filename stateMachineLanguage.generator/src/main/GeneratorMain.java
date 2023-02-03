@@ -39,6 +39,10 @@ public class GeneratorMain{
     // tensorboard directory
     static String tensorboardDir = "architecture_tb/";
     
+    // emssion Code Carbon output directory
+    static String emissionDir = "emissions/";
+    
+    
     // json directory
     //static String jsonDir = "architecture_json/";
 	
@@ -154,6 +158,9 @@ public class GeneratorMain{
 		if(!folder.exists()) folder.mkdirs();
 		
 		folder = new File(output_dir+smlDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(output_dir+emissionDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
 		//folder = new File(output_dir+jsonDir+expDir);
