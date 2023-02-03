@@ -40,6 +40,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class SMLGenerator extends AbstractGenerator {
+	
+	var countryISOCode = "BEL"
 
 	var fsp = new FonctionStringPy()
 	
@@ -68,6 +70,8 @@ class SMLGenerator extends AbstractGenerator {
     var png_dir = "../../architecture_img/"
     
     var tensorboardDir = "../../architecture_tb/"
+    
+    var emission_dir = "../../emissions/"
     
        // csv directory
     static String csvDir = "../../architecture_csv/";
@@ -152,11 +156,13 @@ class SMLGenerator extends AbstractGenerator {
 		
 		// write dataset cifar10
 		py_file += fsp.writecifar10Dataset
+		
+		// write glo variable
+		py_file += fsp.writeGlobalVariable
 				
 		// write init value 
-		py_file += fsp.writeInitValue()
+		py_file += fsp.writeInitValue
 		
-		//println(archi)
 		
 		// try	
     	py_file += "try:\n"
@@ -166,7 +172,13 @@ class SMLGenerator extends AbstractGenerator {
 		
 		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name);
 		
-		py_file += fsp.writeTrain()
+		py_file += fsp.writeStartCodeCarbon(countryISOCode, file_name, emission_dir)
+		
+		py_file += fsp.writeTrain
+		
+		py_file += fsp.writeStopCodeCarbon
+		
+		py_file += fsp.writeFlops
 		
 		py_file += fsp.gestionGood(log_dir + exp_dir, file_name)
 		

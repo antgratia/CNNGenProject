@@ -18,11 +18,13 @@ public class FonctionStringPy {
 		return "import numpy as np\r\n"
 				+ "import os\r\n"
 				+ "from tensorflow import keras\r\n"
-				+ "from tensorflow.keras.callbacks import EarlyStopping, TensorBoard\r\n"
+				+ "from tensorflow.keras.callbacks import Callback, EarlyStopping, TensorBoard\r\n"
 				+ "from tensorflow.keras.models import Sequential, Model,load_model\r\n"
 				+ "from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, GlobalAveragePooling2D, MaxPool2D, Concatenate, Dropout\r\n"
 				+ "from tensorflow.keras.initializers import glorot_uniform\r\n"
 				+ "from tensorflow.keras.utils import plot_model\r\n"
+				+ "from keras_flops import get_flops\r\n"
+				+ "from codecarbon import OfflineEmissionsTracker\r\n"
 				+ "import tensorflow as tf\r\n"
 				+ "import sys\r\n"
 				+ "import traceback\r\n"
@@ -57,6 +59,11 @@ public class FonctionStringPy {
 				+ "\n\n";
 	}
 	
+	public String writeGlobalVariable() {
+		return "batch_size = 64\n"
+				+ "nb_epochs = 5\n\n";
+	}
+	
 	public String writeInitValue() {
 		return "# init training time\r\n"
 				+ "training_time = 0\r\n"
@@ -71,6 +78,77 @@ public class FonctionStringPy {
 				+ "history = None\n"
 				+ "epochs = 0\n"
 				+ "\r\n\n";
+	}
+	
+	public String writeStartCodeCarbon(String country_iso_code, String file_name, String emission_dir) {
+		return "\t# start Emission tracker \n"
+				+ "\ttracker = OfflineEmissionsTracker(country_iso_code=\""+ country_iso_code +"\", log_level='error', output_file=\""+ file_name + "_emissions.csv\", output_dir=\""+ emission_dir+"\")\r\n"
+				+ "\ttracker.start()\n\n";
+	}
+	
+	public String writeStopCodeCarbon() {
+		return "\t# stop tracker \n"
+				+ "\temissions = tracker.stop()\n\n";
+	}
+	
+	public String writeFlops() {
+		return "\t # get number of flops\n"
+				+ "\tflops = get_flops(model, batch_size=batch_size)\n";
+	}
+	
+	public String writeFunctionEarlyStopingCarbon() {
+		return "class MyTrainingCallBack(Callback):\r\n"
+				+ "        def __init__(self, codecarbon_tracker):\r\n"
+				+ "            self.codecarbon_tracker = codecarbon_tracker\r\n"
+				+ "            pass\r\n"
+				+ "\r\n"
+				+ "        ## Q4: How to stop training in an epoch when we pass a energy cap?\r\n"
+				+ "        # Use the energy measured at section 1b as an energy cap for the\r\n"
+				+ "        # training \r\n"
+				+ "        # \r\n"
+				+ "        # Hint: variable to tell TF to stop training: self.model.stop_training\r\n"
+				+ "        # (True or False)       \r\n"
+				+ "        def on_epoch_end(self, epoch, logs=None):\r\n"
+				+ "            self.codecarbon_tracker.flush()\r\n"
+				+ "\r\n"
+				+ "            # Energy measured in the 1b run on my laptop \r\n"
+				+ "            energy_cap_kwh = 0.001071591612688175\r\n"
+				+ "            \r\n"
+				+ "            # Getting the total energy consumption from the tracker\r\n"
+				+ "            train_total_energy = self.codecarbon_tracker._total_energy.kWh\r\n"
+				+ "\r\n"
+				+ "            # Checking if we pass the energy cap at the end of the epoch\r\n"
+				+ "            if train_total_energy >= energy_cap_kwh:\r\n"
+				+ "                # command to tell TF to stop training\r\n"
+				+ "                self.model.stop_training = True            \r\n"
+				+ "\r\n"
+				+ "        ## Q5: How to stop training in a **batch** when we pass a energy cap?\r\n"
+				+ "        # Use the energy measured at section 1b as an energy cap for the\r\n"
+				+ "        # training\r\n"
+				+ "        #   \r\n"
+				+ "        # Useful resources: Custom callbacks:\r\n"
+				+ "        # https://www.tensorflow.org/guide/keras/custom_callback \r\n"
+				+ "        # \r\n"
+				+ "        # Hint: use self.codecarbon_tracker._measure_power_and_energy() instead\r\n"
+				+ "        # of self.codecarbon_tracker.flush() to avoid IO overhead\r\n"
+				+ "        ## Q6: What happens if you don't call _measure_power_and_energy() or flush()?\r\n"
+				+ "        def on_batch_end(self, batch, logs=None):\r\n"
+				+ "            # Energy measured in the 1b run on my laptop \r\n"
+				+ "            energy_cap_kwh = 0.001071591612688175\r\n"
+				+ "            \r\n"
+				+ "            # Actively calling the trackers's function to get energy values\r\n"
+				+ "            # Otherwise the tracker will get energy values only every 15 seconds\r\n"
+				+ "            # (default value). We could use flush but flush performs IO\r\n"
+				+ "            # operations and this would result in a larger overhead\r\n"
+				+ "            self.codecarbon_tracker._measure_power_and_energy()\r\n"
+				+ "\r\n"
+				+ "            # Getting the total energy consumption from the tracker\r\n"
+				+ "            train_total_energy = self.codecarbon_tracker._total_energy.kWh            \r\n"
+				+ "\r\n"
+				+ "            # Checking if we pass the energy cap at the end of the batch\r\n"
+				+ "            if train_total_energy >= energy_cap_kwh:\r\n"
+				+ "                # command to tell TF to stop training\r\n"
+				+ "                self.model.stop_training = True\n";
 	}
 	
 	public String writeInput(String shape, String x) {
@@ -138,12 +216,18 @@ public class FonctionStringPy {
 	public String writeCallbackMethode(String tbDir) {
 		return "\tes = EarlyStopping(monitor='val_loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
 				+ "\ttb = TensorBoard(log_dir=\""+ tbDir +"\")\r\n"
-				+ "\tlist_cb = [es, tb]\n";
+				+ "\tlist_cb = [es, tb]\n\n";
+	}
+	
+	public String writeCallbackMethodeCodeCarbon(String tbDir) {
+		return "\tes = EarlyStopping(monitor='val_loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
+				+ "\ttb = TensorBoard(log_dir=\""+ tbDir +"\")\r\n"
+				+ "\tlist_cb = [es, tb, MyTrainingCallBack(tracker)]\n\n";
 	}
 	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=5, batch_size=64, validation_split=0.2, callbacks=list_cb)\n"
+				+ "\thistory = model.fit(train_x, train_y, epochs=nb_epochs, batch_size=batch_size, validation_split=0.2, callbacks=list_cb)\n"
 				+ "\ttraining_time = time()-start\n"
 				+ "\tprint(model.evaluate(test_x, test_y))\n\n";
 	}
@@ -157,7 +241,7 @@ public class FonctionStringPy {
 			    + "\ttest_result_acc = model.evaluate(test_x, test_y)[1]\n"
 			    
 			    + "\n\t# save train result\n"
-			    + "\tlog_file.write('train result : ' + str(model.evaluate(test_x, test_y)))\n"
+			    + "\tlog_file.write('Train result : ' + str(model.evaluate(test_x, test_y)))\n"
 			    + "\tlog_file.write('History train result : ' + str(history.history))\n"
 			    + "\ttrain_result_loss = model.evaluate(train_x, train_y)[0]\n"
 			    + "\ttrain_result_acc = model.evaluate(train_x, train_y)[1]\n"
@@ -179,6 +263,7 @@ public class FonctionStringPy {
 	    		+ "\tresult_loss = \"Error\"\n"
 	    		+ "\tresult_acc = \"Error\"\n"
 	    		+ "\tepochs = 0\n"
+	    		+ "\tflops = 0\n"
 	    		+ "\thistory = None\n"
 	    		+ "\terror_file.close()\n\n";
 	}
@@ -189,21 +274,28 @@ public class FonctionStringPy {
 			   +"\twith file:\n"
 			   
 			   +"\t\t# identifying header \n"  
-			   +"\t\theader = ['file_name', 'training_time(s)', 'test_result_loss', 'test_result_acc', 'train_result_acc', 'train_result_loss', 'nb_layers', 'epochs']\n"
+			   +"\t\theader = ['File_name', 'Training_time(s)', 'Train_result_acc', 'Train_result_loss', 'Test_result_acc', 'Test_result_loss', 'Nb_layers', 'Epochs', "
+			   + "'Flops', 'CPU_energy_consumption' , 'GPU_energy_consumption', 'RAM_energy_consumption', 'Tot_energy_consumption', 'Emissions']\n"
 			   +"\t\twriter = csv.DictWriter(file, fieldnames = header)\n"
 			   +"\t\tif (history != None):\n"
 			   +"\t\t\tepochs = len(history.history['loss'])\n"
 			      
 			   +"\t\t# writing data row-wise into the csv file\n"
 			   +"\t\t# writer.writeheader()\n" 
-			   +"\t\twriter.writerow({'file_name' : '"+ file_name + "',\n"  
-			   +"                      'training_time(s)': training_time,  \n"
-			   +"                      'test_result_loss': test_result_loss,\n"
-			   +"                      'test_result_acc': test_result_acc,\n"
-			   +"                      'train_result_acc': train_result_acc,\n"
-			   +"                      'train_result_loss': train_result_loss,\n"
-			   +"                      'nb_layers': nb_layers,\n"
-			   +"                      'epochs' : epochs\n"
+			   +"\t\twriter.writerow({'File_name' : '"+ file_name + "',\n"  
+			   +"                      'Training_time(s)': training_time,  \n"
+			   +"                      'Train_result_acc': train_result_acc,\n"
+			   +"                      'Train_result_loss': train_result_loss,\n"
+			   +"                      'Test_result_acc': test_result_acc,\n"
+			   +"                      'Test_result_loss': test_result_loss,\n"
+			   +"                      'Nb_layers': nb_layers,\n"
+			   +"                      'Epochs' : epochs,\n"
+			   +"					   'Flops' : flops,\n"
+			   +"                      'CPU_energy_consumption' : tracker._total_cpu_energy.kWh,\n"
+			   +"                      'GPU_energy_consumption' : tracker._total_gpu_energy.kWh,\n"
+			   +"                      'RAM_energy_consumption' : tracker._total_ram_energy.kWh,\n"
+			   +"                      'Tot_energy_consumption' : tracker._total_energy.kWh,\n"
+			   +"                      'Emissions' : emissions\n"
 			   +"                      })\n"
 			   +"\t\tprint('add line into architecture_results.csv')\n"
 			   +"\tfile.close()\n";
