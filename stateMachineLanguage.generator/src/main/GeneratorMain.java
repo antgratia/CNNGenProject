@@ -40,7 +40,7 @@ public class GeneratorMain{
     static String tensorboardDir = "architecture_tb/";
     
     // emssion Code Carbon output directory
-    static String emissionDir = "emissions/";
+    static String emissionDir = "architecture_emissions/";
     
     
     // json directory

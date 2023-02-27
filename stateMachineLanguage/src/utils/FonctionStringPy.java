@@ -80,9 +80,9 @@ public class FonctionStringPy {
 				+ "\r\n\n";
 	}
 	
-	public String writeStartCodeCarbon(String country_iso_code, String file_name, String emission_dir) {
+	public String writeStartCodeCarbon(String country_iso_code, String file_name, String exp_dir, String emission_dir) {
 		return "\t# start Emission tracker \n"
-				+ "\ttracker = OfflineEmissionsTracker(country_iso_code=\""+ country_iso_code +"\", log_level='error', output_file=\""+ file_name + "_emissions.csv\", output_dir=\""+ emission_dir+"\")\r\n"
+				+ "\ttracker = OfflineEmissionsTracker(country_iso_code=\""+ country_iso_code +"\", log_level='error', output_file=\""+ file_name + "_emissions.csv\", output_dir=\""+ emission_dir+exp_dir+"\" )\r\n"
 				+ "\ttracker.start()\n\n";
 	}
 	
