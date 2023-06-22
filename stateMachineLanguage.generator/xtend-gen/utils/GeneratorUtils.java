@@ -2,7 +2,6 @@ package utils;
 
 import com.google.common.base.Objects;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -32,30 +31,48 @@ public class GeneratorUtils {
   
   private static Random rand = new Random();
   
-  private static List<String> flatOrGLo = new ArrayList<String>(List.<String>of("flatten", "global_avg_pooling", "global_max_pooling"));
+  private static List<String> flatOrGLo;
   
-  private static List<String> poolOrNot = new ArrayList<String>(List.<String>of("", "avg_pooling", "max_pooling"));
+  private static List<String> poolOrNot;
   
-  private static List<String> dropOrNot = new ArrayList<String>(List.<String>of("", "", "", "", "dropout"));
+  private static List<String> dropOrNot;
   
-  private static List<String> convs = new ArrayList<String>(List.<String>of("conv", "convbn", "bnconv"));
+  private static List<String> convs;
   
-  private static List<String> convOrMerge = new ArrayList<String>(List.<String>of("conv", "conv", "merge"));
+  private static List<String> convOrMerge;
   
-  private static List<String> convOrEmpty = new ArrayList<String>(List.<String>of("conv", "Empty"));
+  private static List<String> convOrEmpty;
   
-  private static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.<Integer>of(Integer.valueOf(3), Integer.valueOf(4), Integer.valueOf(5)));
+  private static List<Integer> nbFeatureExtraction;
   
-  private static List<Integer> nbDense = new ArrayList<Integer>(List.<Integer>of(Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3)));
+  private static List<Integer> nbDense;
   
-  private static List<Integer> nbOtherZero = new ArrayList<Integer>(List.<Integer>of(Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2)));
+  private static List<Integer> nbOtherZero;
   
-  private static List<Integer> nbOther = new ArrayList<Integer>(List.<Integer>of(Integer.valueOf(1), Integer.valueOf(2)));
+  private static List<Integer> nbOther;
   
   private CheckArchitectureValidity cav;
   
-  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName) {
+  public List<Integer> getconfig(final ProgramConfig programConfig) {
+    List<Integer> _xblockexpression = null;
+    {
+      GeneratorUtils.flatOrGLo = programConfig.getFlattenOrGlobalPool();
+      GeneratorUtils.poolOrNot = programConfig.getPoolingOrNot();
+      GeneratorUtils.dropOrNot = programConfig.getDropout();
+      GeneratorUtils.convs = programConfig.getConvolution();
+      GeneratorUtils.convOrEmpty = programConfig.getConvOrEmpty();
+      GeneratorUtils.convOrMerge = programConfig.getConvOrMerge();
+      GeneratorUtils.nbFeatureExtraction = programConfig.getNbFeatureExtraction();
+      GeneratorUtils.nbDense = programConfig.getNbDense();
+      GeneratorUtils.nbOtherZero = programConfig.getNbOtherZero();
+      _xblockexpression = GeneratorUtils.nbOther = programConfig.getNbOther();
+    }
+    return _xblockexpression;
+  }
+  
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final ProgramConfig programConfig) {
     try {
+      this.getconfig(programConfig);
       SML sml = this.factory.createSML();
       Architecture archi = this.factory.createArchitecture();
       archi.setInput("input");
@@ -76,14 +93,15 @@ public class GeneratorUtils {
       PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
       writer.println(strSML);
       writer.close();
-      this.smlGenerator.generate(sml, pyFilename, expDir, DBName);
+      this.smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final String strSML) {
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final String strSML, final ProgramConfig programConfig) {
     try {
+      this.getconfig(programConfig);
       CheckArchitectureValidity _checkArchitectureValidity = new CheckArchitectureValidity();
       this.cav = _checkArchitectureValidity;
       this.cav.checkValidity(strSML);
@@ -93,7 +111,7 @@ public class GeneratorUtils {
       PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
       writer.println(strSML);
       writer.close();
-      this.smlGenerator.generate(sml, pyFilename, expDir, DBName);
+      this.smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

@@ -18,6 +18,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import utils.FonctionStringPy
 import utils.GestionWay
+import utils.ProgramConfig
 import views.ArchitectureGraphView
 import xtext.sML.Architecture
 import xtext.sML.Classification
@@ -28,11 +29,8 @@ import xtext.sML.Merge
 import xtext.sML.MergeBody
 import xtext.sML.Right
 import xtext.sML.SML
-
 import xtext.sML.impl.SMLFactoryImpl
-import com.google.inject.Injector
-import xtext.SMLStandaloneSetup
-import org.eclipse.xtext.resource.XtextResourceSet
+import static org.testng.Assert.expectThrows
 
 /**
  * Generates code from your model files on save.
@@ -75,6 +73,8 @@ class SMLGenerator extends AbstractGenerator {
        // csv directory
     static String csvDir = "../../architecture_csv/";
     
+    var ProgramConfig progConf = null
+    
     
     /*
      * 
@@ -113,12 +113,14 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def void generate(SML sml, String filename, String expDir, String DBName) {	
+	def void generate(SML sml, String filename, String expDir, String DBName, ProgramConfig programConfig ) {
+		
+		progConf = programConfig
 	
 		exp_dir = expDir
 		file_name = filename.split("/").last.split('.py').get(0)
 
-		mainCtrl = new MainController(DBName)	
+		mainCtrl = new MainController(DBName, programConfig)	
 		
 		var archi = compile(sml.sml)
 		
@@ -132,14 +134,13 @@ class SMLGenerator extends AbstractGenerator {
 	// create py file
 	private def compile(Architecture archi ){
 		
-		
 		gestionWay = mainCtrl.gestionWay
 		
 		graphview = mainCtrl.graphview
 		
 		graphview.createGraph(archi);
 		
-		graphview.architectureHpp(mainCtrl.gestionHPPNeo4j)
+		graphview.architectureHpp(mainCtrl.gestionHPP)
 		
 
 
@@ -148,30 +149,35 @@ class SMLGenerator extends AbstractGenerator {
 		
 		// write import
 		py_file += fsp.strImport()
+
+				
+		if(progConf.dataset == "mnist")
+			// write dataset minist
+			py_file += fsp.writeMnistDataSet()
+		else if (progConf.dataset == "cifar10")
+			// write dataset cifar10
+			py_file += fsp.writecifar10Dataset
 		
-		
-		// write dataset minist
-		//py_file += fsp.writeMnistDataSet()
-		
-		// write dataset cifar10
-		py_file += fsp.writecifar10Dataset
+		else throw new Exception("wtf")
 		
 		// write glo variable
-		py_file += fsp.writeGlobalVariable
+		py_file += fsp.writeGlobalVariable(progConf.batchSize, progConf.epochs)
 				
 		// write init value 
 		py_file += fsp.writeInitValue
+		
+		// write init code carbon
+		py_file += fsp.writeInitTrackerCodeCarbon(countryISOCode, file_name, exp_dir, emission_dir)
 		
 		
 		// try	
     	py_file += "try:\n"
 		
-		
 		py_file += gestionArchi(archi)
 		
 		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name);
 		
-		py_file += fsp.writeStartCodeCarbon(countryISOCode, file_name, exp_dir, emission_dir)
+		py_file += fsp.writeStartCodeCarbonTracker
 		
 		py_file += fsp.writeTrain
 		
@@ -194,7 +200,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 		// verify input not missing
 		if (!a.input.empty){
-			str_archi += fsp.writeInput("[32, 32, 3]", gestionWay.current)
+			str_archi += fsp.writeInput("[" + progConf.maxSizeImg + ","+ progConf.maxSizeImg + ","+ progConf.inputFilter +"]", gestionWay.current)
 		}else{
 			throw new Exception("missing Input")
 		}
@@ -216,16 +222,13 @@ class SMLGenerator extends AbstractGenerator {
 		
 		
 		if(!a.output.empty){
-			str_archi += String.format("\t\tmodel = Model(inputs=X_input, outputs=%s)\n", gestionWay.current)
-			str_archi += "\t\treturn model\n\n"
-			str_archi += "\tmodel = getModel()\n"
+			str_archi += fsp.writeModel(gestionWay.current)
 			
 			// write : create png of the model
-    		str_archi += String.format("\tplot_model(model, show_shapes=True, to_file=\"%s\")\n", 
-    			png_dir+exp_dir+file_name+".png"
-    		)
-    		// write compiler
-    		str_archi += "\tmodel.compile(optimizer='adam', loss=keras.losses.sparse_categorical_crossentropy, metrics=['accuracy'])\n\n"
+			str_archi += fsp.writeImg(png_dir, exp_dir, file_name)
+    		
+    		// write compile
+    		str_archi += fsp.writeCompile
     		
 		}else{
 			throw new Exception("missing output")
@@ -410,11 +413,11 @@ class SMLGenerator extends AbstractGenerator {
 	// ===== Units =====
 	
 	def unitConv(String X_or_shortcut){
-		var Convolution conv = graphview.convolutionController.findByLayerpos(currentPos)
+		var Convolution conv = graphview.getLayerByLayerpos(currentPos) as Convolution
 		//var Convolution conv = graph.getByID(currentPos) as Convolution
 		// str_stride += conv.stride + " "
 		currentPos++
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
+		return fsp.writeConv(conv.outputFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitUpConv(String X_or_shortcut){
@@ -422,33 +425,33 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitBnConv(String X_or_shortcut){
-		var BatchNormalisation bn = graphview.batchNormalisationController.findByLayerpos(currentPos)
+		var BatchNormalisation bn = graphview.getLayerByLayerpos(currentPos) as BatchNormalisation
 		//var BatchNormalisation bn = graph.getByID(currentPos) as BatchNormalisation
 		currentPos++
 		
-		var Convolution conv = graphview.convolutionController.findByLayerpos(currentPos)
+		var Convolution conv = graphview.getLayerByLayerpos(currentPos) as Convolution
 		//var Convolution conv = graph.getByID(currentPos) as Convolution
 		currentPos++
 		// str_stride += conv.stride + " "
 		
-		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
+		return fsp.writeBN(bn.epsilon, X_or_shortcut) + fsp.writeConv(conv.outputFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut)
 	}
 	
 	def unitConvBn(String X_or_shortcut){
-		var Convolution conv = graphview.convolutionController.findByLayerpos(currentPos)
+		var Convolution conv = graphview.getLayerByLayerpos(currentPos) as Convolution
 		//var Convolution conv = graph.getByID(currentPos) as Convolution
 		currentPos++
 		
-		var BatchNormalisation bn = graphview.batchNormalisationController.findByLayerpos(currentPos)
+		var BatchNormalisation bn = graphview.getLayerByLayerpos(currentPos) as BatchNormalisation
 		//var BatchNormalisation bn = graph.getByID(currentPos) as BatchNormalisation
 		currentPos++
 		// str_stride += conv.stride + " "
-		return fsp.writeConv(conv.nbFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
+		return fsp.writeConv(conv.outputFilter, conv.kernel, conv.stride , conv.fctActivation, conv.padding, X_or_shortcut) + fsp.writeBN(bn.epsilon, X_or_shortcut)
 	}
 	
 	 
 	def unitPooling(String pool, String X_or_shortcut){
-		var Pooling p = graphview.poolingController.findByLayerpos(currentPos)
+		var Pooling p = graphview.getLayerByLayerpos(currentPos) as Pooling
 		//var Pooling p = graph.getByID(currentPos) as Pooling
 		currentPos++
 		if(pool == "avg_pooling"){
@@ -459,14 +462,14 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	def unitDropout(String X_or_shortcut){
-		var Dropout dropout = graphview.dropoutController.findByLayerpos(currentPos)
+		var Dropout dropout = graphview.getLayerByLayerpos(currentPos) as Dropout
 		//var Dropout dropout = graph.getByID(currentPos) as Dropout
 		currentPos++;
 		return fsp.writeDropout(dropout.dropoutRate, X_or_shortcut)
 	}
 	
 	def unitDense(String X_or_shortcut){
-		var Dense dense = graphview.denseController.findByLayerpos(currentPos)
+		var Dense dense = graphview.getLayerByLayerpos(currentPos) as Dense
 		//var Dense dense = graph.getByID(currentPos) as Dense
 		currentPos++
 		return fsp.writeDense(dense.units,dense.fctActivation, X_or_shortcut)

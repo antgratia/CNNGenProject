@@ -26,95 +26,122 @@ import xtext.sML.MergeConv;
 
 @Data
 @SuppressWarnings("unused")
-public class GestionHPPNeo4j {
+public class GestionHPP {
 	
-	// info img
-	private final static int MAX_SIZE_IMG = 32;
-	private static int currentSizeImg;
+	// Input Layer info img / filter
+	private static int inputLayerInputImgSize;
+	private static int inputLayerinputFilter; 
 	
-	private final static int NB_CLASS = 10;
-	private final static String FCT_ACTIVATION = "softmax";
+	private int nb_class;
+	private String fctClassification;
 	
 	
 	// hpp Convolution + Pooling
-	private static List<Integer> kernel = new ArrayList<Integer>(List.of(1,2,3,4,5,6,7));
-	private static List<Integer> stride = new ArrayList<Integer>(List.of(1,2,3,4));
-	private static List<String> padding = new ArrayList<String>(List.of("same","valid"));
+	private static List<Integer> kernel;
+	private static List<Integer> stride;
+	private static List<String> padding;
 		// hpp Convolution supp
-	private List<String> fctActivation = new ArrayList<String>(List.of("relu","selu","tanh", "gelu"));
+	private List<String> fctActivation;
 	//private int currentNBFilters;
-	private static final int INPUT_FILTER= 3;
-	private static final int INIT_NB_FILTER = 16;
+	
+	private static int initFilter;
 	
 	// hpp dropout
-	private static List<Double> dropoutRate = new ArrayList<Double>(List.of(.1, .2, .4, .5, .8, .01));
+	private static List<Double> dropoutRate;
 	
 	//hpp batch Normalisation
-	private static List<Double> epsilon = new ArrayList<Double>(List.of(1.1e-10, 1.001e-5, 0.001, 1.1e-5, 1.1e-7));;
+	private static List<Double> epsilon;
 	
 	// hpp Dense
 	private int entryParams;
 	
 	// hpp
-	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
-	private static List<Double> compressFactor = new ArrayList<Double>(List.of(0.5,0.6,0.7,0.8,0.9));
+	private static List<String> add_or_concat;
+	private static List<Double> compressFactor;
 	
 	private static String str_add_or_concat = "";
 	private String str_fctActivation = "";
 	
 	private static Random rand = new Random();
 	
-	public GestionHPPNeo4j() {
+	public GestionHPP(ProgramConfig programConfig) {
 		//currentNBFilters = INPUT_FILTER;
 		entryParams = 0;
-		currentSizeImg = MAX_SIZE_IMG;
+		inputLayerInputImgSize = programConfig.getMaxSizeImg();
+		nb_class = programConfig.getNbClass();
+		fctClassification = programConfig.getFonctionClassification();
+		kernel = programConfig.getKernelValues();
+		stride = programConfig.getStringValues();
+		padding = programConfig.getPaddingValues();
+		fctActivation = programConfig.getFonctionActivation();
+		inputLayerinputFilter = programConfig.getInputFilter();
+		initFilter = programConfig.getInitNbFilter();
+		dropoutRate = programConfig.getDropoutRate();
+		epsilon = programConfig.getEpsilon();
+		add_or_concat = programConfig.getAddOrConcat();
+		compressFactor = programConfig.getCompressFactor();
 	}
-	
-	public int getCurrentSizeImg(){
-		return currentSizeImg;
-	}
-	
-	public int getInputFilter() {
-		return INPUT_FILTER;
-	}
+
 	
 	// set HPP for convolution layer
-	public void gestionConvolution(Convolution conv, boolean reduction){
+	public void gestionConvolution(Convolution conv, boolean reduction) throws Exception{
 		
 		if(reduction) {
 			optimisationKernelPaddingStride(conv);
-			conv.setNbFilter(addInitToFilter(conv.getPrevLayer().get(0).getNbFilter()));
+			conv.setOutputFilter(addInitToFilter(conv.getInputFilter()));
 		}else {
 			// kernel <= input size
-			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= conv.getInputImgSize()).collect(Collectors.toList());
+			if(kernel_value_filtered.size() == 0)
+				kernel_value_filtered.add(1);
+
 			int knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
 			
 			conv.setKernel(knl);
 			conv.setStride(1);
 			conv.setPadding("same");
-			conv.setNbFilter(conv.getPrevLayer().get(0).getNbFilter());
+			conv.setOutputFilter(conv.getInputFilter());
+			conv.setOutputImgSize(calculCurrentSize(conv.getPadding(), conv.getKernel(), conv.getStride(), conv.getInputImgSize()));
+			
 		}
 		
+		conv.setFctActivation(str_fctActivation);
+			
+	}
+	
+	// set HPP for convolution layer
+	public void gestionConvolution(Convolution conv, boolean reduction,  int objectiveImgSize, int objectiveFilter) throws Exception{
 		
-		
+		optiHPPfromImgObjective(conv, objectiveImgSize);
+		conv.setOutputFilter(objectiveFilter);
 		conv.setFctActivation(str_fctActivation);
 			
 	}
 	
 	
 	// set HPP for pooling layer
-	public void gestionPooling(Pooling pool, boolean reduction) {
+	public void gestionPooling(Pooling pool, boolean reduction) throws Exception {
+	
 		if(reduction) {
 			optimisationKernelPaddingStride(pool);
 		}else {
 			// kernel <= input size
-			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= pool.getInputImgSize()).collect(Collectors.toList());
+			if(kernel_value_filtered.size() == 0)
+				kernel_value_filtered.add(1);
 			int knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
 						
 			pool.setKernel(knl);
 			pool.setStride(1);
 			pool.setPadding("same");
+			
+			pool.setOutputImgSize(calculCurrentSize(pool.getPadding(), pool.getKernel(), pool.getStride(), pool.getInputImgSize()));
 		}
+	}
+	
+	// set HPP for pooling layer
+	public void gestionPooling(Pooling pool, boolean reduction, int objectiveImgSize) throws Exception {
+		optiHPPfromImgObjective(pool, objectiveImgSize);
 	}
 
 	// set HPP for Dropout layer
@@ -124,16 +151,16 @@ public class GestionHPPNeo4j {
 
 	// set Hpp for Batch Normalization Layer
 	public void gestionBN(BatchNormalisation bn) {
-		bn.setEpsilon(epsilon.get(rand.nextInt(epsilon.size())));
+		bn.setEpsilon( epsilon.get(rand.nextInt(epsilon.size())));
 	}
 
 	// set HPP for Dense layer
-	public void gestionDense(Dense dense, boolean isLast) {
-		if(entryParams == 0) entryParams = currentSizeImg*currentSizeImg*dense.getPrevLayer().get(0).getNbFilter();
+	public void gestionDense(Dense dense, boolean isLast) {		
+		if(entryParams == 0) entryParams = dense.getInputImgSize()*dense.getInputImgSize()*dense.getInputFilter();
 		
 		if(isLast) {
-			dense.setUnits(NB_CLASS);
-			dense.setFctActivation(FCT_ACTIVATION);
+			dense.setUnits(this.nb_class);
+			dense.setFctActivation(this.fctClassification);
 		}else {
 			int units;
 			if (entryParams >=1000) {
@@ -141,6 +168,12 @@ public class GestionHPPNeo4j {
 			}else {
 				units = (int)(entryParams*Randomizer.generate(10, 80)/100);
 			}
+			
+			if(units %2 != 0 ) units++;
+			
+			// memory prevention
+			if(units >= 1000) units = 256;
+			
 			dense.setUnits(units);
 			dense.setFctActivation(str_fctActivation);
 			entryParams = units;
@@ -149,7 +182,7 @@ public class GestionHPPNeo4j {
 	}
 	
 	// handle HPP kernel Padding Stride
-	private static void optimisationKernelPaddingStride(Layer layer) {
+	private static void optimisationKernelPaddingStride(Layer layer) throws Exception {
 		
 		String pad = padding.get(rand.nextInt(padding.size()));
 		int knl = 1; // kernel
@@ -158,31 +191,30 @@ public class GestionHPPNeo4j {
 		List<Integer> kernel_value_filtered = null;
 		List<Integer> stride_value_filtered;
 		
-		if(currentSizeImg == 2) {
+		if(layer.getInputImgSize() == 2) {
 			kernel_value_filtered = new ArrayList<Integer>(List.of(1,2));
-		}else if(currentSizeImg == 1) {
+		}else if(layer.getInputImgSize() == 1) {
 			kernel_value_filtered = new ArrayList<Integer>(List.of(1));
 		}
 		
-		
-		if(pad == "valid") {
+		if(pad.equals("valid")) {
 			  // kernel <= input size
 			 if(kernel_value_filtered == null) {
-				 kernel_value_filtered = kernel.stream().filter(k -> k <= currentSizeImg).collect(Collectors.toList());
+				 kernel_value_filtered = kernel.stream().filter(k -> k <= layer.getInputImgSize()).collect(Collectors.toList());
 				 knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
 			 }    
 			  //stride <= kernel
-			  strd = (int)currentSizeImg/knl;
+			  strd = (int)layer.getInputImgSize()/knl;
 			  if(strd > knl) {
 				  int k = knl;
 				  stride_value_filtered = stride.stream().filter(s -> s <= k).collect(Collectors.toList());
 				  strd = stride_value_filtered.get(rand.nextInt(stride_value_filtered.size()));
 			  }
 				            
-		}else {
+		}else if (pad.equals("same")){
 			 // Kernel <= output/2
 			 if(kernel_value_filtered == null) {
-				 kernel_value_filtered = kernel.stream().filter(k -> k <= Math.ceil(currentSizeImg/2)).collect(Collectors.toList());
+				 kernel_value_filtered = kernel.stream().filter(k -> k <= Math.ceil(layer.getInputImgSize()/2)).collect(Collectors.toList());
 			 }
 				            
 			 knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
@@ -192,7 +224,7 @@ public class GestionHPPNeo4j {
 			 stride_value_filtered = stride.stream().filter(s -> s <= k).collect(Collectors.toList());
 			 strd = stride_value_filtered.get(rand.nextInt(stride_value_filtered.size()));
 				    
-		}
+		}else throw new Exception("GestionHPP optimisationKernelPaddingStride : not possible");
 		
 		
 		if (layer instanceof Convolution) {
@@ -209,7 +241,7 @@ public class GestionHPPNeo4j {
 			pool.setStride(strd);
 		}
 		
-		currentSizeImg = calculCurrentSize(pad, knl, strd, currentSizeImg);
+		layer.setOutputImgSize(calculCurrentSize(pad, knl, strd, layer.getInputImgSize()));
 			 
 	}
 	
@@ -220,12 +252,13 @@ public class GestionHPPNeo4j {
 		if(nbFilterCompress%2 != 0) {
 			nbFilterCompress+=1;
 		}
+		
 		return nbFilterCompress;
 	}
 	
 	// multiple by 2 the filter
 	private int multFilterby2(int currentNBFilters) {
-		if(currentNBFilters == INPUT_FILTER) currentNBFilters = 8;
+		if(currentNBFilters == inputLayerinputFilter) currentNBFilters = 8;
 		currentNBFilters *= 2;
 		
 		if(currentNBFilters%2 != 0) {
@@ -238,9 +271,9 @@ public class GestionHPPNeo4j {
 	// add fixe number to filter
 	private int addInitToFilter(int currentNBFilters) {
 		
-		if(currentNBFilters == INPUT_FILTER) currentNBFilters = 0;
+		if(currentNBFilters == inputLayerinputFilter) currentNBFilters = 0;
 		
-		currentNBFilters += INIT_NB_FILTER;
+		currentNBFilters += initFilter;
 		
 		if(currentNBFilters%2 != 0) {
 			currentNBFilters+=1;
@@ -252,9 +285,8 @@ public class GestionHPPNeo4j {
 	// compute the current img size
 	public static int calculCurrentSize(String pad, int knl, int strd, int imgSize) {
 		int newCurrentSizeImg = 0;
-		if(pad == "valid") {
-			
-			newCurrentSizeImg = ((imgSize-knl)/strd)+1;
+		if(pad.equals("valid")) {
+			newCurrentSizeImg = (int) ((imgSize-knl)/strd)+1;
 			
 		}else {
 	        if(imgSize%strd == 0)
@@ -273,6 +305,62 @@ public class GestionHPPNeo4j {
 	}
 
 	
+	public void optiHPPfromImgObjective(Layer layer, int objectiveImgSize) throws Exception {
+		int knl = 0;
+		String pad = "";
+		
+		if(layer.getInputImgSize()<objectiveImgSize) 
+			throw new Exception("GestionHPP optiHPPfromImgObjective: startimg < ObjectifImg");
+		
+		int stride = Math.round(layer.getInputImgSize()/objectiveImgSize);
+		
+		if( calculCurrentSize(pad, stride, stride, layer.getInputImgSize()) == objectiveImgSize) {
+			pad="same";
+			int s = stride;
+			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= layer.getInputImgSize() && k>=s).collect(Collectors.toList());
+			
+			if(kernel_value_filtered.size() <1) {
+				knl = stride;
+			}else {
+				knl = kernel_value_filtered.get(rand.nextInt(kernel_value_filtered.size()));
+			}
+			
+			
+		}else {
+			pad = "valid";
+			knl = layer.getInputImgSize() -((objectiveImgSize-1)*stride);
+			boolean knlReduction = false; 
+			while(calculCurrentSize("valid", knl, stride, layer.getInputImgSize()) != objectiveImgSize){
+				if(knl-1> 0 && !knlReduction) {
+					knl -=1;
+					knlReduction = true;
+				}else if(stride-1 > 0 && knlReduction) {
+					stride-=1;
+					knlReduction = false;
+				}else {
+					throw new Exception("HPP invalide");
+				}
+			}
+		}
+		
+		if(layer instanceof Convolution) {
+			((Convolution) layer).setKernel(knl);
+			((Convolution) layer).setPadding(pad);
+			((Convolution) layer).setStride(stride);
+			
+		}else if(layer instanceof Pooling) {
+			((Pooling) layer).setKernel(knl);
+			((Pooling) layer).setPadding(pad);
+			((Pooling) layer).setStride(stride);
+		}else {
+			throw new Exception("GestionHPP recomputeSize : layerinterface Wrong type");
+		}
+		
+		layer.setOutputImgSize(calculCurrentSize(pad, knl, stride,  layer.getInputImgSize()));
+		
+		
+	}
+	
 	// compute the img size
 	public void recomputeSize(Layer layer, int startImgSize, int objectifImgSize) throws Exception {
 		
@@ -285,7 +373,7 @@ public class GestionHPPNeo4j {
 		
 		int newStride = Math.round(startImgSize/objectifImgSize);
 		
-		if( calculCurrentSize("same", newStride, newStride,  startImgSize) == objectifImgSize) {
+		if( calculCurrentSize("same", newKnl, newStride,  startImgSize) == objectifImgSize) {
 			newPad="same";
 			int s = newStride;
 			List<Integer> kernel_value_filtered = kernel.stream().filter(k -> k <= startImgSize && k>=s).collect(Collectors.toList());
@@ -327,7 +415,16 @@ public class GestionHPPNeo4j {
 			throw new Exception("GestionHPP recomputeSize : layerinterface Wrong type");
 		}
 		
-		layer.setImgSize(calculCurrentSize(newPad, newKnl, newStride,  startImgSize));
+		layer.setOutputImgSize(calculCurrentSize(newPad, newKnl, newStride,  startImgSize));
+		
+	}
+
+	public void initInputLayer(Input input) {
+		input.setInputFilter(inputLayerinputFilter);
+		input.setOutputFilter(inputLayerinputFilter);
+		
+		input.setInputImgSize(inputLayerInputImgSize);
+		input.setOutputImgSize(inputLayerInputImgSize);
 		
 	}
 

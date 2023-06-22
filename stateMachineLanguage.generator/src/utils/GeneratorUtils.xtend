@@ -21,23 +21,37 @@ class GeneratorUtils {
 		static Random rand = new Random();
 		
 			
-		static List<String> flatOrGLo = new ArrayList<String>(List.of("flatten", "global_avg_pooling", "global_max_pooling"));
-		static List<String> poolOrNot = new ArrayList<String>(List.of("", "avg_pooling", "max_pooling"));
-		static List<String> dropOrNot = new ArrayList<String>(List.of("", "", "", "", "dropout"));
-		static List<String> convs = new ArrayList<String>(List.of("conv", "convbn", "bnconv"));
-		static List<String> convOrMerge = new ArrayList<String>(List.of("conv", "conv", "merge"));
-		static List<String> convOrEmpty = new ArrayList<String>(List.of("conv", "Empty"));
+		static List<String> flatOrGLo
+		static List<String> poolOrNot
+		static List<String> dropOrNot
+		static List<String> convs
+		static List<String> convOrMerge
+		static List<String> convOrEmpty
 		
-		static List<Integer> nbFeatureExtraction = new ArrayList<Integer>(List.of(3,4,5))
-		static List<Integer> nbDense = new ArrayList<Integer>(List.of(1,2,3))
-		static List<Integer> nbOtherZero = new ArrayList<Integer>(List.of(0,1,2))
-		static List<Integer> nbOther = new ArrayList<Integer>(List.of(1,2))
+		static List<Integer> nbFeatureExtraction
+		static List<Integer> nbDense
+		static List<Integer> nbOtherZero
+		static List<Integer> nbOther
 		
 		CheckArchitectureValidity cav;
 		
-		// generate a random architecture valid and create the py file
-		def generate(String pyFilename, String smlFilename, String expDir, String DBName){
+		def getconfig(ProgramConfig programConfig){
+			flatOrGLo = programConfig.flattenOrGlobalPool
+			poolOrNot = programConfig.poolingOrNot
+			dropOrNot = programConfig.dropout
+			convs = programConfig.convolution
+			convOrEmpty = programConfig.convOrEmpty
+			convOrMerge = programConfig.convOrMerge
+			nbFeatureExtraction = programConfig.nbFeatureExtraction
+			nbDense = programConfig.nbDense
+			nbOtherZero = programConfig.nbOtherZero
+			nbOther = programConfig.nbOther
+		}
 		
+		// generate a random architecture valid and create the py file
+		def generate(String pyFilename, String smlFilename, String expDir, String DBName, ProgramConfig programConfig){
+		
+			getconfig(programConfig)
 			
 			// init sentence
 			var SML sml = factory.createSML()
@@ -77,13 +91,15 @@ class GeneratorUtils {
 			
 			
 			// generate python file
-			smlGenerator.generate(sml, pyFilename, expDir, DBName);
+			smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
 			
 
 		}
 		
 		// generate a random architecture valid and create the py file
-		def generate(String pyFilename, String smlFilename, String expDir, String DBName, String strSML){
+		def generate(String pyFilename, String smlFilename, String expDir, String DBName, String strSML, ProgramConfig programConfig){
+			
+			getconfig(programConfig)
 			
 			// verify
 			cav = new CheckArchitectureValidity()
@@ -100,7 +116,7 @@ class GeneratorUtils {
 			writer.close();
 			
 			// generate python file
-			smlGenerator.generate(sml, pyFilename, expDir, DBName);
+			smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
 			
 		}
 		

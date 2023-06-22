@@ -59,9 +59,9 @@ public class FonctionStringPy {
 				+ "\n\n";
 	}
 	
-	public String writeGlobalVariable() {
-		return "batch_size = 64\n"
-				+ "nb_epochs = 5\n\n";
+	public String writeGlobalVariable(int batch_size, int epochs) {
+		return "batch_size = "+ batch_size+"\n"
+				+ "nb_epochs = "+epochs+"\n\n";
 	}
 	
 	public String writeInitValue() {
@@ -80,10 +80,9 @@ public class FonctionStringPy {
 				+ "\r\n\n";
 	}
 	
-	public String writeStartCodeCarbon(String country_iso_code, String file_name, String exp_dir, String emission_dir) {
-		return "\t# start Emission tracker \n"
-				+ "\ttracker = OfflineEmissionsTracker(country_iso_code=\""+ country_iso_code +"\", log_level='error', output_file=\""+ file_name + "_emissions.csv\", output_dir=\""+ emission_dir+exp_dir+"\" )\r\n"
-				+ "\ttracker.start()\n\n";
+	public String writeInitTrackerCodeCarbon(String country_iso_code, String file_name, String exp_dir, String emission_dir) {
+		return "# start Emission tracker \n"
+				+ "tracker = OfflineEmissionsTracker(country_iso_code=\""+ country_iso_code +"\", log_level='error', output_file=\""+ file_name + "_emissions.csv\", output_dir=\""+ emission_dir+exp_dir+"\" )\r\n\n";
 	}
 	
 	public String writeStopCodeCarbon() {
@@ -94,6 +93,25 @@ public class FonctionStringPy {
 	public String writeFlops() {
 		return "\t # get number of flops\n"
 				+ "\tflops = get_flops(model, batch_size=batch_size)\n";
+	}
+	
+	public String writeModel(String out) {
+		return "\t\tmodel = Model(inputs=X_input, outputs="+ out + ")\n"
+				+ "\t\treturn model\n\n"
+				+ "\tmodel = getModel()\n"
+				+ "\tnb_params = model.count_params()\n";
+		 
+	}
+	
+	public String writeImg(String png_dir, String exp_dir, String file_name) {
+		return String.format("\tplot_model(model, show_shapes=True, to_file=\"%s\")\n", 
+    			png_dir+exp_dir+file_name+".png"
+    		);
+    		
+	}
+	
+	public String writeCompile() {
+		return "\tmodel.compile(optimizer='adam', loss=keras.losses.sparse_categorical_crossentropy, metrics=['accuracy'])\n\n";
 	}
 	
 	public String writeFunctionEarlyStopingCarbon() {
@@ -176,7 +194,7 @@ public class FonctionStringPy {
 	}
 	
 	public String writeBN(double epsilon, String X_or_shortcut) {
-		return String.format(Locale.US,"\t\t%s = BatchNormalization(epsilon=%.2f, axis=3)" + "(" + X_or_shortcut+ ")\n", 
+		return String.format(Locale.US,"\t\t%s = BatchNormalization(epsilon=%s, axis=3)" + "(" + X_or_shortcut+ ")\n", 
 				X_or_shortcut, epsilon);
 	}
 	
@@ -225,11 +243,14 @@ public class FonctionStringPy {
 				+ "\tlist_cb = [es, tb, MyTrainingCallBack(tracker)]\n\n";
 	}
 	
+	public String writeStartCodeCarbonTracker() {
+		return "\ttracker.start()\n";
+	}
+	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=nb_epochs, batch_size=batch_size, validation_split=0.2, callbacks=list_cb)\n"
-				+ "\ttraining_time = time()-start\n"
-				+ "\tprint(model.evaluate(test_x, test_y))\n\n";
+				+ "\thistory = model.fit(train_x, train_y, epochs=nb_epochs, batch_size=batch_size, validation_split=0.2, callbacks=list_cb)\n\n"
+				+ "\ttraining_time = time()-start\n\n";
 	}
 	
 	public String gestionGood(String log_dir, String file_name) {
@@ -275,7 +296,7 @@ public class FonctionStringPy {
 			   
 			   +"\t\t# identifying header \n"  
 			   +"\t\theader = ['File_name', 'Training_time(s)', 'Train_result_acc', 'Train_result_loss', 'Test_result_acc', 'Test_result_loss', 'Nb_layers', 'Epochs', "
-			   + "'Flops', 'CPU_energy_consumption' , 'GPU_energy_consumption', 'RAM_energy_consumption', 'Tot_energy_consumption', 'Emissions']\n"
+			   + "'Flops', 'nb_params' ]\n"
 			   +"\t\twriter = csv.DictWriter(file, fieldnames = header)\n"
 			   +"\t\tif (history != None):\n"
 			   +"\t\t\tepochs = len(history.history['loss'])\n"
@@ -291,11 +312,7 @@ public class FonctionStringPy {
 			   +"                      'Nb_layers': nb_layers,\n"
 			   +"                      'Epochs' : epochs,\n"
 			   +"					   'Flops' : flops,\n"
-			   +"                      'CPU_energy_consumption' : tracker._total_cpu_energy.kWh,\n"
-			   +"                      'GPU_energy_consumption' : tracker._total_gpu_energy.kWh,\n"
-			   +"                      'RAM_energy_consumption' : tracker._total_ram_energy.kWh,\n"
-			   +"                      'Tot_energy_consumption' : tracker._total_energy.kWh,\n"
-			   +"                      'Emissions' : emissions\n"
+			   +"                      'nb_params' : nb_params\n"
 			   +"                      })\n"
 			   +"\t\tprint('add line into architecture_results.csv')\n"
 			   +"\tfile.close()\n";

@@ -6,6 +6,7 @@ import java.time.Instant;
 
 import utils.CheckArchitectureValidity;
 import utils.GeneratorUtils;
+import utils.ProgramConfig;
 
 
 public class GeneratorMain{
@@ -19,28 +20,28 @@ public class GeneratorMain{
 	static String newSml = "";
 	
 	// output dir
-	static String output_dir = "output/";
+	static String outputDir;
 	
 	// python directory
-	static String pyDir = "architecture_py/";
+	static String pyDir;
 	
 	// python directory
-	static String smlDir = "architecture_sml/";
+	static String smlDir;
 
     // log directory
-    static String logDir = "architecture_log/";
+    static String logDir;
     
     // png directory
-    static String pngDir = "architecture_img/";
+    static String pngDir;
     
     // csv directory
-    static String csvDir = "architecture_csv/";
+    static String csvDir;
     
     // tensorboard directory
-    static String tensorboardDir = "architecture_tb/";
+    static String tensorboardDir;
     
-    // emssion Code Carbon output directory
-    static String emissionDir = "architecture_emissions/";
+    // Code Carbon output directory
+    static String emissionDir;
     
     
     // json directory
@@ -48,6 +49,18 @@ public class GeneratorMain{
 	
 	
 	public static void main(String[] args) throws Exception {
+		
+		ProgramConfig programConfig = new ProgramConfig();
+		
+		// init
+		outputDir = programConfig.getOutputDir();
+		pyDir = programConfig.getPyDir();
+		smlDir = programConfig.getSMLDir();
+		logDir = programConfig.getLogDir();
+		pngDir = programConfig.getPngDir();
+		csvDir = programConfig.getCSVDir();
+		tensorboardDir = programConfig.getTensorboardDir();
+		emissionDir = programConfig.getEmissionDir();
 		
 		
 		if (args.length == 1 ) {
@@ -83,12 +96,12 @@ public class GeneratorMain{
 			int total_time = 0;
 			for (int i=1; i<(repeat+1); i++) {
 				GeneratorUtils gu = new GeneratorUtils();
-				String pyFilename = output_dir + pyDir + expDir + "architecture_"+i+".py";
-				String smlFilename = output_dir + smlDir + expDir + "architecture_"+i+".sml";
+				String pyFilename = outputDir + pyDir + expDir + "architecture_"+i+".py";
+				String smlFilename = outputDir + smlDir + expDir + "architecture_"+i+".sml";
 				System.out.println("Random Generation no : " + i);
 				Instant start = Instant.now();
 				String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+i;
-				gu.generate(pyFilename, smlFilename, expDir, DBName);
+				gu.generate(pyFilename, smlFilename, expDir, DBName, programConfig);
 				Instant end = Instant.now();
 				System.out.println(pyFilename + " generate");
 				Duration timeElapsed = Duration.between(start, end);
@@ -121,12 +134,12 @@ public class GeneratorMain{
 			
 			createFolder();
 			GeneratorUtils gu = new GeneratorUtils();
-			String pyFilename = output_dir + pyDir + expDir + "architecture_"+nb+".py";
-			String smlFilename = output_dir + smlDir + expDir + "architecture_"+nb+".sml";
+			String pyFilename = outputDir + pyDir + expDir + "architecture_"+nb+".py";
+			String smlFilename = outputDir + smlDir + expDir + "architecture_"+nb+".sml";
 			System.out.println("Create Architecture no : " + nb);
 			Instant start = Instant.now();
 			String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+nb;
-			gu.generate(pyFilename, smlFilename, expDir, DBName, args[2]);
+			gu.generate(pyFilename, smlFilename, expDir, DBName, args[2], programConfig);
 			Instant end = Instant.now();
 			System.out.println(pyFilename + " generate");
 			Duration timeElapsed = Duration.between(start, end);
@@ -142,25 +155,25 @@ public class GeneratorMain{
 
 	// create all the require folder
 	private static void createFolder() {
-		File folder = new File(output_dir+pyDir+expDir);
+		File folder = new File(outputDir+pyDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+logDir+expDir);
+		folder = new File(outputDir+logDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+pngDir+expDir);
+		folder = new File(outputDir+pngDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+csvDir+expDir);
+		folder = new File(outputDir+csvDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+tensorboardDir+expDir);
+		folder = new File(outputDir+tensorboardDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+smlDir+expDir);
+		folder = new File(outputDir+smlDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
-		folder = new File(output_dir+emissionDir+expDir);
+		folder = new File(outputDir+emissionDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
 		
 		//folder = new File(output_dir+jsonDir+expDir);
