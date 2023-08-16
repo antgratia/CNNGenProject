@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import xtext.generator.SMLGenerator;
 import xtext.sML.Architecture;
 import xtext.sML.Classification;
@@ -70,7 +69,7 @@ public class GeneratorUtils {
     return _xblockexpression;
   }
   
-  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final ProgramConfig programConfig) {
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final ProgramConfig programConfig) {
     try {
       this.getconfig(programConfig);
       SML sml = this.factory.createSML();
@@ -93,13 +92,13 @@ public class GeneratorUtils {
       PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
       writer.println(strSML);
       writer.close();
-      this.smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
+      this.smlGenerator.generate(sml, pyFilename, expDir, programConfig);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String DBName, final String strSML, final ProgramConfig programConfig) {
+  public void generate(final String pyFilename, final String smlFilename, final String expDir, final String strSML, final ProgramConfig programConfig) {
     try {
       this.getconfig(programConfig);
       CheckArchitectureValidity _checkArchitectureValidity = new CheckArchitectureValidity();
@@ -107,11 +106,10 @@ public class GeneratorUtils {
       this.cav.checkValidity(strSML);
       ConvertSML csml = new ConvertSML();
       SML sml = csml.stringToSML(strSML);
-      InputOutput.<String>println(smlFilename);
       PrintWriter writer = new PrintWriter(smlFilename, "UTF-8");
       writer.println(strSML);
       writer.close();
-      this.smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
+      this.smlGenerator.generate(sml, pyFilename, expDir, programConfig);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

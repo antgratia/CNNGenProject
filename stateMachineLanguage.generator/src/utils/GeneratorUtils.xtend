@@ -1,16 +1,14 @@
 package utils
 
-import java.util.ArrayList
+import java.io.PrintWriter
 import java.util.List
 import java.util.Random
-import utils.CheckArchitectureValidity
 import xtext.generator.SMLGenerator
 import xtext.sML.Architecture
 import xtext.sML.FeatureExtraction
 import xtext.sML.Merge
 import xtext.sML.SML
 import xtext.sML.impl.SMLFactoryImpl
-import java.io.PrintWriter
 
 class GeneratorUtils {
 	
@@ -48,8 +46,8 @@ class GeneratorUtils {
 			nbOther = programConfig.nbOther
 		}
 		
-		// generate a random architecture valid and create the py file
-		def generate(String pyFilename, String smlFilename, String expDir, String DBName, ProgramConfig programConfig){
+		// generate random architectures valid and create the py file
+		def generate(String pyFilename, String smlFilename, String expDir, ProgramConfig programConfig){
 		
 			getconfig(programConfig)
 			
@@ -91,13 +89,13 @@ class GeneratorUtils {
 			
 			
 			// generate python file
-			smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
+			smlGenerator.generate(sml, pyFilename, expDir, programConfig);
 			
 
 		}
 		
 		// generate a random architecture valid and create the py file
-		def generate(String pyFilename, String smlFilename, String expDir, String DBName, String strSML, ProgramConfig programConfig){
+		def generate(String pyFilename, String smlFilename, String expDir, String strSML, ProgramConfig programConfig){
 			
 			getconfig(programConfig)
 			
@@ -109,14 +107,14 @@ class GeneratorUtils {
 			var csml = new ConvertSML()
 			var sml = csml.stringToSML(strSML)
 			
-			println(smlFilename)
-			
 			var writer = new PrintWriter(smlFilename, "UTF-8");
 			writer.println(strSML);
 			writer.close();
 			
+			
+			
 			// generate python file
-			smlGenerator.generate(sml, pyFilename, expDir, DBName, programConfig);
+			smlGenerator.generate(sml, pyFilename, expDir, programConfig);
 			
 		}
 		

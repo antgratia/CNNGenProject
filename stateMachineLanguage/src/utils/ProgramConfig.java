@@ -79,6 +79,9 @@ public class ProgramConfig {
 	public String getEmissionDir() {
 		return prop.getProperty("EMISSION_DIR");
 	}
+	public String getAdjacencyDir() {
+		return prop.getProperty("ADJACENCY_DIR");
+	}
 	
 	// Generation Archi
 	public List<String> getFlattenOrGlobalPool() {

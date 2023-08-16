@@ -10,8 +10,8 @@
 	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.common_2.23.0.v20210924-1718.jar"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.xtext.testing_2.25.0.v20210301-0843.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ui"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ide"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stateMachineLanguage.ui"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

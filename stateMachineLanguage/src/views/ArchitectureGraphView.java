@@ -107,8 +107,7 @@ public class ArchitectureGraphView {
 			graph.add(output);
 			
 			lastLayer.getNextLayer().add(output);
-			
-			
+				
 		}else{
 			throw new Exception("missing output");
 		}
@@ -806,7 +805,7 @@ public class ArchitectureGraphView {
 			for(Layer y: anchorRight) {
 				List<Layer> subLayerRightReductionPossible = new ArrayList<>();
 				for (Layer l : layerRightReductionPossible) {
-					if(y.getLayerPos() > l.getLayerPos()) {
+					if(y.getLayerPos() >= l.getLayerPos()) {
 						subLayerRightReductionPossible.add(l);	
 					}
 				}
@@ -820,6 +819,7 @@ public class ArchitectureGraphView {
 					subLayerRightReductionPossible.get(rightLayerIndice).setReduction(true);
 				}else {
 					System.out.println(layerRightReductionPossible);
+					System.out.println(y.getLayerPos());
 				}
 				
 			}
@@ -1083,6 +1083,31 @@ public class ArchitectureGraphView {
 		}
 		else throw new Exception("ArchitectureGraphView updateLayer : forgot Layer ? " + layer.getClass());
 		
+	}
+	
+	
+	public String createAdjencyMatrix() {
+		int numVertices = graph.size();
+		boolean[][] adjMatrix = new boolean[numVertices][numVertices];
+		
+		for (Layer layer: graph) {
+			for (int i=0; i<layer.getNextLayer().size(); i++) {
+				adjMatrix[layer.getLayerPos()][layer.getNextLayer().get(i).getLayerPos()] = true;
+				adjMatrix[layer.getNextLayer().get(i).getLayerPos()][layer.getLayerPos()] = true;
+				
+			}
+		}
+		
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < numVertices; i++) {
+		      //s.append(graph.get(i).getClass().getSimpleName() + ": ");
+		      for (boolean j : adjMatrix[i]) {
+		        s.append((j ? 1 : 0) + " ");
+		      }
+		      s.append("\n");
+		    }
+		    return s.toString();
+			
 	}
 	
 }

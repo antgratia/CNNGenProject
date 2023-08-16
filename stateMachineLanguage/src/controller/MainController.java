@@ -13,7 +13,7 @@ public class MainController {
 	private GestionWay gestionWay;
 	private ArchitectureGraphView graphview;
 	
-	public MainController (String dbName, ProgramConfig programConfig) {
+	public MainController (ProgramConfig programConfig) {
 		gestionWay = new GestionWay();
 		graphview = new ArchitectureGraphView();
 		//graphview.init(dbName);

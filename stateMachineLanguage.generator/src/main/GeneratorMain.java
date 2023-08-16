@@ -43,6 +43,9 @@ public class GeneratorMain{
     // Code Carbon output directory
     static String emissionDir;
     
+    // Adjacency matrix directory
+    static String adjacencyDir;
+    
     
     // json directory
     //static String jsonDir = "architecture_json/";
@@ -61,6 +64,7 @@ public class GeneratorMain{
 		csvDir = programConfig.getCSVDir();
 		tensorboardDir = programConfig.getTensorboardDir();
 		emissionDir = programConfig.getEmissionDir();
+		adjacencyDir = programConfig.getAdjacencyDir();
 		
 		
 		if (args.length == 1 ) {
@@ -100,8 +104,7 @@ public class GeneratorMain{
 				String smlFilename = outputDir + smlDir + expDir + "architecture_"+i+".sml";
 				System.out.println("Random Generation no : " + i);
 				Instant start = Instant.now();
-				String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+i;
-				gu.generate(pyFilename, smlFilename, expDir, DBName, programConfig);
+				gu.generate(pyFilename, smlFilename, expDir, programConfig);
 				Instant end = Instant.now();
 				System.out.println(pyFilename + " generate");
 				Duration timeElapsed = Duration.between(start, end);
@@ -138,8 +141,7 @@ public class GeneratorMain{
 			String smlFilename = outputDir + smlDir + expDir + "architecture_"+nb+".sml";
 			System.out.println("Create Architecture no : " + nb);
 			Instant start = Instant.now();
-			String DBName = expDir.replace("_", "").replace("/", "") + "Architecture"+nb;
-			gu.generate(pyFilename, smlFilename, expDir, DBName, args[2], programConfig);
+			gu.generate(pyFilename, smlFilename, expDir, args[2], programConfig);
 			Instant end = Instant.now();
 			System.out.println(pyFilename + " generate");
 			Duration timeElapsed = Duration.between(start, end);
@@ -175,6 +177,10 @@ public class GeneratorMain{
 		
 		folder = new File(outputDir+emissionDir+expDir);
 		if(!folder.exists()) folder.mkdirs();
+		
+		folder = new File(outputDir+adjacencyDir+expDir);
+		if(!folder.exists()) folder.mkdirs();
+		
 		
 		//folder = new File(output_dir+jsonDir+expDir);
 		//if(!folder.exists()) folder.mkdirs();

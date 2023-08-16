@@ -1,4 +1,6 @@
-/xtext/
+/controller/
 /domain/
-/views/
+/test/
 /utils/
+/views/
+/xtext/

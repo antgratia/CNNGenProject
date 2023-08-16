@@ -30,7 +30,6 @@ import xtext.sML.MergeBody
 import xtext.sML.Right
 import xtext.sML.SML
 import xtext.sML.impl.SMLFactoryImpl
-import static org.testng.Assert.expectThrows
 
 /**
  * Generates code from your model files on save.
@@ -113,21 +112,22 @@ class SMLGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def void generate(SML sml, String filename, String expDir, String DBName, ProgramConfig programConfig ) {
+	def void generate(SML sml, String filename, String expDir, ProgramConfig programConfig ) {
 		
 		progConf = programConfig
 	
 		exp_dir = expDir
 		file_name = filename.split("/").last.split('.py').get(0)
 
-		mainCtrl = new MainController(DBName, programConfig)	
+		mainCtrl = new MainController(programConfig)	
 		
 		var archi = compile(sml.sml)
 		
 		
-		var writer = new PrintWriter(filename, "UTF-8");
-		writer.println(archi);
-		writer.close();
+		var writer = new PrintWriter(filename, "UTF-8")
+		writer.println(archi)
+		writer.close()
+		
 		
 	}
 	
@@ -138,7 +138,13 @@ class SMLGenerator extends AbstractGenerator {
 		
 		graphview = mainCtrl.graphview
 		
-		graphview.createGraph(archi);
+		graphview.createGraph(archi)
+		
+		var adjMatrix = graphview.createAdjencyMatrix
+		
+		var writer = new PrintWriter(progConf.outputDir+progConf.adjacencyDir+exp_dir+file_name+".txt","UTF-8")
+		writer.println(adjMatrix)
+		writer.close()
 		
 		graphview.architectureHpp(mainCtrl.gestionHPP)
 		
