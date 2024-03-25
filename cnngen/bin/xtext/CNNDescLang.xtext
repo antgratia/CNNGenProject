@@ -1,0 +1,42 @@
+grammar xtext.CNNDescLang with org.eclipse.xtext.common.Terminals
+
+generate cNNDescLang "http://www.xtext.org/CNNDescLang"
+
+CNNDescLang : cnndesclang = (Architecture);
+
+Architecture : input = ('input') fe += (FeatureExtraction)+ (inter = (Interstice) class += (Classification)+)? output = ('output');
+
+// litteraux
+
+Dropout: 'dropout';
+
+Pooling: 'avg_pooling' | 'max_pooling';
+
+Convolution: (bnconv = 'bnconv') | (convbn = 'convbn') | (conv = 'conv') | (upconv = 'upconv') ;
+
+GlobalPooling: ('global_avg_pooling') | ("global_max_pooling");
+
+FlattenOrGlobal: (flat='flatten') | (gp = GlobalPooling);
+
+Interstice: fg = (FlattenOrGlobal);
+
+Classification: drop =(Dropout)? d=('dense') ;
+
+ConvDrop: conv = Convolution (drop = Dropout)?;
+
+// Body merge
+MergeConv:merge=Merge convdrop += (ConvDrop)*;
+
+ConvOrMerge:convdrop += (ConvDrop)+ | convdrop += (ConvDrop)* mergeConv += MergeConv+;
+
+Left: (p=Pooling)? com=ConvOrMerge (pool=Pooling)?;
+
+Right: conv += Convolution+ | {Right} empty = 'Empty';
+
+MergeBody:'(' left = Left virg=',' right = Right ')' ;
+
+// Merge
+Merge:db = '[' (mergeBody+=MergeBody)+  fm = ']' ;
+
+//Feature extraction
+FeatureExtraction: 	(conv = Convolution | merge = (Merge)) drop = (Dropout)? pool= (Pooling)?;

@@ -111,7 +111,7 @@ public class CheckArchitectureValidity {
 		if(fe.getConv() != null ){
 			// === CONV
 			strFe = convToString(fe.getConv());
-		}else{
+		}else if (fe.getMerge() != null){
 			// === MERGE
 			strFe = mergeToString(fe.getMerge());
 		}
@@ -210,18 +210,19 @@ public class CheckArchitectureValidity {
 	}
 
 	private String poolToString(String pool) {
+		
 		String strPool = "";
-		if (pool == "avg_pooling") strPool += "avg_pooling ";
-		else if (pool == "max_pooling") strPool += "max_pooling ";
-		else strPool +="error pool ";
+		if (pool.equals("avg_pooling")) strPool += "avg_pooling ";
+		else if (pool.equals("max_pooling")) strPool += "max_pooling ";
+		else strPool +="poolToString : error pool";
 		return strPool;
 	}
 
 	private String interToString(Interstice inter) {
 		String strInter = "";
 		if(inter.getFg().getFlat() != null) strInter += "flatten ";
-		else if (inter.getFg().getGp() == "global_avg_pooling") strInter += "global_avg_pooling ";
-		else if (inter.getFg().getGp() == "global_max_pooling") strInter += "global_max_pooling ";
+		else if (inter.getFg().getGp().equals("global_avg_pooling")) strInter += "global_avg_pooling ";
+		else if (inter.getFg().getGp().equals("global_max_pooling")) strInter += "global_max_pooling ";
 		else strInter += "error inter ";
 		return strInter;
 	}
