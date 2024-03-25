@@ -1,1 +1,0 @@
-input convbn avg_pooling conv conv max_pooling bnconv max_pooling global_avg_pooling dense dense output 
