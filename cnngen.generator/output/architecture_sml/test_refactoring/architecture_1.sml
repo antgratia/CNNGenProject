@@ -1,0 +1,1 @@
+input [ ( max_pooling convbn convbn max_pooling , Empty ) ] dropout max_pooling [ ( avg_pooling convbn max_pooling , Empty ) ] max_pooling convbn max_pooling conv max_pooling conv avg_pooling flatten dropout dense dense dense output 

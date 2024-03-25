@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cNNDescLang" nsURI="http://www.xtext.org/CNNDescLang" nsPrefix="cNNDescLang">
+  <eClassifiers xsi:type="ecore:EClass" name="CNNDescLang">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cnndesclang" eType="#//Architecture"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Architecture">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fe" upperBound="-1" eType="#//FeatureExtraction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inter" eType="#//Interstice"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="class" upperBound="-1"
+        eType="#//Classification" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Convolution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bnconv" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="convbn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="conv" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upconv" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FlattenOrGlobal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Interstice">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fg" eType="#//FlattenOrGlobal"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Classification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="drop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="d" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvDrop">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conv" eType="#//Convolution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="drop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MergeConv">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="merge" eType="#//Merge"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="convdrop" upperBound="-1"
+        eType="#//ConvDrop" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvOrMerge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="convdrop" upperBound="-1"
+        eType="#//ConvDrop" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mergeConv" upperBound="-1"
+        eType="#//MergeConv" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Left">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="p" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="com" eType="#//ConvOrMerge"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Right">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conv" upperBound="-1" eType="#//Convolution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="empty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MergeBody">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Left" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="virg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Right"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Merge">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mergeBody" upperBound="-1"
+        eType="#//MergeBody" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureExtraction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conv" eType="#//Convolution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="merge" eType="#//Merge"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="drop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>
