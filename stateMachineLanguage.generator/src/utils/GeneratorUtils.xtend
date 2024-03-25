@@ -112,9 +112,8 @@ class GeneratorUtils {
 			writer.close();
 			
 			
-			
 			// generate python file
-			smlGenerator.generate(sml, pyFilename, expDir, programConfig);
+			smlGenerator.generate(sml, pyFilename, expDir, programConfig)
 			
 		}
 		

@@ -3,8 +3,13 @@ package main;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import utils.CheckArchitectureValidity;
+import utils.GeneratorNasbench101;
 import utils.GeneratorUtils;
 import utils.ProgramConfig;
 
@@ -67,7 +72,17 @@ public class GeneratorMain{
 		adjacencyDir = programConfig.getAdjacencyDir();
 		
 		
-		if (args.length == 1 ) {
+        int timeoutMillis = 120000; // Timeout de 120 secondes (120000 millisecondes)
+		
+		if(args[0].equals("nasbench101")) {
+			System.out.println("cc");
+			for (int i=1; i<(repeat+1); i++) {
+				GeneratorNasbench101 genNas101 = new GeneratorNasbench101();
+				String pyFilename = outputDir + pyDir + expDir + "architecture_"+i+".py";
+				String smlFilename = outputDir + smlDir + expDir + "architecture_"+i+".sml";
+				genNas101.generate(pyFilename, smlFilename, expDir);
+			}
+		}else if (args.length == 1 ) {
 			// only check if sml is valid
 			
 			cav = new CheckArchitectureValidity();
@@ -82,6 +97,8 @@ public class GeneratorMain{
 		}else if (args.length == 2 ) {
 			
 			// do experiment 
+			// param1 -> dir
+			// param2 -> nb archi to build
 			
 			if(args[0] != "") expDir = args[0];
 			else {
@@ -95,10 +112,40 @@ public class GeneratorMain{
 				System.exit(1);
 			}
 			
-			
 			createFolder();
 			int total_time = 0;
+			ExecutorService executor = Executors.newSingleThreadExecutor();
 			for (int i=1; i<(repeat+1); i++) {
+				final int iterationNumber = i;
+				
+				// Execute in Future for timeout
+	            Future<?> future = executor.submit(() -> {
+	                GeneratorUtils gu = new GeneratorUtils();
+					String pyFilename = outputDir + pyDir + expDir + "architecture_"+iterationNumber+".py";
+					String smlFilename = outputDir + smlDir + expDir + "architecture_"+iterationNumber+".sml";
+					System.out.println("Random Generation no : " + iterationNumber);
+					gu.generate(pyFilename, smlFilename, expDir, programConfig);
+					System.out.println(pyFilename + " generate");
+					
+	            });
+
+	            try {
+	            	Instant start = Instant.now();
+	                future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+	                Instant end = Instant.now();
+	                Duration timeElapsed = Duration.between(start, end);
+					total_time += timeElapsed.toMillis();
+					System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds\n");
+	            } catch (Exception e) {
+	                System.out.println("Timeout occurred for iteration " + i);
+	                future.cancel(true); // cancel task
+	                continue; // next it
+	            }
+			}
+			
+			/*
+			for (int i=1; i<(repeat+1); i++) {
+				timeoutThread.start();
 				GeneratorUtils gu = new GeneratorUtils();
 				String pyFilename = outputDir + pyDir + expDir + "architecture_"+i+".py";
 				String smlFilename = outputDir + smlDir + expDir + "architecture_"+i+".sml";
@@ -110,13 +157,18 @@ public class GeneratorMain{
 				Duration timeElapsed = Duration.between(start, end);
 				total_time += timeElapsed.toMillis();
 				System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds\n");
-							
-			}
+				timeoutThread.interrupt();	
+			}*/
 			
 			System.out.println("Total Time : " + total_time + " milliseconds\n");
 			
 			
 		}else if(args.length == 3) {
+			
+			// instantiate specific architecture 
+			// param1 -> dir
+			// param2 -> num
+			// param3 -> archi to build
 			
 			if(args[0] != "") expDir = args[0];
 			else {

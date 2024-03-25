@@ -2,6 +2,8 @@ package utils;
 
 import java.util.Locale;
 
+import org.testng.annotations.Ignore;
+
 /*
  * 
  * Class for all python instruction to write in a python file
@@ -23,7 +25,6 @@ public class FonctionStringPy {
 				+ "from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, GlobalAveragePooling2D, MaxPool2D, Concatenate, Dropout\r\n"
 				+ "from tensorflow.keras.initializers import glorot_uniform\r\n"
 				+ "from tensorflow.keras.utils import plot_model\r\n"
-				+ "from keras_flops import get_flops\r\n"
 				+ "from codecarbon import OfflineEmissionsTracker\r\n"
 				+ "import tensorflow as tf\r\n"
 				+ "import sys\r\n"
@@ -90,11 +91,6 @@ public class FonctionStringPy {
 				+ "\temissions = tracker.stop()\n\n";
 	}
 	
-	public String writeFlops() {
-		return "\t # get number of flops\n"
-				+ "\tflops = get_flops(model, batch_size=batch_size)\n";
-	}
-	
 	public String writeModel(String out) {
 		return "\t\tmodel = Model(inputs=X_input, outputs="+ out + ")\n"
 				+ "\t\treturn model\n\n"
@@ -120,7 +116,6 @@ public class FonctionStringPy {
 				+ "            self.codecarbon_tracker = codecarbon_tracker\r\n"
 				+ "            pass\r\n"
 				+ "\r\n"
-				+ "        ## Q4: How to stop training in an epoch when we pass a energy cap?\r\n"
 				+ "        # Use the energy measured at section 1b as an energy cap for the\r\n"
 				+ "        # training \r\n"
 				+ "        # \r\n"
@@ -140,7 +135,6 @@ public class FonctionStringPy {
 				+ "                # command to tell TF to stop training\r\n"
 				+ "                self.model.stop_training = True            \r\n"
 				+ "\r\n"
-				+ "        ## Q5: How to stop training in a **batch** when we pass a energy cap?\r\n"
 				+ "        # Use the energy measured at section 1b as an energy cap for the\r\n"
 				+ "        # training\r\n"
 				+ "        #   \r\n"
@@ -149,7 +143,6 @@ public class FonctionStringPy {
 				+ "        # \r\n"
 				+ "        # Hint: use self.codecarbon_tracker._measure_power_and_energy() instead\r\n"
 				+ "        # of self.codecarbon_tracker.flush() to avoid IO overhead\r\n"
-				+ "        ## Q6: What happens if you don't call _measure_power_and_energy() or flush()?\r\n"
 				+ "        def on_batch_end(self, batch, logs=None):\r\n"
 				+ "            # Energy measured in the 1b run on my laptop \r\n"
 				+ "            energy_cap_kwh = 0.001071591612688175\r\n"
@@ -231,10 +224,34 @@ public class FonctionStringPy {
 		return String.format("\t\t%s = UpSampling2D(size = %d)(%s)", x1, kernel, x1);
 	}
 	
-	public String writeCallbackMethode(String tbDir) {
-		return "\tes = EarlyStopping(monitor='val_loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n"
-				+ "\ttb = TensorBoard(log_dir=\""+ tbDir +"\")\r\n"
-				+ "\tlist_cb = [es, tb]\n\n";
+	private String writeEarlyStopping() {
+		return "\tes = EarlyStopping(monitor='val_loss', min_delta=0.001, verbose=1, restore_best_weights=True, patience=7)\r\n";
+	}
+	
+	private String writeTensorBoard(String tbDir) {
+		return "\ttb = TensorBoard(log_dir=\""+ tbDir +"\")\r\n";
+	}
+	
+	public String writeCallbackMethode(String tbDir, boolean es, boolean tb) throws Exception {
+		String cb = "";
+		if(es == true && tb == true) {
+			cb += writeEarlyStopping();
+			cb += writeTensorBoard(tbDir);
+			cb += "\tlist_cb = [es, tb]\n\n";
+		}else if(es == true && tb == false) {
+			cb += writeEarlyStopping();
+			cb += "\tlist_cb = [es]\n\n";
+		}else if (es == false && tb == true) {
+			cb += writeTensorBoard(tbDir);
+			cb += "\tlist_cb = [tb]\n\n";
+		}else if (es == false && tb == false) {
+			cb += "\tlist_cb = []\n\n";
+		}else {
+			throw new Exception("writeCallbackMethode");
+		}
+		
+		return cb;
+				
 	}
 	
 	public String writeCallbackMethodeCodeCarbon(String tbDir) {
@@ -249,7 +266,7 @@ public class FonctionStringPy {
 	
 	public String writeTrain() {
 		return "\tstart = time()\n"
-				+ "\thistory = model.fit(train_x, train_y, epochs=nb_epochs, batch_size=batch_size, validation_split=0.2, callbacks=list_cb)\n\n"
+				+ "\thistory = model.fit(train_x, train_y, epochs=nb_epochs, batch_size=batch_size, validation_split=0.2, callbacks=list_cb, verbose=0)\n\n"
 				+ "\ttraining_time = time()-start\n\n";
 	}
 	
@@ -257,15 +274,15 @@ public class FonctionStringPy {
 		String log_file = log_dir + file_name +".log";
 		return "\tlog_file = open( \""+ log_file + "\", \"w\")\n"
 			    + "\n\t# save test result\n"
-			    + "\tlog_file.write('test result : ' + str(model.evaluate(test_x, test_y)))\n"
-			    + "\ttest_result_loss = model.evaluate(test_x, test_y)[0]\n"
-			    + "\ttest_result_acc = model.evaluate(test_x, test_y)[1]\n"
+			    + "\tlog_file.write('test result : ' + str(model.evaluate(test_x, test_y, verbose=0)))\n"
+			    + "\ttest_result_loss = model.evaluate(test_x, test_y, verbose=0)[0]\n"
+			    + "\ttest_result_acc = model.evaluate(test_x, test_y, verbose=0)[1]\n"
 			    
 			    + "\n\t# save train result\n"
-			    + "\tlog_file.write('Train result : ' + str(model.evaluate(test_x, test_y)))\n"
+			    + "\tlog_file.write('Train result : ' + str(model.evaluate(test_x, test_y, verbose=0)))\n"
 			    + "\tlog_file.write('History train result : ' + str(history.history))\n"
-			    + "\ttrain_result_loss = model.evaluate(train_x, train_y)[0]\n"
-			    + "\ttrain_result_acc = model.evaluate(train_x, train_y)[1]\n"
+			    + "\ttrain_result_loss = model.evaluate(train_x, train_y,verbose=0)[0]\n"
+			    + "\ttrain_result_acc = model.evaluate(train_x, train_y, verbose=0)[1]\n"
 			    
 			    + "\tprint('OK: file " + log_file + " has been create')\n"
 			    
@@ -284,12 +301,11 @@ public class FonctionStringPy {
 	    		+ "\tresult_loss = \"Error\"\n"
 	    		+ "\tresult_acc = \"Error\"\n"
 	    		+ "\tepochs = 0\n"
-	    		+ "\tflops = 0\n"
 	    		+ "\thistory = None\n"
 	    		+ "\terror_file.close()\n\n";
 	}
 	
-	public String gestionFinally(String log_dir, String file_name) {
+	public String gestionFinally(String log_dir, String file_name, float flops) {
 		return "finally:\n"
 			   + "\tfile = open(\""+log_dir+ "architecture_results.csv\", 'a', newline ='')\n"
 			   +"\twith file:\n"
@@ -311,7 +327,7 @@ public class FonctionStringPy {
 			   +"                      'Test_result_loss': test_result_loss,\n"
 			   +"                      'Nb_layers': nb_layers,\n"
 			   +"                      'Epochs' : epochs,\n"
-			   +"					   'Flops' : flops,\n"
+			   +"					   'Flops' : " + flops + ",\n"
 			   +"                      'nb_params' : nb_params\n"
 			   +"                      })\n"
 			   +"\t\tprint('add line into architecture_results.csv')\n"

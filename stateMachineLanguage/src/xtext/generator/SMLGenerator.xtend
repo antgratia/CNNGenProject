@@ -50,7 +50,7 @@ class SMLGenerator extends AbstractGenerator {
 	var currentPos = 1
 		
 	// python directory
-    var py_dir = "architecture_py/"
+    var py_dir = ""
     
    	/*
    	 * 
@@ -60,17 +60,17 @@ class SMLGenerator extends AbstractGenerator {
    	 * 
    	*/
     // log directory
-    var log_dir = "../../architecture_log/"
+    var log_dir = ""
     
     // png directory
-    var png_dir = "../../architecture_img/"
+    var png_dir = ""
     
-    var tensorboardDir = "../../architecture_tb/"
+    var tensorboardDir = ""
     
-    var emission_dir = "../../architecture_emissions/"
+    var emission_dir = ""
     
-       // csv directory
-    static String csvDir = "../../architecture_csv/";
+    // csv directory
+    var csvDir = "";
     
     var ProgramConfig progConf = null
     
@@ -91,6 +91,8 @@ class SMLGenerator extends AbstractGenerator {
     static String csvDir = "../architecture_csv/";
      */
     
+    var isES = false;
+    var isTB = false;
     
 	var file_name = ""
 	
@@ -115,7 +117,16 @@ class SMLGenerator extends AbstractGenerator {
 	def void generate(SML sml, String filename, String expDir, ProgramConfig programConfig ) {
 		
 		progConf = programConfig
-	
+		
+		py_dir = progConf.pyDir
+		log_dir = "../../" + progConf.logDir
+		png_dir = "../../" + progConf.pngDir
+		tensorboardDir = "../../" + progConf.tensorboardDir
+		emission_dir = "../../" + progConf.emissionDir
+		csvDir = "../../" + progConf.CSVDir
+		isES = progConf.isEarlyStopping
+		isTB = progConf.isTensorBoard
+		
 		exp_dir = expDir
 		file_name = filename.split("/").last.split('.py').get(0)
 
@@ -181,7 +192,7 @@ class SMLGenerator extends AbstractGenerator {
 		
 		py_file += gestionArchi(archi)
 		
-		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name);
+		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name, isES,isTB);
 		
 		py_file += fsp.writeStartCodeCarbonTracker
 		
@@ -189,13 +200,11 @@ class SMLGenerator extends AbstractGenerator {
 		
 		py_file += fsp.writeStopCodeCarbon
 		
-		py_file += fsp.writeFlops
-		
 		py_file += fsp.gestionGood(log_dir + exp_dir, file_name)
 		
 		py_file += fsp.gestionError(log_dir + exp_dir, file_name)
 		
-		py_file += fsp.gestionFinally(csvDir + exp_dir, file_name)
+		py_file += fsp.gestionFinally(csvDir + exp_dir, file_name, graphview.computeFlops)
 		
 		return py_file
 		

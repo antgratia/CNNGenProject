@@ -111,7 +111,7 @@ public class CheckArchitectureValidity {
 		if(fe.getConv() != null ){
 			// === CONV
 			strFe = convToString(fe.getConv());
-		}else{
+		}else if (fe.getMerge() != null){
 			// === MERGE
 			strFe = mergeToString(fe.getMerge());
 		}

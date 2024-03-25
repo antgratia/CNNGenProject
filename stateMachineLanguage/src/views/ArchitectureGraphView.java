@@ -42,6 +42,7 @@ public class ArchitectureGraphView {
 	private int layerPos;
 	private static Random rand = new Random();
 	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
+	private float flops;
 	
 	private Layer lastLayer; 
 	private String str_add_or_concat;
@@ -60,6 +61,23 @@ public class ArchitectureGraphView {
 			}
 		}
 		return null;
+	}
+	
+	public float computeFlops() {
+		for(Layer l : graph) {
+			if(l instanceof domain.Convolution) {
+				domain.Convolution c = (domain.Convolution) l;
+				flops += 2*c.getInputFilter()*c.getKernel()*c.getKernel()*c.getOutputImgSize()*c.getOutputImgSize();
+			}else if (l instanceof Pooling) {
+				Pooling p = (Pooling) l;
+				flops += 2*p.getInputFilter()*p.getKernel()*p.getKernel()*p.getOutputImgSize()*p.getOutputImgSize();
+
+			}else if (l instanceof Dense) {
+				Dense d = (Dense) l;
+				flops += 2*d.getInputImgSize()*d.getOutputImgSize();
+			}
+		}
+		return flops;
 	}
 	
 	

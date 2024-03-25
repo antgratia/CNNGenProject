@@ -54,6 +54,14 @@ public class ProgramConfig {
 		return prop.getProperty("DATASET");
 	}
 	
+	public boolean isEarlyStopping() {
+		return Boolean. parseBoolean(prop.getProperty("EARLY_STOPPING")); 
+	}
+	
+	public boolean isTensorBoard() {
+		return Boolean. parseBoolean(prop.getProperty("TENSORBOARD"));
+	}
+	
 	// Directories
 	public String getOutputDir() {
 		return prop.getProperty("OUTPUT_DIR");
