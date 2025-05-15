@@ -36,16 +36,21 @@ import xtext.cNNDescLang.Right;
 public class ArchitectureGraphView {
 	
 	//Controllers
+	private final static int MAX_BUDGET_IMG = 10;
 	private final static int MAX_NB_VERIF = 10;
 	
 	private List<Layer> graph;
 	private int layerPos;
 	private static Random rand = new Random();
 	private static List<String> add_or_concat = new ArrayList<String>(List.of("add", "concat"));
-	private float flops;
+	private int flops;
+	private int nbParams;
 	
 	private Layer lastLayer; 
 	private String str_add_or_concat;
+	
+	
+	private int budgetImg = 0;
 	
 	
 	// constructor
@@ -78,6 +83,32 @@ public class ArchitectureGraphView {
 			}
 		}
 		return flops;
+	}
+	
+	public int computeParameters() {
+		for (Layer l : graph) {
+			if(l instanceof domain.Convolution) {
+				domain.Convolution c = (domain.Convolution) l;
+				nbParams += (c.getKernel()*c.getKernel()*c.getInputFilter() + 1 )*c.getOutputFilter();
+			}else if (l instanceof Dense) {
+				Dense d = (Dense) l;
+				int prevUnit = 0;
+				if(d.getPrevLayer() instanceof domain.Interstice) {
+					domain.Interstice i = (domain.Interstice) d.getPrevLayer();
+					if(i.getType() == "flatten") {
+						prevUnit = i.getOutputFilter()*i.getOutputImgSize()*i.getOutputImgSize();
+					}else {
+						prevUnit = i.getOutputFilter();
+					}
+					
+				}else if (d.getPrevLayer() instanceof Dense){
+					Dense prevDense = (Dense) d.getPrevLayer();
+					prevUnit = prevDense.getUnits();
+				}
+				nbParams += prevUnit*d.getUnits()+d.getUnits();
+			}
+		}
+		return nbParams;
 	}
 	
 	
@@ -186,8 +217,17 @@ public class ArchitectureGraphView {
 
 	private void gestionInter(Interstice interstice) throws Exception {
 		if (interstice.getFg().getFlat() != null || interstice.getFg().getGp() != null){
+			String type = null;
+			if(interstice.getFg().getFlat() != null)
+				type = "flatten";
+			else if(interstice.getFg().getGp().equals("global_avg_pooling"))
+				type = "global_avg_pooling";
+			else if(interstice.getFg().getGp().equals("global_max_pooling"))
+				type = "global_max_pooling";
+			else
+				System.out.println("ArchitectureGraphView gestionInter: error");
 			
-			domain.Interstice inter = new domain.Interstice(layerPos);
+			domain.Interstice inter = new domain.Interstice(layerPos, type);
 			
 			inter.getPrevLayer().add(lastLayer);
 			
@@ -484,6 +524,87 @@ public class ArchitectureGraphView {
 	}
 	
 	
+	private void verificationImage(GestionHPP gestionHPP) throws Exception {
+		int i = 0;
+		while(i < graph.size()) {
+			CorrectionLayer(graph.get(i), gestionHPP);
+			i++;
+		}
+		
+	}
+	
+	private void CorrectionLayer(Layer layer, GestionHPP gestionHPP) throws Exception {
+		if (layer instanceof Add) {
+			Add add = (Add) layer;
+			if(add.getPrevLayer().get(0).getOutputImgSize() != add.getPrevLayer().get(1).getOutputImgSize()) {
+				Layer layerModif = add.getPrevLayer().get(1);
+				if(add.getPrevLayer().get(0).getOutputImgSize() > add.getPrevLayer().get(1).getOutputImgSize()) {
+					while(layerModif.getInputImgSize() == layerModif.getOutputImgSize() && 
+							layerModif.getNextLayer().size()==1 && 
+							layerModif.getPrevLayer().size()==1){
+						layerModif = layerModif.getPrevLayer().get(0);
+					}
+					if(layerModif instanceof domain.Convolution || layerModif instanceof Pooling) {
+						int objectifImgSize = add.getPrevLayer().get(0).getOutputImgSize();
+						gestionHPP.optiHPPfromImgObjective(layerModif, objectifImgSize);
+					}
+					
+				}else {
+					while(layerModif.getInputImgSize() == layerModif.getOutputImgSize() && 
+							layerModif.getNextLayer().size()==1 && 
+							layerModif.getPrevLayer().size()==1){
+						layerModif = layerModif.getPrevLayer().get(0);
+					}
+					if(layerModif instanceof domain.Convolution || layerModif instanceof Pooling) {
+						int objectifImgSize = add.getPrevLayer().get(0).getOutputImgSize();
+						gestionHPP.optiHPPfromImgObjective(layerModif, objectifImgSize);
+					}
+						
+				}
+				layerModif = layerModif.getNextLayer().get(0);
+				while(layerModif.getLayerPos() != add.getLayerPos()) {
+					layerModif.setInputImgSize(layerModif.getPrevLayer().get(0).getOutputImgSize());
+					layerModif.setOutputImgSize(layerModif.getPrevLayer().get(0).getOutputImgSize());
+					layerModif = layerModif.getNextLayer().get(0);
+				}
+			}
+			
+		}else if (layer instanceof Concatenate) {
+			Concatenate concat = (Concatenate) layer;
+			if(concat.getPrevLayer().get(0).getOutputImgSize() != concat.getPrevLayer().get(1).getOutputImgSize()) {
+				Layer layerModif = concat.getPrevLayer().get(1);
+				if(concat.getPrevLayer().get(0).getOutputImgSize() > concat.getPrevLayer().get(1).getOutputImgSize()) {
+					while(layerModif.getInputImgSize() == layerModif.getOutputImgSize() && 
+							layerModif.getNextLayer().size()==1 && 
+							layerModif.getPrevLayer().size()==1){
+						layerModif = layerModif.getPrevLayer().get(0);
+					}
+					if(layerModif instanceof domain.Convolution || layerModif instanceof Pooling) {
+						int objectifImgSize = concat.getPrevLayer().get(0).getOutputImgSize();
+						gestionHPP.optiHPPfromImgObjective(layerModif, objectifImgSize);
+					}
+				}else {
+					while(layerModif.getInputImgSize() == layerModif.getOutputImgSize() && 
+							layerModif.getNextLayer().size()==1 && 
+							layerModif.getPrevLayer().size()==1){
+						layerModif = layerModif.getPrevLayer().get(0);
+					}
+					if(layerModif instanceof domain.Convolution || layerModif instanceof Pooling) {
+						int objectifImgSize = concat.getPrevLayer().get(0).getOutputImgSize();
+						gestionHPP.optiHPPfromImgObjective(layerModif, objectifImgSize);
+					}
+				}
+				
+				layerModif = layerModif.getNextLayer().get(0);
+				while(layerModif.getLayerPos() != concat.getLayerPos()) {
+					layerModif.setInputImgSize(layerModif.getPrevLayer().get(0).getOutputImgSize());
+					layerModif.setOutputImgSize(layerModif.getPrevLayer().get(0).getOutputImgSize());
+					layerModif = layerModif.getNextLayer().get(0);
+				}
+			}			
+		}
+	}
+	
 	
 	// add hyperparameters value to architecture 
 	public void architectureHpp(GestionHPP gestionHPP) throws Exception {
@@ -511,91 +632,64 @@ public class ArchitectureGraphView {
 		
 		System.out.println("graph hpp saved");
 		
+		correction(gestionHPP);
 		
-		System.out.println("verifications...");
+		verificationImage(gestionHPP);
+		
+		
+		//System.out.println("verifications...");
 
 		//verify the img size
 		//verifyImgSize(gestionHPP);
 		
-		System.out.println("1");
+		System.out.println("verifications filter");
 		
 		//verify hpp filter
 	    verifyFilters();
 	    
-	    System.out.println("2");
+	    //System.out.println("2");
 		
 		System.out.println("verification clear");
 
 		
 	}
 	
-	/*
-	// verify the img size
-	public void verifyImgSize(GestionHPP gestionHPP) throws Exception {
-		boolean verify = true;
-		int nb_verif = 0;
-		while(verify && nb_verif < MAX_NB_VERIF) {
-			verify = false;
-			for(Layer cellAddOrConcat :graph.stream()
-													.filter(c-> c instanceof Add || c instanceof Concatenate)
-													.sorted(Comparator.comparingInt(Layer::getLayerPos))
-													.collect(Collectors.toList())) {
-				
-				List<Layer> listEdges = cellAddOrConcat.getPrevLayer();
-				
-				if(listEdges.get(0).getOutputImgSize() < listEdges.get(1).getOutputImgSize()) {
+	public void correction(GestionHPP gestionHPP) {
+		for(Layer layer : graph){
+			if((layer.getPrevLayer().size()>1) && (layer.getNextLayer().size()>1)) {
+				if(layer instanceof domain.Convolution) {
+					domain.Convolution conv =  (domain.Convolution) layer;
 					
+					// init input filter + img
+					conv.setInputFilter(conv.getPrevLayer().get(0).getOutputFilter());
+					conv.setInputImgSize(conv.getPrevLayer().get(0).getOutputImgSize());
 					
-					// right way don't reduce enough 
-					Layer findConv = listEdges.get(1);
-					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-						if(findConv instanceof Input) throw new Exception("ArchitectureGraphView verifyImgSize: can't find conv or pool");
-						findConv = findConv.getPrevLayer().get(0);
-					}
+					//set hpp
+					conv.setOutputImgSize(GestionHPP.calculCurrentSize(conv.getPadding(), conv.getKernel(), conv.getStride(), conv.getInputImgSize()));
 					
-					if(findConv instanceof domain.Convolution) {
-						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-						gestionHPP.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
-						
-					}else if (findConv instanceof Pooling){
-						int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-						gestionHPP.recomputeSize(findConv, startImgSize, listEdges.get(0).getImgSize());
-						
-					}else throw new Exception("ArchitectureGraphView verifyImgSize: not possible ");
+			
+				}
+				else if (layer instanceof Pooling) {
 					
-					// propagation of img change
-					while( !(findConv instanceof Output) && (findConv.getNextLayer().get(0).getLayerPos() != cellAddOrConcat.getLayerPos())) {
-						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
-						findConv = findConv.getNextLayer().get(0);
-					}
+					Pooling pool = (Pooling) layer;
 					
-					verify = true;
-				}else if (listEdges.get(0).getImgSize() > listEdges.get(1).getImgSize()){
-					// right way reduce too much
-					Layer findConv = listEdges.get(0);
-					while(!(findConv instanceof domain.Convolution) && !(findConv instanceof Pooling)) {
-						if(findConv instanceof Input) throw new Exception("GestionHPP verifyImgSize : can't find conv or pool");
-						findConv = findConv.getPrevLayer().get(0);
-					}
+					pool.setInputFilter(pool.getPrevLayer().get(0).getOutputFilter());
+					pool.setInputImgSize(pool.getPrevLayer().get(0).getOutputImgSize());
 					
-					int startImgSize = findConv.getPrevLayer().get(0).getImgSize();
-					gestionHPP.recomputeSize(findConv, startImgSize, listEdges.get(1).getImgSize());
+					pool.setOutputImgSize(GestionHPP.calculCurrentSize(pool.getPadding(), pool.getKernel(), pool.getStride(), pool.getInputImgSize()));
 					
-					// propagation of img change
-					while(!(findConv instanceof Output) && (findConv.getNextLayer().get(0).getLayerPos() != cellAddOrConcat.getLayerPos	())) {
-						findConv.getNextLayer().get(0).setImgSize(findConv.getImgSize());
-						findConv = findConv.getNextLayer().get(0);
-					}
+					pool.setOutputFilter(pool.getInputFilter());
+				}
+				else {
+					layer.setInputFilter(layer.getPrevLayer().get(0).getOutputFilter());
+					layer.setInputImgSize(layer.getPrevLayer().get(0).getOutputImgSize());
 					
-					verify = true;
-				}else {
-					
+					layer.setOutputFilter(layer.getPrevLayer().get(0).getOutputFilter());
+					layer.setOutputImgSize(layer.getPrevLayer().get(0).getOutputImgSize());
 				}
 			}
-			nb_verif++;
 		}
-		
-	}*/
+	}
 	
 	// verify filters
 	public void verifyFilters() throws Exception {
@@ -794,9 +888,14 @@ public class ArchitectureGraphView {
 					layerLeftReductionPossible.remove(l);
 				}
 				
+				if(subLayerLeftReductionPossible.size() > 0) {
+					int leftLayerIndice = rand.nextInt(subLayerLeftReductionPossible.size());
+					subLayerLeftReductionPossible.get(leftLayerIndice).setReduction(true);
+				}else {
+					System.out.println("subLayerLeftReductionPossible : " + subLayerLeftReductionPossible);
+					System.out.println(y.getLayerPos());
+				}
 				
-				int leftLayerIndice = rand.nextInt(subLayerLeftReductionPossible.size());
-				subLayerLeftReductionPossible.get(leftLayerIndice).setReduction(true);
 			}
 			
 			
@@ -836,7 +935,7 @@ public class ArchitectureGraphView {
 					int rightLayerIndice = rand.nextInt(subLayerRightReductionPossible.size());
 					subLayerRightReductionPossible.get(rightLayerIndice).setReduction(true);
 				}else {
-					System.out.println(layerRightReductionPossible);
+					System.out.println("layerRightReductionPossible : " + layerRightReductionPossible);
 					System.out.println(y.getLayerPos());
 				}
 				
@@ -849,7 +948,6 @@ public class ArchitectureGraphView {
 			
 			List<Layer> saveLayer = new ArrayList<>();
 			while (layerRight.getLayerPos() != lastlayer.getLayerPos()) {
-				
 				
 				if (layerRight.getNextLayer().size()==2) {
 					saveLayer.add(layerRight);
@@ -898,6 +996,8 @@ public class ArchitectureGraphView {
 			int leftLayerIndice = rand.nextInt(layerLeftReductionPossible.size());
 			layerLeftReductionPossible.get(leftLayerIndice).setReduction(true);
 			
+			
+			
 			int rightLayerIndice = rand.nextInt(layerRightReductionPossible.size());
 			layerRightReductionPossible.get(rightLayerIndice).setReduction(true);
 			
@@ -915,7 +1015,7 @@ public class ArchitectureGraphView {
 			objectiveImgSize = leftLayer.getPrevLayer().get(0).getOutputImgSize();
 			objectiveFilter = leftLayer.getPrevLayer().get(0).getOutputFilter();
 			
-			Layer rightLayer = firstLayer.getNextLayer().get(0);
+			Layer rightLayer = firstLayer.getNextLayer().get(1);
 			
 			while(rightLayer.getLayerPos() != lastlayer.getLayerPos()) {
 				if(rightLayer.isReduction() == true) {

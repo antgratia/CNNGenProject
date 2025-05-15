@@ -62,6 +62,21 @@ public class CheckArchitectureValidity {
 		return smlArchi;
 	}
 	
+	public EList<Diagnostic> checkValidity(CNNDescLang cnndl) throws IOException {
+
+		String smlArchi = SMLToString(cnndl.getCnndesclang());
+
+		System.out.println(smlArchi);
+
+		Injector injector = new CNNDescLangStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+
+		Resource r = rs.createResource(URI.createURI(path));
+		r.load(new StringInputStream(smlArchi), null);
+				
+		return r.getErrors();
+	}
+	
 	/*
 	 * 
 	 * Check validity of a string

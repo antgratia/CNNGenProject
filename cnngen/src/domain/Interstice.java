@@ -11,9 +11,11 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Interstice extends Layer {
 	
+	private String type;
 	
-	public Interstice(int layerPos) {
+	public Interstice(int layerPos, String type) {
 		this.layerPos = layerPos;
+		this.type = type;
 	}
 
 }

@@ -30,7 +30,19 @@ public class FonctionStringPy {
 				+ "import sys\r\n"
 				+ "import traceback\r\n"
 				+ "import csv\r\n"
-				+ "from time import time\n\n";
+				+ "from time import time\n\n"
+				+ "from PIL import Image\n\n";
+	}
+	
+	
+	private String upscale() {
+		return "def upscale_images(images, new_size): \r\n"
+				+ "	upscaled_images = [] \r\n"
+				+ "	for img in images: \r\n"
+				+ "		img_array = np.array(img)\r\n"
+				+ "		img_upscaled = np.expand_dims(np.array(Image.fromarray(img_array).resize(new_size)), axis=-1)\r\n"
+				+ "		upscaled_images.append(img_upscaled)\r\n"
+				+ "	return np.array(upscaled_images)\r\n";
 	}
 	
 	public String writeMnistDataSet() {
@@ -47,9 +59,40 @@ public class FonctionStringPy {
 				+ "val_y = train_y[:5000]\n\n";
 	}
 	
+	public String writeFashionMnistDataSet() {
+		
+		return  upscale() + "(train_x, train_y), (test_x, test_y) = keras.datasets.fashion_mnist.load_data()\r\n"
+				+ "new_size = (32, 32)\r\n"
+				+ "train_x = upscale_images(train_x, new_size)\r\n"
+				+ "test_x = upscale_images(test_x, new_size)\r\n"
+				+ "\r\n"
+				+ "# normaliser les pixel 0-255 -> 0-1\r\n"
+				+ "train_x = train_x / 255.0\r\n"
+				+ "test_x = test_x / 255.0\r\n"
+				+ "\r\n"
+				+ "train_x = tf.expand_dims(train_x, 3)\r\n"
+				+ "test_x = tf.expand_dims(test_x, 3)\r\n"
+				+ "\r\n"
+				+ "val_x = train_x[:5000]\r\n"
+				+ "val_y = train_y[:5000]\n\n";
+	}
+	
 	public String writecifar10Dataset() {
 		return "# load dataset\r\n"
 				+ "(train_x, train_y), (test_x, test_y) = keras.datasets.cifar10.load_data()\r\n"
+				+ "\r\n"
+				+ "# normalize to range 0-1\r\n"
+				+ "train_x = train_x / 255.0\r\n"
+				+ "test_x = test_x / 255.0\r\n"
+				+ "\r\n"
+				+ "val_x = train_x[:5000]\r\n"
+				+ "val_y = train_y[:5000]\r\n"
+				+ "\n\n";
+	}
+	
+	public String writecifar100Dataset() {
+		return "# load dataset\r\n"
+				+ "(train_x, train_y), (test_x, test_y) = keras.datasets.cifar100.load_data()\r\n"
 				+ "\r\n"
 				+ "# normalize to range 0-1\r\n"
 				+ "train_x = train_x / 255.0\r\n"
@@ -78,6 +121,7 @@ public class FonctionStringPy {
 				+ "nb_layers = \"not build\"\r\n"
 				+ "history = None\n"
 				+ "epochs = 0\n"
+				+ "nb_params = 0\n"
 				+ "\r\n\n";
 	}
 	

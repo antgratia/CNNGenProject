@@ -48,29 +48,124 @@ tracker = OfflineEmissionsTracker(country_iso_code="BEL", log_level='error', out
 try:
 	def getModel():
 		X_input = X = Input([28,28,1])
-		X = BatchNormalization(epsilon=0.001, axis=3)(X)
-		X = Conv2D(16, kernel_size=7, strides=4, activation='gelu', padding='valid')(X)
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=3, strides=2, activation='relu', padding='valid')(X)
 		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
-		X = Conv2D(32, kernel_size=1, strides=1, activation='gelu', padding='same')(X)
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = MaxPooling2D(pool_size=4, strides=4, padding='same')(X)
 
 		X1 = X
-		X = MaxPooling2D(pool_size=3, strides=1, padding='same')(X)
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
 		X = BatchNormalization(epsilon=1.001E-5, axis=3)(X)
-		X = Conv2D(32, kernel_size=4, strides=1, activation='gelu', padding='same')(X)
-		X = Conv2D(32, kernel_size=6, strides=1, activation='gelu', padding='same')(X)
-		X = Dropout(0.50)(X)
-		X = AveragePooling2D(pool_size=5, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.10)(X)
 
+		X2 = X
+		X = MaxPooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-7, axis=3)(X)
+
+		X3 = X
+		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
+
+		X4 = X
+		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
+		X = Conv2D(16, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.40)(X)
+
+		X5 = X
+		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=3, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.80)(X)
+		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X5])
+
+		X5 = X
+		X = MaxPooling2D(pool_size=3, strides=1, padding='same')(X)
+		X = Conv2D(20, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X5])
+		X = Conv2D(24, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = Conv2D(24, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = MaxPooling2D(pool_size=3, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X4])
+		X = BatchNormalization(epsilon=0.001, axis=3)(X)
+		X = Conv2D(36, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.01)(X)
+
+		X4 = X
+		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = Conv2D(36, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
+		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X4])
+		X = Conv2D(50, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X3])
+		X = Conv2D(40, kernel_size=3, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X2])
+		X = Conv2D(50, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-7, axis=3)(X)
+		X = Conv2D(50, kernel_size=1, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.80)(X)
+
+		X2 = X
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = BatchNormalization(epsilon=1.001E-5, axis=3)(X)
+		X = Conv2D(50, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = Conv2D(50, kernel_size=4, strides=1, activation='relu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.001E-5, axis=3)(X)
+		X = Dropout(0.80)(X)
+		X = AveragePooling2D(pool_size=2, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X2])
+		X = Conv2D(80, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Conv2D(80, kernel_size=3, strides=1, activation='relu', padding='same')(X)
+		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+
+		X1 = Conv2D(80, kernel_size=1, strides=1, activation='relu', padding='same')(X1)
+		X1 = BatchNormalization(epsilon=1.001E-5, axis=3)(X1)
+		X1 = BatchNormalization(epsilon=1.001E-5, axis=3)(X1)
+		X1 = Conv2D(80, kernel_size=3, strides=1, activation='relu', padding='same')(X1)
+		X = Concatenate()([X, X1])
+		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = Conv2D(64, kernel_size=2, strides=2, activation='relu', padding='same')(X)
+		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
+
+		X1 = Conv2D(80, kernel_size=1, strides=1, activation='relu', padding='same')(X1)
+		X1 = Conv2D(64, kernel_size=2, strides=2, activation='relu', padding='same')(X1)
+		X1 = BatchNormalization(epsilon=1.001E-5, axis=3)(X1)
 		X = Concatenate()([X, X1])
 		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = Conv2D(74, kernel_size=1, strides=1, activation='gelu', padding='same')(X)
-		X = MaxPooling2D(pool_size=3, strides=3, padding='same')(X)
 
-		X = Flatten()(X)
+		X1 = X
+		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
+		X = Conv2D(102, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = Dropout(0.50)(X)
+		X = Conv2D(102, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
+
+		X = Concatenate()([X, X1])
 		X = Dropout(0.80)(X)
+		X = AveragePooling2D(pool_size=2, strides=1, padding='same')(X)
+
+		X = GlobalMaxPooling2D()(X)
+		X = Dropout(0.50)(X)
+		X = Dense(48, activation='relu')(X)
+		X = Dense(4, activation='relu')(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model
@@ -137,7 +232,7 @@ finally:
                       'Test_result_loss': test_result_loss,
                       'Nb_layers': nb_layers,
                       'Epochs' : epochs,
-					   'Flops' : 230336.0,
+					   'Flops' : 384074.0,
                       'nb_params' : nb_params
                       })
 		print('add line into architecture_results.csv')

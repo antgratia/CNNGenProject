@@ -22,6 +22,7 @@ public class ProgramConfig {
 		try (FileInputStream fis = new FileInputStream(fileName)) {
 		    prop.load(fis);
 		} catch (FileNotFoundException ex) {
+			System.out.println(System.getProperty("user.dir"));
 		    System.out.println(ex);
 		} catch (IOException ex) {
 		    System.out.println(ex);

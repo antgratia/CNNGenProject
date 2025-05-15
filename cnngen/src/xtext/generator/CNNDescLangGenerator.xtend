@@ -70,6 +70,8 @@ class CNNDescLangGenerator extends AbstractGenerator {
     
     var emission_dir = ""
     
+    var testComp = ""
+    
     // csv directory
     var csvDir = "";
     
@@ -115,7 +117,7 @@ class CNNDescLangGenerator extends AbstractGenerator {
 	}
 	
 	// entry for generator
-	def void generate(CNNDescLang cnndl, String filename, String expDir, ProgramConfig programConfig ) {
+	def generate(CNNDescLang cnndl, String filename, String expDir, ProgramConfig programConfig ) {
 		
 		progConf = programConfig
 		
@@ -140,7 +142,7 @@ class CNNDescLangGenerator extends AbstractGenerator {
 		writer.println(archi)
 		writer.close()
 		
-		
+		return mainCtrl.graphview;
 	}
 	
 	// create py file
@@ -152,11 +154,11 @@ class CNNDescLangGenerator extends AbstractGenerator {
 		
 		graphview.createGraph(archi)
 		
-		var adjMatrix = graphview.createAdjencyMatrix
+		//var adjMatrix = graphview.createAdjencyMatrix
 		
-		var writer = new PrintWriter(progConf.outputDir+progConf.adjacencyDir+exp_dir+file_name+".txt","UTF-8")
-		writer.println(adjMatrix)
-		writer.close()
+		//var writer = new PrintWriter(progConf.outputDir+progConf.adjacencyDir+exp_dir+file_name+".txt","UTF-8")
+		//writer.println(adjMatrix)
+		//writer.close()
 		
 		graphview.architectureHpp(mainCtrl.gestionHPP)
 		
@@ -164,10 +166,11 @@ class CNNDescLangGenerator extends AbstractGenerator {
 
 		var py_file = ""
 		
+		var test_compil = ""
+		
 		
 		// write import
 		py_file += fsp.strImport()
-
 				
 		if(progConf.dataset == "mnist")
 			// write dataset minist
@@ -175,8 +178,13 @@ class CNNDescLangGenerator extends AbstractGenerator {
 		else if (progConf.dataset == "cifar10")
 			// write dataset cifar10
 			py_file += fsp.writecifar10Dataset
+		else if (progConf.dataset == "fashion_mnist")
+			py_file += fsp.writeFashionMnistDataSet
 		
-		else throw new Exception("wtf")
+		else if (progConf.dataset == "cifar100")
+			py_file += fsp.writecifar100Dataset
+		
+		else throw new Exception("wrong dataset")
 		
 		// write glo variable
 		py_file += fsp.writeGlobalVariable(progConf.batchSize, progConf.epochs)
@@ -184,14 +192,25 @@ class CNNDescLangGenerator extends AbstractGenerator {
 		// write init value 
 		py_file += fsp.writeInitValue
 		
+		test_compil = py_file
+		
 		// write init code carbon
 		py_file += fsp.writeInitTrackerCodeCarbon(countryISOCode, file_name, exp_dir, emission_dir)
 		
 		
 		// try	
     	py_file += "try:\n"
+    	
+    	test_compil += "try:\n"
+    	
+    	var archi_py = gestionArchi(archi)
 		
-		py_file += gestionArchi(archi)
+		py_file += archi_py
+		
+		test_compil += archi_py.replace("plot_model", "#plot_model")
+		test_compil += "\tdummy_input = np.random.rand(1, "+ progConf.maxSizeImg +"," + progConf.maxSizeImg + ","+ progConf.inputFilter + ").astype(np.float32)\n\toutput = model(dummy_input, training=False)\n"
+		
+	
 		
 		py_file += fsp.writeCallbackMethode(tensorboardDir + exp_dir + file_name, isES,isTB);
 		
@@ -205,7 +224,13 @@ class CNNDescLangGenerator extends AbstractGenerator {
 		
 		py_file += fsp.gestionError(log_dir + exp_dir, file_name)
 		
+		test_compil += "except Exception as e:\n\t print(\"exception\")"
+		
 		py_file += fsp.gestionFinally(csvDir + exp_dir, file_name, graphview.computeFlops)
+		
+		var writer = new PrintWriter(progConf.outputDir + "test_compil.py", "UTF-8")
+		writer.println(test_compil)
+		writer.close()
 		
 		return py_file
 		
