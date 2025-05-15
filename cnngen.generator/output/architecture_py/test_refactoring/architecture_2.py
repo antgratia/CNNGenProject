@@ -50,73 +50,27 @@ try:
 		X_input = X = Input([28,28,1])
 
 		X1 = X
-		X = AveragePooling2D(pool_size=4, strides=1, padding='same')(X)
-		X = Conv2D(16, kernel_size=2, strides=2, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
-		X = AveragePooling2D(pool_size=7, strides=1, padding='same')(X)
+		X = AveragePooling2D(pool_size=3, strides=1, padding='same')(X)
+		X = Conv2D(1, kernel_size=6, strides=1, activation='selu', padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-7, axis=3)(X)
+		X = MaxPooling2D(pool_size=4, strides=1, padding='same')(X)
 
-		X1 = Conv2D(16, kernel_size=2, strides=2, activation='selu', padding='same')(X1)
 		X = Add()([X, X1])
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
-		X = Conv2D(32, kernel_size=5, strides=2, activation='selu', padding='valid')(X)
-		X = BatchNormalization(epsilon=0.001, axis=3)(X)
-		X = Dropout(0.80)(X)
-		X = BatchNormalization(epsilon=0.001, axis=3)(X)
-		X = Conv2D(32, kernel_size=4, strides=1, activation='selu', padding='same')(X)
-
-		X2 = X
-		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
-		X = Conv2D(32, kernel_size=3, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = Dropout(0.01)(X)
-		X = Conv2D(32, kernel_size=3, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.001E-5, axis=3)(X)
-		X = Dropout(0.80)(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X = Add()([X, X2])
-		X = Conv2D(32, kernel_size=5, strides=1, activation='selu', padding='same')(X)
-		X = Dropout(0.50)(X)
-		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
-		X = Conv2D(32, kernel_size=3, strides=1, activation='selu', padding='same')(X)
-		X = MaxPooling2D(pool_size=5, strides=1, padding='same')(X)
-
-		X1 = Conv2D(32, kernel_size=6, strides=2, activation='selu', padding='valid')(X1)
-		X1 = BatchNormalization(epsilon=0.001, axis=3)(X1)
-		X = Add()([X, X1])
-		X = Dropout(0.50)(X)
-		X = MaxPooling2D(pool_size=4, strides=1, padding='valid')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = Conv2D(48, kernel_size=1, strides=1, activation='selu', padding='valid')(X)
-		X = AveragePooling2D(pool_size=1, strides=1, padding='valid')(X)
+		X = Dropout(0.10)(X)
+		X = MaxPooling2D(pool_size=7, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=6, strides=2, activation='selu', padding='same')(X)
+		X = AveragePooling2D(pool_size=5, strides=2, padding='valid')(X)
 
 		X1 = X
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(48, kernel_size=2, strides=1, activation='selu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = BatchNormalization(epsilon=0.001, axis=3)(X)
-		X = Conv2D(48, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = Dropout(0.01)(X)
-		X = MaxPooling2D(pool_size=2, strides=2, padding='same')(X)
+		X = MaxPooling2D(pool_size=4, strides=1, padding='same')(X)
+		X = Conv2D(16, kernel_size=2, strides=1, activation='selu', padding='same')(X)
+		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
 
-		X1 = Conv2D(48, kernel_size=2, strides=2, activation='selu', padding='same')(X1)
-		X1 = BatchNormalization(epsilon=0.001, axis=3)(X1)
 		X = Add()([X, X1])
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(48, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = Conv2D(64, kernel_size=1, strides=1, activation='selu', padding='valid')(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = AveragePooling2D(pool_size=2, strides=2, padding='same')(X)
 
-		X1 = Conv2D(64, kernel_size=1, strides=1, activation='selu', padding='same')(X1)
-		X = Add()([X, X1])
-		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = Conv2D(80, kernel_size=1, strides=1, activation='selu', padding='valid')(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-		X = Conv2D(96, kernel_size=1, strides=1, activation='selu', padding='same')(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
-
-		X = GlobalAveragePooling2D()(X)
+		X = GlobalMaxPooling2D()(X)
+		X = Dense(30, activation='selu')(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model
@@ -183,7 +137,7 @@ finally:
                       'Test_result_loss': test_result_loss,
                       'Nb_layers': nb_layers,
                       'Epochs' : epochs,
-					   'Flops' : 575330.0,
+					   'Flops' : 224580.0,
                       'nb_params' : nb_params
                       })
 		print('add line into architecture_results.csv')

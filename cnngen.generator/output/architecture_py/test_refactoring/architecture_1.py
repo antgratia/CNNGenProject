@@ -48,39 +48,15 @@ tracker = OfflineEmissionsTracker(country_iso_code="BEL", log_level='error', out
 try:
 	def getModel():
 		X_input = X = Input([28,28,1])
-
-		X1 = X
-		X = MaxPooling2D(pool_size=3, strides=1, padding='same')(X)
-		X = Conv2D(1, kernel_size=1, strides=1, activation='gelu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
-		X = Conv2D(1, kernel_size=4, strides=1, activation='gelu', padding='same')(X)
-		X = BatchNormalization(epsilon=1.1E-5, axis=3)(X)
-		X = MaxPooling2D(pool_size=4, strides=1, padding='same')(X)
-
-		X = Concatenate()([X, X1])
-		X = Dropout(0.20)(X)
-		X = MaxPooling2D(pool_size=2, strides=2, padding='same')(X)
-
-		X1 = X
-		X = AveragePooling2D(pool_size=6, strides=1, padding='same')(X)
-		X = Conv2D(2, kernel_size=3, strides=1, activation='gelu', padding='same')(X)
-		X = BatchNormalization(epsilon=0.001, axis=3)(X)
+		X = Conv2D(16, kernel_size=4, strides=4, activation='relu', padding='same')(X)
+		X = AveragePooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
+		X = Conv2D(32, kernel_size=2, strides=1, activation='relu', padding='same')(X)
+		X = MaxPooling2D(pool_size=1, strides=1, padding='same')(X)
+		X = Conv2D(48, kernel_size=1, strides=1, activation='relu', padding='same')(X)
 		X = MaxPooling2D(pool_size=2, strides=1, padding='same')(X)
 
-		X = Concatenate()([X, X1])
-		X = MaxPooling2D(pool_size=6, strides=1, padding='same')(X)
-		X = Conv2D(18, kernel_size=2, strides=1, activation='gelu', padding='valid')(X)
-		X = BatchNormalization(epsilon=1.1E-10, axis=3)(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(34, kernel_size=1, strides=1, activation='gelu', padding='valid')(X)
-		X = MaxPooling2D(pool_size=1, strides=1, padding='valid')(X)
-		X = Conv2D(50, kernel_size=4, strides=3, activation='gelu', padding='valid')(X)
-		X = AveragePooling2D(pool_size=4, strides=1, padding='valid')(X)
-
-		X = Flatten()(X)
-		X = Dropout(0.01)(X)
-		X = Dense(28, activation='gelu')(X)
-		X = Dense(4, activation='gelu')(X)
+		X = GlobalAveragePooling2D()(X)
 		X = Dense(10, activation='softmax')(X)
 		model = Model(inputs=X_input, outputs=X)
 		return model
@@ -147,7 +123,7 @@ finally:
                       'Test_result_loss': test_result_loss,
                       'Nb_layers': nb_layers,
                       'Epochs' : epochs,
-					   'Flops' : 181010.0,
+					   'Flops' : 34594.0,
                       'nb_params' : nb_params
                       })
 		print('add line into architecture_results.csv')

@@ -89,7 +89,7 @@ class GeneratorUtils {
 			
 			
 			// generate python file
-			smlGenerator.generate(cnndl, pyFilename, expDir, programConfig);
+			return smlGenerator.generate(cnndl, pyFilename, expDir, programConfig);
 			
 
 		}

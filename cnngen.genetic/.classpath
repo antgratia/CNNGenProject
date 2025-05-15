@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="xtend-gen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cnngen.ui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cnngen.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cnngen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-algorithm"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-auto"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-component"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-lab"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-parallel"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-problem"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.common_2.23.0.v20210924-1718.jar"/>
-	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.xtext.testing_2.25.0.v20210301-0843.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cnngen.ui"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cnngen.ide"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cnngen"/>
+	<classpathentry kind="lib" path="C:/java_external_lib/lombok.jar"/>
 	<classpathentry kind="lib" path="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.ecore_2.26.0.v20220123-0838.jar" sourcepath="C:/Users/agratia/.p2/pool/plugins/org.eclipse.emf.ecore.source_2.26.0.v20220123-0838.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/eclipse/emf/ecore/*"/>
@@ -31,5 +36,6 @@
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/java_external_lib/opencsv-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

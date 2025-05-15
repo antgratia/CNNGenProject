@@ -309,9 +309,12 @@ public class GestionHPP {
 		int knl = 0;
 		String pad = "";
 		
-		if(layer.getInputImgSize()<objectiveImgSize) 
-			throw new Exception("GestionHPP optiHPPfromImgObjective: startimg < ObjectifImg");
-		
+		if(layer.getInputImgSize()<objectiveImgSize) {
+			layer.setReduction(false);
+			objectiveImgSize = layer.getInputImgSize();
+		}
+			
+			
 		int stride = Math.round(layer.getInputImgSize()/objectiveImgSize);
 		
 		if( calculCurrentSize(pad, stride, stride, layer.getInputImgSize()) == objectiveImgSize) {
